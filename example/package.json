@@ -1,0 +1,32 @@
+{
+  "name": "exmaple",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "start": "react-native start"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.14.0",
+    "expo": "44.0.0-alpha.0",
+    "expo-error-recovery": "3.0.4",
+    "expo-maps": "*",
+    "expo-status-bar": "~1.1.0",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-native": "0.64.3",
+    "react-native-gesture-handler": "~1.10.2",
+    "react-native-reanimated": "~2.2.0",
+    "react-native-safe-area-context": "3.3.2",
+    "react-native-screens": "~3.8.0",
+    "react-native-web": "0.17.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@types/react": "~17.0.1",
+    "@types/react-native": "~0.64.3"
+  }
+}

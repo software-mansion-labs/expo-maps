@@ -1,0 +1,1 @@
+{"version":3,"file":"ExpoMaps.js","sourceRoot":"","sources":["../src/ExpoMaps.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,kBAAkB,EAAE,MAAM,mBAAmB,CAAC;AAEvD,eAAe,kBAAkB,CAAC,QAAQ,CAAC","sourcesContent":["import { NativeModulesProxy } from 'expo-modules-core';\n\nexport default NativeModulesProxy.ExpoMaps;\n"]}

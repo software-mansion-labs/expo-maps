@@ -1,0 +1,10 @@
+{
+  "name": "expo-maps",
+  "platforms": ["ios", "android"],
+  "ios": {
+    "modulesClassNames": ["ExpoMapsModule"]
+  },
+  "android": {
+    "modulesClassNames": ["expo.modules.maps.ExpoMapsModule"]
+  }
+}

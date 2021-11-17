@@ -1,0 +1,13 @@
+{
+  "name": "@expo/expo-maps",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Expo",
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "example",
+      "expo-maps"
+    ]
+  }
+}
