@@ -3,7 +3,9 @@ PODS:
   - DoubleConversion (1.1.6)
   - EXApplication (4.0.1):
     - ExpoModulesCore
-  - EXConstants (12.2.0):
+  - EXConstants (13.0.0):
+    - ExpoModulesCore
+  - EXErrorRecovery (3.0.4):
     - ExpoModulesCore
   - EXFileSystem (13.1.0):
     - ExpoModulesCore
@@ -11,11 +13,11 @@ PODS:
     - ExpoModulesCore
   - EXKeepAwake (10.0.1):
     - ExpoModulesCore
-  - Expo (44.0.0-alpha.0):
+  - Expo (44.0.0-beta.1):
     - ExpoModulesCore
   - ExpoMaps (1.0.0):
     - ExpoModulesCore
-  - ExpoModulesCore (0.5.0):
+  - ExpoModulesCore (0.6.1):
     - React-Core
     - ReactCommon/turbomodule/core
   - FBLazyVector (0.64.3)
@@ -326,6 +328,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../../node_modules/expo-application/ios`)
   - EXConstants (from `../../node_modules/expo-constants/ios`)
+  - EXErrorRecovery (from `../../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../../node_modules/expo-file-system/ios`)
   - EXFont (from `../../node_modules/expo-font/ios`)
   - EXKeepAwake (from `../../node_modules/expo-keep-awake/ios`)
@@ -377,6 +380,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/expo-application/ios"
   EXConstants:
     :path: "../../node_modules/expo-constants/ios"
+  EXErrorRecovery:
+    :path: "../../node_modules/expo-error-recovery/ios"
   EXFileSystem:
     :path: "../../node_modules/expo-file-system/ios"
   EXFont:
@@ -456,13 +461,14 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   EXApplication: bdc8dc27713235565da1029a34385229f31b8e08
-  EXConstants: 9d7055dde2e900983785a7e40975ffb5db3c2877
+  EXConstants: 5d18484e38e8eacef7695a82214b6ac90133dedf
+  EXErrorRecovery: deea88a01d38f8b1c1181b4e1d179b0ba0e4bb5b
   EXFileSystem: 7d1309ba6b38b82ef7fc9e80174de3f9184ac8b4
   EXFont: 1fb13af43dc517c01c0ff21a6e32f9f9bf2ea602
   EXKeepAwake: b571c2ad8323b2fced6e907766e2549f75119471
-  Expo: 988e3a33c6b5c19fb951ffb376e6d8a8405000ed
+  Expo: dcd13c848d84cf058c81b1a4289ac3a7891f61b4
   ExpoMaps: 58772bd4b8cb49111b42247456e9adc5faaf193d
-  ExpoModulesCore: 3339f23adf96e5b39e6315d5f32b4585ecd4cd43
+  ExpoModulesCore: 98f874d20b96d4497eb8ff9df686f14384913a30
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
   FBReactNativeSpec: 1b9e48d3704e8c9a566350b2565c68ad4b903b18
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
