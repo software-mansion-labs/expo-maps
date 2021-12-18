@@ -5,7 +5,8 @@ import { StyleSheet, View } from 'react-native';
 import * as Maps from 'expo-maps';
 
 export default function App() {
-  const GOOGLE_MAPS_API_KEY = 'AIzaSyBDqnKEUVnZEgx1qxKLAtfEc7Kg_slX0jg';
+  // add your api key here
+  const GOOGLE_MAPS_API_KEY = '';
   return (
     <View style={styles.container}>
       <Maps.ExpoMap
