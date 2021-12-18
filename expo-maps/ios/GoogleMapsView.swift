@@ -4,12 +4,6 @@ public final class GoogleMapsView: UIView, MapView {
   internal var mapView: UIView?
   internal var authenticated: Bool
 
-  override public var bounds: CGRect {
-    didSet {
-      self.mapView?.frame = self.frame
-    }
-  }
-
   init() {
     self.authenticated = false
     super.init(frame: CGRect.zero)
@@ -28,6 +22,7 @@ public final class GoogleMapsView: UIView, MapView {
       // TODO: use prop as a source for initial camera position
       let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
       self.mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+      self.mapView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
       self.addSubview(self.mapView!)
     }
   }
