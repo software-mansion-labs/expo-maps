@@ -11,7 +11,7 @@ export default function App() {
     <View style={styles.container}>
       <Maps.ExpoMap
         apiKey={GOOGLE_MAPS_API_KEY as string}
-        style={{ flex: 1, minWidth: '100%' }}
+        style={{ flex: 1, width: '100%' }}
       />
       <StatusBar style="auto" />
     </View>
