@@ -1,34 +1,17 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import * as Maps from "expo-maps";
-
-const generateColor = () => {
-  const randomColor = Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, "0");
-  return `#${randomColor}`;
-};
+import * as Maps from 'expo-maps';
 
 export default function App() {
-  const [color, setColor] = React.useState(generateColor());
+  const GOOGLE_MAPS_API_KEY = 'AIzaSyBDqnKEUVnZEgx1qxKLAtfEc7Kg_slX0jg';
   return (
     <View style={styles.container}>
-      <Text>Open up example/App.js to start working on your app!</Text>
-      <Button
-        title="Invoke someGreatMethodAsync"
-        onPress={async () => {
-          await Maps.someGreatMethodAsync({ someOption: "option" });
-        }}
+      <Maps.ExpoMap
+        apiKey={GOOGLE_MAPS_API_KEY as string}
+        style={{ flex: 1, minWidth: '100%' }}
       />
-      <Button
-        title="Change color"
-        onPress={async () => {
-          setColor(generateColor());
-        }}
-      />
-      <Maps.ExpoMap color={color} style={{ width: 200, height: 200 }} />
       <StatusBar style="auto" />
     </View>
   );
@@ -37,8 +20,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

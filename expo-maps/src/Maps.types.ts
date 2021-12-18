@@ -1,13 +1,10 @@
-import { PropsWithChildren } from "react";
-import { ViewProps } from "react-native";
-
-export interface SampleOptions {
-  someOption: string;
-}
+import { PropsWithChildren } from 'react';
+import { ViewProps } from 'react-native';
 
 export type NativeExpoMapViewProps = ViewProps &
   PropsWithChildren<{
-    color: number;
+    apiKey: string;
   }>;
 
-export type ExpoMapViewProps = ViewProps & PropsWithChildren<{ color: string }>;
+export type ExpoMapViewProps = ViewProps &
+  PropsWithChildren<{ apiKey: string }>;
