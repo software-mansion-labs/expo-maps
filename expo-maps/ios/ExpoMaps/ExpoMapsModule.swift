@@ -8,10 +8,6 @@ public class ExpoMapsModule: Module {
       view {
         GoogleMapsView()
       }
-
-      prop("apiKey") { (view: GoogleMapsView, apiKey: String) in
-        view.authenticateAndCreateMapView(apiKey: apiKey)
-      }
     }
   }
 }
