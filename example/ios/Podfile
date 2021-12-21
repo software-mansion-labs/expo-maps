@@ -8,6 +8,7 @@ require 'json'
 podfile_properties = JSON.parse(File.read('./Podfile.properties.json')) rescue {}
 
 target 'example' do
+  pod 'GoogleMaps', '6.0.0'
   use_expo_modules!
   config = use_native_modules!
 
@@ -37,5 +38,4 @@ target 'example' do
       end
     end
   end
-
 end
