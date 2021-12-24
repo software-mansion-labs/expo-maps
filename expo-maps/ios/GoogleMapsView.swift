@@ -1,7 +1,7 @@
 import GoogleMaps
 
 public final class GoogleMapsView: UIView {
-  internal var mapView: UIView
+  internal var mapView: GMSMapView
 
   init() {
     // just for now we do authentication here

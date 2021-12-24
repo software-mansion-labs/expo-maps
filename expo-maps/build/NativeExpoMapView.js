@@ -1,4 +1,4 @@
-import { requireNativeViewManager } from "expo-modules-core";
-const NativeExpoMapView = requireNativeViewManager("ExpoMaps");
-export default NativeExpoMapView;
+import { requireNativeViewManager } from 'expo-modules-core';
+export const NativeExpoGoogleMapsView = requireNativeViewManager('ExpoGoogleMaps');
+export const NativeExpoAppleMapsView = requireNativeViewManager('ExpoAppleMaps');
 //# sourceMappingURL=NativeExpoMapView.js.map

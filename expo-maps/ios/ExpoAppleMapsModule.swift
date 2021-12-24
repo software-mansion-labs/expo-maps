@@ -1,8 +1,13 @@
-//
-//  ExpoAppleMapsModule.swift
-//  ExpoMaps
-//
-//  Created by Szymon Dziedzic on 24/12/2021.
-//
+import ExpoModulesCore
 
-import Foundation
+public class ExpoAppleMapsModule: Module {
+  public func definition() -> ModuleDefinition {
+    name("ExpoAppleMaps")
+
+    viewManager {
+      view {
+        AppleMapsView()
+      }
+    }
+  }
+}
