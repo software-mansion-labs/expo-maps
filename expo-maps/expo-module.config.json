@@ -2,9 +2,9 @@
   "name": "expo-maps",
   "platforms": ["ios", "android"],
   "ios": {
-    "modulesClassNames": ["ExpoMapsModule"]
+    "modulesClassNames": ["ExpoGoogleMapsModule", "ExpoAppleMapsModule"]
   },
   "android": {
-    "modulesClassNames": ["expo.modules.maps.ExpoMapsModule"]
+    "modulesClassNames": ["expo.modules.maps.ExpoGoogleMapsModule"]
   }
 }
