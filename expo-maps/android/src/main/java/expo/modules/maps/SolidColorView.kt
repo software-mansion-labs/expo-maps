@@ -6,7 +6,7 @@ import android.view.View
 
 class SolidColorView(context: Context): View(context) {
   init {
-    setBackgroundColor(Color.WHITE)
+    setBackgroundColor(Color.GREEN)
   }
 
   fun setColor(color: Int) {

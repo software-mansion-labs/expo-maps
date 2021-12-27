@@ -1,12 +1,12 @@
 import ExpoModulesCore
 
-public class ExpoMapsModule: Module {
+public class ExpoAppleMapsModule: Module {
   public func definition() -> ModuleDefinition {
-    name("ExpoMaps")
+    name("ExpoAppleMaps")
 
     viewManager {
       view {
-        GoogleMapsView()
+        AppleMapsView()
       }
     }
   }

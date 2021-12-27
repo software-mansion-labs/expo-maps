@@ -1,5 +1,11 @@
 import { ViewProps } from 'react-native';
+import { PropsWithChildren } from 'react';
 
-export type NativeExpoMapViewProps = ViewProps;
+export type NativeExpoGoogleMapsViewProps = ViewProps;
 
-export type ExpoMapViewProps = ViewProps;
+export type NativeExpoAppleMapsViewProps = ViewProps;
+
+export type ExpoMapViewProps = ViewProps &
+  PropsWithChildren<{
+    provider?: 'google' | 'apple';
+  }>;

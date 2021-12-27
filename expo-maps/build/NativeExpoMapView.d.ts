@@ -1,3 +1,3 @@
-import * as React from "react";
-declare const NativeExpoMapView: React.FC<import("react-native").ViewProps>;
-export default NativeExpoMapView;
+import * as React from 'react';
+export declare const NativeExpoGoogleMapsView: React.FC<import("react-native").ViewProps>;
+export declare const NativeExpoAppleMapsView: React.FC<import("react-native").ViewProps>;
