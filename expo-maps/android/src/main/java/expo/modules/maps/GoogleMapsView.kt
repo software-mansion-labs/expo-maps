@@ -8,7 +8,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 
 class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallback {
 
-  val mapView: MapView = MapView(context)
+  private val mapView: MapView = MapView(context)
+  val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
   init {
     mapView.onCreate(null)
