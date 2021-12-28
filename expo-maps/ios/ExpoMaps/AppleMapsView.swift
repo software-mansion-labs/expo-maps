@@ -14,4 +14,17 @@ public final class AppleMapsView: UIView {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  func mapType(mapTypeName: String) -> Void {
+    var mapViewType: MKMapType
+    switch mapTypeName {
+    case "hybrid":
+      mapViewType = .hybrid
+    case "satelite":
+      mapViewType = .satellite
+    default:
+      mapViewType = .standard
+    }
+    self.mapView.mapType = mapViewType
+  }
 }
