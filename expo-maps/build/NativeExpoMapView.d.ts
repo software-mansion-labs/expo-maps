@@ -1,3 +1,4 @@
 import * as React from 'react';
-export declare const NativeExpoGoogleMapsView: React.FC<import("react-native").ViewProps>;
-export declare const NativeExpoAppleMapsView: React.FC<import("react-native").ViewProps>;
+import { NativeExpoGoogleMapsViewProps, NativeExpoAppleMapsViewProps } from './Maps.types';
+export declare const NativeExpoGoogleMapsView: React.FC<NativeExpoGoogleMapsViewProps>;
+export declare const NativeExpoAppleMapsView: React.FC<NativeExpoAppleMapsViewProps>;

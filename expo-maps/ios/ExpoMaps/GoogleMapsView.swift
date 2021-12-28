@@ -21,4 +21,19 @@ public final class GoogleMapsView: UIView {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  func mapType(mapTypeName: String) -> Void {
+    var mapViewType: GMSMapViewType
+    switch mapTypeName {
+    case "hybrid":
+      mapViewType = .hybrid
+    case "satelite":
+      mapViewType = .satellite
+    case "terain":
+      mapViewType = .terrain
+    default:
+      mapViewType = .normal
+    }
+    self.mapView.mapType = mapViewType
+  }
 }

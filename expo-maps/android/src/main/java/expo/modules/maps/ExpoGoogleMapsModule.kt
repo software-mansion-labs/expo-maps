@@ -15,6 +15,8 @@ class ExpoGoogleMapsModule : Module() {
         GoogleMapsView(it).also { googleMapsView ->
           appContext.legacyModule<UIManager>()?.registerLifecycleEventListener(googleMapsView.lifecycleEventListener)
         }
+      prop("mapType") { view: GoogleMapsView, color: Int ->
+
       }
     }
   }
