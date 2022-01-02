@@ -8,8 +8,8 @@ public class ExpoGoogleMapsModule: Module {
       view {
         GoogleMapsView()
       }
-      prop("mapType") { (view: GoogleMapsView, mapTypeName: String) in
-        view.mapType(mapTypeName: mapTypeName)
+      prop("mapType") { (view: GoogleMapsView, mapType: MapType) in
+        view.mapType(mapType: mapType)
       }
     }
   }

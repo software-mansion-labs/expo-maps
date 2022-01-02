@@ -1,5 +1,6 @@
 import ExpoModulesCore
 
+
 public class ExpoAppleMapsModule: Module {
   public func definition() -> ModuleDefinition {
     name("ExpoAppleMaps")
@@ -8,8 +9,8 @@ public class ExpoAppleMapsModule: Module {
       view {
         AppleMapsView()
       }
-      prop("mapType") { (view: AppleMapsView, mapTypeName: String) in
-        view.mapType(mapTypeName: mapTypeName)
+      prop("mapType") { (view: AppleMapsView, mapType: MapType) in
+        view.mapType(mapType: mapType)
       }
     }
   }

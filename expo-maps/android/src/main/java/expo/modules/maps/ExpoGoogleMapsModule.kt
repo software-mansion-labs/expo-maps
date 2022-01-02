@@ -4,6 +4,12 @@ import expo.modules.core.interfaces.services.UIManager
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
+enum class MapType(val value: String) {
+  normal("normal"),
+  hybrid("hybrid"),
+  satelite("satelite"),
+  terain("terain")
+}
 
 class ExpoGoogleMapsModule : Module() {
 
@@ -15,8 +21,9 @@ class ExpoGoogleMapsModule : Module() {
         GoogleMapsView(it).also { googleMapsView ->
           appContext.legacyModule<UIManager>()?.registerLifecycleEventListener(googleMapsView.lifecycleEventListener)
         }
-      prop("mapType") { view: GoogleMapsView, color: Int ->
-
+      }
+      prop("mapType") { view: GoogleMapsView, mapType: MapType ->
+        view.mapView(mapType)
       }
     }
   }
