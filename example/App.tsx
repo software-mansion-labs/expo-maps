@@ -7,7 +7,7 @@ import * as Maps from 'expo-maps';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Maps.ExpoMap style={{ flex: 1, width: '100%' }} mapType="satelite" />
+      <Maps.ExpoMap style={{ flex: 1, width: '100%' }} mapType="satellite" />
       <StatusBar style="auto" />
     </View>
   );

@@ -7,8 +7,8 @@ import expo.modules.kotlin.modules.ModuleDefinition
 enum class MapType(val value: String) {
   normal("normal"),
   hybrid("hybrid"),
-  satelite("satelite"),
-  terain("terain")
+  satellite("satellite"),
+  terrain("terrain")
 }
 
 class ExpoGoogleMapsModule : Module() {

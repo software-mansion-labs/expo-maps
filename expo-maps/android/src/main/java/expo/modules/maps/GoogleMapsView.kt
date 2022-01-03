@@ -27,8 +27,8 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
   fun mapView(mapType: MapType) {
     val googleMapType = when (mapType) {
       MapType.normal -> GoogleMap.MAP_TYPE_NORMAL
-      MapType.terain -> GoogleMap.MAP_TYPE_TERRAIN
-      MapType.satelite -> GoogleMap.MAP_TYPE_SATELLITE
+      MapType.terrain -> GoogleMap.MAP_TYPE_TERRAIN
+      MapType.satellite -> GoogleMap.MAP_TYPE_SATELLITE
       MapType.hybrid -> GoogleMap.MAP_TYPE_HYBRID
     }
     mapView.getMapAsync {map: GoogleMap ->

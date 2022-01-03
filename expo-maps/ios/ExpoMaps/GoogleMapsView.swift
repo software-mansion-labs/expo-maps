@@ -28,9 +28,9 @@ public final class GoogleMapsView: UIView {
     switch mapType {
     case .hybrid:
       mapViewType = .hybrid
-    case .satelite:
+    case .satellite:
       mapViewType = .satellite
-    case .terain:
+    case .terrain:
       mapViewType = .terrain
     case .normal:
       mapViewType = .normal

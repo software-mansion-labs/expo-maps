@@ -9,7 +9,7 @@ import { Platform } from 'react-native';
 export * from './Maps.types';
 
 interface DefaultNativeExpoMapViewProps {
-  mapType: 'normal' | 'hybrid' | 'satelite' | 'terain';
+  mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
 }
 
 const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {

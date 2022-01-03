@@ -20,9 +20,9 @@ public final class AppleMapsView: UIView {
     switch mapType {
     case .hybrid:
       mapViewType = .hybrid
-    case .satelite:
+    case .satellite:
       mapViewType = .satellite
-    case .normal, .terain:
+    case .normal, .terrain:
       mapViewType = .standard
     }
     self.mapView.mapType = mapViewType
