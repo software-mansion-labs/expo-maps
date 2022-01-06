@@ -6,7 +6,7 @@ public final class AppleMapsView: UIView {
   init() {
     self.mapView = MKMapView()
     self.mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    
+
     super.init(frame: CGRect.zero)
     self.addSubview(self.mapView)
   }
