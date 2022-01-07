@@ -34,10 +34,10 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
 
   fun mapType(mapType: MapType) {
     val googleMapType = when (mapType) {
-      MapType.normal -> GoogleMap.MAP_TYPE_NORMAL
-      MapType.terrain -> GoogleMap.MAP_TYPE_TERRAIN
-      MapType.satellite -> GoogleMap.MAP_TYPE_SATELLITE
-      MapType.hybrid -> GoogleMap.MAP_TYPE_HYBRID
+      MapType.Normal -> GoogleMap.MAP_TYPE_NORMAL
+      MapType.Terrain -> GoogleMap.MAP_TYPE_TERRAIN
+      MapType.Satellite -> GoogleMap.MAP_TYPE_SATELLITE
+      MapType.Hybrid -> GoogleMap.MAP_TYPE_HYBRID
     }
 
     updateMap {

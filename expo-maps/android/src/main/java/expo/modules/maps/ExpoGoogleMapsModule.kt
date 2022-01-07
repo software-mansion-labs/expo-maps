@@ -4,13 +4,6 @@ import expo.modules.core.interfaces.services.UIManager
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
-enum class MapType(val value: String) {
-  normal("normal"),
-  hybrid("hybrid"),
-  satellite("satellite"),
-  terrain("terrain")
-}
-
 class ExpoGoogleMapsModule : Module() {
 
   override fun definition() = ModuleDefinition {
