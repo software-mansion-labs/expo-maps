@@ -23,7 +23,7 @@ class ExpoGoogleMapsModule : Module() {
         }
       }
       prop("mapType") { view: GoogleMapsView, mapType: MapType ->
-        view.mapView(mapType)
+        view.mapType(mapType)
       }
     }
   }
