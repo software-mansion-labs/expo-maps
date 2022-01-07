@@ -10,7 +10,7 @@ public class ExpoAppleMapsModule: Module {
         AppleMapsView()
       }
       prop("mapType") { (view: AppleMapsView, mapType: MapType) in
-        view.mapType(mapType: mapType)
+        view.setMapType(mapType: mapType)
       }
     }
   }

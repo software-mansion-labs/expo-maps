@@ -15,7 +15,7 @@ public final class AppleMapsView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func mapType(mapType: MapType) -> Void {
+  func setMapType(mapType: MapType) -> Void {
     var mapViewType: MKMapType
     switch mapType {
     case .hybrid:

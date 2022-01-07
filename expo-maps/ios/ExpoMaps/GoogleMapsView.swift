@@ -23,7 +23,7 @@ public final class GoogleMapsView: UIView {
   }
   
   
-  func mapType(mapType: MapType) -> Void {
+  func setMapType(mapType: MapType) -> Void {
     var mapViewType: GMSMapViewType
     switch mapType {
     case .hybrid:

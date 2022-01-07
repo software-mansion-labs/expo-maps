@@ -32,7 +32,7 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
     }
   }
 
-  fun mapType(mapType: MapType) {
+  fun setMapType(mapType: MapType) {
     val googleMapType = when (mapType) {
       MapType.Normal -> GoogleMap.MAP_TYPE_NORMAL
       MapType.Terrain -> GoogleMap.MAP_TYPE_TERRAIN
