@@ -4,7 +4,6 @@ import expo.modules.core.interfaces.services.UIManager
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
-
 class ExpoGoogleMapsModule : Module() {
 
   override fun definition() = ModuleDefinition {
@@ -15,6 +14,9 @@ class ExpoGoogleMapsModule : Module() {
         GoogleMapsView(it).also { googleMapsView ->
           appContext.legacyModule<UIManager>()?.registerLifecycleEventListener(googleMapsView.lifecycleEventListener)
         }
+      }
+      prop("mapType") { view: GoogleMapsView, mapType: MapType ->
+        view.setMapType(mapType)
       }
     }
   }
