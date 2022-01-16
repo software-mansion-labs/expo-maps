@@ -114,6 +114,37 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
+  //TODO: setting ui controls in bundles
+  fun setZoomControlButton(enabled: Boolean) {
+    updateMap {
+      googleMap.uiSettings.isZoomControlsEnabled = enabled
+    }
+  }
+
+  fun setCompassButton(enabled: Boolean) {
+    updateMap {
+      googleMap.uiSettings.isCompassEnabled = enabled
+    }
+  }
+
+  fun setMapToolbarButton(enabled: Boolean) {
+    updateMap {
+      googleMap.uiSettings.isMapToolbarEnabled = enabled
+    }
+  }
+
+  fun setMyLocationButton(enabled: Boolean) {
+    updateMap {
+      googleMap.uiSettings.isMyLocationButtonEnabled = enabled
+    }
+  }
+
+  fun setLevelPickerButton(enabled: Boolean) {
+    updateMap {
+      googleMap.uiSettings.isIndoorLevelPickerEnabled = enabled
+    }
+  }
+
   private fun updateMap(update: () -> Unit) {
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.collectLatest {
@@ -127,4 +158,3 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 }
-

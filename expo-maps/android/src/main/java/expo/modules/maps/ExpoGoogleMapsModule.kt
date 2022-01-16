@@ -37,6 +37,27 @@ class ExpoGoogleMapsModule : Module() {
         view.setMapType(mapType)
       }
 
+      prop("zoomControls") { view: GoogleMapsView, enabled: Boolean ->
+        view.setZoomControlButton(enabled)
+      }
+
+      prop("compass") { view: GoogleMapsView, enabled: Boolean ->
+        view.setCompassButton(enabled)
+      }
+
+      prop("mapToolbar") { view: GoogleMapsView, enabled: Boolean ->
+        view.setMapToolbarButton(enabled)
+      }
+
+      //TODO: enable MyLocation layer, otherwise My location button will not be displayed
+      prop("myLocationButton") { view: GoogleMapsView, enabled: Boolean ->
+        view.setMyLocationButton(enabled)
+      }
+
+      prop("levelPicker") { view: GoogleMapsView, enabled: Boolean ->
+        view.setLevelPickerButton(enabled)
+      }
+
       prop("jsonStyleString") { view: GoogleMapsView, jsonStyleString: String ->
         view.setMapStyle(jsonStyleString)
       }
