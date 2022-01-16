@@ -2,6 +2,11 @@ import { ViewProps } from 'react-native';
 import { PropsWithChildren } from 'react';
 export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
+    zoomControls: boolean;
+    compass: boolean;
+    mapToolbar: boolean;
+    myLocationButton: boolean;
+    levelPicker: boolean;
     jsonStyleString: string;
     markers: MarkerObject[];
     enableRotateGestures: boolean;
@@ -24,6 +29,11 @@ export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren
 export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<{
     provider?: 'google' | 'apple';
     mapType?: 'normal' | 'hybrid' | 'satellite' | 'terrain';
+    zoomControls?: boolean;
+    compass?: boolean;
+    mapToolbar?: boolean;
+    myLocationButton?: boolean;
+    levelPicker?: boolean;
     googleMapsJsonStyleString?: string;
     enableRotateGestures?: boolean;
     enableScrollGestures?: boolean;
