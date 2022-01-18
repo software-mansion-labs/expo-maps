@@ -1,14 +1,14 @@
 import MapKit
 
 public final class AppleMapsView: UIView, ExpoMapView {
-  
+
   private let mapView: MKMapView
   private let delegate: MKMapViewDelegate
   private let markers: AppleMapsMarkers
   private let gestures: AppleMapsGestures
   private let polygons: AppleMapsPolygons
   private let polylines: AppleMapsPolylines
-  
+
   init() {
     mapView = MKMapView()
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -42,7 +42,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   func setEnabledZoomGestures(enabled: Bool) {
     gestures.setEnabledZoomGesture(enabled: enabled)
   }
-  
+
   func setMapType(mapType: MapType) {
     var mapViewType: MKMapType
     switch mapType {
@@ -55,16 +55,41 @@ public final class AppleMapsView: UIView, ExpoMapView {
     }
     mapView.mapType = mapViewType
   }
-  
+
   func setMarkers(markerObjects: [MarkerObject]) {
     markers.setMarkers(markerObjects: markerObjects)
   }
-  
+
   func setPolygons(polygonObjects: [PolygonObject]) {
     polygons.setPolygons(polygonObjects: polygonObjects)
   }
-  
+
   func setPolylines(polylineObjects: [PolylineObject]) {
     polylines.setPolylines(polylineObjects: polylineObjects)
+    self.mapView.mapType = mapViewType
+
   }
+
+  func setCompassButton(enable: Bool) -> Void {
+      self.mapView.showsCompass = enable
+  }
+
+//TODO: cllocationbutton for ios 15+, mkuserbrakcingbutton for ios <15
+  func setMyLocationButton(enable: Bool) -> Void {
+      self.createButton()
+  }
+
+  private func createButton() {
+          let button = MKUserTrackingButton(mapView: self.mapView)
+//        let myLocationButton = CLLocationButton(frame: CGRect.init(x: 0, y: 0, width: 200, height: 50))
+//        myLocationButton.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin, .flexibleRightMargin, .flexibleBottomMargin]
+//        myLocationButton.center = mapView.center
+//
+//        myLocationButton.icon = .arrowOutline
+//        myLocationButton.label = .currentLocation
+//        myLocationButton.cornerRadius = 12
+//
+        self.mapView.addSubview(button)
+      }
+//TODO: enable floor picker
 }
