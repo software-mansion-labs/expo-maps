@@ -22,6 +22,9 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
 export type NativeExpoAppleMapsViewProps = ViewProps &
   PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
+    compass: boolean;
+    myLocationButton: boolean;
+    levelPicker: boolean;
     markers: MarkerObject[];
     enableRotateGestures: boolean;
     enableScrollGestures: boolean;

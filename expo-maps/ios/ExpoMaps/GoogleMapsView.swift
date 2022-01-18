@@ -85,4 +85,16 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   func setPolylines(polylineObjects: [PolylineObject]) {
     polylines.setPolylines(polylineObjects: polylineObjects)
   }
+    
+  func setCompassButton(enabled: Bool) -> Void {
+    self.mapView.settings.compassButton = enabled
+  }
+
+  func setMyLocationButton(enabled: Bool) -> Void {
+    self.mapView.settings.myLocationButton = enabled
+  }
+
+  func setFloorPickerButton(enabled: Bool) -> Void {
+    self.mapView.settings.indoorPicker = enabled
+  }
 }
