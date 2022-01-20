@@ -85,6 +85,8 @@ public final class AppleMapsView: UIView, ExpoMapView {
   }
 
   private func enableMyLocationButton() -> Void {
+
+    self.mapView.showsUserLocation = true
     let myLocationButton = MKUserTrackingButton(mapView: self.mapView)
         myLocationButton.layer.backgroundColor = UIColor(white: 1, alpha: 0.5).cgColor
         myLocationButton.layer.borderColor = UIColor.white.cgColor
