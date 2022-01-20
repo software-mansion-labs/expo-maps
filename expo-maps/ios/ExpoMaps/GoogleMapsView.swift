@@ -92,9 +92,18 @@ public final class GoogleMapsView: UIView, ExpoMapView {
 
   func setMyLocationButton(enabled: Bool) -> Void {
     self.mapView.settings.myLocationButton = enabled
+    if (enabled == true) {
+        self.requestLocationPermission()
+        self.mapView.isMyLocationEnabled = true
+    }
   }
 
   func setFloorPickerButton(enabled: Bool) -> Void {
     self.mapView.settings.indoorPicker = enabled
   }
+    
+    private func requestLocationPermission() -> Void {
+      let locationManager = CLLocationManager()
+      locationManager.requestWhenInUseAuthorization()
+    }
 }
