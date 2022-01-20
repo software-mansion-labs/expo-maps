@@ -121,12 +121,17 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   }
 
   fun setCompassButton(enabled: Boolean) {
+    // the compass will only ever appear when the camera is oriented such that
+    // it has a non-zero bearing or non-zero tilt. When the user clicks on the compass,
+    // the camera animates back to the default orientation and the compass fades away shortly afterwards
     updateMap {
       googleMap.uiSettings.isCompassEnabled = enabled
     }
   }
 
   fun setMapToolbarButton(enabled: Boolean) {
+    // the toolbar slides in when the user taps a marker
+    // and slides out again when the marker is no longer in focust
     updateMap {
       googleMap.uiSettings.isMapToolbarEnabled = enabled
     }
@@ -134,13 +139,16 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   fun setMyLocationButton(enabled: Boolean) {
     updateMap {
-      //TODO: enable my location layer; firstly enable handling needed permissions request
+      // the My Location button appears in the top right corner of
+      // the screen only when the My Location layer is enabled
+      //TODO: enable my location layer + firstly handle needed permissions request
       //googleMap.isMyLocationEnabled = true
       googleMap.uiSettings.isMyLocationButtonEnabled = enabled
     }
   }
 
   fun setLevelPickerButton(enabled: Boolean) {
+    // appears only when the user is viewing an indoor map
     updateMap {
       googleMap.uiSettings.isIndoorLevelPickerEnabled = enabled
     }
