@@ -49,6 +49,10 @@ public class ExpoAppleMapsModule: Module {
       prop("myLocationButton") { (view: AppleMapsView, enable: Bool) in
         view.setMyLocationButton(enable: enable)
       }
+
+      prop("levelPicker") { (view: AppleMapsView, enable: Bool) in
+        view.setLevelPickerButton(enable: enable)
+      }
     }
   }
 }

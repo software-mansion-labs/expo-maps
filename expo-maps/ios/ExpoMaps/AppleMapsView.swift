@@ -71,25 +71,30 @@ public final class AppleMapsView: UIView, ExpoMapView {
   }
 
   func setCompassButton(enable: Bool) -> Void {
-      self.mapView.showsCompass = enable
+    self.mapView.showsCompass = enable
   }
 
-//TODO: cllocationbutton for ios 15+, mkuserbrakcingbutton for ios <15
   func setMyLocationButton(enable: Bool) -> Void {
-      self.createButton()
+    if (enable == true) {
+      self.enableMyLocationButton()
+    }
   }
 
-  private func createButton() {
-          let button = MKUserTrackingButton(mapView: self.mapView)
-//        let myLocationButton = CLLocationButton(frame: CGRect.init(x: 0, y: 0, width: 200, height: 50))
-//        myLocationButton.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin, .flexibleRightMargin, .flexibleBottomMargin]
-//        myLocationButton.center = mapView.center
-//
-//        myLocationButton.icon = .arrowOutline
-//        myLocationButton.label = .currentLocation
-//        myLocationButton.cornerRadius = 12
-//
-        self.mapView.addSubview(button)
-      }
-//TODO: enable floor picker
-}
+  func setLevelPickerButton(enable: Bool) -> Void {
+    //TODO: enable floor picker
+  }
+
+  private func enableMyLocationButton() -> Void {
+    let myLocationButton = MKUserTrackingButton(mapView: self.mapView)
+        myLocationButton.layer.backgroundColor = UIColor(white: 1, alpha: 0.5).cgColor
+        myLocationButton.layer.borderColor = UIColor.white.cgColor
+        myLocationButton.layer.borderWidth = 1
+        myLocationButton.layer.cornerRadius = 5
+        myLocationButton.translatesAutoresizingMaskIntoConstraints = false
+    self.mapView.addSubview(myLocationButton)
+
+    NSLayoutConstraint.activate([
+        myLocationButton.topAnchor.constraint(equalTo: self.mapView.topAnchor,
+            constant: 100),
+        myLocationButton.trailingAnchor.constraint(equalTo: self.mapView.trailingAnchor, constant: -10)])
+  }
