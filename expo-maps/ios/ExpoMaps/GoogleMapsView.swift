@@ -100,6 +100,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
 
   func setFloorPickerButton(enabled: Bool) -> Void {
     self.mapView.settings.indoorPicker = enabled
+      //TODO: enable floor picker handling
   }
     
     private func requestLocationPermission() -> Void {

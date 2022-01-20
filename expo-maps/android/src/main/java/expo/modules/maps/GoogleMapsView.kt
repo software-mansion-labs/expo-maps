@@ -114,7 +114,6 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
-  //TODO: setting ui controls in bundles
   fun setZoomControlButton(enabled: Boolean) {
     updateMap {
       googleMap.uiSettings.isZoomControlsEnabled = enabled
@@ -135,6 +134,8 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   fun setMyLocationButton(enabled: Boolean) {
     updateMap {
+      //TODO: enable my location layer; firstly enable handling needed permissions request
+      //googleMap.isMyLocationEnabled = true
       googleMap.uiSettings.isMyLocationButtonEnabled = enabled
     }
   }
