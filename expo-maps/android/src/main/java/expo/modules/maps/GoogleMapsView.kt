@@ -5,6 +5,7 @@ import android.widget.LinearLayout
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.MapStyleOptions
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -42,6 +43,18 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
 
     updateMap {
       googleMap.mapType = googleMapType
+    }
+  }
+
+  fun setMapStyle(jsonStyleString: String) {
+    if (jsonStyleString.isNotEmpty()) {
+      updateMap {
+        this.googleMap.setMapStyle(MapStyleOptions(jsonStyleString))
+      }
+    } else {
+      updateMap {
+        this.googleMap.setMapStyle(null)
+      }
     }
   }
 

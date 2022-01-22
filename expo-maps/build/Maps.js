@@ -7,11 +7,12 @@ const defaultNativeExpoMapViewProps = {
 };
 export class ExpoMap extends React.Component {
     render() {
-        let NativeExpoMapView = NativeExpoGoogleMapsView;
         if (Platform.OS == 'ios' && this.props.provider == 'apple') {
-            NativeExpoMapView = NativeExpoAppleMapsView;
+            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props }));
         }
-        return (React.createElement(NativeExpoMapView, { ...defaultNativeExpoMapViewProps, ...this.props }));
+        return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, jsonStyleString: this.props.googleMapsJsonStyleString
+                ? this.props.googleMapsJsonStyleString
+                : '' }));
     }
 }
 //# sourceMappingURL=Maps.js.map

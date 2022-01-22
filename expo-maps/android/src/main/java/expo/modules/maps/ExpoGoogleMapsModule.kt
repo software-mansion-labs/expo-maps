@@ -18,6 +18,9 @@ class ExpoGoogleMapsModule : Module() {
       prop("mapType") { view: GoogleMapsView, mapType: MapType ->
         view.setMapType(mapType)
       }
+      prop("jsonStyleString") { view: GoogleMapsView, jsonStyleString: String ->
+        view.setMapStyle(jsonStyleString)
+      }
     }
   }
 }

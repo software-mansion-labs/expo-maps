@@ -18,12 +18,25 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
 
 export class ExpoMap extends React.Component<ExpoMapViewProps> {
   render() {
-    let NativeExpoMapView = NativeExpoGoogleMapsView;
     if (Platform.OS == 'ios' && this.props.provider == 'apple') {
-      NativeExpoMapView = NativeExpoAppleMapsView;
+      return (
+        <NativeExpoAppleMapsView
+          {...defaultNativeExpoMapViewProps}
+          {...this.props}
+        />
+      );
     }
+
     return (
-      <NativeExpoMapView {...defaultNativeExpoMapViewProps} {...this.props} />
+      <NativeExpoGoogleMapsView
+        {...defaultNativeExpoMapViewProps}
+        {...this.props}
+        jsonStyleString={
+          this.props.googleMapsJsonStyleString
+            ? this.props.googleMapsJsonStyleString
+            : ''
+        }
+      />
     );
   }
 }
