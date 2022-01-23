@@ -11,9 +11,21 @@ class ExpoGoogleMapsModule : Module() {
 
     viewManager {
       view {
-        GoogleMapsView(it).also { googleMapsView ->
+        GoogleMapsView(it, GoogleMapsViewGestures()).also { googleMapsView ->
           appContext.legacyModule<UIManager>()?.registerLifecycleEventListener(googleMapsView.lifecycleEventListener)
         }
+      }
+      prop("enableRotateGestures") { view: GoogleMapsView, enable: Boolean ->
+        view.setEnabledRotateGestures(enable)
+      }
+      prop("enableScrollGestures") { view: GoogleMapsView, enable: Boolean ->
+        view.setEnabledScrollGestures(enable)
+      }
+      prop("enableTiltRotateGestures") { view: GoogleMapsView, enable: Boolean ->
+        view.setEnabledTiltGestures(enable)
+      }
+      prop("enableZoomGestures") { view: GoogleMapsView, enable: Boolean ->
+        view.setEnabledZoomGestures(enable)
       }
       prop("mapType") { view: GoogleMapsView, mapType: MapType ->
         view.setMapType(mapType)

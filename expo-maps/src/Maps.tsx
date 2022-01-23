@@ -10,10 +10,18 @@ export * from './Maps.types';
 
 interface DefaultNativeExpoMapViewProps {
   mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
+  enableRotateGestures: boolean;
+  enableScrollGestures: boolean;
+  enableTiltGestures: boolean;
+  enableZoomGestures: boolean;
 }
 
 const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   mapType: 'normal',
+  enableRotateGestures: false,
+  enableScrollGestures: true,
+  enableTiltGestures: false,
+  enableZoomGestures: true,
 };
 
 export class ExpoMap extends React.Component<ExpoMapViewProps> {
