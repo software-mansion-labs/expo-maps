@@ -4,6 +4,7 @@ import { PropsWithChildren } from 'react';
 export type NativeExpoGoogleMapsViewProps = ViewProps &
   PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
+    jsonStyleString: string;
   }>;
 
 export type NativeExpoAppleMapsViewProps = ViewProps &
@@ -15,4 +16,5 @@ export type ExpoMapViewProps = ViewProps &
   PropsWithChildren<{
     provider?: 'google' | 'apple';
     mapType?: 'normal' | 'hybrid' | 'satellite' | 'terrain';
+    googleMapsJsonStyleString?: string;
   }>;

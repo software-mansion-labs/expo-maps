@@ -37,4 +37,16 @@ public final class GoogleMapsView: UIView {
     }
     self.mapView.mapType = mapViewType
   }
+  
+  func setMapStyle(jsonStyleString: String) -> Void {
+    if (jsonStyleString.count != 0) {
+      do {
+        self.mapView.mapStyle = try GMSMapStyle(jsonString: jsonStyleString)
+      } catch {
+        NSLog("One or more of the map styles failed to load. \(error)")
+      }
+    } else {
+      self.mapView.mapStyle = nil
+    }
+  }
 }
