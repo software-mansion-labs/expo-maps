@@ -1,6 +1,5 @@
 package expo.modules.maps
 
-import GoogleMapsMarkers
 import android.content.Context
 import android.widget.LinearLayout
 import com.google.android.gms.maps.GoogleMap
@@ -22,11 +21,11 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
   init {
-    this.mapView.onCreate(null)
-    this.mapView.getMapAsync(this)
-    this.mapView.onStart()
-    this.mapView.onResume()
-    this.addView(mapView)
+    mapView.onCreate(null)
+    mapView.getMapAsync(this)
+    mapView.onStart()
+    mapView.onResume()
+    addView(mapView)
   }
 
   override fun onMapReady(googleMap: GoogleMap) {
@@ -45,8 +44,8 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
       MapType.Hybrid -> GoogleMap.MAP_TYPE_HYBRID
     }
 
-    this.updateMap {
-      this.googleMap.mapType = googleMapType
+    updateMap {
+      googleMap.mapType = googleMapType
     }
   }
 
