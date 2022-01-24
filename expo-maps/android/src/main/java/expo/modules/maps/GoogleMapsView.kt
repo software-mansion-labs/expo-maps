@@ -21,11 +21,11 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
   init {
-    mapView.onCreate(null)
-    mapView.getMapAsync(this)
-    mapView.onStart()
-    mapView.onResume()
-    addView(mapView)
+    this.mapView.onCreate(null)
+    this.mapView.getMapAsync(this)
+    this.mapView.onStart()
+    this.mapView.onResume()
+    this.addView(mapView)
   }
 
   override fun onMapReady(googleMap: GoogleMap) {
@@ -44,8 +44,8 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
       MapType.Hybrid -> GoogleMap.MAP_TYPE_HYBRID
     }
 
-    updateMap {
-      googleMap.mapType = googleMapType
+    this.updateMap {
+      this.googleMap.mapType = googleMapType
     }
   }
 

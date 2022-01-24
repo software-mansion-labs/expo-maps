@@ -32,6 +32,8 @@ class ExpoGoogleMapsModule : Module() {
       }
       prop("jsonStyleString") { view: GoogleMapsView, jsonStyleString: String ->
         view.setMapStyle(jsonStyleString)
+      prop("markers") { view: GoogleMapsView, markerObjects: Array<MarkerObject> ->
+        view.setMarkers(markerObjects)
       }
 
       prop("markers") { view: GoogleMapsView, markerObjects: Array<MarkerObject> ->
