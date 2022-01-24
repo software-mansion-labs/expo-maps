@@ -42,8 +42,13 @@ export class Marker extends React.Component {
     }
 }
 function instanceOfMarker(child) {
-    if ('type' in child && String(child.type).includes('Marker')) {
-        return true;
+    if ('type' in child &&
+        String(child.type).includes('Marker') &&
+        'props' in child) {
+        return arePropsKeysEqual(Object.keys(child.props), [
+            'latitude',
+            'longitude',
+        ]);
     }
     return false;
 }
@@ -64,5 +69,9 @@ function isSimpleType(child) {
         typeof child == 'number' ||
         child == null ||
         child == undefined);
+}
+function arePropsKeysEqual(expectedPropsKeys, actualPropsKeys) {
+    return (actualPropsKeys.length === expectedPropsKeys.length &&
+        actualPropsKeys.every((value, index) => value === expectedPropsKeys[index]));
 }
 //# sourceMappingURL=Maps.js.map

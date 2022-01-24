@@ -1,6 +1,5 @@
 package expo.modules.maps
 
-import GoogleMapsMarkers
 import android.content.Context
 import android.widget.LinearLayout
 import com.google.android.gms.maps.GoogleMap
@@ -21,16 +20,16 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
   init {
-    this.mapView.onCreate(null)
-    this.mapView.getMapAsync(this)
-    this.mapView.onStart()
-    this.mapView.onResume()
-    this.addView(mapView)
+    mapView.onCreate(null)
+    mapView.getMapAsync(this)
+    mapView.onStart()
+    mapView.onResume()
+    addView(mapView)
   }
 
   override fun onMapReady(googleMap: GoogleMap) {
     this.googleMap = googleMap
-    this.markers = GoogleMapsMarkers(this.googleMap)
+    markers = GoogleMapsMarkers(googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
@@ -44,26 +43,26 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
       MapType.Hybrid -> GoogleMap.MAP_TYPE_HYBRID
     }
 
-    this.updateMap {
-      this.googleMap.mapType = googleMapType
+    updateMap {
+      googleMap.mapType = googleMapType
     }
   }
 
   fun setMapStyle(jsonStyleString: String) {
     if (jsonStyleString.isNotEmpty()) {
       updateMap {
-        this.googleMap.setMapStyle(MapStyleOptions(jsonStyleString))
+        googleMap.setMapStyle(MapStyleOptions(jsonStyleString))
       }
     } else {
       updateMap {
-        this.googleMap.setMapStyle(null)
+        googleMap.setMapStyle(null)
       }
     }
   }
 
   override fun setMarkers(markerObjects: Array<MarkerObject>) {
-    this.updateMap {
-      this.markers.setMarkers(markerObjects)
+    updateMap {
+      markers.setMarkers(markerObjects)
     }
   }
 

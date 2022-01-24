@@ -9,13 +9,4 @@ enum class MapType(val value: String) {
     Terrain("terrain")
 }
 
-class MarkerObject : Record {
-    @Field
-    val type: String? = null
-
-    @Field
-    val latitude: Double? = null
-
-    @Field
-    val longitude: Double? = null
-}
+data class MarkerObject( @Field val latitude: Double = 0.0, @Field val longitude: Double = 0.0) : Record {}

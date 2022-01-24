@@ -3,7 +3,7 @@ protocol ExpoMapView: UIView {
   
   init?(coder: NSCoder)
   
-  func setMapType(mapType: MapType) -> Void
+  func setMapType(mapType: MapType)
   
-  func setMarkers(markerObjects: [MarkerObject]) -> Void
+  func setMarkers(markerObjects: [MarkerObject])
 }

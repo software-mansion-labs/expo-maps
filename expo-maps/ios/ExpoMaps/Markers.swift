@@ -1,6 +1,6 @@
 protocol Markers {
-  func detachAndDeleteMarkers() -> Void
+  func detachAndDeleteMarkers()
   
-  func setMarkers(markerObjects: [MarkerObject]) -> Void
+  func setMarkers(markerObjects: [MarkerObject])
 }
 

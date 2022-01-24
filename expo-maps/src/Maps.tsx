@@ -74,8 +74,15 @@ export class Marker extends React.Component<MarkerProps> {
 }
 
 function instanceOfMarker(child: any): child is Marker {
-  if ('type' in child && String(child.type).includes('Marker')) {
-    return true;
+  if (
+    'type' in child &&
+    String(child.type).includes('Marker') &&
+    'props' in child
+  ) {
+    return arePropsKeysEqual(Object.keys(child.props), [
+      'latitude',
+      'longitude',
+    ]);
   }
   return false;
 }
@@ -106,5 +113,15 @@ function isSimpleType(child: any) {
     typeof child == 'number' ||
     child == null ||
     child == undefined
+  );
+}
+
+function arePropsKeysEqual(
+  expectedPropsKeys: string[],
+  actualPropsKeys: string[]
+) {
+  return (
+    actualPropsKeys.length === expectedPropsKeys.length &&
+    actualPropsKeys.every((value, index) => value === expectedPropsKeys[index])
   );
 }

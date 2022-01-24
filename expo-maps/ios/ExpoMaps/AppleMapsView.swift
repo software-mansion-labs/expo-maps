@@ -17,7 +17,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func setMapType(mapType: MapType) -> Void {
+  func setMapType(mapType: MapType) {
     var mapViewType: MKMapType
     switch mapType {
     case .hybrid:

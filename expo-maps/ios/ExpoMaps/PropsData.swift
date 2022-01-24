@@ -9,11 +9,8 @@ enum MapType: String, EnumArgument {
 
 struct MarkerObject: Record {
   @Field
-  var type: String?
+  var latitude: CGFloat = 0
 
   @Field
-  var latitude: CGFloat?
-
-  @Field
-  var longitude: CGFloat?
+  var longitude: CGFloat = 0
 }

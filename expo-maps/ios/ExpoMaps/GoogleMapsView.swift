@@ -25,7 +25,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   }
   
   
-  func setMapType(mapType: MapType) -> Void {
+  func setMapType(mapType: MapType) {
     var mapViewType: GMSMapViewType
     switch mapType {
     case .hybrid:
@@ -40,7 +40,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     self.mapView.mapType = mapViewType
   }
   
-  func setMapStyle(jsonStyleString: String) -> Void {
+  func setMapStyle(jsonStyleString: String) {
     if (jsonStyleString.count != 0) {
       do {
         self.mapView.mapStyle = try GMSMapStyle(jsonString: jsonStyleString)
@@ -52,7 +52,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     }
   }
 
-  func setMarkers(markerObjects: [MarkerObject]) -> Void {
+  func setMarkers(markerObjects: [MarkerObject]) {
     self.markers.setMarkers(markerObjects: markerObjects)
   }
 }

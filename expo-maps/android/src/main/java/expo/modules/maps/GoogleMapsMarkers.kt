@@ -1,3 +1,5 @@
+package expo.modules.maps
+
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
@@ -10,19 +12,19 @@ class GoogleMapsMarkers(map: GoogleMap): Markers {
     private var googleMap: GoogleMap = map
 
     override fun setMarkers(markerObjects: Array<MarkerObject>) {
-        this.detachAndDeleteMarkers()
+        detachAndDeleteMarkers()
         for (markerObject in markerObjects) {
             val markerOptions = MarkerOptions()
-            markerOptions.position(LatLng(markerObject.latitude!!, markerObject.longitude!!))
-            val marker = this.googleMap.addMarker(markerOptions)
-            this.markers.add(marker!!)
+            markerOptions.position(LatLng(markerObject.latitude, markerObject.longitude))
+            val marker = googleMap.addMarker(markerOptions)
+            markers.add(marker!!)
         }
     }
 
     override fun detachAndDeleteMarkers() {
-        for (marker in this.markers) {
+        for (marker in markers) {
             marker.remove()
         }
-        this.markers.clear()
+        markers.clear()
     }
 }
