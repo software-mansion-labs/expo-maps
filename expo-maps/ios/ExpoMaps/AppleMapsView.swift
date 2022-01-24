@@ -1,12 +1,13 @@
 import MapKit
 
-public final class AppleMapsView: UIView {
-  internal var mapView: MKMapView
-  internal var markers: [MKPointAnnotation] = []
-
+public final class AppleMapsView: UIView, MapView {
+  private let mapView: MKMapView
+  private let markers: AppleMapsMarkers
+  
   init() {
     self.mapView = MKMapView()
     self.mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    self.markers = AppleMapsMarkers(mapView: self.mapView)
 
     super.init(frame: CGRect.zero)
     self.addSubview(self.mapView)
@@ -30,19 +31,6 @@ public final class AppleMapsView: UIView {
   }
   
   func setMarkers(markerObjects: [MarkerObject]) {
-    self.detachAndDeleteMarkers()
-    for markerObject in markerObjects {
-      let marker = MKPointAnnotation()
-      marker.coordinate = CLLocationCoordinate2D(latitude: markerObject.latitude!, longitude: markerObject.longitude!)
-      self.mapView.addAnnotation(marker)
-      self.markers.append(marker)
-    }
-  }
-  
-  private func detachAndDeleteMarkers() -> Void {
-    for marker in self.markers {
-      self.mapView.removeAnnotation(marker)
-    }
-    self.markers = []
+    self.markers.setMarkers(markerObjects: markerObjects)
   }
 }

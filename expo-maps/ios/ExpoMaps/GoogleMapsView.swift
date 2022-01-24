@@ -1,8 +1,8 @@
 import GoogleMaps
 
-public final class GoogleMapsView: UIView {
-  internal let mapView: GMSMapView
-  internal var markers: [GMSMarker] = []
+public final class GoogleMapsView: UIView, MapView {
+  private let mapView: GMSMapView
+  private let markers: GoogleMapsMarkers
 
   init() {
     // just for now we do authentication here
@@ -14,6 +14,7 @@ public final class GoogleMapsView: UIView {
     let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
     self.mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
     self.mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    self.markers = GoogleMapsMarkers(mapView: self.mapView)
     
     super.init(frame: CGRect.zero)
     self.addSubview(self.mapView)
@@ -49,5 +50,9 @@ public final class GoogleMapsView: UIView {
     } else {
       self.mapView.mapStyle = nil
     }
+  }
+
+  func setMarkers(markerObjects: [MarkerObject]) -> Void {
+    self.markers.setMarkers(markerObjects: markerObjects)
   }
 }
