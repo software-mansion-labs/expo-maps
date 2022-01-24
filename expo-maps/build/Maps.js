@@ -8,16 +8,16 @@ const defaultNativeExpoMapViewProps = {
 export class ExpoMap extends React.Component {
     mapChildren() {
         const childrenArray = React.Children.map(this.props.children, (child) => {
-            if (isNotSimpleType(child)) {
-                if (instanceOfExpoMarker(child)) {
+            if (!isSimpleType(child)) {
+                if (instanceOfMarker(child)) {
                     return {
                         type: 'marker',
-                        lat: child.props.latitude,
-                        lng: child.props.longitude,
+                        latitude: child.props.latitude,
+                        longitude: child.props.longitude,
                     };
                 }
-                return null;
             }
+            warnIfChildIsIncompatible(child);
             return null;
         });
         return {
@@ -36,27 +36,33 @@ export class ExpoMap extends React.Component {
                 : '', markers: childrenObj.markers }));
     }
 }
-export class ExpoMarker extends React.Component {
+export class Marker extends React.Component {
     render() {
         return null;
     }
 }
-function instanceOfExpoMarker(object) {
-    if ('props' in object) {
-        return doPropsKeysMatch(['latitude', 'longitude'], object.props);
+function instanceOfMarker(child) {
+    if ('type' in child && String(child.type).includes('Marker')) {
+        return true;
     }
     return false;
 }
-function isNotSimpleType(instance) {
-    return (typeof instance != 'string' &&
-        typeof instance != 'boolean' &&
-        typeof instance != 'number' &&
-        instance != null &&
-        instance != undefined);
+function warnIfChildIsIncompatible(child) {
+    if (typeof child == 'string' ||
+        typeof child == 'boolean' ||
+        typeof child == 'number') {
+        console.warn(`Warning! Child of type ${typeof child} isn't valid ExpoMap child!`);
+    }
+    else if (child != null && child != undefined) {
+        console.log(child.type);
+        console.warn(`Warning! Child of type ${child.type} isn't valid ExpoMap child!`);
+    }
 }
-function doPropsKeysMatch(expectedPropsKeys, props) {
-    const propsKeys = Object.keys(props);
-    return (propsKeys.length === expectedPropsKeys.length &&
-        propsKeys.every((value, index) => value === expectedPropsKeys[index]));
+function isSimpleType(child) {
+    return (typeof child == 'string' ||
+        typeof child == 'boolean' ||
+        typeof child == 'number' ||
+        child == null ||
+        child == undefined);
 }
 //# sourceMappingURL=Maps.js.map

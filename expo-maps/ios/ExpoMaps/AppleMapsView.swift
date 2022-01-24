@@ -33,7 +33,7 @@ public final class AppleMapsView: UIView {
     self.detachAndDeleteMarkers()
     for markerObject in markerObjects {
       let marker = MKPointAnnotation()
-      marker.coordinate = CLLocationCoordinate2D(latitude: markerObject.lat!, longitude: markerObject.lng!)
+      marker.coordinate = CLLocationCoordinate2D(latitude: markerObject.latitude!, longitude: markerObject.longitude!)
       self.mapView.addAnnotation(marker)
       self.markers.append(marker)
     }

@@ -12,8 +12,8 @@ struct MarkerObject: Record {
   var type: String?
 
   @Field
-  var lat: CGFloat?
+  var latitude: CGFloat?
 
   @Field
-  var lng: CGFloat?
+  var longitude: CGFloat?
 }

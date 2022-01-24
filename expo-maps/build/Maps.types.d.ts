@@ -16,10 +16,10 @@ export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<{
 }>;
 export declare type MarkerObject = {
     type: string;
-    lat: number;
-    lng: number;
+    latitude: number;
+    longitude: number;
 };
-export declare type ExpoMarkerProps = PropsWithChildren<{
+export declare type MarkerProps = PropsWithChildren<{
     latitude: number;
     longitude: number;
 }>;

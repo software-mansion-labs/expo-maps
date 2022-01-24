@@ -23,11 +23,11 @@ export type ExpoMapViewProps = ViewProps &
 
 export type MarkerObject = {
   type: string;
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
 };
 
-export type ExpoMarkerProps = PropsWithChildren<{
+export type MarkerProps = PropsWithChildren<{
   latitude: number;
   longitude: number;
 }>;
