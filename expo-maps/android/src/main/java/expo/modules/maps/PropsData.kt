@@ -14,8 +14,8 @@ class MarkerObject : Record {
     val type: String? = null
 
     @Field
-    val lat: Double? = null
+    val latitude: Double? = null
 
     @Field
-    val lng: Double? = null
+    val longitude: Double? = null
 }
