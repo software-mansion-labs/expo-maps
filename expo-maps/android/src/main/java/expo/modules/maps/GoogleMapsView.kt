@@ -1,5 +1,6 @@
 package expo.modules.maps
 
+import GoogleMapsMarkers
 import android.content.Context
 import android.widget.LinearLayout
 import com.google.android.gms.maps.GoogleMap
