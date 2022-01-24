@@ -1,6 +1,6 @@
 import MapKit
 
-public final class AppleMapsView: UIView, MapView {
+public final class AppleMapsView: UIView, ExpoMapView {
   private let mapView: MKMapView
   private let markers: AppleMapsMarkers
   

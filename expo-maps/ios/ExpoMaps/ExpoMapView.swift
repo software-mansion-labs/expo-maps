@@ -1,4 +1,4 @@
-protocol MapView: UIView {
+protocol ExpoMapView: UIView {
   init()
   
   init?(coder: NSCoder)

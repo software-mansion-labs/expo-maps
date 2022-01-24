@@ -1,5 +1,6 @@
 package expo.modules.maps
 
+import GoogleMapsMarkers
 import android.content.Context
 import android.widget.LinearLayout
 import com.google.android.gms.maps.GoogleMap
@@ -10,12 +11,12 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 
-class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallback {
+class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallback, ExpoMapView {
 
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
   private val mapReady = MutableStateFlow(false)
-  private val markers = mutableListOf<Marker>()
+  private lateinit var markers: GoogleMapsMarkers
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
@@ -29,12 +30,13 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
 
   override fun onMapReady(googleMap: GoogleMap) {
     this.googleMap = googleMap
+    this.markers = GoogleMapsMarkers(this.googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
   }
 
-  fun setMapType(mapType: MapType) {
+  override fun setMapType(mapType: MapType) {
     val googleMapType = when (mapType) {
       MapType.Normal -> GoogleMap.MAP_TYPE_NORMAL
       MapType.Terrain -> GoogleMap.MAP_TYPE_TERRAIN
@@ -56,6 +58,12 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
       updateMap {
         this.googleMap.setMapStyle(null)
       }
+    }
+  }
+
+  override fun setMarkers(markerObjects: Array<MarkerObject>) {
+    this.updateMap {
+      this.markers.setMarkers(markerObjects)
     }
   }
 

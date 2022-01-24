@@ -1,6 +1,6 @@
 import GoogleMaps
 
-public final class GoogleMapsView: UIView, MapView {
+public final class GoogleMapsView: UIView, ExpoMapView {
   private let mapView: GMSMapView
   private let markers: GoogleMapsMarkers
 
