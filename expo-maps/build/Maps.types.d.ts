@@ -8,6 +8,7 @@ export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildre
     enableScrollGestures: boolean;
     enableTiltGestures: boolean;
     enableZoomGestures: boolean;
+    polygons: PolygonObject[];
 }>;
 export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
@@ -16,6 +17,7 @@ export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren
     enableScrollGestures: boolean;
     enableTiltGestures: boolean;
     enableZoomGestures: boolean;
+    polygons: PolygonObject[];
 }>;
 export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<{
     provider?: 'google' | 'apple';
@@ -26,12 +28,18 @@ export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<{
     enableTiltGestures?: boolean;
     enableZoomGestures?: boolean;
 }>;
-export declare type MarkerObject = {
-    type: string;
+export declare type Point = {
     latitude: number;
     longitude: number;
 };
-export declare type MarkerProps = PropsWithChildren<{
-    latitude: number;
-    longitude: number;
+export declare type MarkerObject = {
+    type: 'marker';
+} & Point;
+export declare type MarkerProps = PropsWithChildren<Point>;
+export declare type PolygonProps = PropsWithChildren<{
+    points: Point[];
 }>;
+export declare type PolygonObject = {
+    type: 'polygon';
+    points: Point[];
+};

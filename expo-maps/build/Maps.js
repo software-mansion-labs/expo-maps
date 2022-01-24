@@ -20,24 +20,35 @@ export class ExpoMap extends React.Component {
                         longitude: child.props.longitude,
                     };
                 }
+                else if (instanceOfPolygon(child)) {
+                    return {
+                        type: 'polygon',
+                        points: child.props.points,
+                    };
+                }
             }
             warnIfChildIsIncompatible(child);
             return null;
         });
         return {
-            markers: childrenArray
+            markers: (childrenArray
                 ? childrenArray.filter((e) => e.type === 'marker')
-                : [],
+                : []),
+            polygons: (childrenArray
+                ? childrenArray.filter((e) => e.type === 'polygon')
+                : []),
         };
     }
     render() {
         const childrenObj = this.mapChildren();
+        console.log("I'm sending polygons prop!");
+        console.log(JSON.stringify(childrenObj.polygons));
         if (Platform.OS == 'ios' && this.props.provider == 'apple') {
-            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: childrenObj.markers }));
+            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: childrenObj.markers, polygons: childrenObj.polygons }));
         }
         return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, jsonStyleString: this.props.googleMapsJsonStyleString
                 ? this.props.googleMapsJsonStyleString
-                : '', markers: childrenObj.markers }));
+                : '', markers: childrenObj.markers, polygons: childrenObj.polygons }));
     }
 }
 export class Marker extends React.Component {
@@ -53,6 +64,19 @@ function instanceOfMarker(child) {
             'latitude',
             'longitude',
         ]);
+    }
+    return false;
+}
+export class Polygon extends React.Component {
+    render() {
+        return null;
+    }
+}
+function instanceOfPolygon(child) {
+    if ('type' in child &&
+        String(child.type).includes('Polygon') &&
+        'props' in child) {
+        return arePropsKeysEqual(Object.keys(child.props), ['points']);
     }
     return false;
 }

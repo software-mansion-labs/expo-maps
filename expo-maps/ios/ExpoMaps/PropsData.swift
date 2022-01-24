@@ -14,3 +14,16 @@ struct MarkerObject: Record {
   @Field
   var longitude: CGFloat = 0
 }
+
+struct Point: Record {
+  @Field
+  var latitude: CGFloat = 0
+
+  @Field
+  var longitude: CGFloat = 0
+}
+
+struct PolygonObject: Record {
+  @Field
+  var points: [Point] = []
+}
