@@ -15,15 +15,16 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
   private val mapReady = MutableStateFlow(false)
+  private val markers = mutableListOf<Marker>()
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
   init {
-    mapView.onCreate(null)
-    mapView.getMapAsync(this)
-    mapView.onStart()
-    mapView.onResume()
-    addView(mapView)
+    this.mapView.onCreate(null)
+    this.mapView.getMapAsync(this)
+    this.mapView.onStart()
+    this.mapView.onResume()
+    this.addView(mapView)
   }
 
   override fun onMapReady(googleMap: GoogleMap) {
@@ -41,8 +42,8 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
       MapType.Hybrid -> GoogleMap.MAP_TYPE_HYBRID
     }
 
-    updateMap {
-      googleMap.mapType = googleMapType
+    this.updateMap {
+      this.googleMap.mapType = googleMapType
     }
   }
 
@@ -71,3 +72,4 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
     }
   }
 }
+
