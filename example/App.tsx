@@ -11,7 +11,10 @@ export default function App() {
       <Maps.ExpoMap
         style={{ flex: 1, width: '100%' }}
         googleMapsJsonStyleString={JSON.stringify(exampleMapStyle)}
-      />
+      >
+        <Maps.ExpoMarker latitude={-33.86} longitude={151.2} />
+        <Maps.ExpoMarker latitude={-32} longitude={152} />
+      </Maps.ExpoMap>
       <StatusBar style="auto" />
     </View>
   );

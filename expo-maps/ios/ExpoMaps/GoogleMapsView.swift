@@ -1,7 +1,8 @@
 import GoogleMaps
 
 public final class GoogleMapsView: UIView {
-  internal var mapView: GMSMapView
+  internal let mapView: GMSMapView
+  internal var markers: [GMSMarker] = []
 
   init() {
     // just for now we do authentication here
