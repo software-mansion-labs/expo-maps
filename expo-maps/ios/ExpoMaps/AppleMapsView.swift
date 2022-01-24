@@ -2,6 +2,7 @@ import MapKit
 
 public final class AppleMapsView: UIView {
   internal var mapView: MKMapView
+  internal var markers: [MKPointAnnotation] = []
 
   init() {
     self.mapView = MKMapView()
@@ -26,5 +27,22 @@ public final class AppleMapsView: UIView {
       mapViewType = .standard
     }
     self.mapView.mapType = mapViewType
+  }
+  
+  func setMarkers(markerObjects: [MarkerObject]) {
+    self.detachAndDeleteMarkers()
+    for markerObject in markerObjects {
+      let marker = MKPointAnnotation()
+      marker.coordinate = CLLocationCoordinate2D(latitude: markerObject.lat!, longitude: markerObject.lng!)
+      self.mapView.addAnnotation(marker)
+      self.markers.append(marker)
+    }
+  }
+  
+  private func detachAndDeleteMarkers() -> Void {
+    for marker in self.markers {
+      self.mapView.removeAnnotation(marker)
+    }
+    self.markers = []
   }
 }
