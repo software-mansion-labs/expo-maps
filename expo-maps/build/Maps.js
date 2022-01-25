@@ -5,11 +5,11 @@ import { Platform } from 'react-native';
 export * from './Maps.types';
 const defaultNativeExpoMapViewProps = {
     mapType: 'normal',
-    zoomControls: true,
-    compass: true,
-    mapToolbar: true,
-    myLocationButton: true,
-    levelPicker: true,
+    showZoomControls: true,
+    showCompass: true,
+    showMapToolbar: true,
+    showMyLocationButton: true,
+    showLevelPicker: true,
     enableRotateGestures: false,
     enableScrollGestures: true,
     enableTiltGestures: false,

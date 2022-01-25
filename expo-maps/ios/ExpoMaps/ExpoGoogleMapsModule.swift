@@ -30,16 +30,16 @@ public class ExpoGoogleMapsModule: Module {
         view.setMapType(mapType: mapType)
       }
 
-      prop ("compass") { (view: GoogleMapsView, enabled: Bool) in
-        view.setCompassButton(enabled: enabled)
+      prop ("showCompass") { (view: GoogleMapsView, enabled: Bool) in
+        view.setShowCompassButton(enabled: enabled)
       }
 
-      prop ("myLocationButton") { (view: GoogleMapsView, enabled: Bool) in
-        view.setMyLocationButton(enabled: enabled)
+      prop ("showMyLocationButton") { (view: GoogleMapsView, enabled: Bool) in
+        view.setShowMyLocationButton(enabled: enabled)
       }
 
-      prop ("levelPicker") { (view: GoogleMapsView, enabled: Bool) in
-        view.setFloorPickerButton(enabled: enabled)
+      prop ("showLevelPicker") { (view: GoogleMapsView, enabled: Bool) in
+        view.setShowFloorPickerButton(enabled: enabled)
       }
 
       prop("jsonStyleString") { (view: GoogleMapsView, jsonStyleString: String) in

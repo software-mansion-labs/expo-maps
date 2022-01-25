@@ -1,7 +1,7 @@
 import GoogleMaps
 
 public final class GoogleMapsView: UIView, ExpoMapView {
-  
+
   private let mapView: GMSMapView
   private let markers: GoogleMapsMarkers
   private let gestures: GoogleMapsGestures
@@ -61,7 +61,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     }
     mapView.mapType = mapViewType
   }
-  
+
   func setMapStyle(jsonStyleString: String) {
     if (jsonStyleString.count != 0) {
       do {
@@ -77,33 +77,33 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   func setMarkers(markerObjects: [MarkerObject]) {
     markers.setMarkers(markerObjects: markerObjects)
   }
-  
+
   func setPolygons(polygonObjects: [PolygonObject]) {
     polygons.setPolygons(polygonObjects: polygonObjects)
   }
-  
+
   func setPolylines(polylineObjects: [PolylineObject]) {
     polylines.setPolylines(polylineObjects: polylineObjects)
   }
     
-  func setCompassButton(enabled: Bool) -> Void {
+  func setShowCompassButton(enabled: Bool) {
     self.mapView.settings.compassButton = enabled
   }
 
-  func setMyLocationButton(enabled: Bool) -> Void {
+  func setShowMyLocationButton(enabled: Bool) {
     self.mapView.settings.myLocationButton = enabled
     if (enabled == true) {
-        self.requestLocationPermission()
-        self.mapView.isMyLocationEnabled = true
+     self.requestLocationPermission()
+     self.mapView.isMyLocationEnabled = true
     }
   }
 
-  func setFloorPickerButton(enabled: Bool) -> Void {
-      //appears whenever an indoor map is featured prominently
+  func setShowFloorPickerButton(enabled: Bool) {
+    //appears whenever an indoor map is featured prominently
     self.mapView.settings.indoorPicker = enabled
   }
     
-    private func requestLocationPermission() -> Void {
+    private func requestLocationPermission() {
       let locationManager = CLLocationManager()
       locationManager.requestWhenInUseAuthorization()
     }

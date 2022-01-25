@@ -4,11 +4,11 @@ import { PropsWithChildren } from 'react';
 export type NativeExpoGoogleMapsViewProps = ViewProps &
   PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
-    zoomControls: boolean;
-    compass: boolean;
-    mapToolbar: boolean;
-    myLocationButton: boolean;
-    levelPicker: boolean;
+    showZoomControls: boolean;
+    showCompass: boolean;
+    showMapToolbar: boolean;
+    showMyLocationButton: boolean;
+    showLevelPicker: boolean;
     jsonStyleString: string;
     markers: MarkerObject[];
     enableRotateGestures: boolean;
@@ -22,9 +22,9 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
 export type NativeExpoAppleMapsViewProps = ViewProps &
   PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
-    compass: boolean;
-    myLocationButton: boolean;
-    levelPicker: boolean;
+    showCompass: boolean;
+    showMyLocationButton: boolean;
+    showLevelPicker: boolean;
     markers: MarkerObject[];
     enableRotateGestures: boolean;
     enableScrollGestures: boolean;
@@ -38,11 +38,11 @@ export type ExpoMapViewProps = ViewProps &
   PropsWithChildren<{
     provider?: 'google' | 'apple';
     mapType?: 'normal' | 'hybrid' | 'satellite' | 'terrain';
-    zoomControls?: boolean;
-    compass?: boolean;
-    mapToolbar?: boolean;
-    myLocationButton?: boolean;
-    levelPicker?: boolean;
+    showZoomControls?: boolean;
+    showCompass?: boolean;
+    showMapToolbar?: boolean;
+    showMyLocationButton?: boolean;
+    showLevelPicker?: boolean;
     googleMapsJsonStyleString?: string;
     enableRotateGestures?: boolean;
     enableScrollGestures?: boolean;

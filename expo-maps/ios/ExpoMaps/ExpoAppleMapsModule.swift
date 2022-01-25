@@ -42,16 +42,16 @@ public class ExpoAppleMapsModule: Module {
         view.setPolylines(polylineObjects: polylineObjects)
       }
 
-      prop("compass") { (view: AppleMapsView, enable: Bool) in
-        view.setCompassButton(enable: enable)
+      prop("showCmpass") { (view: AppleMapsView, enable: Bool) in
+        view.setShowCompassButton(enable: enable)
       }
 
-      prop("myLocationButton") { (view: AppleMapsView, enable: Bool) in
-        view.setMyLocationButton(enable: enable)
+      prop("showMyLocationButton") { (view: AppleMapsView, enable: Bool) in
+        view.setShowMyLocationButton(enable: enable)
       }
 
-      prop("levelPicker") { (view: AppleMapsView, enable: Bool) in
-        view.setLevelPickerButton(enable: enable)
+      prop("showLevelPicker") { (view: AppleMapsView, enable: Bool) in
+        view.setShowLevelPickerButton(enable: enable)
       }
     }
   }

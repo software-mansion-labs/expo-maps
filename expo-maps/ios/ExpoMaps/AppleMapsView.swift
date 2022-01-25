@@ -70,33 +70,35 @@ public final class AppleMapsView: UIView, ExpoMapView {
 
   }
 
-  func setCompassButton(enable: Bool) -> Void {
+  func setShowCompassButton(enable: Bool) {
     self.mapView.showsCompass = enable
   }
 
-  func setMyLocationButton(enable: Bool) -> Void {
+  func setShowMyLocationButton(enable: Bool) {
     if (enable == true) {
       self.enableMyLocationButton()
     }
   }
 
-  func setLevelPickerButton(enable: Bool) -> Void {
+  func setShowLevelPickerButton(enable: Bool) {
     //TODO: enable floor picker
   }
 
-  private func enableMyLocationButton() -> Void {
+  private func enableMyLocationButton() {
 
     self.mapView.showsUserLocation = true
     let myLocationButton = MKUserTrackingButton(mapView: self.mapView)
-        myLocationButton.layer.backgroundColor = UIColor(white: 1, alpha: 0.5).cgColor
-        myLocationButton.layer.borderColor = UIColor.white.cgColor
-        myLocationButton.layer.borderWidth = 1
-        myLocationButton.layer.cornerRadius = 5
-        myLocationButton.translatesAutoresizingMaskIntoConstraints = false
+    myLocationButton.layer.backgroundColor = UIColor(white: 1, alpha: 0.5).cgColor
+    myLocationButton.layer.borderColor = UIColor.white.cgColor
+    myLocationButton.layer.borderWidth = 1
+    myLocationButton.layer.cornerRadius = 5
+    myLocationButton.translatesAutoresizingMaskIntoConstraints = false
     self.mapView.addSubview(myLocationButton)
 
     NSLayoutConstraint.activate([
         myLocationButton.topAnchor.constraint(equalTo: self.mapView.topAnchor,
-            constant: 100),
-        myLocationButton.trailingAnchor.constraint(equalTo: self.mapView.trailingAnchor, constant: -10)])
+constant: 100),
+        myLocationButton.trailingAnchor.constraint(equalTo:
+self.mapView.trailingAnchor, constant: -10)
+    ])
   }
