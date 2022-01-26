@@ -9,5 +9,8 @@
       "example",
       "expo-maps"
     ]
+  },
+  "resolutions": {
+    "expo-modules-core": "0.7.0"
   }
 }

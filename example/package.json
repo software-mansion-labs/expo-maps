@@ -11,8 +11,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
-    "expo": "44.0.0-beta.1",
+    "expo": "44.0.5",
     "expo-error-recovery": "3.0.4",
+    "expo-modules-core": "0.7.0",
     "expo-maps": "*",
     "expo-status-bar": "~1.1.0",
     "react": "17.0.1",
