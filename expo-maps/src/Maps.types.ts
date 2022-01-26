@@ -5,11 +5,13 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
   PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
     jsonStyleString: string;
+    markers: MarkerObject[];
   }>;
 
 export type NativeExpoAppleMapsViewProps = ViewProps &
   PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
+    markers: MarkerObject[];
   }>;
 
 export type ExpoMapViewProps = ViewProps &
@@ -18,3 +20,14 @@ export type ExpoMapViewProps = ViewProps &
     mapType?: 'normal' | 'hybrid' | 'satellite' | 'terrain';
     googleMapsJsonStyleString?: string;
   }>;
+
+export type MarkerObject = {
+  type: string;
+  latitude: number;
+  longitude: number;
+};
+
+export type MarkerProps = PropsWithChildren<{
+  latitude: number;
+  longitude: number;
+}>;

@@ -1,7 +1,8 @@
 import GoogleMaps
 
-public final class GoogleMapsView: UIView {
-  internal var mapView: GMSMapView
+public final class GoogleMapsView: UIView, ExpoMapView {
+  private let mapView: GMSMapView
+  private let markers: GoogleMapsMarkers
 
   init() {
     // just for now we do authentication here
@@ -13,6 +14,7 @@ public final class GoogleMapsView: UIView {
     let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
     self.mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
     self.mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    self.markers = GoogleMapsMarkers(mapView: self.mapView)
     
     super.init(frame: CGRect.zero)
     self.addSubview(self.mapView)
@@ -23,7 +25,7 @@ public final class GoogleMapsView: UIView {
   }
   
   
-  func setMapType(mapType: MapType) -> Void {
+  func setMapType(mapType: MapType) {
     var mapViewType: GMSMapViewType
     switch mapType {
     case .hybrid:
@@ -38,7 +40,7 @@ public final class GoogleMapsView: UIView {
     self.mapView.mapType = mapViewType
   }
   
-  func setMapStyle(jsonStyleString: String) -> Void {
+  func setMapStyle(jsonStyleString: String) {
     if (jsonStyleString.count != 0) {
       do {
         self.mapView.mapStyle = try GMSMapStyle(jsonString: jsonStyleString)
@@ -48,5 +50,9 @@ public final class GoogleMapsView: UIView {
     } else {
       self.mapView.mapStyle = nil
     }
+  }
+
+  func setMarkers(markerObjects: [MarkerObject]) {
+    self.markers.setMarkers(markerObjects: markerObjects)
   }
 }

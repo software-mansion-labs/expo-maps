@@ -10,11 +10,12 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 
-class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallback {
+class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallback, ExpoMapView {
 
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
   private val mapReady = MutableStateFlow(false)
+  private lateinit var markers: GoogleMapsMarkers
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
@@ -28,12 +29,13 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
 
   override fun onMapReady(googleMap: GoogleMap) {
     this.googleMap = googleMap
+    markers = GoogleMapsMarkers(googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
   }
 
-  fun setMapType(mapType: MapType) {
+  override fun setMapType(mapType: MapType) {
     val googleMapType = when (mapType) {
       MapType.Normal -> GoogleMap.MAP_TYPE_NORMAL
       MapType.Terrain -> GoogleMap.MAP_TYPE_TERRAIN
@@ -49,12 +51,18 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
   fun setMapStyle(jsonStyleString: String) {
     if (jsonStyleString.isNotEmpty()) {
       updateMap {
-        this.googleMap.setMapStyle(MapStyleOptions(jsonStyleString))
+        googleMap.setMapStyle(MapStyleOptions(jsonStyleString))
       }
     } else {
       updateMap {
-        this.googleMap.setMapStyle(null)
+        googleMap.setMapStyle(null)
       }
+    }
+  }
+
+  override fun setMarkers(markerObjects: Array<MarkerObject>) {
+    updateMap {
+      markers.setMarkers(markerObjects)
     }
   }
 
@@ -71,3 +79,4 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
     }
   }
 }
+

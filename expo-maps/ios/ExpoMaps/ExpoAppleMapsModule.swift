@@ -12,6 +12,9 @@ public class ExpoAppleMapsModule: Module {
       prop("mapType") { (view: AppleMapsView, mapType: MapType) in
         view.setMapType(mapType: mapType)
       }
+      prop("markers") { (view: AppleMapsView, markerObjects: [MarkerObject]) in
+        view.setMarkers(markerObjects: markerObjects)
+      }
     }
   }
 }

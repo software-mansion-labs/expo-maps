@@ -1,11 +1,13 @@
 import MapKit
 
-public final class AppleMapsView: UIView {
-  internal var mapView: MKMapView
-
+public final class AppleMapsView: UIView, ExpoMapView {
+  private let mapView: MKMapView
+  private let markers: AppleMapsMarkers
+  
   init() {
     self.mapView = MKMapView()
     self.mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    self.markers = AppleMapsMarkers(mapView: self.mapView)
 
     super.init(frame: CGRect.zero)
     self.addSubview(self.mapView)
@@ -15,7 +17,7 @@ public final class AppleMapsView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func setMapType(mapType: MapType) -> Void {
+  func setMapType(mapType: MapType) {
     var mapViewType: MKMapType
     switch mapType {
     case .hybrid:
@@ -26,5 +28,9 @@ public final class AppleMapsView: UIView {
       mapViewType = .standard
     }
     self.mapView.mapType = mapViewType
+  }
+  
+  func setMarkers(markerObjects: [MarkerObject]) {
+    self.markers.setMarkers(markerObjects: markerObjects)
   }
 }
