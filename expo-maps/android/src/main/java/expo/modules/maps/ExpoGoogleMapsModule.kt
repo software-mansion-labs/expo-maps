@@ -12,7 +12,8 @@ class ExpoGoogleMapsModule : Module() {
     viewManager {
       view {
         GoogleMapsView(it).also { googleMapsView ->
-          appContext.legacyModule<UIManager>()?.registerLifecycleEventListener(googleMapsView.lifecycleEventListener)
+          appContext.legacyModule<UIManager>()
+            ?.registerLifecycleEventListener(googleMapsView.lifecycleEventListener)
         }
       }
       prop("enableRotateGestures") { view: GoogleMapsView, enable: Boolean ->

@@ -1,16 +1,7 @@
 import React from 'react';
-import {
-  ExpoMapViewProps,
-  MarkerProps,
-  MarkerObject,
-  PolygonProps,
-  PolygonObject,
-  PolylineObject,
-} from './Maps.types';
-import {
-  NativeExpoAppleMapsView,
-  NativeExpoGoogleMapsView,
-} from './NativeExpoMapView';
+import { ExpoMapViewProps, MarkerProps, MarkerObject, PolygonProps, PolygonObject, PolylineObject } from './Maps.types';
+import { NativeExpoAppleMapsView, NativeExpoGoogleMapsView } from './NativeExpoMapView';
+import { Asset } from 'expo-asset';
 import { Platform } from 'react-native';
 
 export * from './Maps.types';
@@ -32,14 +23,37 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
 };
 
 export class ExpoMap extends React.Component<ExpoMapViewProps> {
-  private mapChildren() {
-    const childrenArray = React.Children.map(this.props.children, (child) => {
+  state = {
+    markers: [],
+    polygons: [],
+    polylines: [],
+  };
+
+  componentDidMount() {
+    this.mapChildren();
+  }
+
+  private async mapChildren() {
+    const childrenArray = React.Children.map(this.props.children, async (child) => {
       if (!isSimpleType(child)) {
         if (instanceOfMarker(child)) {
+          let iconPath: Asset | undefined = undefined;
+          if (child.props.icon !== undefined) {
+            iconPath = await Asset.fromModule(child.props.icon).downloadAsync();
+          }
           return {
             type: 'marker',
             latitude: child.props.latitude,
             longitude: child.props.longitude,
+            title: child.props.title,
+            snippet: child.props.snippet,
+            icon: iconPath?.localUri,
+            defaultMarkerColor: child.props.defaultMarkerColor ? child.props.defaultMarkerColor : 'red',
+            draggable: child.props.draggable ? child.props.draggable : false,
+            anchorU: child.props.anchorU,
+            anchorV: child.props.anchorV,
+            opacity: child.props.opacity,
+            zIndex: child.props.zIndex,
           } as MarkerObject;
         } else if (instanceOfPolygon(child)) {
           return {
@@ -57,30 +71,25 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
       return null;
     });
 
-    return {
-      markers: (childrenArray
-        ? childrenArray.filter((e) => e.type === 'marker')
-        : []) as MarkerObject[],
-      polygons: (childrenArray
-        ? childrenArray.filter((e) => e.type === 'polygon')
-        : []) as PolygonObject[],
-      polylines: (childrenArray
-        ? childrenArray.filter((e) => e.type === 'polyline')
-        : []) as PolylineObject[],
-    };
+    if (childrenArray != undefined) {
+      let propObjects = await Promise.all(childrenArray);
+      this.setState({
+        markers: propObjects.filter((elem) => elem?.type === 'marker'),
+        polygons: propObjects.filter((elem) => elem?.type === 'polygon'),
+        polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
+      });
+    }
   }
 
   render() {
-    const childrenObj = this.mapChildren();
-
     if (Platform.OS == 'ios' && this.props.provider == 'apple') {
       return (
         <NativeExpoAppleMapsView
           {...defaultNativeExpoMapViewProps}
           {...this.props}
-          markers={childrenObj.markers}
-          polygons={childrenObj.polygons}
-          polylines={childrenObj.polylines}
+          markers={this.state.markers}
+          polygons={this.state.polygons}
+          polylines={this.state.polylines}
         />
       );
     }
@@ -89,14 +98,10 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
       <NativeExpoGoogleMapsView
         {...defaultNativeExpoMapViewProps}
         {...this.props}
-        jsonStyleString={
-          this.props.googleMapsJsonStyleString
-            ? this.props.googleMapsJsonStyleString
-            : ''
-        }
-        markers={childrenObj.markers}
-        polygons={childrenObj.polygons}
-        polylines={childrenObj.polylines}
+        jsonStyleString={this.props.googleMapsJsonStyleString ? this.props.googleMapsJsonStyleString : ''}
+        markers={this.state.markers}
+        polygons={this.state.polygons}
+        polylines={this.state.polylines}
       />
     );
   }
@@ -109,15 +114,11 @@ export class Marker extends React.Component<MarkerProps> {
 }
 
 function instanceOfMarker(child: any): child is Marker {
-  if (
-    'type' in child &&
-    String(child.type).includes('Marker') &&
-    'props' in child
-  ) {
-    return arePropsKeysEqual(Object.keys(child.props), [
-      'latitude',
-      'longitude',
-    ]);
+  if ('type' in child && String(child.type).includes('Marker') && 'props' in child) {
+    let props = Object.keys(child.props);
+    if (props.includes('latitude') && props.includes('longitude')) {
+      return true;
+    }
   }
   return false;
 }
@@ -129,12 +130,8 @@ export class Polygon extends React.Component<PolygonProps> {
 }
 
 function instanceOfPolygon(child: any): child is Polygon {
-  if (
-    'type' in child &&
-    String(child.type).includes('Polygon') &&
-    'props' in child
-  ) {
-    return arePropsKeysEqual(Object.keys(child.props), ['points']);
+  if ('type' in child && String(child.type).includes('Polygon') && 'props' in child) {
+    return true;
   }
   return false;
 }
@@ -146,32 +143,18 @@ export class Polyline extends React.Component<PolygonProps> {
 }
 
 function instanceOfPolyline(child: any): child is Polyline {
-  if (
-    'type' in child &&
-    String(child.type).includes('Polyline') &&
-    'props' in child
-  ) {
-    return arePropsKeysEqual(Object.keys(child.props), ['points']);
+  if ('type' in child && String(child.type).includes('Polyline') && 'props' in child) {
+    return true;
   }
   return false;
 }
 
 function warnIfChildIsIncompatible(child: any) {
-  if (
-    typeof child == 'string' ||
-    typeof child == 'boolean' ||
-    typeof child == 'number'
-  ) {
-    console.warn(
-      `Warning! Child of type ${typeof child} isn't valid ExpoMap child!`
-    );
+  if (typeof child == 'string' || typeof child == 'boolean' || typeof child == 'number') {
+    console.warn(`Warning! Child of type ${typeof child} isn't valid ExpoMap child!`);
   } else if (child != null && child != undefined) {
     console.log(child.type);
-    console.warn(
-      `Warning! Child of type ${
-        (child as React.ReactElement<any>).type
-      } isn't valid ExpoMap child!`
-    );
+    console.warn(`Warning! Child of type ${(child as React.ReactElement<any>).type} isn't valid ExpoMap child!`);
   }
 }
 
@@ -182,15 +165,5 @@ function isSimpleType(child: any) {
     typeof child == 'number' ||
     child == null ||
     child == undefined
-  );
-}
-
-function arePropsKeysEqual(
-  expectedPropsKeys: string[],
-  actualPropsKeys: string[]
-) {
-  return (
-    actualPropsKeys.length === expectedPropsKeys.length &&
-    actualPropsKeys.every((value, index) => value === expectedPropsKeys[index])
   );
 }

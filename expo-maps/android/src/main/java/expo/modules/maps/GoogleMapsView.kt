@@ -71,7 +71,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
       markers.setMarkers(markerObjects)
     }
   }
-  
+
   fun setEnabledRotateGestures(enabled: Boolean) {
     updateMap {
       gestures.setEnabledRotateGesture(enabled)
@@ -95,7 +95,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
       gestures.setEnabledZoomGesture(enabled)
     }
   }
-  
+
   fun setEnabledAllGestures(enabled: Boolean) {
     updateMap {
       gestures.setEnabledAllGestures(enabled)

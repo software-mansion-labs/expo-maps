@@ -34,13 +34,35 @@ export declare type Point = {
     latitude: number;
     longitude: number;
 };
-export declare type MarkerObject = {
-    type: 'marker';
-} & Point;
-export declare type MarkerProps = PropsWithChildren<Point>;
+export declare type MarkerColor = 'azure' | 'blue' | 'cyan' | 'green' | 'magenta' | 'orange' | 'red' | 'rosr' | 'violet' | 'yellow';
 export declare type PolygonProps = PropsWithChildren<{
     points: Point[];
 }>;
+export declare type MarkerProps = PropsWithChildren<{
+    latitude: number;
+    longitude: number;
+    title?: string;
+    snippet?: string;
+    icon?: string;
+    defaultMarkerColor?: MarkerColor;
+    draggable?: boolean;
+    anchorU?: number;
+    anchorV?: number;
+    opacity?: number;
+    zIndex?: number;
+} & Point>;
+export declare type MarkerObject = {
+    type: 'marker';
+    title?: string;
+    snippet?: string;
+    icon?: string;
+    defaultMarkerColor: MarkerColor;
+    draggable: boolean;
+    anchorU?: number;
+    anchorV?: number;
+    opacity?: number;
+    zIndex?: number;
+} & Point;
 export declare type PolygonObject = {
     type: 'polygon';
     points: Point[];
