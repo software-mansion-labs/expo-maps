@@ -19,6 +19,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var polygons: GoogleMapsPolygons
   private lateinit var polylines: GoogleMapsPolylines
   private val mapReady = MutableStateFlow(false)
+  private lateinit var controllers: GoogleMapsControllers
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
@@ -36,6 +37,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     markers = GoogleMapsMarkers(googleMap)
     polygons = GoogleMapsPolygons(googleMap)
     polylines = GoogleMapsPolylines(googleMap)
+    controllers = GoogleMapsControllers(googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
@@ -114,43 +116,33 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
-  fun setShowZoomControlButton(enabled: Boolean) {
+  fun setShowZoomControl(enable: Boolean) {
     updateMap {
-      googleMap.uiSettings.isZoomControlsEnabled = enabled
+      controllers.setShowZoomControl(enable)
     }
   }
 
-  fun setShowCompassButton(enabled: Boolean) {
-    // the compass will only ever appear when the camera is oriented such that
-    // it has a non-zero bearing or non-zero tilt. When the user clicks on the compass,
-    // the camera animates back to the default orientation and the compass fades away shortly afterwards
-    updateMap {
-      googleMap.uiSettings.isCompassEnabled = enabled
+  fun setShowCompass(enable: Boolean) {
+   updateMap {
+      controllers.setShowCompass(enable)
     }
   }
 
-  fun setShowMapToolbarButton(enabled: Boolean) {
-    // the toolbar slides in when the user taps a marker
-    // and slides out again when the marker is no longer in focust
+  fun setShowMapToolbar(enable: Boolean) {
     updateMap {
-      googleMap.uiSettings.isMapToolbarEnabled = enabled
+      controllers.setShowMapToolbar(enable)
     }
   }
 
-  fun setShowMyLocationButton(enabled: Boolean) {
+  fun setShowMyLocationButton(enable: Boolean) {
     updateMap {
-      // the My Location button appears in the top right corner of
-      // the screen only when the My Location layer is enabled
-      //TODO: enable my location layer + firstly handle needed permissions request
-      //googleMap.isMyLocationEnabled = true
-      googleMap.uiSettings.isMyLocationButtonEnabled = enabled
+      controllers.setShowMyLocationButton(enable)
     }
   }
 
-  fun setShowLevelPickerButton(enabled: Boolean) {
-    // appears only when the user is viewing an indoor map
+  fun setShowLevelPicker(enable: Boolean) {
     updateMap {
-      googleMap.uiSettings.isIndoorLevelPickerEnabled = enabled
+      controllers.setShowLevelPicker(enable)
     }
   }
 
