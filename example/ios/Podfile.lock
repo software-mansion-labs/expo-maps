@@ -13,12 +13,12 @@ PODS:
     - ExpoModulesCore
   - EXKeepAwake (10.0.1):
     - ExpoModulesCore
-  - Expo (44.0.0-beta.1):
+  - Expo (44.0.5):
     - ExpoModulesCore
   - ExpoMaps (1.0.0):
     - ExpoModulesCore
     - GoogleMaps
-  - ExpoModulesCore (0.6.1):
+  - ExpoModulesCore (0.7.0):
     - React-Core
     - ReactCommon/turbomodule/core
   - FBLazyVector (0.64.3)
@@ -474,11 +474,11 @@ SPEC CHECKSUMS:
   EXFileSystem: 7d1309ba6b38b82ef7fc9e80174de3f9184ac8b4
   EXFont: 1fb13af43dc517c01c0ff21a6e32f9f9bf2ea602
   EXKeepAwake: b571c2ad8323b2fced6e907766e2549f75119471
-  Expo: dcd13c848d84cf058c81b1a4289ac3a7891f61b4
+  Expo: 337c72b7e9314e93023af79c875930db8e008275
   ExpoMaps: 0eec27d0df1f40a47868958a9016c8fc2977ba12
-  ExpoModulesCore: 98f874d20b96d4497eb8ff9df686f14384913a30
+  ExpoModulesCore: 5ee50e40092c569518fe06977be5e747228c652a
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: bc7bcc6b544e00d6606a51687903bf09faa8483e
+  FBReactNativeSpec: 1b9e48d3704e8c9a566350b2565c68ad4b903b18
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   GoogleMaps: 750f237920fa44dd32de0c0d2004d35cb2c688f3
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c

@@ -3306,10 +3306,10 @@ babel-preset-expo@~8.3.0:
     babel-plugin-react-native-web "~0.13.6"
     metro-react-native-babel-preset "~0.59.0"
 
-babel-preset-expo@~9.0.1:
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/babel-preset-expo/-/babel-preset-expo-9.0.1.tgz#e43ad6085ad962a413c45f63118cf8e313eb07f8"
-  integrity sha512-BYAJ7j+PuY8SF5SpvaiJhxPoMewD0QUkfJONQxamo2ceUOj6fJujmVwgSL6TQjrI9FnAyUP5tO2mT42r12jjkQ==
+babel-preset-expo@~9.0.2:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/babel-preset-expo/-/babel-preset-expo-9.0.2.tgz#018bafbe29c61491d55bf5c1b603534b54a13bf1"
+  integrity sha512-NKVichCkbmb+ZIJ4hvuxzX3PnvHUKT42NxYIYTsKAfHPUKuaSAawtpsmMThph6pUc0GUYcLvCRql8ZX5A1zYNw==
   dependencies:
     "@babel/plugin-proposal-decorators" "^7.12.9"
     "@babel/plugin-transform-react-jsx" "^7.12.17"
@@ -4764,10 +4764,10 @@ expo-application@~4.0.1:
   resolved "https://registry.yarnpkg.com/expo-application/-/expo-application-4.0.1.tgz#d38a1315c06c253b843c951ddc6fbb9a026f05cc"
   integrity sha512-yZM/SrpWdi84m5+5F3VDfhrMZOz/uKwXcgBhOP1wzfXt0otGSRW1V5tM+a0sgaKZsDRCGojTU7Jm73BVwwVrwg==
 
-expo-asset@~8.4.4:
-  version "8.4.4"
-  resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-8.4.4.tgz#6214270a41af378ac734a28fbff7b542ca84a3cf"
-  integrity sha512-0yxAOJo8bnYvnRNOWikQ1xFP+YQViJ/px3MofZFUPGw02iaSSUzArcKDfMtpJNmH/EC7HE7GJSZpkoxx+zsHWA==
+expo-asset@~8.4.6:
+  version "8.4.6"
+  resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-8.4.6.tgz#1c40e9badac66dbd3d2be2810711937e5b9b09bd"
+  integrity sha512-Kpzcmmf1lceHnZkAdJOvq7l7SU/hCL59vAj2xUZS66U6lFkUf7LNEA/NzILA56loCd4cka5ShYlWs+BMchyFDQ==
   dependencies:
     blueimp-md5 "^2.10.0"
     invariant "^2.2.4"
@@ -4828,10 +4828,10 @@ expo-module-scripts@^2.0.0:
     ts-jest "~26.3.0"
     typescript "^4.0.2"
 
-expo-modules-autolinking@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-0.5.0.tgz#1cbeb3e6ea774eab8485d04db3f67154457e11f0"
-  integrity sha512-RJ1ZWWqAdjN62kjGJcYA0tQW/7bB3OTsNMoqAwYmsWvnuXw1IwUZdUdCO08tt/k44e3x4UrvI9IdvWyGls3sog==
+expo-modules-autolinking@0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-0.5.5.tgz#6bcc42072dcbdfca79d207b7f549f1fdb54a2b74"
+  integrity sha512-bILEG0Fg+ZhIhdEaShHzsEN1WC0hUmXJ5Kcd4cd+8rVk1Ead9vRZxA/yLx1cNBDCOwMe0GAMrhF7TKT+A1P+YA==
   dependencies:
     chalk "^4.1.0"
     commander "^7.2.0"
@@ -4839,10 +4839,10 @@ expo-modules-autolinking@0.5.0:
     find-up "^5.0.0"
     fs-extra "^9.1.0"
 
-expo-modules-core@0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.6.1.tgz#d27c94ae9504c0721cc701c21757a290a1023e83"
-  integrity sha512-oYb/DPYd6DRARrRHNodzpuFouMr5jnjaxoHM8xJk4RgA/53oOIxOAUmlCbQQSx1g3ox5asohwVvUjPWA2XriwA==
+expo-modules-core@0.6.4, expo-modules-core@0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.7.0.tgz#ab9ff51410a1dca22087a7db5a95ada2693b6d5a"
+  integrity sha512-6jd7m2J7kMsnpGtWb4KF1wDf/57+4Tnf1l0kMoww8iRsY5al7QRXhwdy5mSqQ2TaJWUspudsWtFWK5IlYw5NXA==
   dependencies:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
@@ -4852,24 +4852,24 @@ expo-status-bar@~1.1.0:
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.1.0.tgz#b1015a69c8563b7cadcb5b6c726227397610725d"
   integrity sha512-XgAbGfDV/Q6br2h4yzQwcZRYi37bZ/nvc06vvaJ7i7w9tRxb05OJmXBxl7ywkKlFCMcN6q3Miaf2wnzEgMwJoQ==
 
-expo@44.0.0-beta.1:
-  version "44.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-44.0.0-beta.1.tgz#8f190bc30972056b68db264e56a4823a7095c7a7"
-  integrity sha512-tDyutx3gU8L8cPcuyuvD7YtLCGl3O+c2vCcbqjWK86Oe+8vxig25AdHtJXuwmI3w/ldX+dc6vOixoaI4SwOqBg==
+expo@44.0.5:
+  version "44.0.5"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-44.0.5.tgz#2b681c07e7bb3665c50b70a18850ce6cbc91c23f"
+  integrity sha512-QNQjUb+Rve1r1wUjs2fSx3JVxAVtcmqWZgS+izCLFovAoX6bZ1UUkQBUkVP9PNfimnZ11EDFG4243E0yxtmuuA==
   dependencies:
     "@babel/runtime" "^7.14.0"
     "@expo/metro-config" "~0.2.6"
     "@expo/vector-icons" "^12.0.4"
-    babel-preset-expo "~9.0.1"
+    babel-preset-expo "~9.0.2"
     cross-spawn "^6.0.5"
     expo-application "~4.0.1"
-    expo-asset "~8.4.4"
+    expo-asset "~8.4.6"
     expo-constants "~13.0.0"
     expo-file-system "~13.1.0"
     expo-font "~10.0.4"
     expo-keep-awake "~10.0.1"
-    expo-modules-autolinking "0.5.0"
-    expo-modules-core "0.6.1"
+    expo-modules-autolinking "0.5.5"
+    expo-modules-core "0.6.4"
     fbemitter "^2.1.1"
     invariant "^2.2.4"
     md5-file "^3.2.3"
