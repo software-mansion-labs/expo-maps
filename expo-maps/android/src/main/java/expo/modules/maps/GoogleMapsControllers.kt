@@ -26,8 +26,8 @@ class GoogleMapsControllers(map: GoogleMap): Controllers {
     override fun setShowMyLocationButton(enable: Boolean) {
         // the My Location button appears in the top right corner of
         // the screen only when the My Location layer is enabled
-        //TODO: enable my location layer + firstly handle needed permissions request
-        //googleMap.isMyLocationEnabled = true
+        @SuppressWarnings("MissingPermission")
+        googleMap.isMyLocationEnabled = true
         googleMap.uiSettings.isMyLocationButtonEnabled = enable
     }
 
