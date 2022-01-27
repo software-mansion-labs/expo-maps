@@ -30,6 +30,7 @@
   "license": "MIT",
   "homepage": "https://docs.expo.dev/versions/latest/sdk/module-template",
   "dependencies": {
+    "expo-location": "^14.0.1",
     "expo-asset": "^8.4.6",
     "expo-module-scripts": "^2.0.0"
   },

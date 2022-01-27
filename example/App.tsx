@@ -4,8 +4,15 @@ import { StyleSheet, View } from 'react-native';
 import exampleMapStyle from './exampleMapStyle.json';
 
 import * as Maps from 'expo-maps';
+import * as Location from 'expo-location';
 
 export default function App() {
+
+  async () => {
+    await Location.requestForegroundPermissionsAsync();
+  };
+
+
   return (
     <View style={styles.container}>
       <Maps.ExpoMap
