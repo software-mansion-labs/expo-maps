@@ -8,6 +8,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let gestures: AppleMapsGestures
   private let polygons: AppleMapsPolygons
   private let polylines: AppleMapsPolylines
+  private let controllers: AppleMapsControllers
 
   init() {
     mapView = MKMapView()
@@ -18,6 +19,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
     gestures = AppleMapsGestures(mapView: mapView)
     polygons = AppleMapsPolygons(mapView: mapView)
     polylines = AppleMapsPolylines(mapView: mapView)
+    controllers = AppleMapsControllers(mapView: mapView)
 
     super.init(frame: CGRect.zero)
     addSubview(mapView)
@@ -70,35 +72,15 @@ public final class AppleMapsView: UIView, ExpoMapView {
 
   }
 
-  func setShowCompassButton(enable: Bool) {
-    self.mapView.showsCompass = enable
+  func setShowCompass(enable: Bool) {
+    self.controllers.setShowCompass(enable: enable)
   }
 
   func setShowMyLocationButton(enable: Bool) {
-    if (enable == true) {
-      self.enableMyLocationButton()
-    }
+    self.controllers.setShowMyLocationButton(enable: enable)
   }
-
-  func setShowLevelPickerButton(enable: Bool) {
-    //TODO: enable floor picker
+    
+  func setShowLevelPicker(enable: Bool) {
+    self.controllers.setShowFloorPicker(enable: enable)
   }
-
-  private func enableMyLocationButton() {
-
-    self.mapView.showsUserLocation = true
-    let myLocationButton = MKUserTrackingButton(mapView: self.mapView)
-    myLocationButton.layer.backgroundColor = UIColor(white: 1, alpha: 0.5).cgColor
-    myLocationButton.layer.borderColor = UIColor.white.cgColor
-    myLocationButton.layer.borderWidth = 1
-    myLocationButton.layer.cornerRadius = 5
-    myLocationButton.translatesAutoresizingMaskIntoConstraints = false
-    self.mapView.addSubview(myLocationButton)
-
-    NSLayoutConstraint.activate([
-        myLocationButton.topAnchor.constraint(equalTo: self.mapView.topAnchor,
-constant: 100),
-        myLocationButton.trailingAnchor.constraint(equalTo:
-self.mapView.trailingAnchor, constant: -10)
-    ])
-  }
+}

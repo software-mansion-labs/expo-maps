@@ -43,7 +43,7 @@ public class ExpoAppleMapsModule: Module {
       }
 
       prop("showCmpass") { (view: AppleMapsView, enable: Bool) in
-        view.setShowCompassButton(enable: enable)
+        view.setShowCompass(enable: enable)
       }
 
       prop("showMyLocationButton") { (view: AppleMapsView, enable: Bool) in
@@ -51,7 +51,7 @@ public class ExpoAppleMapsModule: Module {
       }
 
       prop("showLevelPicker") { (view: AppleMapsView, enable: Bool) in
-        view.setShowLevelPickerButton(enable: enable)
+        view.setShowLevelPicker(enable: enable)
       }
     }
   }

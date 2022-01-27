@@ -13,6 +13,9 @@ PODS:
     - ExpoModulesCore
   - EXKeepAwake (10.0.1):
     - ExpoModulesCore
+  - EXLocation (14.0.1):
+    - ExpoModulesCore
+    - UMTaskManagerInterface
   - Expo (44.0.5):
     - ExpoModulesCore
   - ExpoMaps (1.0.0):
@@ -328,6 +331,8 @@ PODS:
   - RNScreens (3.8.0):
     - React-Core
     - React-RCTImage
+  - UMTaskManagerInterface (7.1.0):
+    - ExpoModulesCore
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -338,6 +343,7 @@ DEPENDENCIES:
   - EXFileSystem (from `../../node_modules/expo-file-system/ios`)
   - EXFont (from `../../node_modules/expo-font/ios`)
   - EXKeepAwake (from `../../node_modules/expo-keep-awake/ios`)
+  - EXLocation (from `../../node_modules/expo-location/ios`)
   - Expo (from `../../node_modules/expo/ios`)
   - ExpoMaps (from `../../expo-maps/ios`)
   - ExpoModulesCore (from `../../node_modules/expo-modules-core/ios`)
@@ -374,6 +380,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../../node_modules/react-native-reanimated`)
   - RNScreens (from `../../node_modules/react-native-screens`)
+  - UMTaskManagerInterface (from `../../node_modules/unimodules-task-manager-interface/ios`)
   - Yoga (from `../../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -396,6 +403,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/expo-font/ios"
   EXKeepAwake:
     :path: "../../node_modules/expo-keep-awake/ios"
+  EXLocation:
+    :path: "../../node_modules/expo-location/ios"
   Expo:
     :path: "../../node_modules/expo/ios"
   ExpoMaps:
@@ -462,6 +471,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../../node_modules/react-native-screens"
+  UMTaskManagerInterface:
+    :path: "../../node_modules/unimodules-task-manager-interface/ios"
   Yoga:
     :path: "../../node_modules/react-native/ReactCommon/yoga"
 
@@ -474,6 +485,7 @@ SPEC CHECKSUMS:
   EXFileSystem: 7d1309ba6b38b82ef7fc9e80174de3f9184ac8b4
   EXFont: 1fb13af43dc517c01c0ff21a6e32f9f9bf2ea602
   EXKeepAwake: b571c2ad8323b2fced6e907766e2549f75119471
+  EXLocation: 4bc1ea8086bc296aaba63d16bd194b0995c61cd4
   Expo: 337c72b7e9314e93023af79c875930db8e008275
   ExpoMaps: 0eec27d0df1f40a47868958a9016c8fc2977ba12
   ExpoModulesCore: 5ee50e40092c569518fe06977be5e747228c652a
@@ -508,6 +520,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: 024eff8202342abf4b24e11575a16afc441dabfe
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
+  UMTaskManagerInterface: 6f7150f9ec9bc6f2760eeae532a70de71ff951c1
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
 PODFILE CHECKSUM: c8aa0d312be23a613d8cec127cd5d99f85141dfa

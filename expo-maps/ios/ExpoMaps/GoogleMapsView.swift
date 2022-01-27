@@ -7,6 +7,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let gestures: GoogleMapsGestures
   private let polygons: GoogleMapsPolygons
   private let polylines: GoogleMapsPolylines
+  private let controllers: GoogleMapsControllers
 
   init() {
     // just for now we do authentication here
@@ -22,6 +23,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     gestures = GoogleMapsGestures(mapView: mapView)
     polygons = GoogleMapsPolygons(mapView: mapView)
     polylines = GoogleMapsPolylines(mapView: mapView)
+    controllers = GoogleMapsControllers(mapView: mapView)
     
     super.init(frame: CGRect.zero)
     addSubview(mapView)
@@ -86,25 +88,15 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     polylines.setPolylines(polylineObjects: polylineObjects)
   }
     
-  func setShowCompassButton(enabled: Bool) {
-    self.mapView.settings.compassButton = enabled
+  func setShowCompass(enable: Bool) {
+    self.controllers.setShowCompass(enable: enable)
   }
 
-  func setShowMyLocationButton(enabled: Bool) {
-    self.mapView.settings.myLocationButton = enabled
-    if (enabled == true) {
-     self.requestLocationPermission()
-     self.mapView.isMyLocationEnabled = true
-    }
+  func setShowMyLocationButton(enable: Bool) {
+    self.controllers.setShowMyLocationButton(enable: enable)
   }
 
-  func setShowFloorPickerButton(enabled: Bool) {
-    //appears whenever an indoor map is featured prominently
-    self.mapView.settings.indoorPicker = enabled
+  func setShowLevelPicker(enable: Bool) {
+    self.controllers.setShowLevelPicker(enable: enable)
   }
-    
-    private func requestLocationPermission() {
-      let locationManager = CLLocationManager()
-      locationManager.requestWhenInUseAuthorization()
-    }
 }
