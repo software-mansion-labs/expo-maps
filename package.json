@@ -4,6 +4,9 @@
   "private": true,
   "author": "Expo",
   "license": "MIT",
+  "scripts": {
+    "postinstall": "patch-package"
+  },
   "workspaces": {
     "packages": [
       "example",
@@ -12,5 +15,9 @@
   },
   "resolutions": {
     "expo-modules-core": "0.7.0"
+  },
+  "devDependencies": {
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0"
   }
 }
