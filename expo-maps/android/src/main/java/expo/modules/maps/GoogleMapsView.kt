@@ -14,7 +14,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
-  private lateinit var gestures: MapsViewGestures
+  private lateinit var gestures: GoogleMapsGestures
   private val mapReady = MutableStateFlow(false)
   private lateinit var markers: GoogleMapsMarkers
 
@@ -30,7 +30,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   override fun onMapReady(googleMap: GoogleMap) {
     this.googleMap = googleMap
-    this.gestures = MapsViewGestures(this.googleMap)
+    this.gestures = GoogleMapsGestures(this.googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
