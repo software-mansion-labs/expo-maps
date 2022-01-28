@@ -1,6 +1,6 @@
 import MapKit
 
- class AppleMapsControllers {
+class AppleMapsControllers: Controllers {
    private let mapView: MKMapView
 
    init(mapView: MKMapView) {
@@ -17,7 +17,7 @@ import MapKit
      }
    }
 
-    func setShowFloorPicker(enable: Bool) {
+    func setShowLevelPicker(enable: Bool) {
       //TODO: enable floor picker
     }
     

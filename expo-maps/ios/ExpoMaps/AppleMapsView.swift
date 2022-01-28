@@ -81,6 +81,6 @@ public final class AppleMapsView: UIView, ExpoMapView {
   }
     
   func setShowLevelPicker(enable: Bool) {
-    self.controllers.setShowFloorPicker(enable: enable)
+    self.controllers.setShowLevelPicker(enable: enable)
   }
 }
