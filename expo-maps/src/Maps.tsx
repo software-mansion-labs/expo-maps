@@ -1,5 +1,13 @@
 import React from 'react';
-import { ExpoMapViewProps, MarkerProps, MarkerObject, PolygonProps, PolygonObject, PolylineObject } from './Maps.types';
+import {
+  ExpoMapViewProps,
+  MarkerProps,
+  MarkerObject,
+  MarkerColor,
+  PolygonProps,
+  PolygonObject,
+  PolylineObject,
+} from './Maps.types';
 import { NativeExpoAppleMapsView, NativeExpoGoogleMapsView } from './NativeExpoMapView';
 import { Asset } from 'expo-asset';
 import { Platform } from 'react-native';
@@ -41,20 +49,30 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
           if (child.props.icon !== undefined) {
             iconPath = await Asset.fromModule(child.props.icon).downloadAsync();
           }
-          return {
+
+          let markerObject = {
             type: 'marker',
             latitude: child.props.latitude,
             longitude: child.props.longitude,
             title: child.props.title,
             snippet: child.props.snippet,
             icon: iconPath?.localUri,
-            defaultMarkerColor: child.props.defaultMarkerColor ? child.props.defaultMarkerColor : 'red',
+            defaultMarkerColor: 0,
             draggable: child.props.draggable ? child.props.draggable : false,
-            anchorU: child.props.anchorU,
-            anchorV: child.props.anchorV,
-            opacity: child.props.opacity,
-            zIndex: child.props.zIndex,
+            anchorU: child.props.anchorU ? child.props.anchorU : 0.5,
+            anchorV: child.props.anchorV ? child.props.anchorV : 1,
+            opacity: child.props.opacity ? child.props.opacity : 1,
+            zIndex: child.props.zIndex ? child.props.zIndex : 0,
           } as MarkerObject;
+
+          if (child.props.defaultMarkerColor != undefined) {
+            if (typeof child.props.defaultMarkerColor === 'number') {
+              markerObject.defaultMarkerColor = child.props.defaultMarkerColor!;
+            } else {
+              markerObject.defaultMarkerColor = mapColor(child.props.defaultMarkerColor);
+            }
+          }
+          return markerObject;
         } else if (instanceOfPolygon(child)) {
           return {
             type: 'polygon',
@@ -111,6 +129,39 @@ export class Marker extends React.Component<MarkerProps> {
   render() {
     return null;
   }
+}
+
+function mapColor(color: MarkerColor): number {
+  switch (color) {
+    case 'azure': {
+      return 210;
+    }
+    case 'blue': {
+      return 240;
+    }
+    case 'cyan': {
+      return 180;
+    }
+    case 'green': {
+      return 120;
+    }
+    case 'magenta': {
+      return 300;
+    }
+    case 'orange': {
+      return 30;
+    }
+    case 'rose': {
+      return 330;
+    }
+    case 'violet': {
+      return 270;
+    }
+    case 'yellow': {
+      return 60;
+    }
+  }
+  return 0;
 }
 
 function instanceOfMarker(child: any): child is Marker {

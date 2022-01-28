@@ -50,7 +50,7 @@ export type MarkerColor =
   | 'magenta'
   | 'orange'
   | 'red'
-  | 'rosr'
+  | 'rose'
   | 'violet'
   | 'yellow';
 
@@ -60,8 +60,6 @@ export type PolygonProps = PropsWithChildren<{
 
 export type MarkerProps = PropsWithChildren<
   {
-    latitude: number;
-    longitude: number;
     title?: string;
     snippet?: string;
     icon?: string;
@@ -79,12 +77,12 @@ export type MarkerObject = {
   title?: string;
   snippet?: string;
   icon?: string;
-  defaultMarkerColor: MarkerColor;
+  defaultMarkerColor: number;
   draggable: boolean;
-  anchorU?: number;
-  anchorV?: number;
-  opacity?: number;
-  zIndex?: number;
+  anchorU: number;
+  anchorV: number;
+  opacity: number;
+  zIndex: number;
 } & Point;
 
 export type PolygonObject = {

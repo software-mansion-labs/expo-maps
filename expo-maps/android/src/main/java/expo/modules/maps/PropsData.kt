@@ -10,27 +10,13 @@ enum class MapType(val value: String) {
   Terrain("terrain")
 }
 
-enum class MarkerColor(val value: String) {
-  Azure("azure"),
-  Blue("blue"),
-  Cyan("cyan"),
-  Green("green"),
-  Magenta("magenta"),
-  Orange("orange"),
-  Red("red"),
-  Rose("rose"),
-  Violet("violet"),
-  Yellow("yellow")
-}
-
 data class MarkerObject(
-  @Field val type: String = "marker",
   @Field val latitude: Double = 0.0,
   @Field val longitude: Double = 0.0,
   @Field val title: String? = null,
   @Field val snippet: String? = null,
   @Field val icon: String? = null,
-  @Field val defaultMarkerColor: MarkerColor = MarkerColor.Red,
+  @Field val defaultMarkerColor: Double = 0.0,
   @Field val draggable: Boolean = false,
   @Field val anchorU: Double = 0.5,
   @Field val anchorV: Double = 1.0,

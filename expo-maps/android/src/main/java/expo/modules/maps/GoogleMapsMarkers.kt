@@ -13,6 +13,7 @@ class GoogleMapsMarkers(map: GoogleMap) : Markers {
 
   override fun setMarkers(markerObjects: Array<MarkerObject>) {
     detachAndDeleteMarkers()
+
     markerObjects.forEach { markerObject ->
       val markerOptions = MarkerOptions()
       val localUri = markerObject.icon?.let { Uri.parse(it)?.path }
@@ -28,7 +29,11 @@ class GoogleMapsMarkers(map: GoogleMap) : Markers {
       if (localUri != null) {
         markerOptions.icon(BitmapDescriptorFactory.fromPath(localUri))
       } else {
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(getHueColor(markerObject.defaultMarkerColor)))
+        markerOptions.icon(
+          BitmapDescriptorFactory.defaultMarker(
+            (markerObject.defaultMarkerColor % HUE_WHEEL_MAX_VALUE).toFloat()
+          )
+        )
       }
 
       googleMap.addMarker(markerOptions)?.let { markers.add(it) }
@@ -40,18 +45,7 @@ class GoogleMapsMarkers(map: GoogleMap) : Markers {
     markers.clear()
   }
 
-  private fun getHueColor(markerColor: MarkerColor): Float {
-    return when (markerColor) {
-      MarkerColor.Red -> BitmapDescriptorFactory.HUE_RED
-      MarkerColor.Azure -> BitmapDescriptorFactory.HUE_AZURE
-      MarkerColor.Blue -> BitmapDescriptorFactory.HUE_BLUE
-      MarkerColor.Cyan -> BitmapDescriptorFactory.HUE_CYAN
-      MarkerColor.Green -> BitmapDescriptorFactory.HUE_GREEN
-      MarkerColor.Magenta -> BitmapDescriptorFactory.HUE_MAGENTA
-      MarkerColor.Orange -> BitmapDescriptorFactory.HUE_ORANGE
-      MarkerColor.Rose -> BitmapDescriptorFactory.HUE_ROSE
-      MarkerColor.Violet -> BitmapDescriptorFactory.HUE_VIOLET
-      MarkerColor.Yellow -> BitmapDescriptorFactory.HUE_YELLOW
-    }
+  companion object {
+    const val HUE_WHEEL_MAX_VALUE = 360
   }
 }
