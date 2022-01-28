@@ -4,6 +4,10 @@ export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildre
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
     jsonStyleString: string;
     markers: MarkerObject[];
+    enableRotateGestures: boolean;
+    enableScrollGestures: boolean;
+    enableTiltGestures: boolean;
+    enableZoomGestures: boolean;
 }>;
 export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
@@ -13,6 +17,10 @@ export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<{
     provider?: 'google' | 'apple';
     mapType?: 'normal' | 'hybrid' | 'satellite' | 'terrain';
     googleMapsJsonStyleString?: string;
+    enableRotateGestures?: boolean;
+    enableScrollGestures?: boolean;
+    enableTiltGestures?: boolean;
+    enableZoomGestures?: boolean;
 }>;
 export declare type MarkerObject = {
     type: string;

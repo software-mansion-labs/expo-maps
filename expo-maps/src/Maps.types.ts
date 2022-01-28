@@ -23,10 +23,10 @@ export type ExpoMapViewProps = ViewProps &
     provider?: 'google' | 'apple';
     mapType?: 'normal' | 'hybrid' | 'satellite' | 'terrain';
     googleMapsJsonStyleString?: string;
-    enableRotateGestures: boolean;
-    enableScrollGestures: boolean;
-    enableTiltGestures: boolean;
-    enableZoomGestures: boolean;
+    enableRotateGestures?: boolean;
+    enableScrollGestures?: boolean;
+    enableTiltGestures?: boolean;
+    enableZoomGestures?: boolean;
   }>;
 
 export type MarkerObject = {

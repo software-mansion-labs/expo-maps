@@ -11,7 +11,7 @@ class ExpoGoogleMapsModule : Module() {
 
     viewManager {
       view {
-        GoogleMapsView(it, GoogleMapsViewGestures()).also { googleMapsView ->
+        GoogleMapsView(it).also { googleMapsView ->
           appContext.legacyModule<UIManager>()?.registerLifecycleEventListener(googleMapsView.lifecycleEventListener)
         }
       }

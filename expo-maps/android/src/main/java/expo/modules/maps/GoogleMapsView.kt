@@ -10,10 +10,11 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 
-class GoogleMapsView(context: Context, private val gestures: MapsViewGestures?): LinearLayout(context), OnMapReadyCallback {
+class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallback {
 
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
+  private lateinit var gestures: MapsViewGestures
   private val mapReady = MutableStateFlow(false)
   private lateinit var markers: GoogleMapsMarkers
 
@@ -29,11 +30,7 @@ class GoogleMapsView(context: Context, private val gestures: MapsViewGestures?):
 
   override fun onMapReady(googleMap: GoogleMap) {
     this.googleMap = googleMap
-    markers = GoogleMapsMarkers(googleMap)
-    // Possibly shift this logic to a dedicated method, when there is more dependencies
-    if(gestures != null) {
-      (gestures as GoogleMapsViewGestures).initMap(googleMap)
-    }
+    this.gestures = MapsViewGestures(this.googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
@@ -70,33 +67,33 @@ class GoogleMapsView(context: Context, private val gestures: MapsViewGestures?):
     }
   }
   
-  fun setEnabledScrollGestures(enabled: Boolean) {
+  fun setEnabledRotateGestures(enabled: Boolean) {
     updateMap {
-      gestures?.setEnabledScrollGesture(enabled)
+      gestures.setEnabledRotateGesture(enabled)
     }
   }
 
-  fun setEnabledZoomGestures(enabled: Boolean) {
+  fun setEnabledScrollGestures(enabled: Boolean) {
     updateMap {
-      gestures?.setEnabledZoomGesture(enabled)
+      gestures.setEnabledScrollGesture(enabled)
     }
   }
 
   fun setEnabledTiltGestures(enabled: Boolean) {
     updateMap {
-      gestures?.setEnabledTiltGesture(enabled)
+      gestures.setEnabledTiltGesture(enabled)
     }
   }
 
-  fun setEnabledRotateGestures(enabled: Boolean) {
+  fun setEnabledZoomGestures(enabled: Boolean) {
     updateMap {
-      gestures?.setEnabledRotateGesture(enabled)
+      gestures.setEnabledZoomGesture(enabled)
     }
   }
-
+  
   fun setEnabledAllGestures(enabled: Boolean) {
     updateMap {
-      gestures?.setEnabledAllGestures(enabled)
+      gestures.setEnabledAllGestures(enabled)
     }
   }
 

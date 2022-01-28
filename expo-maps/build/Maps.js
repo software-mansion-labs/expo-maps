@@ -4,6 +4,10 @@ import { Platform } from 'react-native';
 export * from './Maps.types';
 const defaultNativeExpoMapViewProps = {
     mapType: 'normal',
+    enableRotateGestures: false,
+    enableScrollGestures: true,
+    enableTiltGestures: false,
+    enableZoomGestures: true,
 };
 export class ExpoMap extends React.Component {
     mapChildren() {
