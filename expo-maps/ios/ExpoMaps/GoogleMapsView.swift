@@ -2,7 +2,7 @@ import GoogleMaps
 
 public final class GoogleMapsView: UIView, ExpoMapView {
   private let mapView: GMSMapView
-  private let markers: GoogleMapsMarkers
+  private let gestures: GoogleMapsGestures
 
   init() {
     // just for now we do authentication here
@@ -15,6 +15,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     self.mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
     self.mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     self.markers = GoogleMapsMarkers(mapView: self.mapView)
+    self.gestures = GoogleMapsGestures(mapView: self.mapView)
     
     super.init(frame: CGRect.zero)
     self.addSubview(self.mapView)
@@ -23,8 +24,23 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
-  
+
+  func setEnabledRotateGestures(enabled: Bool) {
+    gestures.setEnabledRotateGesture(enabled: enabled)
+  }
+
+  func setEnabledScrollGestures(enabled: Bool) {
+    gestures.setEnabledScrollGesture(enabled: enabled)
+  }
+
+  func setEnabledTiltGestures(enabled: Bool) {
+    gestures.setEnabledTiltGesture(enabled: enabled)
+  }
+
+  func setEnabledZoomGestures(enabled: Bool) {
+    gestures.setEnabledZoomGesture(enabled: enabled)
+  }
+
   func setMapType(mapType: MapType) {
     var mapViewType: GMSMapViewType
     switch mapType {

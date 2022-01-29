@@ -8,6 +8,18 @@ public class ExpoGoogleMapsModule: Module {
       view {
         GoogleMapsView()
       }
+      prop("enableRotateGestures") { (view: GoogleMapsView, enable: Bool) in
+          view.setEnabledRotateGestures(enabled: enable)
+      }
+      prop("enableScrollGestures") { (view: GoogleMapsView, enable: Bool) in
+          view.setEnabledScrollGestures(enabled: enable)
+      }
+      prop("enableTiltGestures") { (view: GoogleMapsView, enable: Bool) in
+          view.setEnabledTiltGestures(enabled: enable)
+      }
+      prop("enableZoomGestures") { (view: GoogleMapsView, enable: Bool) in
+          view.setEnabledZoomGestures(enabled: enable)
+      }
       prop("mapType") { (view: GoogleMapsView, mapType: MapType) in
         view.setMapType(mapType: mapType)
       }

@@ -12,6 +12,10 @@ export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildre
 export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
     markers: MarkerObject[];
+    enableRotateGestures: boolean;
+    enableScrollGestures: boolean;
+    enableTiltGestures: boolean;
+    enableZoomGestures: boolean;
 }>;
 export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<{
     provider?: 'google' | 'apple';

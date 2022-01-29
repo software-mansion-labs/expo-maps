@@ -3,11 +3,13 @@ import MapKit
 public final class AppleMapsView: UIView, ExpoMapView {
   private let mapView: MKMapView
   private let markers: AppleMapsMarkers
+  private let gestures: AppleMapsGestures
   
   init() {
     self.mapView = MKMapView()
     self.mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     self.markers = AppleMapsMarkers(mapView: self.mapView)
+    self.gestures = AppleMapsGestures(mapView: self.mapView)
 
     super.init(frame: CGRect.zero)
     self.addSubview(self.mapView)
@@ -15,6 +17,22 @@ public final class AppleMapsView: UIView, ExpoMapView {
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  func setEnabledRotateGestures(enabled: Bool) {
+    gestures.setEnabledRotateGesture(enabled: enabled)
+  }
+
+  func setEnabledScrollGestures(enabled: Bool) {
+    gestures.setEnabledScrollGesture(enabled: enabled)
+  }
+
+  func setEnabledTiltGestures(enabled: Bool) {
+    gestures.setEnabledTiltGesture(enabled: enabled)
+  }
+
+  func setEnabledZoomGestures(enabled: Bool) {
+    gestures.setEnabledZoomGesture(enabled: enabled)
   }
   
   func setMapType(mapType: MapType) {

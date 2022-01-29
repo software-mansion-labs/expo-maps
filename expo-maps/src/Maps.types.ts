@@ -16,6 +16,10 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
   PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
     markers: MarkerObject[];
+    enableRotateGestures: boolean;
+    enableScrollGestures: boolean;
+    enableTiltGestures: boolean;
+    enableZoomGestures: boolean;
   }>;
 
 export type ExpoMapViewProps = ViewProps &
