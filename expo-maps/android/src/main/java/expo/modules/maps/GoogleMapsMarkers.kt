@@ -22,9 +22,8 @@ class GoogleMapsMarkers(map: GoogleMap) : Markers {
         .title(markerObject.title)
         .snippet(markerObject.snippet)
         .draggable(markerObject.draggable)
-        .anchor(markerObject.anchorU.toFloat(), markerObject.anchorV.toFloat())
+        .anchor((markerObject.anchorU ?: 0.5).toFloat(), (markerObject.anchorV ?: 1).toFloat())
         .alpha(markerObject.opacity.toFloat())
-        .zIndex(markerObject.zIndex.toFloat())
 
       if (localUri != null) {
         markerOptions.icon(BitmapDescriptorFactory.fromPath(localUri))

@@ -1,18 +1,33 @@
 import MapKit
 
-class AppleMapsMarkers: Markers {
+class AppleMapsMarkers: NSObject, Markers {
   private let mapView: MKMapView
-  private var markers: [MKPointAnnotation] = []
+  private let delegate: MKMapViewDelegate
+  private var markers: [ExpoAppleMapsAnnotation] = []
   
   init(mapView: MKMapView) {
     self.mapView = mapView
+    self.delegate = AppleMapsViewDelegate()
+    self.mapView.delegate = delegate
+    self.mapView.register(
+      MKMarkerAnnotationView.self,
+      forAnnotationViewWithReuseIdentifier: NSStringFromClass(ExpoAppleMapsAnnotation.self)
+    )
   }
   
   func setMarkers(markerObjects: [MarkerObject]) {
     self.detachAndDeleteMarkers()
     for markerObject in markerObjects {
-      let marker = MKPointAnnotation()
-      marker.coordinate = CLLocationCoordinate2D(latitude: markerObject.latitude, longitude: markerObject.longitude)
+      let marker = ExpoAppleMapsAnnotation(coordinate: CLLocationCoordinate2D(latitude: markerObject.latitude, longitude: markerObject.longitude))
+      
+      marker.title = markerObject.title
+      marker.subtitle = markerObject.snippet
+      marker.glyphImage = markerObject.icon
+      marker.markerTintColor = markerObject.defaultMarkerColor
+      marker.centerOffsetX = markerObject.anchorU ?? 0
+      marker.centerOffsetY = markerObject.anchorV ?? 0
+      marker.alpha = markerObject.opacity
+      
       self.mapView.addAnnotation(marker)
       self.markers.append(marker)
     }

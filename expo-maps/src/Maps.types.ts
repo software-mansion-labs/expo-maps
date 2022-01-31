@@ -63,12 +63,11 @@ export type MarkerProps = PropsWithChildren<
     title?: string;
     snippet?: string;
     icon?: string;
-    defaultMarkerColor?: MarkerColor;
+    defaultMarkerColor?: number | MarkerColor;
     draggable?: boolean;
     anchorU?: number;
     anchorV?: number;
     opacity?: number;
-    zIndex?: number;
   } & Point
 >;
 
@@ -79,10 +78,9 @@ export type MarkerObject = {
   icon?: string;
   defaultMarkerColor: number;
   draggable: boolean;
-  anchorU: number;
-  anchorV: number;
+  anchorU?: number;
+  anchorV?: number;
   opacity: number;
-  zIndex: number;
 } & Point;
 
 export type PolygonObject = {

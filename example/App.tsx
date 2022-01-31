@@ -10,7 +10,7 @@ export default function App() {
     <View style={styles.container}>
       <Maps.ExpoMap
         style={{ flex: 1, width: '100%' }}
-        provider='google'
+        provider='apple'
         googleMapsJsonStyleString={JSON.stringify(exampleMapStyle)}>
         <Maps.Marker
           latitude={-33.86}

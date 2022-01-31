@@ -42,12 +42,11 @@ export declare type MarkerProps = PropsWithChildren<{
     title?: string;
     snippet?: string;
     icon?: string;
-    defaultMarkerColor?: MarkerColor;
+    defaultMarkerColor?: number | MarkerColor;
     draggable?: boolean;
     anchorU?: number;
     anchorV?: number;
     opacity?: number;
-    zIndex?: number;
 } & Point>;
 export declare type MarkerObject = {
     type: 'marker';
@@ -56,10 +55,9 @@ export declare type MarkerObject = {
     icon?: string;
     defaultMarkerColor: number;
     draggable: boolean;
-    anchorU: number;
-    anchorV: number;
+    anchorU?: number;
+    anchorV?: number;
     opacity: number;
-    zIndex: number;
 } & Point;
 export declare type PolygonObject = {
     type: 'polygon';

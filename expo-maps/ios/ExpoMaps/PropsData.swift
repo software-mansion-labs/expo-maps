@@ -15,10 +15,9 @@ struct MarkerObject: Record {
   @Field var icon: String? = nil
   @Field var defaultMarkerColor: Double = 0
   @Field var draggable: Bool = false
-  @Field var anchorU: Double = 0.5
-  @Field var anchorV: Double = 1
+  @Field var anchorU: Double? = nil
+  @Field var anchorV: Double? = nil
   @Field var opacity: Double = 1
-  @Field var zIndex: Int = 0
 }
 
 struct Point: Record {

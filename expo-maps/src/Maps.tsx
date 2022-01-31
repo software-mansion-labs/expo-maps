@@ -59,10 +59,9 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             icon: iconPath?.localUri,
             defaultMarkerColor: 0,
             draggable: child.props.draggable ? child.props.draggable : false,
-            anchorU: child.props.anchorU ? child.props.anchorU : 0.5,
-            anchorV: child.props.anchorV ? child.props.anchorV : 1,
+            anchorU: child.props.anchorU,
+            anchorV: child.props.anchorV,
             opacity: child.props.opacity ? child.props.opacity : 1,
-            zIndex: child.props.zIndex ? child.props.zIndex : 0,
           } as MarkerObject;
 
           if (child.props.defaultMarkerColor != undefined) {
