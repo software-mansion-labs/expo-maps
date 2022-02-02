@@ -42,7 +42,7 @@ public class ExpoAppleMapsModule: Module {
         view.setPolylines(polylineObjects: polylineObjects)
       }
 
-      prop("showCmpass") { (view: AppleMapsView, enable: Bool) in
+      prop("showCompass") { (view: AppleMapsView, enable: Bool) in
         view.setShowCompass(enable: enable)
       }
 
