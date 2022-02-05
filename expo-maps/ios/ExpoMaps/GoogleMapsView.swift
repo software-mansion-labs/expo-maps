@@ -3,6 +3,8 @@ import GoogleMaps
 public final class GoogleMapsView: UIView, ExpoMapView {
   private let mapView: GMSMapView
   private let gestures: GoogleMapsGestures
+  private let markers: GoogleMapsMarkers
+  private let polygons: GoogleMapsPolygons
 
   init() {
     // just for now we do authentication here
@@ -16,6 +18,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     self.mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     self.markers = GoogleMapsMarkers(mapView: self.mapView)
     self.gestures = GoogleMapsGestures(mapView: self.mapView)
+    self.polygons = GoogleMapsPolygons(mapView: self.mapView)
     
     super.init(frame: CGRect.zero)
     self.addSubview(self.mapView)
@@ -70,5 +73,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
 
   func setMarkers(markerObjects: [MarkerObject]) {
     self.markers.setMarkers(markerObjects: markerObjects)
+  }
+  
+  func setPolygons(polygonObjects: [PolygonObject]) {
+    self.polygons.setPolygons(polygonObjects: polygonObjects)
   }
 }

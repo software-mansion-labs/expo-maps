@@ -4,12 +4,14 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let mapView: MKMapView
   private let markers: AppleMapsMarkers
   private let gestures: AppleMapsGestures
+  private let polygons: AppleMapsPolygons
   
   init() {
     mapView = MKMapView()
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     markers = AppleMapsMarkers(mapView: self.mapView)
     gestures = AppleMapsGestures(mapView: self.mapView)
+    polygons = AppleMapsPolygons(mapView: self.mapView)
 
     super.init(frame: CGRect.zero)
     self.addSubview(self.mapView)
@@ -50,5 +52,9 @@ public final class AppleMapsView: UIView, ExpoMapView {
   
   func setMarkers(markerObjects: [MarkerObject]) {
     self.markers.setMarkers(markerObjects: markerObjects)
+  }
+  
+  func setPolygons(polygonObjects: [PolygonObject]) {
+    self.polygons.setPolygons(polygonObjects: polygonObjects)
   }
 }

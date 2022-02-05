@@ -64,9 +64,6 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
   render() {
     const childrenObj = this.mapChildren();
 
-    console.log("I'm sending polygons prop!");
-    console.log(JSON.stringify(childrenObj.polygons));
-
     if (Platform.OS == 'ios' && this.props.provider == 'apple') {
       return (
         <NativeExpoAppleMapsView

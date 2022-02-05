@@ -35,8 +35,7 @@ public class ExpoAppleMapsModule: Module {
       }
       
       prop("polygons") { (view: AppleMapsView, polygonObjects: [PolygonObject]) in
-        print("I've received polygons prop!")
-        print(polygonObjects)
+        view.setPolygons(polygonObjects: polygonObjects)
       }
     }
   }
