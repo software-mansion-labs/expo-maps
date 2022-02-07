@@ -16,8 +16,6 @@ class AppleMapsPolygons: Polygons {
         overlayPoints.append(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
       }
       let polygon = MKPolygon(coordinates: &overlayPoints, count: overlayPoints.count)
-      let polygonRenderer = MKPolygonRenderer(polygon: polygon)
-      polygonRenderer.fillColor = UIColor.red
       mapView.addOverlay(polygon)
       polygons.append(polygon)
     }

@@ -5,6 +5,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let markers: AppleMapsMarkers
   private let gestures: AppleMapsGestures
   private let polygons: AppleMapsPolygons
+  private let delegate: AppleMapsViewDelegate
   
   init() {
     mapView = MKMapView()
@@ -12,6 +13,8 @@ public final class AppleMapsView: UIView, ExpoMapView {
     markers = AppleMapsMarkers(mapView: self.mapView)
     gestures = AppleMapsGestures(mapView: self.mapView)
     polygons = AppleMapsPolygons(mapView: self.mapView)
+    delegate = AppleMapsViewDelegate()
+    mapView.delegate = delegate
 
     super.init(frame: CGRect.zero)
     self.addSubview(self.mapView)
