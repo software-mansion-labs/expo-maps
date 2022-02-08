@@ -1,6 +1,5 @@
 import MapKit
-final class AppleMapsGestures : Gestures
-{
+final class AppleMapsGestures : Gestures {
   
   internal var mapView: MKMapView;
   
