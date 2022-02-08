@@ -1,5 +1,4 @@
-protocol Gestures
-{    
+protocol Gestures {    
     init?(coder: NSCoder)
     
     func setEnabledRotateGesture(enabled: Bool)
