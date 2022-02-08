@@ -10,14 +10,14 @@ public final class AppleMapsView: UIView, ExpoMapView {
   init() {
     mapView = MKMapView()
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    markers = AppleMapsMarkers(mapView: self.mapView)
-    gestures = AppleMapsGestures(mapView: self.mapView)
-    polygons = AppleMapsPolygons(mapView: self.mapView)
+    markers = AppleMapsMarkers(mapView: mapView)
+    gestures = AppleMapsGestures(mapView: mapView)
+    polygons = AppleMapsPolygons(mapView: mapView)
     delegate = AppleMapsViewDelegate()
     mapView.delegate = delegate
 
     super.init(frame: CGRect.zero)
-    self.addSubview(self.mapView)
+    addSubview(mapView)
   }
 
   required init?(coder: NSCoder) {
@@ -50,14 +50,14 @@ public final class AppleMapsView: UIView, ExpoMapView {
     case .normal, .terrain:
       mapViewType = .standard
     }
-    self.mapView.mapType = mapViewType
+    mapView.mapType = mapViewType
   }
   
   func setMarkers(markerObjects: [MarkerObject]) {
-    self.markers.setMarkers(markerObjects: markerObjects)
+    markers.setMarkers(markerObjects: markerObjects)
   }
   
   func setPolygons(polygonObjects: [PolygonObject]) {
-    self.polygons.setPolygons(polygonObjects: polygonObjects)
+    polygons.setPolygons(polygonObjects: polygonObjects)
   }
 }
