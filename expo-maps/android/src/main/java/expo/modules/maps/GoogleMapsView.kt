@@ -10,10 +10,11 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 
-class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallback, ExpoMapView {
+class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallback {
 
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
+  private lateinit var gestures: GoogleMapsGestures
   private val mapReady = MutableStateFlow(false)
   private lateinit var markers: GoogleMapsMarkers
 
@@ -29,7 +30,7 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
 
   override fun onMapReady(googleMap: GoogleMap) {
     this.googleMap = googleMap
-    markers = GoogleMapsMarkers(googleMap)
+   gestures = GoogleMapsGestures(this.googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
@@ -63,6 +64,36 @@ class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallbac
   override fun setMarkers(markerObjects: Array<MarkerObject>) {
     updateMap {
       markers.setMarkers(markerObjects)
+    }
+  }
+  
+  fun setEnabledRotateGestures(enabled: Boolean) {
+    updateMap {
+      gestures.setEnabledRotateGesture(enabled)
+    }
+  }
+
+  fun setEnabledScrollGestures(enabled: Boolean) {
+    updateMap {
+      gestures.setEnabledScrollGesture(enabled)
+    }
+  }
+
+  fun setEnabledTiltGestures(enabled: Boolean) {
+    updateMap {
+      gestures.setEnabledTiltGesture(enabled)
+    }
+  }
+
+  fun setEnabledZoomGestures(enabled: Boolean) {
+    updateMap {
+      gestures.setEnabledZoomGesture(enabled)
+    }
+  }
+  
+  fun setEnabledAllGestures(enabled: Boolean) {
+    updateMap {
+      gestures.setEnabledAllGestures(enabled)
     }
   }
 
