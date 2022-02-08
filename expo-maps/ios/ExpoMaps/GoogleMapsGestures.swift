@@ -1,7 +1,6 @@
 import GoogleMaps
 
-final class GoogleMapsGestures : Gestures
-{
+final class GoogleMapsGestures : Gestures {
     internal var mapView: GMSMapView
     
     init(mapView: GMSMapView)
