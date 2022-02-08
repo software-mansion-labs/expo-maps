@@ -6,10 +6,10 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let gestures: AppleMapsGestures
   
   init() {
-    self.mapView = MKMapView()
-    self.mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    self.markers = AppleMapsMarkers(mapView: self.mapView)
-    self.gestures = AppleMapsGestures(mapView: self.mapView)
+    mapView = MKMapView()
+    mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    markers = AppleMapsMarkers(mapView: self.mapView)
+    gestures = AppleMapsGestures(mapView: self.mapView)
 
     super.init(frame: CGRect.zero)
     self.addSubview(self.mapView)
