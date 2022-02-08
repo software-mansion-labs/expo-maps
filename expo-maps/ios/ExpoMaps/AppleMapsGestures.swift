@@ -3,8 +3,7 @@ final class AppleMapsGestures : Gestures {
   
   internal var mapView: MKMapView;
   
-  init(mapView: MKMapView)
-  {
+  init(mapView: MKMapView) {
     self.mapView = mapView
   }
   
