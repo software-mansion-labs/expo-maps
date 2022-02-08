@@ -33,6 +33,4 @@ final class AppleMapsGestures : Gestures {
     mapView.isScrollEnabled = enabled
     mapView.isZoomEnabled = enabled
   }
-    
-    
 }
