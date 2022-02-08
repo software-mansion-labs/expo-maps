@@ -6,6 +6,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let gestures: AppleMapsGestures
   private let polygons: AppleMapsPolygons
   private let delegate: AppleMapsViewDelegate
+  private let polylines: AppleMapsPolylines
   
   init() {
     mapView = MKMapView()
@@ -13,6 +14,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
     markers = AppleMapsMarkers(mapView: mapView)
     gestures = AppleMapsGestures(mapView: mapView)
     polygons = AppleMapsPolygons(mapView: mapView)
+    polylines = AppleMapsPolylines(mapView: mapView)
     delegate = AppleMapsViewDelegate()
     mapView.delegate = delegate
 
@@ -59,5 +61,9 @@ public final class AppleMapsView: UIView, ExpoMapView {
   
   func setPolygons(polygonObjects: [PolygonObject]) {
     polygons.setPolygons(polygonObjects: polygonObjects)
+  }
+  
+  func setPolylines(polylineObjects: [PolylineObject]) {
+    polylines.setPolylines(polylineObjects: polylineObjects)
   }
 }

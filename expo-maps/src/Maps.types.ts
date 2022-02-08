@@ -11,6 +11,7 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
     enableTiltGestures: boolean;
     enableZoomGestures: boolean;
     polygons: PolygonObject[];
+    polylines: PolylineObject[];
   }>;
 
 export type NativeExpoAppleMapsViewProps = ViewProps &
@@ -22,6 +23,7 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
     enableTiltGestures: boolean;
     enableZoomGestures: boolean;
     polygons: PolygonObject[];
+    polylines: PolylineObject[];
   }>;
 
 export type ExpoMapViewProps = ViewProps &
@@ -52,5 +54,10 @@ export type PolygonProps = PropsWithChildren<{
 
 export type PolygonObject = {
   type: 'polygon';
+  points: Point[];
+};
+
+export type PolylineObject = {
+  type: 'polyline';
   points: Point[];
 };

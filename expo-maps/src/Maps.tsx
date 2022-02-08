@@ -5,6 +5,7 @@ import {
   MarkerObject,
   PolygonProps,
   PolygonObject,
+  PolylineObject,
 } from './Maps.types';
 import {
   NativeExpoAppleMapsView,
@@ -45,6 +46,11 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             type: 'polygon',
             points: child.props.points,
           } as PolygonObject;
+        } else if (instanceOfPolyline(child)) {
+          return {
+            type: 'polyline',
+            points: child.props.points,
+          } as PolylineObject;
         }
       }
       warnIfChildIsIncompatible(child);
@@ -58,6 +64,9 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
       polygons: (childrenArray
         ? childrenArray.filter((e) => e.type === 'polygon')
         : []) as PolygonObject[],
+      polylines: (childrenArray
+        ? childrenArray.filter((e) => e.type === 'polyline')
+        : []) as PolylineObject[],
     };
   }
 
@@ -71,6 +80,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
           {...this.props}
           markers={childrenObj.markers}
           polygons={childrenObj.polygons}
+          polylines={childrenObj.polylines}
         />
       );
     }
@@ -86,6 +96,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
         }
         markers={childrenObj.markers}
         polygons={childrenObj.polygons}
+        polylines={childrenObj.polylines}
       />
     );
   }
@@ -121,6 +132,23 @@ function instanceOfPolygon(child: any): child is Polygon {
   if (
     'type' in child &&
     String(child.type).includes('Polygon') &&
+    'props' in child
+  ) {
+    return arePropsKeysEqual(Object.keys(child.props), ['points']);
+  }
+  return false;
+}
+
+export class Polyline extends React.Component<PolygonProps> {
+  render() {
+    return null;
+  }
+}
+
+function instanceOfPolyline(child: any): child is Polyline {
+  if (
+    'type' in child &&
+    String(child.type).includes('Polyline') &&
     'props' in child
   ) {
     return arePropsKeysEqual(Object.keys(child.props), ['points']);

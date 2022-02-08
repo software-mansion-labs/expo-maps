@@ -26,6 +26,12 @@ export class ExpoMap extends React.Component {
                         points: child.props.points,
                     };
                 }
+                else if (instanceOfPolyline(child)) {
+                    return {
+                        type: 'polyline',
+                        points: child.props.points,
+                    };
+                }
             }
             warnIfChildIsIncompatible(child);
             return null;
@@ -37,16 +43,19 @@ export class ExpoMap extends React.Component {
             polygons: (childrenArray
                 ? childrenArray.filter((e) => e.type === 'polygon')
                 : []),
+            polylines: (childrenArray
+                ? childrenArray.filter((e) => e.type === 'polyline')
+                : []),
         };
     }
     render() {
         const childrenObj = this.mapChildren();
         if (Platform.OS == 'ios' && this.props.provider == 'apple') {
-            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: childrenObj.markers, polygons: childrenObj.polygons }));
+            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: childrenObj.markers, polygons: childrenObj.polygons, polylines: childrenObj.polylines }));
         }
         return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, jsonStyleString: this.props.googleMapsJsonStyleString
                 ? this.props.googleMapsJsonStyleString
-                : '', markers: childrenObj.markers, polygons: childrenObj.polygons }));
+                : '', markers: childrenObj.markers, polygons: childrenObj.polygons, polylines: childrenObj.polylines }));
     }
 }
 export class Marker extends React.Component {
@@ -73,6 +82,19 @@ export class Polygon extends React.Component {
 function instanceOfPolygon(child) {
     if ('type' in child &&
         String(child.type).includes('Polygon') &&
+        'props' in child) {
+        return arePropsKeysEqual(Object.keys(child.props), ['points']);
+    }
+    return false;
+}
+export class Polyline extends React.Component {
+    render() {
+        return null;
+    }
+}
+function instanceOfPolyline(child) {
+    if ('type' in child &&
+        String(child.type).includes('Polyline') &&
         'props' in child) {
         return arePropsKeysEqual(Object.keys(child.props), ['points']);
     }

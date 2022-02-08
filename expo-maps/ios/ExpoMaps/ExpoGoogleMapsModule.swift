@@ -34,6 +34,10 @@ public class ExpoGoogleMapsModule: Module {
       prop("polygons") { (view: GoogleMapsView, polygonObjects: [PolygonObject]) in
         view.setPolygons(polygonObjects: polygonObjects)
       }
+      
+      prop("polylines") { (view: GoogleMapsView, polylineObjects: [PolylineObject]) in
+        view.setPolylines(polylineObjects: polylineObjects)
+      }
     }
   }
 }
