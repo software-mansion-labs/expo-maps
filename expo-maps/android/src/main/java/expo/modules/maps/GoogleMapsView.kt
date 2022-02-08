@@ -30,7 +30,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   override fun onMapReady(googleMap: GoogleMap) {
     this.googleMap = googleMap
-    this.gestures = GoogleMapsGestures(this.googleMap)
+   gestures = GoogleMapsGestures(this.googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
