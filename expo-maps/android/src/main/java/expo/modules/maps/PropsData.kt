@@ -15,3 +15,5 @@ data class Point(@Field val latitude: Double = 0.0, @Field val longitude: Double
 
 data class PolygonObject(@Field val points: Array<Point> = emptyArray()) : Record {}
 
+data class PolylineObject(@Field val points: Array<Point> = emptyArray()) : Record {}
+
