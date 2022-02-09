@@ -9,7 +9,7 @@ class GoogleMapsPolygons(map: GoogleMap): Polygons {
     private val polygons = mutableListOf<Polygon>()
     private var googleMap: GoogleMap = map
 
-    override fun setMarkers(polygonObjects: Array<PolygonObject>) {
+    override fun setPolygons(polygonObjects: Array<PolygonObject>) {
         detachAndDeletePolygons()
         for (polygonObject in polygonObjects) {
             val polygonOptions = PolygonOptions()

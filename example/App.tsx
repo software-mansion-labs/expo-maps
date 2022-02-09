@@ -31,6 +31,22 @@ export default function App() {
             },
           ]}
         />
+        <Maps.Polyline
+          points={[
+            {
+              latitude: -29,
+              longitude: 150,
+            },
+            {
+              latitude: -29,
+              longitude: 151,
+            },
+            {
+              latitude: -28,
+              longitude: 152,
+            },
+          ]}
+        />
       </Maps.ExpoMap>
       <StatusBar style="auto" />
     </View>

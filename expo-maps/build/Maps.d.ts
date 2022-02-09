@@ -11,3 +11,6 @@ export declare class Marker extends React.Component<MarkerProps> {
 export declare class Polygon extends React.Component<PolygonProps> {
     render(): null;
 }
+export declare class Polyline extends React.Component<PolygonProps> {
+    render(): null;
+}

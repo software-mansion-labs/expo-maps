@@ -37,6 +37,10 @@ public class ExpoAppleMapsModule: Module {
       prop("polygons") { (view: AppleMapsView, polygonObjects: [PolygonObject]) in
         view.setPolygons(polygonObjects: polygonObjects)
       }
+      
+      prop("polylines") { (view: AppleMapsView, polylineObjects: [PolylineObject]) in
+        view.setPolylines(polylineObjects: polylineObjects)
+      }
     }
   }
 }

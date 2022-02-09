@@ -5,6 +5,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let gestures: GoogleMapsGestures
   private let markers: GoogleMapsMarkers
   private let polygons: GoogleMapsPolygons
+  private let polylines: GoogleMapsPolylines
 
   init() {
     // just for now we do authentication here
@@ -14,14 +15,15 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     // random initial camera position
     // TODO: use prop as a source for initial camera position
     let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
-    self.mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-    self.mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    self.markers = GoogleMapsMarkers(mapView: self.mapView)
-    self.gestures = GoogleMapsGestures(mapView: self.mapView)
-    self.polygons = GoogleMapsPolygons(mapView: self.mapView)
+    mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+    mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    markers = GoogleMapsMarkers(mapView: mapView)
+    gestures = GoogleMapsGestures(mapView: mapView)
+    polygons = GoogleMapsPolygons(mapView: mapView)
+    polylines = GoogleMapsPolylines(mapView: mapView)
     
     super.init(frame: CGRect.zero)
-    self.addSubview(self.mapView)
+    addSubview(mapView)
   }
 
   required init?(coder: NSCoder) {
@@ -56,26 +58,30 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     case .normal:
       mapViewType = .normal
     }
-    self.mapView.mapType = mapViewType
+    mapView.mapType = mapViewType
   }
   
   func setMapStyle(jsonStyleString: String) {
     if (jsonStyleString.count != 0) {
       do {
-        self.mapView.mapStyle = try GMSMapStyle(jsonString: jsonStyleString)
+        mapView.mapStyle = try GMSMapStyle(jsonString: jsonStyleString)
       } catch {
         NSLog("One or more of the map styles failed to load. \(error)")
       }
     } else {
-      self.mapView.mapStyle = nil
+      mapView.mapStyle = nil
     }
   }
 
   func setMarkers(markerObjects: [MarkerObject]) {
-    self.markers.setMarkers(markerObjects: markerObjects)
+    markers.setMarkers(markerObjects: markerObjects)
   }
   
   func setPolygons(polygonObjects: [PolygonObject]) {
-    self.polygons.setPolygons(polygonObjects: polygonObjects)
+    polygons.setPolygons(polygonObjects: polygonObjects)
+  }
+  
+  func setPolylines(polylineObjects: [PolylineObject]) {
+    polylines.setPolylines(polylineObjects: polylineObjects)
   }
 }

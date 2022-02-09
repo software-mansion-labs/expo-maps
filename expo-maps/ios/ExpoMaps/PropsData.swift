@@ -27,3 +27,8 @@ struct PolygonObject: Record {
   @Field
   var points: [Point] = []
 }
+
+struct PolylineObject: Record {
+  @Field
+  var points: [Point] = []
+}

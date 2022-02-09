@@ -1,6 +1,6 @@
 package expo.modules.maps
 
 interface Polygons {
-    fun setMarkers(polygonObjects: Array<PolygonObject>)
+    fun setPolygons(polygonObjects: Array<PolygonObject>)
     fun detachAndDeletePolygons()
 }

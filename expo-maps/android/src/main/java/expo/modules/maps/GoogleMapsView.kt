@@ -10,7 +10,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 
-class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallback {
+class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallback, ExpoMapView {
 
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
@@ -18,6 +18,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private val mapReady = MutableStateFlow(false)
   private lateinit var markers: GoogleMapsMarkers
   private lateinit var polygons: GoogleMapsPolygons
+  private lateinit var polylines: GoogleMapsPolylines
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
@@ -31,9 +32,10 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   override fun onMapReady(googleMap: GoogleMap) {
     this.googleMap = googleMap
-   gestures = GoogleMapsGestures(this.googleMap)
+    gestures = GoogleMapsGestures(this.googleMap)
     markers = GoogleMapsMarkers(googleMap)
     polygons = GoogleMapsPolygons(googleMap)
+    polylines = GoogleMapsPolylines(googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
@@ -102,7 +104,13 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   override fun setPolygons(polygonObjects: Array<PolygonObject>) {
     updateMap {
-      polygons.setMarkers(polygonObjects)
+      polygons.setPolygons(polygonObjects)
+    }
+  }
+
+  override fun setPolylines(polylineObjects: Array<PolylineObject>) {
+    updateMap {
+      polylines.setPolylines(polylineObjects)
     }
   }
 
