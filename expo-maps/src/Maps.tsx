@@ -1,5 +1,12 @@
 import React from 'react';
-import { ExpoMapViewProps, MarkerProps, MarkerObject } from './Maps.types';
+import {
+  ExpoMapViewProps,
+  MarkerProps,
+  MarkerObject,
+  PolygonProps,
+  PolygonObject,
+  PolylineObject,
+} from './Maps.types';
 import {
   NativeExpoAppleMapsView,
   NativeExpoGoogleMapsView,
@@ -34,6 +41,16 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             latitude: child.props.latitude,
             longitude: child.props.longitude,
           } as MarkerObject;
+        } else if (instanceOfPolygon(child)) {
+          return {
+            type: 'polygon',
+            points: child.props.points,
+          } as PolygonObject;
+        } else if (instanceOfPolyline(child)) {
+          return {
+            type: 'polyline',
+            points: child.props.points,
+          } as PolylineObject;
         }
       }
       warnIfChildIsIncompatible(child);
@@ -41,9 +58,15 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
     });
 
     return {
-      markers: childrenArray
+      markers: (childrenArray
         ? childrenArray.filter((e) => e.type === 'marker')
-        : [],
+        : []) as MarkerObject[],
+      polygons: (childrenArray
+        ? childrenArray.filter((e) => e.type === 'polygon')
+        : []) as PolygonObject[],
+      polylines: (childrenArray
+        ? childrenArray.filter((e) => e.type === 'polyline')
+        : []) as PolylineObject[],
     };
   }
 
@@ -56,6 +79,8 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
           {...defaultNativeExpoMapViewProps}
           {...this.props}
           markers={childrenObj.markers}
+          polygons={childrenObj.polygons}
+          polylines={childrenObj.polylines}
         />
       );
     }
@@ -70,6 +95,8 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             : ''
         }
         markers={childrenObj.markers}
+        polygons={childrenObj.polygons}
+        polylines={childrenObj.polylines}
       />
     );
   }
@@ -91,6 +118,40 @@ function instanceOfMarker(child: any): child is Marker {
       'latitude',
       'longitude',
     ]);
+  }
+  return false;
+}
+
+export class Polygon extends React.Component<PolygonProps> {
+  render() {
+    return null;
+  }
+}
+
+function instanceOfPolygon(child: any): child is Polygon {
+  if (
+    'type' in child &&
+    String(child.type).includes('Polygon') &&
+    'props' in child
+  ) {
+    return arePropsKeysEqual(Object.keys(child.props), ['points']);
+  }
+  return false;
+}
+
+export class Polyline extends React.Component<PolygonProps> {
+  render() {
+    return null;
+  }
+}
+
+function instanceOfPolyline(child: any): child is Polyline {
+  if (
+    'type' in child &&
+    String(child.type).includes('Polyline') &&
+    'props' in child
+  ) {
+    return arePropsKeysEqual(Object.keys(child.props), ['points']);
   }
   return false;
 }

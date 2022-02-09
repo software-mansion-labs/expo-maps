@@ -10,3 +10,10 @@ enum class MapType(val value: String) {
 }
 
 data class MarkerObject( @Field val latitude: Double = 0.0, @Field val longitude: Double = 0.0) : Record {}
+
+data class Point(@Field val latitude: Double = 0.0, @Field val longitude: Double = 0.0) : Record {}
+
+data class PolygonObject(@Field val points: Array<Point> = emptyArray()) : Record {}
+
+data class PolylineObject(@Field val points: Array<Point> = emptyArray()) : Record {}
+

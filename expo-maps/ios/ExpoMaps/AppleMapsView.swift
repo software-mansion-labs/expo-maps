@@ -4,15 +4,22 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let mapView: MKMapView
   private let markers: AppleMapsMarkers
   private let gestures: AppleMapsGestures
+  private let polygons: AppleMapsPolygons
+  private let delegate: AppleMapsViewDelegate
+  private let polylines: AppleMapsPolylines
   
   init() {
     mapView = MKMapView()
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    markers = AppleMapsMarkers(mapView: self.mapView)
-    gestures = AppleMapsGestures(mapView: self.mapView)
+    markers = AppleMapsMarkers(mapView: mapView)
+    gestures = AppleMapsGestures(mapView: mapView)
+    polygons = AppleMapsPolygons(mapView: mapView)
+    polylines = AppleMapsPolylines(mapView: mapView)
+    delegate = AppleMapsViewDelegate()
+    mapView.delegate = delegate
 
     super.init(frame: CGRect.zero)
-    self.addSubview(self.mapView)
+    addSubview(mapView)
   }
 
   required init?(coder: NSCoder) {
@@ -45,10 +52,18 @@ public final class AppleMapsView: UIView, ExpoMapView {
     case .normal, .terrain:
       mapViewType = .standard
     }
-    self.mapView.mapType = mapViewType
+    mapView.mapType = mapViewType
   }
   
   func setMarkers(markerObjects: [MarkerObject]) {
-    self.markers.setMarkers(markerObjects: markerObjects)
+    markers.setMarkers(markerObjects: markerObjects)
+  }
+  
+  func setPolygons(polygonObjects: [PolygonObject]) {
+    polygons.setPolygons(polygonObjects: polygonObjects)
+  }
+  
+  func setPolylines(polylineObjects: [PolylineObject]) {
+    polylines.setPolylines(polylineObjects: polylineObjects)
   }
 }

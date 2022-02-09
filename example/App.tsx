@@ -15,6 +15,38 @@ export default function App() {
       >
         <Maps.Marker latitude={-33.86} longitude={151.2} />
         <Maps.Marker latitude={-32} longitude={152} />
+        <Maps.Polygon
+          points={[
+            {
+              latitude: -30,
+              longitude: 150,
+            },
+            {
+              latitude: -29,
+              longitude: 152,
+            },
+            {
+              latitude: -31,
+              longitude: 150,
+            },
+          ]}
+        />
+        <Maps.Polyline
+          points={[
+            {
+              latitude: -29,
+              longitude: 150,
+            },
+            {
+              latitude: -29,
+              longitude: 151,
+            },
+            {
+              latitude: -28,
+              longitude: 152,
+            },
+          ]}
+        />
       </Maps.ExpoMap>
       <StatusBar style="auto" />
     </View>

@@ -10,6 +10,8 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
     enableScrollGestures: boolean;
     enableTiltGestures: boolean;
     enableZoomGestures: boolean;
+    polygons: PolygonObject[];
+    polylines: PolylineObject[];
   }>;
 
 export type NativeExpoAppleMapsViewProps = ViewProps &
@@ -20,6 +22,8 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
     enableScrollGestures: boolean;
     enableTiltGestures: boolean;
     enableZoomGestures: boolean;
+    polygons: PolygonObject[];
+    polylines: PolylineObject[];
   }>;
 
 export type ExpoMapViewProps = ViewProps &
@@ -33,13 +37,27 @@ export type ExpoMapViewProps = ViewProps &
     enableZoomGestures?: boolean;
   }>;
 
-export type MarkerObject = {
-  type: string;
+export type Point = {
   latitude: number;
   longitude: number;
 };
 
-export type MarkerProps = PropsWithChildren<{
-  latitude: number;
-  longitude: number;
+export type MarkerObject = {
+  type: 'marker';
+} & Point;
+
+export type MarkerProps = PropsWithChildren<Point>;
+
+export type PolygonProps = PropsWithChildren<{
+  points: Point[];
 }>;
+
+export type PolygonObject = {
+  type: 'polygon';
+  points: Point[];
+};
+
+export type PolylineObject = {
+  type: 'polyline';
+  points: Point[];
+};

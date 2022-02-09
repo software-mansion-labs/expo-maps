@@ -6,4 +6,8 @@ protocol ExpoMapView: UIView {
   func setMapType(mapType: MapType)
   
   func setMarkers(markerObjects: [MarkerObject])
+  
+  func setPolygons(polygonObjects: [PolygonObject])
+  
+  func setPolylines(polylineObjects: [PolylineObject])
 }
