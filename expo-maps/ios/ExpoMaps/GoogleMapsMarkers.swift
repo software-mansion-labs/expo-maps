@@ -23,7 +23,7 @@ class GoogleMapsMarkers: Markers {
       marker.opacity = Float(markerObject.opacity)
       
       if (iconURL != nil) {
-        marker.icon = UIImage(contentsOfFile: iconURL!.path)
+        marker.icon = UIImage(contentsOfFile: iconURL!.standardized.path)
       } else {
         let color = markerObject.defaultMarkerColor.truncatingRemainder(dividingBy: Resources.HUE_WHEEL_MAX_VALUE) / Resources.HUE_WHEEL_MAX_VALUE
         marker.icon = GMSMarker.markerImage(with: UIColor(hue: color, saturation: 1, brightness: 1, alpha: 1))

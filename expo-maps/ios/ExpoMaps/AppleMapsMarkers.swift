@@ -19,10 +19,12 @@ class AppleMapsMarkers: NSObject, Markers {
     self.detachAndDeleteMarkers()
     for markerObject in markerObjects {
       let marker = ExpoAppleMapsAnnotation(coordinate: CLLocationCoordinate2D(latitude: markerObject.latitude, longitude: markerObject.longitude))
+      let iconURL = (markerObject.icon != nil) ? URL(fileURLWithPath: markerObject.icon!) : nil
       
       marker.title = markerObject.title
       marker.subtitle = markerObject.snippet
-      marker.glyphImage = markerObject.icon
+      marker.glyphImage = iconURL?.standardized.path
+      marker.isDraggable = markerObject.draggable
       marker.markerTintColor = markerObject.defaultMarkerColor
       marker.centerOffsetX = markerObject.anchorU ?? 0
       marker.centerOffsetY = markerObject.anchorV ?? 0

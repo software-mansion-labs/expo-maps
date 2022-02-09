@@ -2,18 +2,6 @@ import MapKit
 
 class AppleMapsViewDelegate : NSObject, MKMapViewDelegate {
   
-  func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
-    if let markerAnnotationView = view as? MKMarkerAnnotationView {
-      switch newState {
-      case .starting:
-          markerAnnotationView.dragState = .dragging
-      case .ending, .canceling:
-          markerAnnotationView.dragState = .none
-      default: break
-      }
-    }
-  }
-  
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
     
     if let annotation = annotation as? ExpoAppleMapsAnnotation {
