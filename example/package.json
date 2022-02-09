@@ -1,5 +1,5 @@
 {
-  "name": "exmaple",
+  "name": "example",
   "version": "1.0.0",
   "main": "index.js",
   "private": true,
@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
+    "@react-navigation/bottom-tabs": "^6.2.0",
+    "@react-navigation/native": "^6.0.8",
+    "@react-navigation/stack": "^6.1.1",
     "expo": "44.0.5",
     "expo-error-recovery": "3.0.4",
     "expo-maps": "*",
@@ -22,8 +25,8 @@
     "react-native": "0.64.3",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-reanimated": "~2.2.0",
-    "react-native-safe-area-context": "3.3.2",
-    "react-native-screens": "~3.8.0",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-screens": "^3.11.0",
     "react-native-web": "0.17.1"
   },
   "devDependencies": {

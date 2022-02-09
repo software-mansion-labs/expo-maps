@@ -328,7 +328,7 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.8.0):
+  - RNScreens (3.11.0):
     - React-Core
     - React-RCTImage
   - UMTaskManagerInterface (7.1.0):
