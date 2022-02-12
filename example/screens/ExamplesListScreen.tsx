@@ -30,7 +30,6 @@ export default function ExamplesListScreen({
             key={name}
             name={name}
             onExampleSelect={() => {
-              console.log('AAA');
               navigation.navigate(name, { provider: provider });
             }}
           />
