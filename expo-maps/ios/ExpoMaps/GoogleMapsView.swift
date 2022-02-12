@@ -16,7 +16,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     
     // random initial camera position
     // TODO: use prop as a source for initial camera position
-    let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
+    let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 3.0)
     mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     markers = GoogleMapsMarkers(mapView: mapView)

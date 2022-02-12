@@ -1,32 +1,38 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MapScreen from '../screens/MapScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import { Ionicons } from '@expo/vector-icons';
+import { createStackNavigator } from '@react-navigation/stack';
+import ExamplesListScreen from '../screens/ExamplesListScreen';
+import { CONCRETE_EXAMPLE_SCREENS } from '../constants/ConcreteExampleScreens';
 
-const Tab = createBottomTabNavigator();
+// TODO: definetly type this better!
+export interface Provider {
+  provider: 'apple' | 'google';
+}
+
+export type ExamplesStackNavigatorProps = {
+  ExamplesListScreen: undefined;
+  Markers: Provider;
+  Polygons: Provider;
+  Polylines: Provider;
+};
+
+const ExamplesStackNavigator =
+  createStackNavigator<ExamplesStackNavigatorProps>();
 
 export default function MainNavigator() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen
-        name="Map"
-        component={MapScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="map" color={color} size={size} />
-          ),
-        }}
+    <ExamplesStackNavigator.Navigator>
+      <ExamplesStackNavigator.Screen
+        name="ExamplesListScreen"
+        component={ExamplesListScreen}
+        options={{ title: 'ExpoMaps 🗺️' }}
       />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="settings" color={color} size={size} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+      {CONCRETE_EXAMPLE_SCREENS.map(({ name, screen }) => (
+        <ExamplesStackNavigator.Screen
+          name={name}
+          component={screen}
+          key={name}
+        />
+      ))}
+    </ExamplesStackNavigator.Navigator>
   );
 }
