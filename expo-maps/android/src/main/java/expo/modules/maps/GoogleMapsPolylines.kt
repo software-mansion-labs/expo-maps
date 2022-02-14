@@ -16,6 +16,22 @@ class GoogleMapsPolylines(map: GoogleMap) : Polylines {
       for (point in polylineObject.points) {
         polylineOptions.add(LatLng(point.latitude, point.longitude))
       }
+      if (polylineObject.color != null) {
+        polylineOptions.color(polylineObject.color)
+      }
+      if (polylineObject.width != null) {
+        polylineOptions.width(polylineObject.width)
+      }
+      if (polylineObject.pattern != null) {
+        polylineOptions.pattern(polylineObject.pattern)
+      }
+      if (polylineObject.jointType != null) {
+        polylineOptions.jointType(polylineObject.jointType)
+      }
+      if (polylineObject.capType != null) {
+        polylineOptions.startCap(polylineObject.capType)
+        polylineOptions.endCap(polylineObject.capType)
+      }
       val polyline = googleMap.addPolyline(polylineOptions)
       polylines.add(polyline)
     }

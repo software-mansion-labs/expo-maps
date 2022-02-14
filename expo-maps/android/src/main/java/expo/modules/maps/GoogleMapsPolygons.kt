@@ -1,9 +1,7 @@
 package expo.modules.maps
 
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Polygon
-import com.google.android.gms.maps.model.PolygonOptions
+import com.google.android.gms.maps.model.*
 
 class GoogleMapsPolygons(map: GoogleMap) : Polygons {
   private val polygons = mutableListOf<Polygon>()
@@ -16,6 +14,22 @@ class GoogleMapsPolygons(map: GoogleMap) : Polygons {
       for (point in polygonObject.points) {
         polygonOptions.add(LatLng(point.latitude, point.longitude))
       }
+      if (polygonObject.fillColor != null) {
+        polygonOptions.fillColor(polygonObject.fillColor)
+      }
+      if (polygonObject.strokeColor != null) {
+        polygonOptions.strokeColor(polygonObject.strokeColor)
+      }
+      if (polygonObject.strokeWidth != null) {
+        polygonOptions.strokeWidth(polygonObject.strokeWidth)
+      }
+      if (polygonObject.strokePattern != null) {
+        polygonOptions.strokePattern(polygonObject.strokePattern)
+      }
+      if(polygonObject.jointType != null){
+        polygonOptions.strokeJointType(polygonObject.jointType)
+      }
+
       val polygon = googleMap.addPolygon(polygonOptions)
       polygons.add(polygon)
     }
