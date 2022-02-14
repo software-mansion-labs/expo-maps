@@ -8,6 +8,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
 class GoogleMapsMarkers(map: GoogleMap) : Markers {
+
   private val markers = mutableListOf<Marker>()
   private var googleMap: GoogleMap = map
 

@@ -2,6 +2,7 @@ import GoogleMaps
 import CoreGraphics
 
 class GoogleMapsMarkers: Markers {
+  
   private let mapView: GMSMapView
   private var markers: [GMSMarker] = []
   
@@ -10,12 +11,12 @@ class GoogleMapsMarkers: Markers {
   }
   
   func setMarkers(markerObjects: [MarkerObject]) {
-    self.detachAndDeleteMarkers()
+    detachAndDeleteMarkers()
     for markerObject in markerObjects {
       let position = CLLocationCoordinate2D(latitude: markerObject.latitude, longitude: markerObject.longitude)
       let marker = GMSMarker(position: position)
       let iconURL = (markerObject.icon != nil) ? URL(fileURLWithPath: markerObject.icon!) : nil
-      marker.map = self.mapView
+      marker.map = mapView
       marker.title = markerObject.title
       marker.snippet = markerObject.snippet
       marker.isDraggable = markerObject.draggable
@@ -29,14 +30,14 @@ class GoogleMapsMarkers: Markers {
         marker.icon = GMSMarker.markerImage(with: UIColor(hue: color, saturation: 1, brightness: 1, alpha: 1))
       }
       
-      self.markers.append(marker)
+      markers.append(marker)
     }
   }
   
   internal func detachAndDeleteMarkers() {
-    for marker in self.markers {
+    for marker in markers {
       marker.map = nil
     }
-    self.markers = []
+    markers = []
   }
 }

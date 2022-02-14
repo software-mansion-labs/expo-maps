@@ -135,7 +135,10 @@ export class Polygon extends React.Component {
 }
 function instanceOfPolygon(child) {
     if ('type' in child && String(child.type).includes('Polygon') && 'props' in child) {
-        return true;
+        let props = Object.keys(child.props);
+        if (props.includes('points')) {
+            return true;
+        }
     }
     return false;
 }
@@ -146,7 +149,10 @@ export class Polyline extends React.Component {
 }
 function instanceOfPolyline(child) {
     if ('type' in child && String(child.type).includes('Polyline') && 'props' in child) {
-        return true;
+        let props = Object.keys(child.props);
+        if (props.includes('points')) {
+            return true;
+        }
     }
     return false;
 }

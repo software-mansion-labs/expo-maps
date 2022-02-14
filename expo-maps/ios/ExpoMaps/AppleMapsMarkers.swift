@@ -1,22 +1,20 @@
 import MapKit
 
 class AppleMapsMarkers: NSObject, Markers {
+  
   private let mapView: MKMapView
-  private let delegate: MKMapViewDelegate
   private var markers: [ExpoAppleMapsAnnotation] = []
   
   init(mapView: MKMapView) {
     self.mapView = mapView
-    self.delegate = AppleMapsViewDelegate()
-    self.mapView.delegate = delegate
-    self.mapView.register(
+    mapView.register(
       MKMarkerAnnotationView.self,
       forAnnotationViewWithReuseIdentifier: NSStringFromClass(ExpoAppleMapsAnnotation.self)
     )
   }
   
   func setMarkers(markerObjects: [MarkerObject]) {
-    self.detachAndDeleteMarkers()
+    detachAndDeleteMarkers()
     for markerObject in markerObjects {
       let marker = ExpoAppleMapsAnnotation(coordinate: CLLocationCoordinate2D(latitude: markerObject.latitude, longitude: markerObject.longitude))
       let iconURL = (markerObject.icon != nil) ? URL(fileURLWithPath: markerObject.icon!) : nil
@@ -30,15 +28,15 @@ class AppleMapsMarkers: NSObject, Markers {
       marker.centerOffsetY = markerObject.anchorV ?? 0
       marker.alpha = markerObject.opacity
       
-      self.mapView.addAnnotation(marker)
-      self.markers.append(marker)
+      mapView.addAnnotation(marker)
+      markers.append(marker)
     }
   }
   
   internal func detachAndDeleteMarkers() {
-    for marker in self.markers {
-      self.mapView.removeAnnotation(marker)
+    for marker in markers {
+      mapView.removeAnnotation(marker)
     }
-    self.markers = []
+    markers = []
   }
 }

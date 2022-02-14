@@ -16,21 +16,27 @@ class ExpoGoogleMapsModule : Module() {
             ?.registerLifecycleEventListener(googleMapsView.lifecycleEventListener)
         }
       }
+
       prop("enableRotateGestures") { view: GoogleMapsView, enable: Boolean ->
         view.setEnabledRotateGestures(enable)
       }
+
       prop("enableScrollGestures") { view: GoogleMapsView, enable: Boolean ->
         view.setEnabledScrollGestures(enable)
       }
+
       prop("enableTiltRotateGestures") { view: GoogleMapsView, enable: Boolean ->
         view.setEnabledTiltGestures(enable)
       }
+
       prop("enableZoomGestures") { view: GoogleMapsView, enable: Boolean ->
         view.setEnabledZoomGestures(enable)
       }
+
       prop("mapType") { view: GoogleMapsView, mapType: MapType ->
         view.setMapType(mapType)
       }
+
       prop("jsonStyleString") { view: GoogleMapsView, jsonStyleString: String ->
         view.setMapStyle(jsonStyleString)
       }

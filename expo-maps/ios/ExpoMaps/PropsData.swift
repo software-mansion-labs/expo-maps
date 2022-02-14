@@ -21,19 +21,14 @@ struct MarkerObject: Record {
 }
 
 struct Point: Record {
-  @Field
-  var latitude: CGFloat = 0
-
-  @Field
-  var longitude: CGFloat = 0
+  @Field var latitude: CGFloat = 0
+  @Field var longitude: CGFloat = 0
 }
 
 struct PolygonObject: Record {
-  @Field
-  var points: [Point] = []
+  @Field var points: [Point] = []
 }
 
 struct PolylineObject: Record {
-  @Field
-  var points: [Point] = []
+  @Field var points: [Point] = []
 }

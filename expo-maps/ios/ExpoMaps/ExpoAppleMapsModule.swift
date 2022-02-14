@@ -1,7 +1,7 @@
 import ExpoModulesCore
 
-
 public class ExpoAppleMapsModule: Module {
+  
   public func definition() -> ModuleDefinition {
     name("ExpoAppleMaps")
 
@@ -11,19 +11,19 @@ public class ExpoAppleMapsModule: Module {
       }
 
       prop("enableRotateGestures") { (view: AppleMapsView, enable: Bool) in
-          view.setEnabledRotateGestures(enabled: enable)
+        view.setEnabledRotateGestures(enabled: enable)
       }
 
       prop("enableScrollGestures") { (view: AppleMapsView, enable: Bool) in
-          view.setEnabledScrollGestures(enabled: enable)
+        view.setEnabledScrollGestures(enabled: enable)
       }
 
       prop("enableTiltGestures") { (view: AppleMapsView, enable: Bool) in
-          view.setEnabledTiltGestures(enabled: enable)
+        view.setEnabledTiltGestures(enabled: enable)
       }
       
       prop("enableZoomGestures") { (view: AppleMapsView, enable: Bool) in
-          view.setEnabledZoomGestures(enabled: enable)
+        view.setEnabledZoomGestures(enabled: enable)
       }
       
       prop("mapType") { (view: AppleMapsView, mapType: MapType) in
