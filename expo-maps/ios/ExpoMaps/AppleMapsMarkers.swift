@@ -1,27 +1,42 @@
 import MapKit
 
-class AppleMapsMarkers: Markers {
+class AppleMapsMarkers: NSObject, Markers {
+  
   private let mapView: MKMapView
-  private var markers: [MKPointAnnotation] = []
+  private var markers: [ExpoAppleMapsAnnotation] = []
   
   init(mapView: MKMapView) {
     self.mapView = mapView
+    mapView.register(
+      MKMarkerAnnotationView.self,
+      forAnnotationViewWithReuseIdentifier: NSStringFromClass(ExpoAppleMapsAnnotation.self)
+    )
   }
   
   func setMarkers(markerObjects: [MarkerObject]) {
-    self.detachAndDeleteMarkers()
+    detachAndDeleteMarkers()
     for markerObject in markerObjects {
-      let marker = MKPointAnnotation()
-      marker.coordinate = CLLocationCoordinate2D(latitude: markerObject.latitude, longitude: markerObject.longitude)
-      self.mapView.addAnnotation(marker)
-      self.markers.append(marker)
+      let marker = ExpoAppleMapsAnnotation(coordinate: CLLocationCoordinate2D(latitude: markerObject.latitude, longitude: markerObject.longitude))
+      let iconURL = (markerObject.icon != nil) ? URL(fileURLWithPath: markerObject.icon!) : nil
+      
+      marker.title = markerObject.title
+      marker.subtitle = markerObject.snippet
+      marker.glyphImage = iconURL?.standardized.path
+      marker.isDraggable = markerObject.draggable
+      marker.markerTintColor = markerObject.defaultMarkerColor
+      marker.centerOffsetX = markerObject.anchorU ?? 0
+      marker.centerOffsetY = markerObject.anchorV ?? 0
+      marker.alpha = markerObject.opacity
+      
+      mapView.addAnnotation(marker)
+      markers.append(marker)
     }
   }
   
   internal func detachAndDeleteMarkers() {
-    for marker in self.markers {
-      self.mapView.removeAnnotation(marker)
+    for marker in markers {
+      mapView.removeAnnotation(marker)
     }
-    self.markers = []
+    markers = []
   }
 }

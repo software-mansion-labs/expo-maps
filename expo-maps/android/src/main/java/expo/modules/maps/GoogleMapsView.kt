@@ -15,10 +15,10 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
   private lateinit var gestures: GoogleMapsGestures
-  private val mapReady = MutableStateFlow(false)
   private lateinit var markers: GoogleMapsMarkers
   private lateinit var polygons: GoogleMapsPolygons
   private lateinit var polylines: GoogleMapsPolylines
+  private val mapReady = MutableStateFlow(false)
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
@@ -32,7 +32,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   override fun onMapReady(googleMap: GoogleMap) {
     this.googleMap = googleMap
-    gestures = GoogleMapsGestures(this.googleMap)
+    gestures = GoogleMapsGestures(googleMap)
     markers = GoogleMapsMarkers(googleMap)
     polygons = GoogleMapsPolygons(googleMap)
     polylines = GoogleMapsPolylines(googleMap)
@@ -71,7 +71,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
       markers.setMarkers(markerObjects)
     }
   }
-  
+
   fun setEnabledRotateGestures(enabled: Boolean) {
     updateMap {
       gestures.setEnabledRotateGesture(enabled)
@@ -95,7 +95,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
       gestures.setEnabledZoomGesture(enabled)
     }
   }
-  
+
   fun setEnabledAllGestures(enabled: Boolean) {
     updateMap {
       gestures.setEnabledAllGestures(enabled)

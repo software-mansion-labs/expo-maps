@@ -1,22 +1,23 @@
 import MapKit
 
 public final class AppleMapsView: UIView, ExpoMapView {
+  
   private let mapView: MKMapView
+  private let delegate: MKMapViewDelegate
   private let markers: AppleMapsMarkers
   private let gestures: AppleMapsGestures
   private let polygons: AppleMapsPolygons
-  private let delegate: AppleMapsViewDelegate
   private let polylines: AppleMapsPolylines
   
   init() {
     mapView = MKMapView()
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    delegate = AppleMapsViewDelegate()
+    mapView.delegate = delegate
     markers = AppleMapsMarkers(mapView: mapView)
     gestures = AppleMapsGestures(mapView: mapView)
     polygons = AppleMapsPolygons(mapView: mapView)
     polylines = AppleMapsPolylines(mapView: mapView)
-    delegate = AppleMapsViewDelegate()
-    mapView.delegate = delegate
 
     super.init(frame: CGRect.zero)
     addSubview(mapView)

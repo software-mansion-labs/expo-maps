@@ -42,15 +42,46 @@ export type Point = {
   longitude: number;
 };
 
-export type MarkerObject = {
-  type: 'marker';
-} & Point;
-
-export type MarkerProps = PropsWithChildren<Point>;
+export type MarkerColor =
+  | 'azure'
+  | 'blue'
+  | 'cyan'
+  | 'green'
+  | 'magenta'
+  | 'orange'
+  | 'red'
+  | 'rose'
+  | 'violet'
+  | 'yellow';
 
 export type PolygonProps = PropsWithChildren<{
   points: Point[];
 }>;
+
+export type MarkerProps = PropsWithChildren<
+  {
+    title?: string;
+    snippet?: string;
+    icon?: string;
+    defaultMarkerColor?: number | MarkerColor;
+    draggable?: boolean;
+    anchorU?: number;
+    anchorV?: number;
+    opacity?: number;
+  } & Point
+>;
+
+export type MarkerObject = {
+  type: 'marker';
+  title?: string;
+  snippet?: string;
+  icon?: string;
+  defaultMarkerColor: number;
+  draggable: boolean;
+  anchorU?: number;
+  anchorV?: number;
+  opacity: number;
+} & Point;
 
 export type PolygonObject = {
   type: 'polygon';

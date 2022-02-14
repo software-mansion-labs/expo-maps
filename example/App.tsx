@@ -10,11 +10,16 @@ export default function App() {
     <View style={styles.container}>
       <Maps.ExpoMap
         style={{ flex: 1, width: '100%' }}
-        provider="apple"
-        googleMapsJsonStyleString={JSON.stringify(exampleMapStyle)}
-      >
-        <Maps.Marker latitude={-33.86} longitude={151.2} />
-        <Maps.Marker latitude={-32} longitude={152} />
+        provider='apple'
+        googleMapsJsonStyleString={JSON.stringify(exampleMapStyle)}>
+        <Maps.Marker
+          latitude={-33.86}
+          longitude={151.2}
+          icon={require('./assets/building.png')}
+          title='Sample Title'
+          snippet='Sample Snippet'
+        />
+        <Maps.Marker latitude={-32} longitude={152} defaultMarkerColor={'green'} draggable={true} />
         <Maps.Polygon
           points={[
             {
@@ -48,7 +53,7 @@ export default function App() {
           ]}
         />
       </Maps.ExpoMap>
-      <StatusBar style="auto" />
+      <StatusBar style='auto' />
     </View>
   );
 }

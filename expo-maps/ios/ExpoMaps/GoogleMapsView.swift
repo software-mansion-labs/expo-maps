@@ -1,9 +1,10 @@
 import GoogleMaps
 
 public final class GoogleMapsView: UIView, ExpoMapView {
+  
   private let mapView: GMSMapView
-  private let gestures: GoogleMapsGestures
   private let markers: GoogleMapsMarkers
+  private let gestures: GoogleMapsGestures
   private let polygons: GoogleMapsPolygons
   private let polylines: GoogleMapsPolylines
 
