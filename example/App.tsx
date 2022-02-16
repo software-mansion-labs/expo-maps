@@ -1,11 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useEffect } from 'react';
 import exampleMapStyle from './exampleMapStyle.json';
 
 import * as Maps from 'expo-maps';
+import * as Location from 'expo-location';
 
 export default function App() {
+
+  const getLocationPermissions = async () => {
+    await Location.requestForegroundPermissionsAsync();
+  }
+
+  useEffect(() => {
+    getLocationPermissions();
+  }, []);
+
+
   return (
     <View style={styles.container}>
       <Maps.ExpoMap

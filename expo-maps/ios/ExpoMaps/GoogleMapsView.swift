@@ -1,12 +1,13 @@
 import GoogleMaps
 
 public final class GoogleMapsView: UIView, ExpoMapView {
-  
+
   private let mapView: GMSMapView
   private let markers: GoogleMapsMarkers
   private let gestures: GoogleMapsGestures
   private let polygons: GoogleMapsPolygons
   private let polylines: GoogleMapsPolylines
+  private let controls: GoogleMapsControls
 
   init() {
     // just for now we do authentication here
@@ -22,6 +23,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     gestures = GoogleMapsGestures(mapView: mapView)
     polygons = GoogleMapsPolygons(mapView: mapView)
     polylines = GoogleMapsPolylines(mapView: mapView)
+    controls = GoogleMapsControls(mapView: mapView)
     
     super.init(frame: CGRect.zero)
     addSubview(mapView)
@@ -61,7 +63,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     }
     mapView.mapType = mapViewType
   }
-  
+
   func setMapStyle(jsonStyleString: String) {
     if (jsonStyleString.count != 0) {
       do {
@@ -77,12 +79,24 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   func setMarkers(markerObjects: [MarkerObject]) {
     markers.setMarkers(markerObjects: markerObjects)
   }
-  
+
   func setPolygons(polygonObjects: [PolygonObject]) {
     polygons.setPolygons(polygonObjects: polygonObjects)
   }
-  
+
   func setPolylines(polylineObjects: [PolylineObject]) {
     polylines.setPolylines(polylineObjects: polylineObjects)
+  }
+    
+  func setShowCompass(enable: Bool) {
+    controls.setShowCompass(enable: enable)
+  }
+
+  func setShowMyLocationButton(enable: Bool) {
+    controls.setShowMyLocationButton(enable: enable)
+  }
+
+  func setShowLevelPicker(enable: Bool) {
+    controls.setShowLevelPicker(enable: enable)
   }
 }

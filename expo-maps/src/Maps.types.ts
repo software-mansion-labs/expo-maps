@@ -4,6 +4,11 @@ import { PropsWithChildren } from 'react';
 export type NativeExpoGoogleMapsViewProps = ViewProps &
   PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
+    showZoomControls: boolean;
+    showCompass: boolean;
+    showMapToolbar: boolean;
+    showMyLocationButton: boolean;
+    showLevelPicker: boolean;
     jsonStyleString: string;
     markers: MarkerObject[];
     enableRotateGestures: boolean;
@@ -17,6 +22,9 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
 export type NativeExpoAppleMapsViewProps = ViewProps &
   PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
+    showCompass: boolean;
+    showMyLocationButton: boolean;
+    showLevelPicker: boolean;
     markers: MarkerObject[];
     enableRotateGestures: boolean;
     enableScrollGestures: boolean;
@@ -30,6 +38,11 @@ export type ExpoMapViewProps = ViewProps &
   PropsWithChildren<{
     provider?: 'google' | 'apple';
     mapType?: 'normal' | 'hybrid' | 'satellite' | 'terrain';
+    showZoomControls?: boolean;
+    showCompass?: boolean;
+    showMapToolbar?: boolean;
+    showMyLocationButton?: boolean;
+    showLevelPicker?: boolean;
     googleMapsJsonStyleString?: string;
     enableRotateGestures?: boolean;
     enableScrollGestures?: boolean;

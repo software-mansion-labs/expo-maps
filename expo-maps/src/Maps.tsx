@@ -16,6 +16,11 @@ export * from './Maps.types';
 
 interface DefaultNativeExpoMapViewProps {
   mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
+  showZoomControls: boolean;
+  showCompass: boolean;
+  showMapToolbar: boolean;
+  showMyLocationButton: boolean;
+  showLevelPicker: boolean;
   enableRotateGestures: boolean;
   enableScrollGestures: boolean;
   enableTiltGestures: boolean;
@@ -24,6 +29,11 @@ interface DefaultNativeExpoMapViewProps {
 
 const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   mapType: 'normal',
+  showZoomControls: true,
+  showCompass: true,
+  showMapToolbar: true,
+  showMyLocationButton: true,
+  showLevelPicker: true,
   enableRotateGestures: false,
   enableScrollGestures: true,
   enableTiltGestures: false,
