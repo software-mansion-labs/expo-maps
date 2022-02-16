@@ -86,9 +86,36 @@ export type MarkerObject = {
 export type PolygonObject = {
   type: 'polygon';
   points: Point[];
+  fillColor: number;
+  strokeColor: number;
+  strokeWidth: number;
+  strokePattern: PatternItem[];
+  jointType: 'bevel'|'default'|'round';
 };
 
 export type PolylineObject = {
   type: 'polyline';
   points: Point[];
+  color: number;
+  width: number;
+  pattern: PatternItem[];
+  jointType: 'bevel'|'default'|'round';
+  capType: 'butt'|'round'|'square';
+};
+
+export type PatternItem = 
+  Dot | Dash | Gap;
+
+export type Dot = {
+  type: 'dot';
+};
+
+export type Dash = {
+  type: 'dash';
+  length: number;
+};
+
+export type Gap = {
+  type: 'gap';
+  length: number;
 };
