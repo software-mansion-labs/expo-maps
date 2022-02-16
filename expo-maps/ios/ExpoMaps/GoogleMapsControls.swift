@@ -1,25 +1,25 @@
 import GoogleMaps
 
-class GoogleMapsControllers: Controllers {
+class GoogleMapsControls: Controls {
    private let mapView: GMSMapView
 
    init(mapView: GMSMapView) {
-     self.mapView = mapView
+    self.mapView = mapView
    }
 
    func setShowCompass(enable: Bool) {
-     self.mapView.settings.compassButton = enable
+     mapView.settings.compassButton = enable
    }
      
    func setShowMyLocationButton(enable: Bool) {
      if (enable == true) {
-        self.mapView.isMyLocationEnabled = true
+        mapView.isMyLocationEnabled = true
      }
-     self.mapView.settings.myLocationButton = enable
+     mapView.settings.myLocationButton = enable
    }
 
     func setShowLevelPicker(enable: Bool) {
       //appears whenever an indoor map is featured prominently
-      self.mapView.settings.indoorPicker = enable
+      mapView.settings.indoorPicker = enable
     }
  }

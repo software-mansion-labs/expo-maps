@@ -1,6 +1,6 @@
 import MapKit
 
-class AppleMapsControllers: Controllers {
+class AppleMapsControls: Controls {
    private let mapView: MKMapView
 
    init(mapView: MKMapView) {
@@ -8,12 +8,12 @@ class AppleMapsControllers: Controllers {
    }
 
    func setShowCompass(enable: Bool) {
-     self.mapView.showsCompass = enable
+     mapView.showsCompass = enable
    }
      
    func setShowMyLocationButton(enable: Bool) {
      if (enable == true) {
-        self.enableMyLocationButton()
+        enableMyLocationButton()
      }
    }
 
@@ -22,20 +22,20 @@ class AppleMapsControllers: Controllers {
     }
     
     private func enableMyLocationButton() {
-      self.mapView.showsUserLocation = true
-      let myLocationButton = MKUserTrackingButton(mapView: self.mapView)
+      mapView.showsUserLocation = true
+      let myLocationButton = MKUserTrackingButton(mapView: mapView)
       myLocationButton.layer.backgroundColor = UIColor(white: 1, alpha: 0.5).cgColor
       myLocationButton.layer.borderColor = UIColor.white.cgColor
       myLocationButton.layer.borderWidth = 1
       myLocationButton.layer.cornerRadius = 5
       myLocationButton.translatesAutoresizingMaskIntoConstraints = false
-      self.mapView.addSubview(myLocationButton)
+      mapView.addSubview(myLocationButton)
              
       NSLayoutConstraint.activate([
-          myLocationButton.topAnchor.constraint(equalTo: self.mapView.topAnchor,
+          myLocationButton.topAnchor.constraint(equalTo: mapView.topAnchor,
 constant: 100),
           myLocationButton.trailingAnchor.constraint(equalTo:
-self.mapView.trailingAnchor, constant: -10)
+mapView.trailingAnchor, constant: -10)
       ])
     }
  }

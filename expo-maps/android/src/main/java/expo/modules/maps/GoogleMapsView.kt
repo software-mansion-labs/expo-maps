@@ -18,8 +18,8 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var markers: GoogleMapsMarkers
   private lateinit var polygons: GoogleMapsPolygons
   private lateinit var polylines: GoogleMapsPolylines
+  private lateinit var controls: GoogleMapsControls
   private val mapReady = MutableStateFlow(false)
-  private lateinit var controllers: GoogleMapsControllers
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
@@ -37,7 +37,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     markers = GoogleMapsMarkers(googleMap)
     polygons = GoogleMapsPolygons(googleMap)
     polylines = GoogleMapsPolylines(googleMap)
-    controllers = GoogleMapsControllers(googleMap)
+    controls = GoogleMapsControls(googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
@@ -118,31 +118,31 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   fun setShowZoomControl(enable: Boolean) {
     updateMap {
-      controllers.setShowZoomControl(enable)
+      controls.setShowZoomControl(enable)
     }
   }
 
   fun setShowCompass(enable: Boolean) {
    updateMap {
-      controllers.setShowCompass(enable)
+      controls.setShowCompass(enable)
     }
   }
 
   fun setShowMapToolbar(enable: Boolean) {
     updateMap {
-      controllers.setShowMapToolbar(enable)
+      controls.setShowMapToolbar(enable)
     }
   }
 
   fun setShowMyLocationButton(enable: Boolean) {
     updateMap {
-      controllers.setShowMyLocationButton(enable)
+      controls.setShowMyLocationButton(enable)
     }
   }
 
   fun setShowLevelPicker(enable: Boolean) {
     updateMap {
-      controllers.setShowLevelPicker(enable)
+      controls.setShowLevelPicker(enable)
     }
   }
 

@@ -8,7 +8,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let gestures: AppleMapsGestures
   private let polygons: AppleMapsPolygons
   private let polylines: AppleMapsPolylines
-  private let controllers: AppleMapsControllers
+  private let controls: AppleMapsControls
 
   init() {
     mapView = MKMapView()
@@ -19,7 +19,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
     gestures = AppleMapsGestures(mapView: mapView)
     polygons = AppleMapsPolygons(mapView: mapView)
     polylines = AppleMapsPolylines(mapView: mapView)
-    controllers = AppleMapsControllers(mapView: mapView)
+    controls = AppleMapsControls(mapView: mapView)
 
     super.init(frame: CGRect.zero)
     addSubview(mapView)
@@ -68,19 +68,17 @@ public final class AppleMapsView: UIView, ExpoMapView {
 
   func setPolylines(polylineObjects: [PolylineObject]) {
     polylines.setPolylines(polylineObjects: polylineObjects)
-    self.mapView.mapType = mapViewType
-
   }
 
   func setShowCompass(enable: Bool) {
-    self.controllers.setShowCompass(enable: enable)
+    controls.setShowCompass(enable: enable)
   }
 
   func setShowMyLocationButton(enable: Bool) {
-    self.controllers.setShowMyLocationButton(enable: enable)
+    controls.setShowMyLocationButton(enable: enable)
   }
     
   func setShowLevelPicker(enable: Bool) {
-    self.controllers.setShowLevelPicker(enable: enable)
+    controls.setShowLevelPicker(enable: enable)
   }
 }

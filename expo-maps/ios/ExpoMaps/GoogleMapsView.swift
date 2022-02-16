@@ -7,7 +7,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let gestures: GoogleMapsGestures
   private let polygons: GoogleMapsPolygons
   private let polylines: GoogleMapsPolylines
-  private let controllers: GoogleMapsControllers
+  private let controls: GoogleMapsControls
 
   init() {
     // just for now we do authentication here
@@ -23,7 +23,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     gestures = GoogleMapsGestures(mapView: mapView)
     polygons = GoogleMapsPolygons(mapView: mapView)
     polylines = GoogleMapsPolylines(mapView: mapView)
-    controllers = GoogleMapsControllers(mapView: mapView)
+    controls = GoogleMapsControls(mapView: mapView)
     
     super.init(frame: CGRect.zero)
     addSubview(mapView)
@@ -89,14 +89,14 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   }
     
   func setShowCompass(enable: Bool) {
-    self.controllers.setShowCompass(enable: enable)
+    controls.setShowCompass(enable: enable)
   }
 
   func setShowMyLocationButton(enable: Bool) {
-    self.controllers.setShowMyLocationButton(enable: enable)
+    controls.setShowMyLocationButton(enable: enable)
   }
 
   func setShowLevelPicker(enable: Bool) {
-    self.controllers.setShowLevelPicker(enable: enable)
+    controls.setShowLevelPicker(enable: enable)
   }
 }

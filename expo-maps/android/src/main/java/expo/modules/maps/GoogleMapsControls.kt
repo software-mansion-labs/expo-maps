@@ -2,7 +2,7 @@ package expo.modules.maps
 
 import com.google.android.gms.maps.GoogleMap
 
-class GoogleMapsControllers(map: GoogleMap): Controllers {
+class GoogleMapsControls(map: GoogleMap): Controls {
     private var googleMap: GoogleMap = map
 
     override fun setShowZoomControl(enable: Boolean) {

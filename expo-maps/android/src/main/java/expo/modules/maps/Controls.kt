@@ -1,6 +1,6 @@
 package expo.modules.maps
 
-interface Controllers {
+interface Controls {
     fun setShowZoomControl(enable: Boolean)
     fun setShowCompass(enable: Boolean)
     fun setShowMapToolbar(enable: Boolean)

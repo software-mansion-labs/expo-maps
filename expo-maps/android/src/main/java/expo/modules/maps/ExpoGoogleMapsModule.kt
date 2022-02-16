@@ -49,7 +49,6 @@ class ExpoGoogleMapsModule : Module() {
         view.setShowMapToolbar(enable)
       }
 
-      //TODO: enable MyLocation layer, otherwise My location button will not be displayed
       prop("showMyLocationButton") { view: GoogleMapsView, enable: Boolean ->
         view.setShowMyLocationButton(enable)
       }
