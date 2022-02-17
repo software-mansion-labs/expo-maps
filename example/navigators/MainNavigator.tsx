@@ -2,10 +2,11 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import ExamplesListScreen from '../screens/ExamplesListScreen';
 import { CONCRETE_EXAMPLE_SCREENS } from '../constants/ConcreteExampleScreens';
+import { Providers } from 'expo-maps/build/Maps.types';
 
 // TODO: definetly type this better!
 interface ProviderProp {
-  provider: 'apple' | 'google';
+  provider: Providers;
 }
 
 export type ExamplesStackNavigatorProps = {

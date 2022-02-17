@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 interface ExampleListItem {
-  onExampleSelect: () => any;
+  onExampleSelect: () => void;
   name: string;
 }
 

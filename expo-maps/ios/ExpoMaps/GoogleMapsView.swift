@@ -14,10 +14,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     // should be moved to module's function
     GMSServices.provideAPIKey("AIzaSyDbgaRNTr3PhYdj_PL7jY_o9u3R08Gf8Ao")
     
-    // random initial camera position
-    // TODO: use prop as a source for initial camera position
-    let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 3.0)
-    mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+    mapView = GMSMapView(frame: CGRect.zero)
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     markers = GoogleMapsMarkers(mapView: mapView)
     gestures = GoogleMapsGestures(mapView: mapView)

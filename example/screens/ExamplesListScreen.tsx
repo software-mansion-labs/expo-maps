@@ -11,7 +11,7 @@ import type { StackScreenProps } from '@react-navigation/stack';
 import ExamplesListItem from '../components/ExamplesListItem';
 import { ExamplesStackNavigatorProps } from '../navigators/MainNavigator';
 import { CONCRETE_EXAMPLE_SCREENS } from '../constants/ConcreteExampleScreens';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Providers } from 'expo-maps/build/Maps.types';
 
 type ExamplesListScreenProps = StackScreenProps<
   ExamplesStackNavigatorProps,
@@ -21,7 +21,7 @@ type ExamplesListScreenProps = StackScreenProps<
 export default function ExamplesListScreen({
   navigation,
 }: ExamplesListScreenProps) {
-  const [provider, setProvider] = useState<'google' | 'apple'>('google');
+  const [provider, setProvider] = useState<Providers>('google');
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
@@ -36,9 +36,10 @@ export default function ExamplesListScreen({
         ))}
       </ScrollView>
       {Platform.OS === 'ios' && (
-        <SafeAreaView style={styles.changeProviderToggle}>
+        <View style={styles.changeProviderToggle}>
           <Text>Use Apple Maps?</Text>
           <Switch
+            style={{ marginTop: 5 }}
             value={provider === 'apple'}
             onChange={() =>
               provider === 'google'
@@ -46,7 +47,7 @@ export default function ExamplesListScreen({
                 : setProvider('google')
             }
           />
-        </SafeAreaView>
+        </View>
       )}
     </View>
   );
@@ -54,9 +55,9 @@ export default function ExamplesListScreen({
 
 const styles = StyleSheet.create({
   changeProviderToggle: {
-    justifyContent: 'center',
+    paddingTop: 20,
     alignItems: 'center',
     backgroundColor: 'white',
-    height: 120,
+    height: 100,
   },
 });

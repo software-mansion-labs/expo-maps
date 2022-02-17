@@ -93,30 +93,23 @@ export type PolygonProps = PropsWithChildren<{
   points: Point[];
 }>;
 
-export type MarkerProps = PropsWithChildren<
-  {
-    title?: string;
-    snippet?: string;
-    icon?: string;
-    defaultMarkerColor?: number | MarkerColor;
-    draggable?: boolean;
-    anchorU?: number;
-    anchorV?: number;
-    opacity?: number;
-  } & Point
->;
-
-export type MarkerObject = {
-  type: 'marker';
+export type MarkerOptions = {
   title?: string;
   snippet?: string;
   icon?: string;
-  defaultMarkerColor: number;
-  draggable: boolean;
+  defaultMarkerColor?: number | MarkerColor;
+  draggable?: boolean;
   anchorU?: number;
   anchorV?: number;
-  opacity: number;
-} & Point;
+  opacity?: number;
+};
+
+export type MarkerProps = PropsWithChildren<MarkerOptions & Point>;
+
+export type MarkerObject = {
+  type: 'marker';
+} & MarkerOptions &
+  Point;
 
 export type PolygonObject = {
   type: 'polygon';
