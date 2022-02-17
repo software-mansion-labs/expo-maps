@@ -1,6 +1,5 @@
 import React from 'react';
 import { ExpoMapViewProps, MarkerProps, PolygonProps } from './Maps.types';
-export * from './Maps.types';
 export declare class ExpoMap extends React.Component<ExpoMapViewProps> {
     state: {
         markers: never[];

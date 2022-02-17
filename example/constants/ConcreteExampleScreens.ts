@@ -5,7 +5,7 @@ import Polylines from '../screens/Polylines';
 // TODO: Type this better
 interface ConcreteExampleScreen {
   name: 'Markers' | 'Polygons' | 'Polylines';
-  screen: () => JSX.Element;
+  screen: (props: any) => JSX.Element;
 }
 
 export const CONCRETE_EXAMPLE_SCREENS: Array<ConcreteExampleScreen> = [

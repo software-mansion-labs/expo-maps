@@ -4,15 +4,15 @@ import ExamplesListScreen from '../screens/ExamplesListScreen';
 import { CONCRETE_EXAMPLE_SCREENS } from '../constants/ConcreteExampleScreens';
 
 // TODO: definetly type this better!
-export interface Provider {
+interface ProviderProp {
   provider: 'apple' | 'google';
 }
 
 export type ExamplesStackNavigatorProps = {
   ExamplesListScreen: undefined;
-  Markers: Provider;
-  Polygons: Provider;
-  Polylines: Provider;
+  Markers: ProviderProp;
+  Polygons: ProviderProp;
+  Polylines: ProviderProp;
 };
 
 const ExamplesStackNavigator =
