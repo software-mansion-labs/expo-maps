@@ -17,6 +17,7 @@ export type ExamplesStackNavigatorProps = {
   Controls: undefined;
   'Google Maps Styling': undefined;
   Gestures: undefined;
+  'Map Types': undefined;
 };
 
 const ExamplesStackNavigator =

@@ -4924,7 +4924,15 @@ expo-modules-autolinking@0.5.5:
     find-up "^5.0.0"
     fs-extra "^9.1.0"
 
-expo-modules-core@0.6.4, expo-modules-core@0.7.0:
+expo-modules-core@0.6.4:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.6.4.tgz#dd0265da98a92bd8004c83d9953136e4820f1bef"
+  integrity sha512-I5MvSZHjww4Jfvob/woCbI0ZLZIUBmhoiLeZsMJoWJuWa8QmtxXjI+4eRjaDB7+RxNVhrnVcmRjQPYG/5HepVg==
+  dependencies:
+    compare-versions "^3.4.0"
+    invariant "^2.2.4"
+
+expo-modules-core@0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.7.0.tgz#ab9ff51410a1dca22087a7db5a95ada2693b6d5a"
   integrity sha512-6jd7m2J7kMsnpGtWb4KF1wDf/57+4Tnf1l0kMoww8iRsY5al7QRXhwdy5mSqQ2TaJWUspudsWtFWK5IlYw5NXA==
@@ -9121,6 +9129,11 @@ react-native-codegen@^0.0.6:
     flow-parser "^0.121.0"
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
+
+react-native-dropdown-picker@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-dropdown-picker/-/react-native-dropdown-picker-5.3.0.tgz#a1043890846e07a197ed882ff922299b46dd4a7a"
+  integrity sha512-LUctVMAWiDir1X0WrFX1784psvqzBXRxRujYbvlvKz1Owa6cujrVN98rP356hIXFzX19E7SkbA942fGfMvoEWQ==
 
 react-native-gesture-handler@~1.10.2:
   version "1.10.3"

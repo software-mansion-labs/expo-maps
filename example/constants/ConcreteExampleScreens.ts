@@ -4,7 +4,7 @@ import GoogleMapsStyling from '../screens/GoogleMapsStyling';
 import Markers from '../screens/Markers';
 import Polygons from '../screens/Polygons';
 import Polylines from '../screens/Polylines';
-
+import MapTypesExample from '../screens/MapTypesExample';
 // TODO: Type this better
 interface ConcreteExampleScreen {
   name:
@@ -13,7 +13,8 @@ interface ConcreteExampleScreen {
     | 'Polylines'
     | 'Controls'
     | 'Google Maps Styling'
-    | 'Gestures';
+    | 'Gestures'
+    | 'Map Types';
   screen: (props: any) => JSX.Element;
 }
 
@@ -41,5 +42,9 @@ export const CONCRETE_EXAMPLE_SCREENS: Array<ConcreteExampleScreen> = [
   {
     name: 'Gestures',
     screen: Gestures,
+  },
+  {
+    name: 'Map Types',
+    screen: MapTypesExample,
   },
 ];
