@@ -122,3 +122,5 @@ export type PolylineObject = {
 };
 
 export type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures;
+
+export type ExpoMapState = Markers & Polygons & Polylines;

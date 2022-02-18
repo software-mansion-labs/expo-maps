@@ -69,3 +69,4 @@ export declare type PolylineObject = {
     points: Point[];
 };
 export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures;
+export declare type ExpoMapState = Markers & Polygons & Polylines;

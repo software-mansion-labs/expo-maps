@@ -8,6 +8,7 @@ import {
   PolygonObject,
   PolylineObject,
   DefaultNativeExpoMapViewProps,
+  ExpoMapState,
 } from './Maps.types';
 import {
   NativeExpoAppleMapsView,
@@ -30,18 +31,26 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
 };
 
 export class ExpoMap extends React.Component<ExpoMapViewProps> {
-  state = {
+  state: ExpoMapState = {
     markers: [],
     polygons: [],
     polylines: [],
   };
+  _ismounted = false;
 
   componentDidMount() {
     this.mapChildren();
+    this._ismounted = true;
   }
 
-  componentDidUpdate() {
-    this.mapChildren();
+  componentWillUnmount() {
+    this._ismounted = false;
+  }
+
+  componentDidUpdate(_, prevState: ExpoMapState) {
+    if (Object.is(this.state, prevState)) {
+      this.mapChildren();
+    }
   }
 
   private async mapChildren() {
@@ -101,11 +110,14 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
 
     if (childrenArray != undefined) {
       let propObjects = await Promise.all(childrenArray);
-      this.setState({
-        markers: propObjects.filter((elem) => elem?.type === 'marker'),
-        polygons: propObjects.filter((elem) => elem?.type === 'polygon'),
-        polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
-      });
+      if (this._ismounted) {
+        console.log('Setting state');
+        this.setState({
+          markers: propObjects.filter((elem) => elem?.type === 'marker'),
+          polygons: propObjects.filter((elem) => elem?.type === 'polygon'),
+          polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
+        });
+      }
     }
   }
 

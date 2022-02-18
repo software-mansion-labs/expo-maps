@@ -20,11 +20,18 @@ export class ExpoMap extends React.Component {
         polygons: [],
         polylines: [],
     };
+    _ismounted = false;
     componentDidMount() {
         this.mapChildren();
+        this._ismounted = true;
     }
-    componentDidUpdate() {
-        this.mapChildren();
+    componentWillUnmount() {
+        this._ismounted = false;
+    }
+    componentDidUpdate(_, prevState) {
+        if (Object.is(this.state, prevState)) {
+            this.mapChildren();
+        }
     }
     async mapChildren() {
         const childrenArray = React.Children.map(this.props.children, async (child) => {
@@ -76,11 +83,14 @@ export class ExpoMap extends React.Component {
         });
         if (childrenArray != undefined) {
             let propObjects = await Promise.all(childrenArray);
-            this.setState({
-                markers: propObjects.filter((elem) => elem?.type === 'marker'),
-                polygons: propObjects.filter((elem) => elem?.type === 'polygon'),
-                polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
-            });
+            if (this._ismounted) {
+                console.log('Setting state');
+                this.setState({
+                    markers: propObjects.filter((elem) => elem?.type === 'marker'),
+                    polygons: propObjects.filter((elem) => elem?.type === 'polygon'),
+                    polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
+                });
+            }
         }
     }
     render() {
