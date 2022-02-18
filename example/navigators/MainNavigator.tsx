@@ -14,6 +14,9 @@ export type ExamplesStackNavigatorProps = {
   Markers: ProviderProp;
   Polygons: ProviderProp;
   Polylines: ProviderProp;
+  Controls: ProviderProp;
+  'Google Maps Styling': ProviderProp;
+  Gestures: ProviderProp;
 };
 
 const ExamplesStackNavigator =

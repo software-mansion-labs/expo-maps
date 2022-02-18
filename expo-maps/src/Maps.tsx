@@ -121,6 +121,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
   }
 
   render() {
+    console.log(this.props.provider);
     if (Platform.OS == 'ios' && this.props.provider == 'apple') {
       return (
         <NativeExpoAppleMapsView
