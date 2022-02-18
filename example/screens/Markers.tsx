@@ -1,22 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
-import { ExamplesStackNavigatorProps } from '../navigators/MainNavigator';
 
 import * as Maps from 'expo-maps';
+import ProviderContext from '../context/ProviderContext';
 
-type MarkersScreenProps = StackScreenProps<
-  ExamplesStackNavigatorProps,
-  'Markers'
->;
-
-export default function Markers({ route }: MarkersScreenProps) {
+export default function Markers() {
+  const provider = useContext(ProviderContext);
   return (
     <View style={styles.container}>
-      <Maps.ExpoMap
-        style={{ flex: 1, width: '100%' }}
-        provider={route.params.provider}
-      >
+      <Maps.ExpoMap style={{ flex: 1, width: '100%' }} provider={provider}>
         <Maps.Marker
           latitude={48.85}
           longitude={2.35}

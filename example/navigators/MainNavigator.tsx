@@ -11,12 +11,12 @@ interface ProviderProp {
 
 export type ExamplesStackNavigatorProps = {
   ExamplesListScreen: undefined;
-  Markers: ProviderProp;
-  Polygons: ProviderProp;
-  Polylines: ProviderProp;
-  Controls: ProviderProp;
-  'Google Maps Styling': ProviderProp;
-  Gestures: ProviderProp;
+  Markers: undefined;
+  Polygons: undefined;
+  Polylines: undefined;
+  Controls: undefined;
+  'Google Maps Styling': undefined;
+  Gestures: undefined;
 };
 
 const ExamplesStackNavigator =

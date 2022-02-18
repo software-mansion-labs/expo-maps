@@ -1,22 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { ExamplesStackNavigatorProps } from '../navigators/MainNavigator';
-import { StackScreenProps } from '@react-navigation/stack';
+import ProviderContext from '../context/ProviderContext';
 
 import * as Maps from 'expo-maps';
 
-type PolylinesScreenProps = StackScreenProps<
-  ExamplesStackNavigatorProps,
-  'Polylines'
->;
-
-export default function Polygons({ route }: PolylinesScreenProps) {
+export default function Polygons() {
+  const provider = useContext(ProviderContext);
   return (
     <View style={styles.container}>
-      <Maps.ExpoMap
-        style={{ flex: 1, width: '100%' }}
-        provider={route.params.provider}
-      >
+      <Maps.ExpoMap style={{ flex: 1, width: '100%' }} provider={provider}>
         <Maps.Polyline
           points={[
             { latitude: 51.5, longitude: -0.13 },

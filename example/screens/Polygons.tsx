@@ -1,22 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { ExamplesStackNavigatorProps } from '../navigators/MainNavigator';
-import { StackScreenProps } from '@react-navigation/stack';
 
 import * as Maps from 'expo-maps';
+import ProviderContext from '../context/ProviderContext';
 
-type PolygonsScreenProps = StackScreenProps<
-  ExamplesStackNavigatorProps,
-  'Polygons'
->;
-
-export default function Polygons({ route }: PolygonsScreenProps) {
+export default function Polygons() {
+  const provider = useContext(ProviderContext);
   return (
     <View style={styles.container}>
-      <Maps.ExpoMap
-        style={{ flex: 1, width: '100%' }}
-        provider={route.params.provider}
-      >
+      <Maps.ExpoMap style={{ flex: 1, width: '100%' }} provider={provider}>
         <Maps.Polygon
           points={[
             { latitude: 52, longitude: 13 },

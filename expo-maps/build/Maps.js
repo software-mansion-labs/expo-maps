@@ -93,7 +93,6 @@ export class ExpoMap extends React.Component {
         }
     }
     render() {
-        console.log(this.props.provider);
         if (Platform.OS == 'ios' && this.props.provider == 'apple') {
             return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines }));
         }

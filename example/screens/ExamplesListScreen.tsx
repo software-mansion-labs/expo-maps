@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Switch,
-  ScrollView,
-  Text,
-  StyleSheet,
-  Platform,
-} from 'react-native';
+import { View, ScrollView, Platform } from 'react-native';
 import type { StackScreenProps } from '@react-navigation/stack';
 import ExamplesListItem from '../components/ExamplesListItem';
 import { ExamplesStackNavigatorProps } from '../navigators/MainNavigator';
@@ -20,8 +13,8 @@ type ExamplesListScreenProps = StackScreenProps<
 
 export default function ExamplesListScreen({
   navigation,
+  route,
 }: ExamplesListScreenProps) {
-  const [provider, setProvider] = useState<Providers>('google');
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
@@ -30,34 +23,11 @@ export default function ExamplesListScreen({
             key={name}
             name={name}
             onExampleSelect={() => {
-              navigation.navigate(name, { provider: provider });
+              navigation.navigate(name);
             }}
           />
         ))}
       </ScrollView>
-      {Platform.OS === 'ios' && (
-        <View style={styles.changeProviderToggle}>
-          <Text>Use Apple Maps?</Text>
-          <Switch
-            style={{ marginTop: 5 }}
-            value={provider === 'apple'}
-            onChange={() =>
-              provider === 'google'
-                ? setProvider('apple')
-                : setProvider('google')
-            }
-          />
-        </View>
-      )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  changeProviderToggle: {
-    paddingTop: 20,
-    alignItems: 'center',
-    backgroundColor: 'white',
-    height: 100,
-  },
-});
