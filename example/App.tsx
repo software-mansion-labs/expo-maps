@@ -35,6 +35,7 @@ export default function App() {
               longitude: 150,
             },
           ]}
+          strokeWidth = {10}
         />
         <Maps.Polyline
           points={[
