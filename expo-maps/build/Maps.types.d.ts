@@ -37,6 +37,19 @@ export declare type Point = {
 export declare type MarkerColor = 'azure' | 'blue' | 'cyan' | 'green' | 'magenta' | 'orange' | 'red' | 'rose' | 'violet' | 'yellow';
 export declare type PolygonProps = PropsWithChildren<{
     points: Point[];
+    fillColor?: string;
+    strokeColor?: string;
+    strokeWidth?: number;
+    strokePattern?: PatternItem[];
+    jointType?: 'bevel' | 'default' | 'round';
+}>;
+export declare type PolylineProps = PropsWithChildren<{
+    points: Point[];
+    color?: string;
+    width?: number;
+    pattern?: PatternItem[];
+    jointType?: 'bevel' | 'default' | 'round';
+    capType?: 'butt' | 'round' | 'square';
 }>;
 export declare type MarkerProps = PropsWithChildren<{
     title?: string;
@@ -62,8 +75,27 @@ export declare type MarkerObject = {
 export declare type PolygonObject = {
     type: 'polygon';
     points: Point[];
+    fillColor?: string;
+    strokeColor?: string;
+    strokeWidth?: number;
+    strokePattern?: PatternItem[];
+    jointType?: 'bevel' | 'default' | 'round';
 };
 export declare type PolylineObject = {
     type: 'polyline';
     points: Point[];
+    color?: string;
+    width?: number;
+    pattern?: PatternItem[];
+    jointType?: 'bevel' | 'default' | 'round';
+    capType?: 'butt' | 'round' | 'square';
+};
+/**
+ * PatternItem is used to define a repeating pattern for polyline and polygon line.
+ * PatternItem with type 'stroke' and length 0 will represent a dot.
+ * Use an array of PatternItem to define a pattern.
+ */
+export declare type PatternItem = {
+    type: 'stroke' | 'gap';
+    length: number;
 };

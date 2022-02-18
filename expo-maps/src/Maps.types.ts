@@ -56,6 +56,20 @@ export type MarkerColor =
 
 export type PolygonProps = PropsWithChildren<{
   points: Point[];
+  fillColor?: string;
+  strokeColor?: string;
+  strokeWidth?: number;
+  strokePattern?: PatternItem[];
+  jointType?: 'bevel'|'default'|'round';
+}>;
+
+export type PolylineProps = PropsWithChildren<{
+  points: Point[];
+  color?: string;
+  width?: number;
+  pattern?: PatternItem[];
+  jointType?: 'bevel'|'default'|'round';
+  capType?: 'butt'|'round'|'square';
 }>;
 
 export type MarkerProps = PropsWithChildren<
@@ -86,36 +100,28 @@ export type MarkerObject = {
 export type PolygonObject = {
   type: 'polygon';
   points: Point[];
-  fillColor: number;
-  strokeColor: number;
-  strokeWidth: number;
-  strokePattern: PatternItem[];
-  jointType: 'bevel'|'default'|'round';
+  fillColor?: string;
+  strokeColor?: string;
+  strokeWidth?: number;
+  strokePattern?: PatternItem[];
+  jointType?: 'bevel'|'default'|'round';
 };
 
 export type PolylineObject = {
   type: 'polyline';
   points: Point[];
-  color: number;
-  width: number;
-  pattern: PatternItem[];
-  jointType: 'bevel'|'default'|'round';
-  capType: 'butt'|'round'|'square';
+  color?: string;
+  width?: number;
+  pattern?: PatternItem[];
+  jointType?: 'bevel'|'default'|'round';
+  capType?: 'butt'|'round'|'square';
 };
-
-export type PatternItem = 
-  Dot | Dash | Gap;
-
-export type Dot = {
-  type: 'dot';
-};
-
-export type Dash = {
-  type: 'dash';
-  length: number;
-};
-
-export type Gap = {
-  type: 'gap';
+/**
+ * PatternItem is used to define a repeating pattern for polyline and polygon line.
+ * PatternItem with type 'stroke' and length 0 will represent a dot.
+ * Use an array of PatternItem to define a pattern.
+ */
+export type PatternItem = {
+  type: 'stroke' | 'gap';
   length: number;
 };

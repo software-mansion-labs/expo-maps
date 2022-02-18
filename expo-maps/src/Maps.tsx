@@ -5,6 +5,7 @@ import {
   MarkerObject,
   MarkerColor,
   PolygonProps,
+  PolylineProps,
   PolygonObject,
   PolylineObject,
 } from './Maps.types';
@@ -76,11 +77,21 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
           return {
             type: 'polygon',
             points: child.props.points,
+            fillColor: child.props.fillColor,
+            strokeColor: child.props.strokeColor,
+            strokeWidth: child.props.strokeWidth,
+            strokePattern: child.props.strokePattern,
+            jointType: child.props.jointType,
           } as PolygonObject;
         } else if (instanceOfPolyline(child)) {
           return {
             type: 'polyline',
             points: child.props.points,
+            color: child.props.color,
+            width: child.props.width,
+            pattern: child.props.pattern,
+            jointType: child.props.jointType,
+            capType: child.props.capType,
           } as PolylineObject;
         }
       }
@@ -189,7 +200,7 @@ function instanceOfPolygon(child: any): child is Polygon {
   return false;
 }
 
-export class Polyline extends React.Component<PolygonProps> {
+export class Polyline extends React.Component<PolylineProps> {
   render() {
     return null;
   }

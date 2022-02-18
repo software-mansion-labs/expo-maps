@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExpoMapViewProps, MarkerProps, PolygonProps } from './Maps.types';
+import { ExpoMapViewProps, MarkerProps, PolygonProps, PolylineProps } from './Maps.types';
 export * from './Maps.types';
 export declare class ExpoMap extends React.Component<ExpoMapViewProps> {
     state: {
@@ -17,6 +17,6 @@ export declare class Marker extends React.Component<MarkerProps> {
 export declare class Polygon extends React.Component<PolygonProps> {
     render(): null;
 }
-export declare class Polyline extends React.Component<PolygonProps> {
+export declare class Polyline extends React.Component<PolylineProps> {
     render(): null;
 }
