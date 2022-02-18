@@ -7,6 +7,7 @@ export declare class ExpoMap extends React.Component<ExpoMapViewProps> {
         polylines: never[];
     };
     componentDidMount(): void;
+    componentDidUpdate(): void;
     private mapChildren;
     render(): JSX.Element;
 }

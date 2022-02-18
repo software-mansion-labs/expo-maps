@@ -40,6 +40,10 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
     this.mapChildren();
   }
 
+  componentDidUpdate() {
+    this.mapChildren();
+  }
+
   private async mapChildren() {
     const childrenArray = React.Children.map(
       this.props.children,

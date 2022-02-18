@@ -23,6 +23,9 @@ export class ExpoMap extends React.Component {
     componentDidMount() {
         this.mapChildren();
     }
+    componentDidUpdate() {
+        this.mapChildren();
+    }
     async mapChildren() {
         const childrenArray = React.Children.map(this.props.children, async (child) => {
             if (!isSimpleType(child)) {
