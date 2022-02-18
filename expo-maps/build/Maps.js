@@ -84,7 +84,6 @@ export class ExpoMap extends React.Component {
         if (childrenArray != undefined) {
             let propObjects = await Promise.all(childrenArray);
             if (this._ismounted) {
-                console.log('Setting state');
                 this.setState({
                     markers: propObjects.filter((elem) => elem?.type === 'marker'),
                     polygons: propObjects.filter((elem) => elem?.type === 'polygon'),

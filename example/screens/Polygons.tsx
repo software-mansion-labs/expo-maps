@@ -19,10 +19,24 @@ export default function Polygons({ route }: PolygonsScreenProps) {
       >
         <Maps.Polygon
           points={[
-            { latitude: 31, longitude: 127 },
-            { latitude: 32, longitude: 120 },
-            { latitude: 11, longitude: 110 },
-            { latitude: 49, longitude: -30 },
+            { latitude: 52, longitude: 13 },
+            { latitude: 47, longitude: 11 },
+            { latitude: 63, longitude: 4 },
+            { latitude: 49, longitude: 22 },
+          ]}
+        />
+        <Maps.Polygon
+          points={[
+            { latitude: 39, longitude: 3 },
+            { latitude: 33, longitude: 2 },
+            { latitude: 44, longitude: 22 },
+          ]}
+        />
+        <Maps.Polygon
+          points={[
+            { latitude: 65, longitude: -5 },
+            { latitude: 37, longitude: -11 },
+            { latitude: 47, longitude: 5 },
           ]}
         />
       </Maps.ExpoMap>

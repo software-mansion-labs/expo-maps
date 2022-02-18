@@ -19,10 +19,11 @@ export default function Polygons({ route }: PolylinesScreenProps) {
       >
         <Maps.Polyline
           points={[
-            { latitude: 31, longitude: 127 },
-            { latitude: 32, longitude: 120 },
-            { latitude: 11, longitude: 110 },
-            { latitude: 49, longitude: -30 },
+            { latitude: 51.5, longitude: -0.13 },
+            { latitude: 48.86, longitude: 2.34 },
+            { latitude: 50.9, longitude: 4.375 },
+            { latitude: 48.16, longitude: 11.5 },
+            { latitude: 52.5, longitude: 13.5 },
           ]}
         />
       </Maps.ExpoMap>
