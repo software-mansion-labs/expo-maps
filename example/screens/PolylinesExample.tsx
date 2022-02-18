@@ -4,7 +4,7 @@ import ProviderContext from '../context/ProviderContext';
 
 import * as Maps from 'expo-maps';
 
-export default function Polygons() {
+export default function PolylinesExample() {
   const provider = useContext(ProviderContext);
   return (
     <View style={styles.container}>

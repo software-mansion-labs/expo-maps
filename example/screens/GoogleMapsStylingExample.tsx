@@ -4,15 +4,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { ExamplesStackNavigatorProps } from '../navigators/MainNavigator';
 
 import * as Maps from 'expo-maps';
-
-type GoogleMapsStylingScreenProps = StackScreenProps<
-  ExamplesStackNavigatorProps,
-  'Google Maps Styling'
->;
-
-export default function GoogleMapsStyling({
-  route,
-}: GoogleMapsStylingScreenProps) {
+export default function GoogleMapsStylingExample() {
   return (
     <View style={styles.container}>
       <Maps.ExpoMap

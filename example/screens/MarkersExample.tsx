@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import * as Maps from 'expo-maps';
 import ProviderContext from '../context/ProviderContext';
 
-export default function Markers() {
+export default function MarkerExample() {
   const provider = useContext(ProviderContext);
   return (
     <View style={styles.container}>

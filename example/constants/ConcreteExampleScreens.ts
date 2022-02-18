@@ -1,9 +1,9 @@
-import Controls from '../screens/Controls';
-import Gestures from '../screens/Gestures';
-import GoogleMapsStyling from '../screens/GoogleMapsStyling';
-import Markers from '../screens/Markers';
-import Polygons from '../screens/Polygons';
-import Polylines from '../screens/Polylines';
+import ControlsExample from '../screens/ControlsExample';
+import GesturesExample from '../screens/GesturesExample';
+import GoogleMapsStylingExample from '../screens/GoogleMapsStylingExample';
+import MarkersExample from '../screens/MarkersExample';
+import PolygonsExample from '../screens/PolygonsExample';
+import PolylinesExample from '../screens/PolylinesExample';
 import MapTypesExample from '../screens/MapTypesExample';
 // TODO: Type this better
 interface ConcreteExampleScreen {
@@ -21,27 +21,27 @@ interface ConcreteExampleScreen {
 export const CONCRETE_EXAMPLE_SCREENS: Array<ConcreteExampleScreen> = [
   {
     name: 'Markers',
-    screen: Markers,
+    screen: MarkersExample,
   },
   {
     name: 'Polygons',
-    screen: Polygons,
+    screen: PolygonsExample,
   },
   {
     name: 'Polylines',
-    screen: Polylines,
+    screen: PolylinesExample,
   },
   {
     name: 'Controls',
-    screen: Controls,
+    screen: ControlsExample,
   },
   {
     name: 'Google Maps Styling',
-    screen: GoogleMapsStyling,
+    screen: GoogleMapsStylingExample,
   },
   {
     name: 'Gestures',
-    screen: Gestures,
+    screen: GesturesExample,
   },
   {
     name: 'Map Types',

@@ -6,7 +6,7 @@ import SettingsContainer from '../components/SettingsContainer';
 import SwitchContainer from '../components/SwitchContainer';
 import ProviderContext from '../context/ProviderContext';
 
-export default function Gestures() {
+export default function GesturesExample() {
   const provider = useContext(ProviderContext);
 
   const [enableRotateGestures, setEnableRotateGestures] =

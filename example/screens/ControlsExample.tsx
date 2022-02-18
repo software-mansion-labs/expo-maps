@@ -6,7 +6,7 @@ import SwitchContainer from '../components/SwitchContainer';
 import SettingsContainer from '../components/SettingsContainer';
 import ProviderContext from '../context/ProviderContext';
 
-export default function Controls() {
+export default function ControlsExample() {
   const provider = useContext(ProviderContext);
 
   const [showZoomControls, setShowZoomControls] = useState<boolean>(false);
