@@ -1,5 +1,8 @@
 import { ViewProps } from 'react-native';
 import { PropsWithChildren } from 'react';
+import { MarkerObject } from './Marker';
+import { PolygonObject } from './Polygon';
+import { PolylineObject } from './Polyline';
 export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
     showZoomControls: boolean;
@@ -43,40 +46,3 @@ export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<{
     enableTiltGestures?: boolean;
     enableZoomGestures?: boolean;
 }>;
-export declare type Point = {
-    latitude: number;
-    longitude: number;
-};
-export declare type MarkerColor = 'azure' | 'blue' | 'cyan' | 'green' | 'magenta' | 'orange' | 'red' | 'rose' | 'violet' | 'yellow';
-export declare type PolygonProps = PropsWithChildren<{
-    points: Point[];
-}>;
-export declare type MarkerProps = PropsWithChildren<{
-    title?: string;
-    snippet?: string;
-    icon?: string;
-    defaultMarkerColor?: number | MarkerColor;
-    draggable?: boolean;
-    anchorU?: number;
-    anchorV?: number;
-    opacity?: number;
-} & Point>;
-export declare type MarkerObject = {
-    type: 'marker';
-    title?: string;
-    snippet?: string;
-    icon?: string;
-    defaultMarkerColor: number;
-    draggable: boolean;
-    anchorU?: number;
-    anchorV?: number;
-    opacity: number;
-} & Point;
-export declare type PolygonObject = {
-    type: 'polygon';
-    points: Point[];
-};
-export declare type PolylineObject = {
-    type: 'polyline';
-    points: Point[];
-};

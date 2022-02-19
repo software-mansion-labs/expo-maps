@@ -8,15 +8,13 @@ import * as Maps from 'expo-maps';
 import * as Location from 'expo-location';
 
 export default function App() {
-
   const getLocationPermissions = async () => {
     await Location.requestForegroundPermissionsAsync();
-  }
+  };
 
   useEffect(() => {
     getLocationPermissions();
   }, []);
-
 
   return (
     <View style={styles.container}>

@@ -1,18 +1,16 @@
 import React from 'react';
-import {
-  ExpoMapViewProps,
-  MarkerProps,
-  MarkerObject,
-  MarkerColor,
-  PolygonProps,
-  PolygonObject,
-  PolylineObject,
-} from './Maps.types';
+import { ExpoMapViewProps } from './Map.types';
 import { NativeExpoAppleMapsView, NativeExpoGoogleMapsView } from './NativeExpoMapView';
 import { Asset } from 'expo-asset';
 import { Platform } from 'react-native';
+import * as Utils from './Utils';
+import { MarkerColor, MarkerObject } from './Marker';
+import { PolygonObject } from './Polygon';
+import { PolylineObject } from './Polyline';
 
-export * from './Maps.types';
+export { Marker } from './Marker';
+export { Polygon } from './Polygon';
+export { Polyline } from './Polyline';
 
 interface DefaultNativeExpoMapViewProps {
   mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
@@ -53,8 +51,8 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
 
   private async mapChildren() {
     const childrenArray = React.Children.map(this.props.children, async (child) => {
-      if (!isSimpleType(child)) {
-        if (instanceOfMarker(child)) {
+      if (!Utils.isSimpleType(child)) {
+        if (Utils.isMarker(child)) {
           let iconPath: Asset | undefined = undefined;
           if (child.props.icon !== undefined) {
             iconPath = await Asset.fromModule(child.props.icon).downloadAsync();
@@ -78,16 +76,16 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             if (typeof child.props.defaultMarkerColor === 'number') {
               markerObject.defaultMarkerColor = child.props.defaultMarkerColor!;
             } else {
-              markerObject.defaultMarkerColor = mapColor(child.props.defaultMarkerColor);
+              markerObject.defaultMarkerColor = mapMarkerColor(child.props.defaultMarkerColor);
             }
           }
           return markerObject;
-        } else if (instanceOfPolygon(child)) {
+        } else if (Utils.isPolygon(child)) {
           return {
             type: 'polygon',
             points: child.props.points,
           } as PolygonObject;
-        } else if (instanceOfPolyline(child)) {
+        } else if (Utils.isPolyline(child)) {
           return {
             type: 'polyline',
             points: child.props.points,
@@ -134,13 +132,16 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
   }
 }
 
-export class Marker extends React.Component<MarkerProps> {
-  render() {
-    return null;
+function warnIfChildIsIncompatible(child: any) {
+  if (typeof child == 'string' || typeof child == 'boolean' || typeof child == 'number') {
+    console.warn(`Warning! Child of type ${typeof child} isn't valid ExpoMap child!`);
+  } else if (child != null && child != undefined) {
+    console.log(child.type);
+    console.warn(`Warning! Child of type ${(child as React.ReactElement<any>).type} isn't valid ExpoMap child!`);
   }
 }
 
-function mapColor(color: MarkerColor): number {
+function mapMarkerColor(color: MarkerColor): number {
   switch (color) {
     case 'azure': {
       return 210;
@@ -169,67 +170,8 @@ function mapColor(color: MarkerColor): number {
     case 'yellow': {
       return 60;
     }
-  }
-  return 0;
-}
-
-function instanceOfMarker(child: any): child is Marker {
-  if ('type' in child && String(child.type).includes('Marker') && 'props' in child) {
-    let props = Object.keys(child.props);
-    if (props.includes('latitude') && props.includes('longitude')) {
-      return true;
+    default: {
+      return 0;
     }
   }
-  return false;
-}
-
-export class Polygon extends React.Component<PolygonProps> {
-  render() {
-    return null;
-  }
-}
-
-function instanceOfPolygon(child: any): child is Polygon {
-  if ('type' in child && String(child.type).includes('Polygon') && 'props' in child) {
-    let props = Object.keys(child.props);
-    if (props.includes('points')) {
-      return true;
-    }
-  }
-  return false;
-}
-
-export class Polyline extends React.Component<PolygonProps> {
-  render() {
-    return null;
-  }
-}
-
-function instanceOfPolyline(child: any): child is Polyline {
-  if ('type' in child && String(child.type).includes('Polyline') && 'props' in child) {
-    let props = Object.keys(child.props);
-    if (props.includes('points')) {
-      return true;
-    }
-  }
-  return false;
-}
-
-function warnIfChildIsIncompatible(child: any) {
-  if (typeof child == 'string' || typeof child == 'boolean' || typeof child == 'number') {
-    console.warn(`Warning! Child of type ${typeof child} isn't valid ExpoMap child!`);
-  } else if (child != null && child != undefined) {
-    console.log(child.type);
-    console.warn(`Warning! Child of type ${(child as React.ReactElement<any>).type} isn't valid ExpoMap child!`);
-  }
-}
-
-function isSimpleType(child: any) {
-  return (
-    typeof child == 'string' ||
-    typeof child == 'boolean' ||
-    typeof child == 'number' ||
-    child == null ||
-    child == undefined
-  );
 }
