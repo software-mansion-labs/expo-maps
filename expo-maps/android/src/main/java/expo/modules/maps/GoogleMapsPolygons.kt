@@ -24,7 +24,7 @@ class GoogleMapsPolygons(map: GoogleMap) : Polygons {
         polygonOptions.strokeWidth(polygonObject.strokeWidth)
       }
       if (polygonObject.strokePattern != null) {
-        polygonOptions.strokePattern(polygonObject.strokePattern)
+        polygonOptions.strokePattern(polygonObject.strokePattern.map(::patternItemToNative))
       }
       if(polygonObject.jointType != null){
         polygonOptions.strokeJointType(polygonObject.jointType)
@@ -40,5 +40,23 @@ class GoogleMapsPolygons(map: GoogleMap) : Polygons {
       polygon.remove()
     }
     polygons.clear()
+  }
+
+  private fun patternItemToNative(patternItem: PatternItem) :com.google.android.gms.maps.model.PatternItem {
+    return when (patternItem.type) {
+      PatternItemType.gap -> Gap(patternItem.length)
+      PatternItemType.stroke -> when (patternItem.length) {
+        0F, -0F -> Dot()
+        else -> Dash(patternItem.length)
+      }
+    }
+  }
+
+  private fun jointToNative(joint: Joint) :Int {
+    return when (joint) {
+      Joint.miter -> JointType.DEFAULT
+      Joint.bevel -> JointType.BEVEL
+      Joint.round -> JointType.ROUND
+    }
   }
 }

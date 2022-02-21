@@ -1,9 +1,6 @@
 package expo.modules.maps
 
 import android.graphics.Color
-import com.google.android.gms.maps.model.Cap
-import com.google.android.gms.maps.model.JointType
-import com.google.android.gms.maps.model.PatternItem
 import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.records.Record
 
@@ -43,6 +40,28 @@ data class PolylineObject(
   @Field val color: Int?,
   @Field val width: Float?,
   @Field val pattern: List<PatternItem>?,
-  @Field val jointType: Int?,
+  @Field val jointType: Joint?,
   @Field val capType: Cap?,
 ) : Record
+
+data class PatternItem(
+  @Field val type: PatternItemType,
+  @Field val length: Float,
+) : Record
+
+enum class PatternItemType(val value: String) {
+  stroke("stroke"),
+  gap("gap"),
+}
+
+enum class Joint(val value: String) {
+  bevel("bevel"),
+  miter("miter"),
+  round("round"),
+}
+
+enum class Cap(val value: String) {
+  butt("butt"),
+  round("round"),
+  square("square"),
+}

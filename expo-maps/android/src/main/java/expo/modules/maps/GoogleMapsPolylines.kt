@@ -1,9 +1,7 @@
 package expo.modules.maps
 
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Polyline
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 
 class GoogleMapsPolylines(map: GoogleMap) : Polylines {
   private val polylines = mutableListOf<Polyline>()
@@ -23,14 +21,14 @@ class GoogleMapsPolylines(map: GoogleMap) : Polylines {
         polylineOptions.width(polylineObject.width)
       }
       if (polylineObject.pattern != null) {
-        polylineOptions.pattern(polylineObject.pattern)
+        polylineOptions.pattern(polylineObject.pattern.map(::patternItemToNative))
       }
       if (polylineObject.jointType != null) {
-        polylineOptions.jointType(polylineObject.jointType)
+        polylineOptions.jointType(jointToNative(polylineObject.jointType))
       }
       if (polylineObject.capType != null) {
-        polylineOptions.startCap(polylineObject.capType)
-        polylineOptions.endCap(polylineObject.capType)
+        polylineOptions.startCap(capToNative(polylineObject.capType))
+        polylineOptions.endCap(capToNative(polylineObject.capType))
       }
       val polyline = googleMap.addPolyline(polylineOptions)
       polylines.add(polyline)
@@ -42,5 +40,31 @@ class GoogleMapsPolylines(map: GoogleMap) : Polylines {
       polyline.remove()
     }
     polylines.clear()
+  }
+
+  private fun patternItemToNative(patternItem: PatternItem) :com.google.android.gms.maps.model.PatternItem {
+    return when (patternItem.type) {
+     PatternItemType.gap -> Gap(patternItem.length)
+     PatternItemType.stroke -> when (patternItem.length) {
+       0F, -0F -> Dot()
+       else -> Dash(patternItem.length)
+     }
+    }
+  }
+
+  private fun jointToNative(joint: Joint) :Int {
+    return when (joint) {
+      Joint.miter -> JointType.DEFAULT
+      Joint.bevel -> JointType.BEVEL
+      Joint.round -> JointType.ROUND
+    }
+  }
+
+  private fun capToNative(cap: Cap) :com.google.android.gms.maps.model.Cap {
+    return when (cap) {
+      Cap.butt -> ButtCap()
+      Cap.round -> RoundCap()
+      Cap.square -> SquareCap()
+    }
   }
 }
