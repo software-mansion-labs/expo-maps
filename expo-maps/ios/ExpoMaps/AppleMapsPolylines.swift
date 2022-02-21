@@ -18,7 +18,8 @@ class AppleMapsPolylines: Polylines {
       let polyline = ExpoAppleMapsPolyline(coordinates: &overlayPoints, count: overlayPoints.count)
       if polylineObject.color != nil { polyline.color = polylineObject.color! }
       if polylineObject.width != nil { polyline.width = polylineObject.width! }
-      polyline.pattern = strokePatternToLineDashPattern(pattern: polylineObject.pattern, width: polyline.width)
+      let dotLength = polylineObject.capType == .butt ? polyline.width : 0
+      polyline.pattern = strokePatternToLineDashPattern(pattern: polylineObject.pattern, dotLength: dotLength)
       polyline.jointType = jointToCGLineJoin(polylineObject.jointType)
       polyline.capType = capToCGLineCap(polylineObject.capType)
       mapView.addOverlay(polyline)
@@ -33,18 +34,26 @@ class AppleMapsPolylines: Polylines {
     polylines = []
   }
   
-  private func strokePatternToLineDashPattern(pattern: [PatternItem]?, width: Float = 2) -> [NSNumber]? {
+  private func strokePatternToLineDashPattern(pattern: [PatternItem]?, dotLength: Float) -> [NSNumber]? {
     if pattern == nil {return nil}
     var LDP: [NSNumber] = []
     for patternItem in pattern! {
-      switch (patternItem.type, LDP.count % 2) {
-      case (.stroke, 0):
+      // Parity of so-far array is the easiest indicator, whether last inserted element is a stroke or a gap
+      switch (patternItem.type, patternItem.length, LDP.count % 2) {
+      case (.stroke, 0, 0): // Dot after gap
+        LDP.append(NSNumber(value: dotLength))
+        LDP.append(1)
+      case (.stroke, _, 0): // Dash after gap
         LDP.append(NSNumber(value: patternItem.length))
-      case (.stroke, _):
+      case (.stroke, _, 0): // Dot after dash
+        LDP.append(1)
+        LDP.append(NSNumber(value: dotLength))
+        LDP.append(1)
+      case (.stroke, _, _): // Dash after dash (merge)
         LDP[LDP.count - 1] = NSNumber(value: LDP.last as! Float + patternItem.length)
-      case (.gap, 1):
+      case (.gap, _, 1): // Gap after any stroke
         LDP.append(NSNumber(value: patternItem.length))
-      case _:
+      case _: // Gap after gap (merge)
         if(!LDP.isEmpty) {
           LDP[LDP.count - 1] = NSNumber(value: LDP.last as! Float + patternItem.length)
         }

@@ -3,6 +3,7 @@ import GoogleMaps
 public final class GoogleMapsView: UIView, ExpoMapView {
   
   private let mapView: GMSMapView
+  private let delegate: GoogleMapsViewDelegate
   private let markers: GoogleMapsMarkers
   private let gestures: GoogleMapsGestures
   private let polygons: GoogleMapsPolygons
@@ -17,6 +18,8 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     // TODO: use prop as a source for initial camera position
     let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
     mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+    delegate = GoogleMapsViewDelegate()
+    mapView.delegate = delegate
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     markers = GoogleMapsMarkers(mapView: mapView)
     gestures = GoogleMapsGestures(mapView: mapView)
@@ -24,6 +27,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     polylines = GoogleMapsPolylines(mapView: mapView)
     
     super.init(frame: CGRect.zero)
+    delegate.expoMapView = self
     addSubview(mapView)
   }
 
@@ -84,5 +88,13 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   
   func setPolylines(polylineObjects: [PolylineObject]) {
     polylines.setPolylines(polylineObjects: polylineObjects)
+  }
+  
+  func updatePolylines() {
+    polylines.updateStrokePatterns()
+  }
+  
+  func updatePolygons() {
+    polygons.updateStrokePatterns()
   }
 }
