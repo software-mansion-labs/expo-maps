@@ -1,4 +1,4 @@
-package expo.modules.maps
+package expo.modules.maps.interfaces
 
 interface Controls {
     fun setShowZoomControl(enable: Boolean)

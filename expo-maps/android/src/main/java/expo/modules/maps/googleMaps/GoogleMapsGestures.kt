@@ -1,6 +1,7 @@
-package expo.modules.maps
+package expo.modules.maps.googleMaps
 
 import com.google.android.gms.maps.GoogleMap
+import expo.modules.maps.interfaces.Gestures
 
 class GoogleMapsGestures(private val googleMap: GoogleMap) : Gestures {
 

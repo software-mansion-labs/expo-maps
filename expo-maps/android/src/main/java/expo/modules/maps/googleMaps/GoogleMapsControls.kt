@@ -1,6 +1,7 @@
-package expo.modules.maps
+package expo.modules.maps.googleMaps
 
 import com.google.android.gms.maps.GoogleMap
+import expo.modules.maps.interfaces.Controls
 
 class GoogleMapsControls(map: GoogleMap): Controls {
     private var googleMap: GoogleMap = map
