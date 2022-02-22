@@ -3,6 +3,7 @@ package expo.modules.maps
 import expo.modules.core.interfaces.services.UIManager
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
+import expo.modules.maps.googleMaps.GoogleMapsView
 
 class ExpoGoogleMapsModule : Module() {
 
