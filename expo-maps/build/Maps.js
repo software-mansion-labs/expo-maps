@@ -1,8 +1,7 @@
 import React from 'react';
-import { NativeExpoAppleMapsView, NativeExpoGoogleMapsView } from './NativeExpoMapView';
+import { NativeExpoAppleMapsView, NativeExpoGoogleMapsView, } from './NativeExpoMapView';
 import { Asset } from 'expo-asset';
 import { Platform } from 'react-native';
-export * from './Maps.types';
 const defaultNativeExpoMapViewProps = {
     mapType: 'normal',
     showZoomControls: true,
@@ -21,8 +20,18 @@ export class ExpoMap extends React.Component {
         polygons: [],
         polylines: [],
     };
+    _ismounted = false;
     componentDidMount() {
         this.mapChildren();
+        this._ismounted = true;
+    }
+    componentWillUnmount() {
+        this._ismounted = false;
+    }
+    componentDidUpdate(_, prevState) {
+        if (Object.is(this.state, prevState)) {
+            this.mapChildren();
+        }
     }
     async mapChildren() {
         const childrenArray = React.Children.map(this.props.children, async (child) => {
@@ -47,7 +56,8 @@ export class ExpoMap extends React.Component {
                     };
                     if (child.props.defaultMarkerColor != undefined) {
                         if (typeof child.props.defaultMarkerColor === 'number') {
-                            markerObject.defaultMarkerColor = child.props.defaultMarkerColor;
+                            markerObject.defaultMarkerColor =
+                                child.props.defaultMarkerColor;
                         }
                         else {
                             markerObject.defaultMarkerColor = mapColor(child.props.defaultMarkerColor);
@@ -73,18 +83,22 @@ export class ExpoMap extends React.Component {
         });
         if (childrenArray != undefined) {
             let propObjects = await Promise.all(childrenArray);
-            this.setState({
-                markers: propObjects.filter((elem) => elem?.type === 'marker'),
-                polygons: propObjects.filter((elem) => elem?.type === 'polygon'),
-                polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
-            });
+            if (this._ismounted) {
+                this.setState({
+                    markers: propObjects.filter((elem) => elem?.type === 'marker'),
+                    polygons: propObjects.filter((elem) => elem?.type === 'polygon'),
+                    polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
+                });
+            }
         }
     }
     render() {
         if (Platform.OS == 'ios' && this.props.provider == 'apple') {
             return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines }));
         }
-        return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, jsonStyleString: this.props.googleMapsJsonStyleString ? this.props.googleMapsJsonStyleString : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines }));
+        return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString
+                ? this.props.googleMapsJsonStyleString
+                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines }));
     }
 }
 export class Marker extends React.Component {

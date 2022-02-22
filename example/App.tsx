@@ -1,80 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useEffect } from 'react';
-import exampleMapStyle from './exampleMapStyle.json';
-
-import * as Maps from 'expo-maps';
+import React, { useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import MainNavigator from './navigators/MainNavigator';
+import { Platform } from 'react-native';
+import { Providers } from 'expo-maps/build/Maps.types';
+import SettingsContainer from './components/SettingsContainer';
+import SwitchContainer from './components/SwitchContainer';
+import ProviderContext from './context/ProviderContext';
 import * as Location from 'expo-location';
 
 export default function App() {
+  const [provider, setProvider] = useState<Providers>('google');
 
+  // it should be done as a part of library, just for now in example app
   const getLocationPermissions = async () => {
     await Location.requestForegroundPermissionsAsync();
-  }
+  };
 
   useEffect(() => {
     getLocationPermissions();
   }, []);
 
-
   return (
-    <View style={styles.container}>
-      <Maps.ExpoMap
-        style={{ flex: 1, width: '100%' }}
-        provider='apple'
-        googleMapsJsonStyleString={JSON.stringify(exampleMapStyle)}>
-        <Maps.Marker
-          latitude={-33.86}
-          longitude={151.2}
-          icon={require('./assets/building.png')}
-          title='Sample Title'
-          snippet='Sample Snippet'
-        />
-        <Maps.Marker latitude={-32} longitude={152} defaultMarkerColor={'green'} draggable={true} />
-        <Maps.Polygon
-          points={[
-            {
-              latitude: -30,
-              longitude: 150,
-            },
-            {
-              latitude: -29,
-              longitude: 152,
-            },
-            {
-              latitude: -31,
-              longitude: 150,
-            },
-          ]}
-        />
-        <Maps.Polyline
-          points={[
-            {
-              latitude: -29,
-              longitude: 150,
-            },
-            {
-              latitude: -29,
-              longitude: 151,
-            },
-            {
-              latitude: -28,
-              longitude: 152,
-            },
-          ]}
-        />
-      </Maps.ExpoMap>
-      <StatusBar style='auto' />
-    </View>
+    <ProviderContext.Provider value={provider}>
+      <NavigationContainer>
+        <MainNavigator />
+        {Platform.OS === 'ios' && (
+          <SettingsContainer style={{ backgroundColor: 'white' }}>
+            <SwitchContainer
+              title="Use Apple Maps"
+              value={provider === 'apple'}
+              onValueChange={() =>
+                setProvider(provider === 'google' ? 'apple' : 'google')
+              }
+              textColor="black"
+            />
+          </SettingsContainer>
+        )}
+      </NavigationContainer>
+    </ProviderContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

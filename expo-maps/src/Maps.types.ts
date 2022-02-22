@@ -1,54 +1,76 @@
 import { ViewProps } from 'react-native';
 import { PropsWithChildren } from 'react';
 
+export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
+
+export type MapType = {
+  mapType: MapTypes;
+};
+
+export type GoogleMapsStyling = {
+  googleMapsJsonStyleString: string;
+};
+
+export type Gestures = {
+  enableRotateGestures: boolean;
+  enableScrollGestures: boolean;
+  enableTiltGestures: boolean;
+  enableZoomGestures: boolean;
+};
+
+export type Markers = {
+  markers: MarkerObject[];
+};
+
+export type Polygons = {
+  polygons: PolygonObject[];
+};
+
+export type Polylines = {
+  polylines: PolylineObject[];
+};
+
+export type Controls = {
+  showZoomControls: boolean;
+  showCompass: boolean;
+  showMapToolbar: boolean;
+  showMyLocationButton: boolean;
+  showLevelPicker: boolean;
+};
+
+export type GoogleMapsControls = Controls;
+
+export type AppleMapsControls = Omit<
+  Controls,
+  'showMapToolbar' | 'showZoomControls'
+>;
+
 export type NativeExpoGoogleMapsViewProps = ViewProps &
-  PropsWithChildren<{
-    mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
-    showZoomControls: boolean;
-    showCompass: boolean;
-    showMapToolbar: boolean;
-    showMyLocationButton: boolean;
-    showLevelPicker: boolean;
-    jsonStyleString: string;
-    markers: MarkerObject[];
-    enableRotateGestures: boolean;
-    enableScrollGestures: boolean;
-    enableTiltGestures: boolean;
-    enableZoomGestures: boolean;
-    polygons: PolygonObject[];
-    polylines: PolylineObject[];
-  }>;
+  PropsWithChildren<
+    MapType &
+      GoogleMapsStyling &
+      Gestures &
+      Markers &
+      Polygons &
+      Polylines &
+      GoogleMapsControls
+  >;
 
 export type NativeExpoAppleMapsViewProps = ViewProps &
-  PropsWithChildren<{
-    mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
-    showCompass: boolean;
-    showMyLocationButton: boolean;
-    showLevelPicker: boolean;
-    markers: MarkerObject[];
-    enableRotateGestures: boolean;
-    enableScrollGestures: boolean;
-    enableTiltGestures: boolean;
-    enableZoomGestures: boolean;
-    polygons: PolygonObject[];
-    polylines: PolylineObject[];
-  }>;
+  PropsWithChildren<
+    MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls
+  >;
+
+export type Providers = 'google' | 'apple';
+
+export type Provider = {
+  provider: Providers;
+};
 
 export type ExpoMapViewProps = ViewProps &
-  PropsWithChildren<{
-    provider?: 'google' | 'apple';
-    mapType?: 'normal' | 'hybrid' | 'satellite' | 'terrain';
-    showZoomControls?: boolean;
-    showCompass?: boolean;
-    showMapToolbar?: boolean;
-    showMyLocationButton?: boolean;
-    showLevelPicker?: boolean;
-    googleMapsJsonStyleString?: string;
-    enableRotateGestures?: boolean;
-    enableScrollGestures?: boolean;
-    enableTiltGestures?: boolean;
-    enableZoomGestures?: boolean;
-  }>;
+  PropsWithChildren<
+    Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures>
+  >;
 
 export type Point = {
   latitude: number;
@@ -71,30 +93,23 @@ export type PolygonProps = PropsWithChildren<{
   points: Point[];
 }>;
 
-export type MarkerProps = PropsWithChildren<
-  {
-    title?: string;
-    snippet?: string;
-    icon?: string;
-    defaultMarkerColor?: number | MarkerColor;
-    draggable?: boolean;
-    anchorU?: number;
-    anchorV?: number;
-    opacity?: number;
-  } & Point
->;
-
-export type MarkerObject = {
-  type: 'marker';
+export type MarkerOptions = {
   title?: string;
   snippet?: string;
   icon?: string;
-  defaultMarkerColor: number;
+  defaultMarkerColor: number | MarkerColor;
   draggable: boolean;
   anchorU?: number;
   anchorV?: number;
-  opacity: number;
-} & Point;
+  opacity?: number;
+};
+
+export type MarkerProps = PropsWithChildren<MarkerOptions & Point>;
+
+export type MarkerObject = {
+  type: 'marker';
+} & MarkerOptions &
+  Point;
 
 export type PolygonObject = {
   type: 'polygon';
@@ -105,3 +120,7 @@ export type PolylineObject = {
   type: 'polyline';
   points: Point[];
 };
+
+export type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures;
+
+export type ExpoMapState = Markers & Polygons & Polylines;

@@ -12,6 +12,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
 
   init() {
     mapView = MKMapView()
+    mapView.camera = MKMapCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: 51.5, longitude: 0), fromDistance: CLLocationDistance(5000000), pitch: 0, heading: CLLocationDirection())
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     delegate = AppleMapsViewDelegate()
     mapView.delegate = delegate

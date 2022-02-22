@@ -42,7 +42,7 @@ public class ExpoGoogleMapsModule: Module {
         view.setShowLevelPicker(enable: enable)
       }
 
-      prop("jsonStyleString") { (view: GoogleMapsView, jsonStyleString: String) in
+      prop("googleMapsJsonStyleString") { (view: GoogleMapsView, jsonStyleString: String) in
         view.setMapStyle(jsonStyleString: jsonStyleString)
       }
 

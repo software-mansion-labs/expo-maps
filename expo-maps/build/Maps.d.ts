@@ -1,13 +1,11 @@
 import React from 'react';
-import { ExpoMapViewProps, MarkerProps, PolygonProps } from './Maps.types';
-export * from './Maps.types';
+import { ExpoMapViewProps, MarkerProps, PolygonProps, ExpoMapState } from './Maps.types';
 export declare class ExpoMap extends React.Component<ExpoMapViewProps> {
-    state: {
-        markers: never[];
-        polygons: never[];
-        polylines: never[];
-    };
+    state: ExpoMapState;
+    _ismounted: boolean;
     componentDidMount(): void;
+    componentWillUnmount(): void;
+    componentDidUpdate(_: any, prevState: ExpoMapState): void;
     private mapChildren;
     render(): JSX.Element;
 }
