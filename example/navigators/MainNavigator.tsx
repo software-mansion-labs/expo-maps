@@ -36,6 +36,9 @@ export default function MainNavigator() {
           name={name}
           component={screen}
           key={name}
+          options={{
+            headerStyle: { borderBottomWidth: 1 },
+          }}
         />
       ))}
     </ExamplesStackNavigator.Navigator>

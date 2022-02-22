@@ -1,9 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
-import { ExamplesStackNavigatorProps } from '../navigators/MainNavigator';
 
 import * as Maps from 'expo-maps';
+
 export default function GoogleMapsStylingExample() {
   return (
     <View style={styles.container}>

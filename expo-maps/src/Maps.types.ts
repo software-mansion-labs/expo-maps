@@ -97,8 +97,8 @@ export type MarkerOptions = {
   title?: string;
   snippet?: string;
   icon?: string;
-  defaultMarkerColor?: number | MarkerColor;
-  draggable?: boolean;
+  defaultMarkerColor: number | MarkerColor;
+  draggable: boolean;
   anchorU?: number;
   anchorV?: number;
   opacity?: number;
