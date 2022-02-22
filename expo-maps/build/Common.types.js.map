@@ -1,0 +1,1 @@
+{"version":3,"file":"Common.types.js","sourceRoot":"","sources":["../src/Common.types.ts"],"names":[],"mappings":"","sourcesContent":["export type Point = {\n  latitude: number;\n  longitude: number;\n};\n"]}

@@ -1,4 +1,4 @@
-package expo.modules.maps
+package expo.modules.maps.interfaces
 
 interface Gestures {
   fun setEnabledRotateGesture(enabled: Boolean)

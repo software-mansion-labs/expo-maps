@@ -1,9 +1,11 @@
-package expo.modules.maps
+package expo.modules.maps.googleMaps
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
+import expo.modules.maps.PolylineObject
+import expo.modules.maps.interfaces.Polylines
 
 class GoogleMapsPolylines(map: GoogleMap) : Polylines {
   private val polylines = mutableListOf<Polyline>()

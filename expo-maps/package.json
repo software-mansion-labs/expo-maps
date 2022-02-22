@@ -2,8 +2,8 @@
   "name": "expo-maps",
   "version": "1.0.0",
   "description": "ExpoMaps standalone module",
-  "main": "build/Maps.js",
-  "types": "build/Maps.d.ts",
+  "main": "build/Map.js",
+  "types": "build/Map.d.ts",
   "scripts": {
     "build": "expo-module build",
     "clean": "expo-module clean",
@@ -30,8 +30,8 @@
   "license": "MIT",
   "homepage": "https://docs.expo.dev/versions/latest/sdk/module-template",
   "dependencies": {
-    "expo-location": "^14.0.1",
     "expo-asset": "^8.4.6",
+    "expo-location": "^14.0.2",
     "expo-module-scripts": "^2.0.0"
   },
   "peerDependencies": {
