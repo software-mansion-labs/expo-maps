@@ -65,3 +65,11 @@ enum class Cap(val value: String) {
   round("round"),
   square("square"),
 }
+
+data class CircleObject(
+  @Field val center: Point,
+  @Field val radius: Double,
+  @Field val strokeColor: Int?,
+  @Field val strokeWidth: Float?,
+  @Field val fillColor: Int?,
+) : Record

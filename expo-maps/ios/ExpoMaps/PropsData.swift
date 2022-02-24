@@ -64,3 +64,11 @@ enum Cap : String, EnumArgument {
   case round
   case square
 }
+
+struct CircleObject: Record {
+  @Field var center: Point = Point()
+  @Field var radius: Double = 0
+  @Field var strokeColor: UIColor?
+  @Field var fillColor: UIColor?
+  @Field var strokeWidth: Float?
+}

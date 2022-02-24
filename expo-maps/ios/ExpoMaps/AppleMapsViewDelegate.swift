@@ -3,7 +3,8 @@ import MapKit
 class AppleMapsViewDelegate: NSObject, MKMapViewDelegate {
 
   func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-    if let polygon = overlay as? ExpoAppleMapsPolygon {
+    switch overlay {
+    case let polygon as ExpoAppleMapsPolygon:
       let renderer = MKPolygonRenderer(overlay: polygon)
       renderer.fillColor = polygon.fillColor
       renderer.strokeColor = polygon.strokeColor
@@ -11,7 +12,7 @@ class AppleMapsViewDelegate: NSObject, MKMapViewDelegate {
       if polygon.strokePattern != nil { renderer.lineDashPattern = polygon.strokePattern }
       renderer.lineJoin = polygon.jointType
       return renderer
-    } else if let polyline = overlay as? ExpoAppleMapsPolyline {
+    case let polyline as ExpoAppleMapsPolyline:
       let renderer = MKPolylineRenderer(overlay: polyline)
       renderer.strokeColor = polyline.color
       renderer.lineWidth = CGFloat(polyline.width)
@@ -19,8 +20,15 @@ class AppleMapsViewDelegate: NSObject, MKMapViewDelegate {
       renderer.lineJoin = polyline.jointType
       renderer.lineCap = polyline.capType
       return renderer
+    case let circle as ExpoAppleMapsCircle:
+      let renderer = MKCircleRenderer(overlay: circle)
+      renderer.fillColor = circle.fillColor
+      renderer.strokeColor = circle.strokeColor
+      renderer.lineWidth = CGFloat(circle.strokeWidth)
+      return renderer
+    default:
+      return MKOverlayRenderer()
     }
-    return MKOverlayRenderer()
   }
 
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

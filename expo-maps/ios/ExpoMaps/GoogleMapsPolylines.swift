@@ -16,8 +16,8 @@ class GoogleMapsPolylines: Polylines {
         path.add(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
       }
       let polyline = ExpoGoogleMapsPolyline(path: path)
-      if polylineObject.width != nil { polyline.strokeWidth = CGFloat(polylineObject.width!) }
-      if polylineObject.color != nil { polyline.strokeColor = polylineObject.color! }
+      polyline.strokeWidth = CGFloat(polylineObject.width ?? Float(polyline.strokeWidth))
+      polyline.strokeColor = polylineObject.color ?? polyline.strokeColor
       if polylineObject.pattern != nil {
         polyline.pattern = polylineObject.pattern
         polyline.spans = strokePatternToStyles(

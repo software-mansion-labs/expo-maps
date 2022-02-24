@@ -12,6 +12,7 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
     enableZoomGestures: boolean;
     polygons: PolygonObject[];
     polylines: PolylineObject[];
+    circles: CircleObject[];
   }>;
 
 export type NativeExpoAppleMapsViewProps = ViewProps &
@@ -24,6 +25,7 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
     enableZoomGestures: boolean;
     polygons: PolygonObject[];
     polylines: PolylineObject[];
+    circles: CircleObject[];
   }>;
 
 export type ExpoMapViewProps = ViewProps &
@@ -70,6 +72,14 @@ export type PolylineProps = PropsWithChildren<{
   pattern?: PatternItem[];
   jointType?: 'bevel'|'default'|'round';
   capType?: 'butt'|'round'|'square';
+}>;
+
+export type CircleProps = PropsWithChildren<{
+  center: Point;
+  radius: number;
+  strokeColor?: string;
+  strokeWidth?: number;
+  fillColor?: string;
 }>;
 
 export type MarkerProps = PropsWithChildren<
@@ -124,4 +134,13 @@ export type PolylineObject = {
 export type PatternItem = {
   type: 'stroke' | 'gap';
   length: number;
+};
+
+export type CircleObject = {
+  type: 'circle';
+  center: Point;
+  radius: number;
+  strokeColor?: string;
+  strokeWidth?: number;
+  fillColor?: string;
 };

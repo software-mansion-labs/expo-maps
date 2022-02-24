@@ -1,19 +1,20 @@
 import GoogleMaps
 
 public final class GoogleMapsView: UIView, ExpoMapView {
-  
+
   private let mapView: GMSMapView
   private let delegate: GoogleMapsViewDelegate
   private let markers: GoogleMapsMarkers
   private let gestures: GoogleMapsGestures
   private let polygons: GoogleMapsPolygons
   private let polylines: GoogleMapsPolylines
+  private let circles: GoogleMapsCircles
 
   init() {
     // just for now we do authentication here
     // should be moved to module's function
     GMSServices.provideAPIKey("AIzaSyDbgaRNTr3PhYdj_PL7jY_o9u3R08Gf8Ao")
-    
+
     // random initial camera position
     // TODO: use prop as a source for initial camera position
     let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
@@ -25,7 +26,8 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     gestures = GoogleMapsGestures(mapView: mapView)
     polygons = GoogleMapsPolygons(mapView: mapView)
     polylines = GoogleMapsPolylines(mapView: mapView)
-    
+    circles = GoogleMapsCircles(mapView: mapView)
+
     super.init(frame: CGRect.zero)
     delegate.expoMapView = self
     addSubview(mapView)
@@ -65,9 +67,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     }
     mapView.mapType = mapViewType
   }
-  
+
   func setMapStyle(jsonStyleString: String) {
-    if (jsonStyleString.count != 0) {
+    if jsonStyleString.count != 0 {
       do {
         mapView.mapStyle = try GMSMapStyle(jsonString: jsonStyleString)
       } catch {
@@ -81,19 +83,23 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   func setMarkers(markerObjects: [MarkerObject]) {
     markers.setMarkers(markerObjects: markerObjects)
   }
-  
+
   func setPolygons(polygonObjects: [PolygonObject]) {
     polygons.setPolygons(polygonObjects: polygonObjects)
   }
-  
+
   func setPolylines(polylineObjects: [PolylineObject]) {
     polylines.setPolylines(polylineObjects: polylineObjects)
   }
-  
+
+  func setCircles(circleObjects: [CircleObject]) {
+    circles.setCircles(circleObjects: circleObjects)
+  }
+
   func updatePolylines() {
     polylines.updateStrokePatterns()
   }
-  
+
   func updatePolygons() {
     polygons.updateStrokePatterns()
   }

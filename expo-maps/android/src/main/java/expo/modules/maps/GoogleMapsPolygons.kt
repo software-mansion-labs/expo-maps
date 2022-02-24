@@ -14,21 +14,13 @@ class GoogleMapsPolygons(map: GoogleMap) : Polygons {
       for (point in polygonObject.points) {
         polygonOptions.add(LatLng(point.latitude, point.longitude))
       }
-      if (polygonObject.fillColor != null) {
-        polygonOptions.fillColor(polygonObject.fillColor)
+      polygonObject.fillColor?.let { polygonOptions.fillColor(it) }
+      polygonObject.strokeColor?.let { polygonOptions.strokeColor(it) }
+      polygonObject.strokeWidth?.let { polygonOptions.strokeWidth(it) }
+      polygonObject.strokePattern?.let {
+        polygonOptions.strokePattern(it.map(::patternItemToNative))
       }
-      if (polygonObject.strokeColor != null) {
-        polygonOptions.strokeColor(polygonObject.strokeColor)
-      }
-      if (polygonObject.strokeWidth != null) {
-        polygonOptions.strokeWidth(polygonObject.strokeWidth)
-      }
-      if (polygonObject.strokePattern != null) {
-        polygonOptions.strokePattern(polygonObject.strokePattern.map(::patternItemToNative))
-      }
-      if(polygonObject.jointType != null){
-        polygonOptions.strokeJointType(polygonObject.jointType)
-      }
+      polygonObject.jointType?.let { polygonOptions.strokeJointType(it) }
 
       val polygon = googleMap.addPolygon(polygonOptions)
       polygons.add(polygon)
@@ -42,7 +34,7 @@ class GoogleMapsPolygons(map: GoogleMap) : Polygons {
     polygons.clear()
   }
 
-  private fun patternItemToNative(patternItem: PatternItem) :com.google.android.gms.maps.model.PatternItem {
+  private fun patternItemToNative(patternItem: PatternItem): com.google.android.gms.maps.model.PatternItem {
     return when (patternItem.type) {
       PatternItemType.gap -> Gap(patternItem.length)
       PatternItemType.stroke -> when (patternItem.length) {
@@ -52,7 +44,7 @@ class GoogleMapsPolygons(map: GoogleMap) : Polygons {
     }
   }
 
-  private fun jointToNative(joint: Joint) :Int {
+  private fun jointToNative(joint: Joint): Int {
     return when (joint) {
       Joint.miter -> JointType.DEFAULT
       Joint.bevel -> JointType.BEVEL

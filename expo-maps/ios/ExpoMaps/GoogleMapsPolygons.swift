@@ -17,25 +17,17 @@ class GoogleMapsPolygons: Polygons {
         path.add(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
       }
       let polygon = GMSPolygon(path: path)
-      if polygonObject.fillColor != nil { polygon.fillColor = polygonObject.fillColor! }
+      polygon.fillColor = polygonObject.fillColor ?? polygon.fillColor
       if polygonObject.strokePattern == nil {
-        if polygonObject.strokeWidth != nil {
-          polygon.strokeWidth = CGFloat(polygonObject.strokeWidth!)
-        }
-        if polygonObject.strokeColor != nil {
-          polygon.strokeColor = polygonObject.strokeColor!
-        }
+        polygon.strokeWidth = CGFloat(polygonObject.strokeWidth ?? Float(polygon.strokeWidth))
+        polygon.strokeColor = polygonObject.strokeColor ?? polygon.strokeColor
       } else {
         polygon.strokeWidth = 0
         polygon.strokeColor = UIColor.clear
 
         let edge = ExpoGoogleMapsPolyline()
-        if polygonObject.strokeWidth != nil {
-          edge.strokeWidth = CGFloat(polygonObject.strokeWidth!)
-        }
-        if polygonObject.strokeColor != nil {
-          edge.strokeColor = polygonObject.strokeColor!
-        }
+        edge.strokeWidth = CGFloat(polygonObject.strokeWidth ?? Float(edge.strokeWidth))
+        edge.strokeColor = polygonObject.strokeColor ?? edge.strokeColor
         if !polygonObject.points.isEmpty {
           let point = polygonObject.points[0]
           path.add(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
@@ -85,7 +77,7 @@ class GoogleMapsPolygons: Polygons {
     })
     return GMSStyleSpans(path, styles, lengths, GMSLengthKind.rhumb)
   }
-  
+
   func updateStrokePatterns() {
     for polyline in edges {
       if polyline.pattern != nil {

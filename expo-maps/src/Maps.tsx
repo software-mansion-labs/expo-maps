@@ -6,8 +6,10 @@ import {
   MarkerColor,
   PolygonProps,
   PolylineProps,
+  CircleProps,
   PolygonObject,
   PolylineObject,
+  CircleObject,
 } from './Maps.types';
 import { NativeExpoAppleMapsView, NativeExpoGoogleMapsView } from './NativeExpoMapView';
 import { Asset } from 'expo-asset';
@@ -36,6 +38,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
     markers: [],
     polygons: [],
     polylines: [],
+    circles: [],
   };
 
   componentDidMount() {
@@ -93,6 +96,15 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             jointType: child.props.jointType,
             capType: child.props.capType,
           } as PolylineObject;
+        } else if (instanceOfCircle(child)) {
+          return {
+            type: 'circle',
+            center: child.props.center,
+            radius: child.props.radius,
+            fillColor: child.props.fillColor,
+            strokeColor: child.props.strokeColor,
+            strokeWidth: child.props.strokeWidth,
+          } as CircleObject;
         }
       }
       warnIfChildIsIncompatible(child);
@@ -105,6 +117,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
         markers: propObjects.filter((elem) => elem?.type === 'marker'),
         polygons: propObjects.filter((elem) => elem?.type === 'polygon'),
         polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
+        circles: propObjects.filter((elem) => elem?.type === 'circle'),
       });
     }
   }
@@ -118,6 +131,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
           markers={this.state.markers}
           polygons={this.state.polygons}
           polylines={this.state.polylines}
+          circles={this.state.circles}
         />
       );
     }
@@ -130,6 +144,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
         markers={this.state.markers}
         polygons={this.state.polygons}
         polylines={this.state.polylines}
+        circles={this.state.circles}
       />
     );
   }
@@ -210,6 +225,22 @@ function instanceOfPolyline(child: any): child is Polyline {
   if ('type' in child && String(child.type).includes('Polyline') && 'props' in child) {
     let props = Object.keys(child.props);
     if (props.includes('points')) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export class Circle extends React.Component<CircleProps> {
+  render() {
+    return null;
+  }
+}
+
+function instanceOfCircle(child: any): child is Circle {
+  if ('type' in child && String(child.type).includes('Circle') && 'props' in child) {
+    let props = Object.keys(child.props);
+    if (props.includes('center') && props.includes('radius')) {
       return true;
     }
   }

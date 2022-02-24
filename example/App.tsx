@@ -4,14 +4,13 @@ import { StyleSheet, View } from "react-native";
 import exampleMapStyle from "./exampleMapStyle.json";
 
 import * as Maps from "expo-maps";
-import { PatternItem } from "expo-maps";
 
 export default function App() {
   return (
     <View style={styles.container}>
       <Maps.ExpoMap
         style={{ flex: 1, width: "100%" }}
-        provider="google"
+        provider="apple"
         googleMapsJsonStyleString={JSON.stringify(exampleMapStyle)}
       >
         <Maps.Marker
@@ -77,6 +76,14 @@ export default function App() {
           color={"#00FF00A0"}
           capType="butt"
         />
+        <Maps.Circle
+          center={{ latitude: -27, longitude: 151 }}
+          radius={100000}
+          fillColor={"#00FF0080"}
+          strokeColor={"#FF0000"}
+          strokeWidth={4}
+        >
+        </Maps.Circle>
       </Maps.ExpoMap>
       <StatusBar style="auto" />
     </View>

@@ -10,6 +10,7 @@ export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildre
     enableZoomGestures: boolean;
     polygons: PolygonObject[];
     polylines: PolylineObject[];
+    circles: CircleObject[];
 }>;
 export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<{
     mapType: 'normal' | 'hybrid' | 'satellite' | 'terrain';
@@ -20,6 +21,7 @@ export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren
     enableZoomGestures: boolean;
     polygons: PolygonObject[];
     polylines: PolylineObject[];
+    circles: CircleObject[];
 }>;
 export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<{
     provider?: 'google' | 'apple';
@@ -50,6 +52,13 @@ export declare type PolylineProps = PropsWithChildren<{
     pattern?: PatternItem[];
     jointType?: 'bevel' | 'default' | 'round';
     capType?: 'butt' | 'round' | 'square';
+}>;
+export declare type CircleProps = PropsWithChildren<{
+    center: Point;
+    radius: number;
+    strokeColor?: string;
+    strokeWidth?: number;
+    fillColor?: string;
 }>;
 export declare type MarkerProps = PropsWithChildren<{
     title?: string;
@@ -98,4 +107,12 @@ export declare type PolylineObject = {
 export declare type PatternItem = {
     type: 'stroke' | 'gap';
     length: number;
+};
+export declare type CircleObject = {
+    type: 'circle';
+    center: Point;
+    radius: number;
+    strokeColor?: string;
+    strokeWidth?: number;
+    fillColor?: string;
 };

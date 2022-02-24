@@ -14,21 +14,13 @@ class GoogleMapsPolylines(map: GoogleMap) : Polylines {
       for (point in polylineObject.points) {
         polylineOptions.add(LatLng(point.latitude, point.longitude))
       }
-      if (polylineObject.color != null) {
-        polylineOptions.color(polylineObject.color)
-      }
-      if (polylineObject.width != null) {
-        polylineOptions.width(polylineObject.width)
-      }
-      if (polylineObject.pattern != null) {
-        polylineOptions.pattern(polylineObject.pattern.map(::patternItemToNative))
-      }
-      if (polylineObject.jointType != null) {
-        polylineOptions.jointType(jointToNative(polylineObject.jointType))
-      }
-      if (polylineObject.capType != null) {
-        polylineOptions.startCap(capToNative(polylineObject.capType))
-        polylineOptions.endCap(capToNative(polylineObject.capType))
+      polylineObject.color?.let { polylineOptions.color(it) }
+      polylineObject.width?.let { polylineOptions.width(it) }
+      polylineObject.pattern?.let { polylineOptions.pattern(it.map(::patternItemToNative)) }
+      polylineObject.jointType?.let { polylineOptions.jointType(jointToNative(it)) }
+      polylineObject.capType?.let {
+        polylineOptions.startCap(capToNative(it))
+        polylineOptions.endCap(capToNative(it))
       }
       val polyline = googleMap.addPolyline(polylineOptions)
       polylines.add(polyline)

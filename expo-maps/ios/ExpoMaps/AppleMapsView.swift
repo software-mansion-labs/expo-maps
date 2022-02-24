@@ -8,6 +8,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let gestures: AppleMapsGestures
   private let polygons: AppleMapsPolygons
   private let polylines: AppleMapsPolylines
+  private let circles: AppleMapsCircles
   
   init() {
     mapView = MKMapView()
@@ -18,6 +19,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
     gestures = AppleMapsGestures(mapView: mapView)
     polygons = AppleMapsPolygons(mapView: mapView)
     polylines = AppleMapsPolylines(mapView: mapView)
+    circles = AppleMapsCircles(mapView: mapView)
 
     super.init(frame: CGRect.zero)
     addSubview(mapView)
@@ -66,5 +68,9 @@ public final class AppleMapsView: UIView, ExpoMapView {
   
   func setPolylines(polylineObjects: [PolylineObject]) {
     polylines.setPolylines(polylineObjects: polylineObjects)
+  }
+  
+  func setCircles(circleObjects: [CircleObject]) {
+    circles.setCircles(circleObjects: circleObjects)
   }
 }
