@@ -53,13 +53,13 @@ enum PatternType: String, EnumArgument {
   case gap
 }
 
-enum Joint : String, EnumArgument {
+enum Joint: String, EnumArgument {
   case miter
   case round
   case bevel
 }
 
-enum Cap : String, EnumArgument {
+enum Cap: String, EnumArgument {
   case butt
   case round
   case square

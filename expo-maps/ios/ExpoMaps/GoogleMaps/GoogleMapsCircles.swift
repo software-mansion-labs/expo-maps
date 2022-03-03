@@ -12,7 +12,8 @@ class GoogleMapsCircles: Circles {
     detachAndDeleteCircles()
     for circleObject in circleObjects {
       let circle = GMSCircle(
-        position: CLLocationCoordinate2D(latitude: circleObject.center.latitude, longitude: circleObject.center.longitude),
+        position: CLLocationCoordinate2D(
+          latitude: circleObject.center.latitude, longitude: circleObject.center.longitude),
         radius: circleObject.radius)
       circle.fillColor = circleObject.fillColor ?? circle.fillColor
       circle.strokeWidth = CGFloat(circleObject.strokeWidth ?? Float(circle.strokeWidth))

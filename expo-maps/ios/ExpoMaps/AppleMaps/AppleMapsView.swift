@@ -1,7 +1,7 @@
 import MapKit
 
 public final class AppleMapsView: UIView, ExpoMapView {
-  
+
   private let mapView: MKMapView
   private let delegate: MKMapViewDelegate
   private let markers: AppleMapsMarkers
@@ -9,7 +9,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let polygons: AppleMapsPolygons
   private let polylines: AppleMapsPolylines
   private let circles: AppleMapsCircles
-  
+
   init() {
     mapView = MKMapView()
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -44,7 +44,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   func setEnabledZoomGestures(enabled: Bool) {
     gestures.setEnabledZoomGesture(enabled: enabled)
   }
-  
+
   func setMapType(mapType: MapType) {
     var mapViewType: MKMapType
     switch mapType {
@@ -57,19 +57,19 @@ public final class AppleMapsView: UIView, ExpoMapView {
     }
     mapView.mapType = mapViewType
   }
-  
+
   func setMarkers(markerObjects: [MarkerObject]) {
     markers.setMarkers(markerObjects: markerObjects)
   }
-  
+
   func setPolygons(polygonObjects: [PolygonObject]) {
     polygons.setPolygons(polygonObjects: polygonObjects)
   }
-  
+
   func setPolylines(polylineObjects: [PolylineObject]) {
     polylines.setPolylines(polylineObjects: polylineObjects)
   }
-  
+
   func setCircles(circleObjects: [CircleObject]) {
     circles.setCircles(circleObjects: circleObjects)
   }
