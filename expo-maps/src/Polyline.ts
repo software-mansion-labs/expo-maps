@@ -1,9 +1,9 @@
-import React from 'react';
-import { Point, PatternItem } from './Common.types';
-import { PolygonProps } from './Polygon';
+import React from "react";
+import { Point, PatternItem } from "./Common.types";
+import { PolygonProps } from "./Polygon";
 
 export type PolylineObject = {
-  type: 'polyline';
+  type: "polyline";
   points: Point[];
 };
 
@@ -12,8 +12,8 @@ export type PolylineProps = {
   color?: string;
   width?: number;
   pattern?: PatternItem[];
-  jointType?: 'bevel'|'default'|'round';
-  capType?: 'butt'|'round'|'square';
+  jointType?: "bevel" | "default" | "round";
+  capType?: "butt" | "round" | "square";
 };
 
 export class Polyline extends React.Component<PolylineProps> {

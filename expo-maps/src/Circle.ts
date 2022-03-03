@@ -1,5 +1,5 @@
-import React from 'react';
-import { Point } from './Common.types';
+import React from "react";
+import { Point } from "./Common.types";
 
 export type CircleProps = {
   center: Point;
@@ -10,7 +10,7 @@ export type CircleProps = {
 };
 
 export type CircleObject = {
-  type: 'circle';
+  type: "circle";
   center: Point;
   radius: number;
   strokeColor?: string;

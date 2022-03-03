@@ -1,17 +1,17 @@
-import React from 'react';
-import { Point } from './Common.types';
+import React from "react";
+import { Point } from "./Common.types";
 
 export type MarkerColor =
-  | 'azure'
-  | 'blue'
-  | 'cyan'
-  | 'green'
-  | 'magenta'
-  | 'orange'
-  | 'red'
-  | 'rose'
-  | 'violet'
-  | 'yellow';
+  | "azure"
+  | "blue"
+  | "cyan"
+  | "green"
+  | "magenta"
+  | "orange"
+  | "red"
+  | "rose"
+  | "violet"
+  | "yellow";
 
 export type MarkerOptions = {
   title?: string;
@@ -27,7 +27,7 @@ export type MarkerOptions = {
 export type MarkerProps = MarkerOptions & Point;
 
 export type MarkerObject = {
-  type: 'marker';
+  type: "marker";
 } & MarkerOptions &
   Point;
 

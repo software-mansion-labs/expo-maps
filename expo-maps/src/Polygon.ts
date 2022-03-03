@@ -1,5 +1,5 @@
-import React from 'react';
-import { Point, PatternItem } from './Common.types';
+import React from "react";
+import { Point, PatternItem } from "./Common.types";
 
 export type PolygonProps = {
   points: Point[];
@@ -7,11 +7,11 @@ export type PolygonProps = {
   strokeColor?: string;
   strokeWidth?: number;
   strokePattern?: PatternItem[];
-  jointType?: 'bevel'|'default'|'round';
+  jointType?: "bevel" | "default" | "round";
 };
 
 export type PolygonObject = {
-  type: 'polygon';
+  type: "polygon";
   points: Point[];
 };
 

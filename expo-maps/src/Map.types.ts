@@ -1,11 +1,11 @@
-import { ViewProps } from 'react-native';
-import { PropsWithChildren } from 'react';
-import { MarkerObject } from './Marker';
-import { PolygonObject } from './Polygon';
-import { PolylineObject } from './Polyline';
-import { CircleObject } from './Circle';
+import { ViewProps } from "react-native";
+import { PropsWithChildren } from "react";
+import { MarkerObject } from "./Marker";
+import { PolygonObject } from "./Polygon";
+import { PolylineObject } from "./Polyline";
+import { CircleObject } from "./Circle";
 
-export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
+export type MapTypes = "normal" | "hybrid" | "satellite" | "terrain";
 
 export type MapType = {
   mapType: MapTypes;
@@ -48,22 +48,44 @@ export type Controls = {
 
 export type GoogleMapsControls = Controls;
 
-export type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZoomControls'>;
+export type AppleMapsControls = Omit<
+  Controls,
+  "showMapToolbar" | "showZoomControls"
+>;
 
 export type NativeExpoGoogleMapsViewProps = ViewProps &
-  PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & Circles & GoogleMapsControls>;
+  PropsWithChildren<
+    MapType &
+      GoogleMapsStyling &
+      Gestures &
+      Markers &
+      Polygons &
+      Polylines &
+      Circles &
+      GoogleMapsControls
+  >;
 
 export type NativeExpoAppleMapsViewProps = ViewProps &
-  PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & Circles & AppleMapsControls>;
+  PropsWithChildren<
+    MapType &
+      Gestures &
+      Markers &
+      Polygons &
+      Polylines &
+      Circles &
+      AppleMapsControls
+  >;
 
-export type Providers = 'google' | 'apple';
+export type Providers = "google" | "apple";
 
 export type Provider = {
   provider: Providers;
 };
 
 export type ExpoMapViewProps = ViewProps &
-  PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures>>;
+  PropsWithChildren<
+    Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures>
+  >;
 
 export type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures;
 

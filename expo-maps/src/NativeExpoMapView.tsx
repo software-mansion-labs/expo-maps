@@ -1,15 +1,15 @@
-import { requireNativeViewManager } from 'expo-modules-core';
-import * as React from 'react';
+import { requireNativeViewManager } from "expo-modules-core";
+import * as React from "react";
 
 import {
   NativeExpoGoogleMapsViewProps,
   NativeExpoAppleMapsViewProps,
-} from './Map.types';
+} from "./Map.types";
 
 export const NativeExpoGoogleMapsView = requireNativeViewManager(
-  'ExpoGoogleMaps'
+  "ExpoGoogleMaps"
 ) as React.FC<NativeExpoGoogleMapsViewProps>;
 
 export const NativeExpoAppleMapsView = requireNativeViewManager(
-  'ExpoAppleMaps'
+  "ExpoAppleMaps"
 ) as React.FC<NativeExpoAppleMapsViewProps>;
