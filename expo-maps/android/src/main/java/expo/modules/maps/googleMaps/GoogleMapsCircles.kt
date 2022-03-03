@@ -1,10 +1,11 @@
-package expo.modules.maps
+package expo.modules.maps.googleMaps
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
-import expo.modules.core.utilities.ifNull
+import expo.modules.maps.CircleObject
+import expo.modules.maps.interfaces.Circles
 
 class GoogleMapsCircles(map: GoogleMap) : Circles {
   private val circles = mutableListOf<Circle>()

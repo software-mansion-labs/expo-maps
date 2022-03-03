@@ -1,7 +1,10 @@
-package expo.modules.maps
+package expo.modules.maps.googleMaps
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
+import expo.modules.maps.*
+import expo.modules.maps.PatternItem
+import expo.modules.maps.interfaces.Polygons
 
 class GoogleMapsPolygons(map: GoogleMap) : Polygons {
   private val polygons = mutableListOf<Polygon>()

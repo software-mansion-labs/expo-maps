@@ -1,4 +1,4 @@
-package expo.modules.maps
+package expo.modules.maps.googleMaps
 
 import android.content.Context
 import android.widget.LinearLayout
@@ -6,6 +6,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.MapStyleOptions
+import expo.modules.maps.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
