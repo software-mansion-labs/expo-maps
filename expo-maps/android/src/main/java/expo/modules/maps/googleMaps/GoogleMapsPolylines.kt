@@ -38,17 +38,17 @@ class GoogleMapsPolylines(map: GoogleMap) : Polylines {
     polylines.clear()
   }
 
-  private fun patternItemToNative(patternItem: PatternItem) :com.google.android.gms.maps.model.PatternItem {
+  private fun patternItemToNative(patternItem: PatternItem): com.google.android.gms.maps.model.PatternItem {
     return when (patternItem.type) {
-     PatternItemType.gap -> Gap(patternItem.length)
-     PatternItemType.stroke -> when (patternItem.length) {
-       0F, -0F -> Dot()
-       else -> Dash(patternItem.length)
-     }
+      PatternItemType.gap -> Gap(patternItem.length)
+      PatternItemType.stroke -> when (patternItem.length) {
+        0F, -0F -> Dot()
+        else -> Dash(patternItem.length)
+      }
     }
   }
 
-  private fun jointToNative(joint: Joint) :Int {
+  private fun jointToNative(joint: Joint): Int {
     return when (joint) {
       Joint.miter -> JointType.DEFAULT
       Joint.bevel -> JointType.BEVEL
@@ -56,7 +56,7 @@ class GoogleMapsPolylines(map: GoogleMap) : Polylines {
     }
   }
 
-  private fun capToNative(cap: Cap) :com.google.android.gms.maps.model.Cap {
+  private fun capToNative(cap: Cap): com.google.android.gms.maps.model.Cap {
     return when (cap) {
       Cap.butt -> ButtCap()
       Cap.round -> RoundCap()
