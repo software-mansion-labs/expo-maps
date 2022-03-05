@@ -9,6 +9,6 @@ export type Point = {
  * Use an array of PatternItem to define a pattern.
  */
 export type PatternItem = {
-  type: "stroke" | "gap";
+  type: 'stroke' | 'gap';
   length: number;
 };

@@ -23,6 +23,7 @@ class AppleMapsPolygons: Polygons {
       if polygonObject.strokePattern != nil {
         polygon.strokePattern = strokePatternToLineDashPattern(
           pattern: polygonObject.strokePattern, width: polygon.strokeWidth)
+        if polygonObject.strokeWidth == nil {polygon.strokeWidth = 1.0}
       }
       polygon.jointType = jointToCGLineJoin(polygonObject.jointType)
       mapView.addOverlay(polygon)

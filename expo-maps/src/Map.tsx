@@ -1,28 +1,28 @@
-import React from "react";
+import React from 'react';
 import {
   NativeExpoAppleMapsView,
   NativeExpoGoogleMapsView,
-} from "./NativeExpoMapView";
+} from './NativeExpoMapView';
 import {
   DefaultNativeExpoMapViewProps,
   ExpoMapState,
   ExpoMapViewProps,
-} from "./Map.types";
-import { Asset } from "expo-asset";
-import { Platform } from "react-native";
-import * as Utils from "./Utils";
-import { MarkerColor, MarkerObject } from "./Marker";
-import { PolygonObject } from "./Polygon";
-import { PolylineObject } from "./Polyline";
-import { CircleObject } from "./Circle";
+} from './Map.types';
+import { Asset } from 'expo-asset';
+import { Platform } from 'react-native';
+import * as Utils from './Utils';
+import { MarkerColor, MarkerObject } from './Marker';
+import { PolygonObject } from './Polygon';
+import { PolylineObject } from './Polyline';
+import { CircleObject } from './Circle';
 
-export { Marker } from "./Marker";
-export { Polygon } from "./Polygon";
-export { Polyline } from "./Polyline";
-export { Circle } from "./Circle";
+export { Marker } from './Marker';
+export { Polygon } from './Polygon';
+export { Polyline } from './Polyline';
+export { Circle } from './Circle';
 
 const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
-  mapType: "normal",
+  mapType: 'normal',
   showZoomControls: true,
   showCompass: true,
   showMapToolbar: true,
@@ -72,7 +72,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             }
 
             let markerObject = {
-              type: "marker",
+              type: 'marker',
               latitude: child.props.latitude,
               longitude: child.props.longitude,
               title: child.props.title,
@@ -86,7 +86,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             } as MarkerObject;
 
             if (child.props.defaultMarkerColor != undefined) {
-              if (typeof child.props.defaultMarkerColor === "number") {
+              if (typeof child.props.defaultMarkerColor === 'number') {
                 markerObject.defaultMarkerColor =
                   child.props.defaultMarkerColor!;
               } else {
@@ -98,7 +98,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             return markerObject;
           } else if (Utils.isPolygon(child)) {
             return {
-              type: "polygon",
+              type: 'polygon',
               points: child.props.points,
               fillColor: child.props.fillColor,
               strokeColor: child.props.strokeColor,
@@ -108,7 +108,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             } as PolygonObject;
           } else if (Utils.isPolyline(child)) {
             return {
-              type: "polyline",
+              type: 'polyline',
               points: child.props.points,
               color: child.props.color,
               width: child.props.width,
@@ -118,7 +118,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             } as PolylineObject;
           } else if (Utils.isCircle(child)) {
             return {
-              type: "circle",
+              type: 'circle',
               center: child.props.center,
               radius: child.props.radius,
               fillColor: child.props.fillColor,
@@ -136,17 +136,17 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
       let propObjects = await Promise.all(childrenArray);
       if (this._ismounted) {
         this.setState({
-          markers: propObjects.filter((elem) => elem?.type === "marker"),
-          polygons: propObjects.filter((elem) => elem?.type === "polygon"),
-          polylines: propObjects.filter((elem) => elem?.type === "polyline"),
-          circles: propObjects.filter((elem) => elem?.type === "circle"),
+          markers: propObjects.filter((elem) => elem?.type === 'marker'),
+          polygons: propObjects.filter((elem) => elem?.type === 'polygon'),
+          polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
+          circles: propObjects.filter((elem) => elem?.type === 'circle'),
         });
       }
     }
   }
 
   render() {
-    if (Platform.OS == "ios" && this.props.provider == "apple") {
+    if (Platform.OS == 'ios' && this.props.provider == 'apple') {
       return (
         <NativeExpoAppleMapsView
           {...defaultNativeExpoMapViewProps}
@@ -166,7 +166,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
         googleMapsJsonStyleString={
           this.props.googleMapsJsonStyleString
             ? this.props.googleMapsJsonStyleString
-            : ""
+            : ''
         }
         markers={this.state.markers}
         polygons={this.state.polygons}
@@ -179,9 +179,9 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
 
 function warnIfChildIsIncompatible(child: any) {
   if (
-    typeof child == "string" ||
-    typeof child == "boolean" ||
-    typeof child == "number"
+    typeof child == 'string' ||
+    typeof child == 'boolean' ||
+    typeof child == 'number'
   ) {
     console.warn(
       `Warning! Child of type ${typeof child} isn't valid ExpoMap child!`
@@ -198,31 +198,31 @@ function warnIfChildIsIncompatible(child: any) {
 
 function mapColor(color: MarkerColor): number {
   switch (color) {
-    case "azure": {
+    case 'azure': {
       return 210;
     }
-    case "blue": {
+    case 'blue': {
       return 240;
     }
-    case "cyan": {
+    case 'cyan': {
       return 180;
     }
-    case "green": {
+    case 'green': {
       return 120;
     }
-    case "magenta": {
+    case 'magenta': {
       return 300;
     }
-    case "orange": {
+    case 'orange': {
       return 30;
     }
-    case "rose": {
+    case 'rose': {
       return 330;
     }
-    case "violet": {
+    case 'violet': {
       return 270;
     }
-    case "yellow": {
+    case 'yellow': {
       return 60;
     }
     default: {

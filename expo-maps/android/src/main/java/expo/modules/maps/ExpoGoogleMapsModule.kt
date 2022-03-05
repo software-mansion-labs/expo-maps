@@ -38,6 +38,25 @@ class ExpoGoogleMapsModule : Module() {
         view.setMapType(mapType)
       }
 
+      prop("showZoomControls") { view: GoogleMapsView, enable: Boolean ->
+        view.setShowZoomControl(enable)
+      }
+
+      prop("showCompass") { view: GoogleMapsView, enable: Boolean ->
+        view.setShowCompass(enable)
+      }
+
+      prop("showMapToolbar") { view: GoogleMapsView, enable: Boolean ->
+        view.setShowMapToolbar(enable)
+      }
+
+      prop("showMyLocationButton") { view: GoogleMapsView, enable: Boolean ->
+        view.setShowMyLocationButton(enable)
+      }
+      prop("showLevelPicker") { view: GoogleMapsView, enable: Boolean ->
+        view.setShowLevelPicker(enable)
+      }
+
       prop("jsonStyleString") { view: GoogleMapsView, jsonStyleString: String ->
         view.setMapStyle(jsonStyleString)
       }

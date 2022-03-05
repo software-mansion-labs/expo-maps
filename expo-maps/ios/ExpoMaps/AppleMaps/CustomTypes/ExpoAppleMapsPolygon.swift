@@ -1,9 +1,9 @@
 import MapKit
 
 class ExpoAppleMapsPolygon: MKPolygon {
-  var fillColor: UIColor = UIColor.red.withAlphaComponent(0.5)
-  var strokeColor: UIColor = UIColor.red
-  var strokeWidth: Float = 2.0
+  var fillColor: UIColor = UIColor.blue.withAlphaComponent(0.25)
+  var strokeColor: UIColor = UIColor.blue
+  var strokeWidth: Float = 0.0001
   var strokePattern: [NSNumber]? = nil
   var jointType: CGLineJoin = CGLineJoin.miter
 }

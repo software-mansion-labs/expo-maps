@@ -10,6 +10,18 @@ public class ExpoAppleMapsModule: Module {
         AppleMapsView()
       }
 
+      prop("showCompass") { (view: AppleMapsView, enable: Bool) in
+        view.setShowCompass(enable: enable)
+      }
+
+      prop("showMyLocationButton") { (view: AppleMapsView, enable: Bool) in
+        view.setShowMyLocationButton(enable: enable)
+      }
+
+      prop("showLevelPicker") { (view: AppleMapsView, enable: Bool) in
+        view.setShowLevelPicker(enable: enable)
+      }
+
       prop("enableRotateGestures") { (view: AppleMapsView, enable: Bool) in
         view.setEnabledRotateGestures(enabled: enable)
       }

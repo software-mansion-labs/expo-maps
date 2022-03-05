@@ -4,19 +4,22 @@ public final class AppleMapsView: UIView, ExpoMapView {
 
   private let mapView: MKMapView
   private let delegate: MKMapViewDelegate
-  private let markers: AppleMapsMarkers
+  private let controls: AppleMapsControls
   private let gestures: AppleMapsGestures
+  private let markers: AppleMapsMarkers
   private let polygons: AppleMapsPolygons
   private let polylines: AppleMapsPolylines
   private let circles: AppleMapsCircles
 
   init() {
     mapView = MKMapView()
+    mapView.camera = MKMapCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: 51.5, longitude: 0), fromDistance: CLLocationDistance(5000000), pitch: 0, heading: CLLocationDirection())
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     delegate = AppleMapsViewDelegate()
     mapView.delegate = delegate
-    markers = AppleMapsMarkers(mapView: mapView)
+    controls = AppleMapsControls(mapView: mapView)
     gestures = AppleMapsGestures(mapView: mapView)
+    markers = AppleMapsMarkers(mapView: mapView)
     polygons = AppleMapsPolygons(mapView: mapView)
     polylines = AppleMapsPolylines(mapView: mapView)
     circles = AppleMapsCircles(mapView: mapView)
@@ -27,6 +30,18 @@ public final class AppleMapsView: UIView, ExpoMapView {
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  func setShowCompass(enable: Bool) {
+    controls.setShowCompass(enable: enable)
+  }
+
+  func setShowMyLocationButton(enable: Bool) {
+    controls.setShowMyLocationButton(enable: enable)
+  }
+
+  func setShowLevelPicker(enable: Bool) {
+    controls.setShowLevelPicker(enable: enable)
   }
 
   func setEnabledRotateGestures(enabled: Bool) {
