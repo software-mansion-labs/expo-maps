@@ -3,9 +3,10 @@ import { StyleSheet, View } from 'react-native';
 
 import * as Maps from 'expo-maps';
 import ProviderContext from '../context/ProviderContext';
-import { MapTypes } from 'expo-maps/build/Maps.types';
+import { MapTypes } from 'expo-maps/src/Map.types';
 import DropDownPicker from 'react-native-dropdown-picker';
 import SettingsContainer from '../components/SettingsContainer';
+import Colors from '../constants/Colors';
 
 export default function MapTypesExample() {
   const provider = useContext(ProviderContext);
@@ -34,15 +35,15 @@ export default function MapTypesExample() {
           setOpen={() => setOpen(!open)}
           placeholder={mapType}
           style={{
-            backgroundColor: '#808080',
-            borderColor: 'white',
-            shadowColor: 'white',
+            backgroundColor: Colors.gray,
+            borderColor: Colors.white,
+            shadowColor: Colors.white,
           }}
           textStyle={{
-            color: 'white',
+            color: Colors.white,
           }}
           listItemContainerStyle={{
-            backgroundColor: '#808080',
+            backgroundColor: Colors.gray,
           }}
         />
       </SettingsContainer>

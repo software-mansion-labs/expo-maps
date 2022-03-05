@@ -72,6 +72,10 @@ class ExpoGoogleMapsModule : Module() {
       prop("polylines") { view: GoogleMapsView, polylineObjects: Array<PolylineObject> ->
         view.setPolylines(polylineObjects)
       }
+
+      prop("cameraPosition") { view: GoogleMapsView, cameraPosition: CameraPosition ->
+        view.setCameraPosition(cameraPosition)
+      }
     }
   }
 }

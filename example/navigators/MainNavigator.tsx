@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import ExamplesListScreen from '../screens/ExamplesListScreen';
 import { CONCRETE_EXAMPLE_SCREENS } from '../constants/ConcreteExampleScreens';
-import { Providers } from 'expo-maps/build/Maps.types';
+import { Providers } from 'expo-maps/src/Map.types';
 
 // TODO: definetly type this better!
 interface ProviderProp {
@@ -18,6 +18,7 @@ export type ExamplesStackNavigatorProps = {
   'Google Maps Styling': undefined;
   Gestures: undefined;
   'Map Types': undefined;
+  'Camera Position': undefined;
 };
 
 const ExamplesStackNavigator =

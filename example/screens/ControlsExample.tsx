@@ -5,6 +5,7 @@ import * as Maps from 'expo-maps';
 import SwitchContainer from '../components/SwitchContainer';
 import SettingsContainer from '../components/SettingsContainer';
 import ProviderContext from '../context/ProviderContext';
+import Colors from '../constants/Colors';
 
 export default function ControlsExample() {
   const provider = useContext(ProviderContext);
@@ -33,33 +34,33 @@ export default function ControlsExample() {
             title="Show zoom controls"
             value={showZoomControls}
             onValueChange={() => setShowZoomControls(!showZoomControls)}
-            textColor="white"
+            textColor={Colors.white}
           />
         )}
         <SwitchContainer
           title="Show compass"
           value={showCompass}
           onValueChange={() => setShowCompass(!showCompass)}
-          textColor="white"
+          textColor={Colors.white}
         />
         <SwitchContainer
           title="Show my location button"
           value={showMyLocationButton}
           onValueChange={() => setShowMyLocationButton(!showMyLocationButton)}
-          textColor="white"
+          textColor={Colors.white}
         />
         <SwitchContainer
           title="Show level picker"
           value={showLevelPicker}
           onValueChange={() => setShowLevelPicker(!showLevelPicker)}
-          textColor="white"
+          textColor={Colors.white}
         />
         {provider == 'google' && (
           <SwitchContainer
             title="Show map toolbar"
             value={showMapToolbar}
             onValueChange={() => setShowMapToolbar(!showMapToolbar)}
-            textColor="white"
+            textColor={Colors.white}
           />
         )}
       </SettingsContainer>
