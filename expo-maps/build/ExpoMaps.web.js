@@ -1,6 +1,6 @@
 export default {
     get name() {
-        return "ExpoMaps";
+        return 'ExpoMaps';
     },
 };
 //# sourceMappingURL=ExpoMaps.web.js.map

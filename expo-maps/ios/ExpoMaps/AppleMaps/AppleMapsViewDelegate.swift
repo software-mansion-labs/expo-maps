@@ -23,8 +23,8 @@ class AppleMapsViewDelegate: NSObject, MKMapViewDelegate {
     case let circle as ExpoAppleMapsCircle:
       let renderer = MKCircleRenderer(overlay: circle)
       renderer.fillColor = circle.fillColor
-      renderer.lineWidth = CGFloat(circle.strokeWidth)
       renderer.strokeColor = circle.strokeColor
+      renderer.lineWidth = CGFloat(circle.strokeWidth)
       return renderer
     default:
       return MKOverlayRenderer()

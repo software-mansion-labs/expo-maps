@@ -1,14 +1,14 @@
-import React from "react";
-import { NativeExpoAppleMapsView, NativeExpoGoogleMapsView, } from "./NativeExpoMapView";
-import { Asset } from "expo-asset";
-import { Platform } from "react-native";
-import * as Utils from "./Utils";
-export { Marker } from "./Marker";
-export { Polygon } from "./Polygon";
-export { Polyline } from "./Polyline";
-export { Circle } from "./Circle";
+import React from 'react';
+import { NativeExpoAppleMapsView, NativeExpoGoogleMapsView, } from './NativeExpoMapView';
+import { Asset } from 'expo-asset';
+import { Platform } from 'react-native';
+import * as Utils from './Utils';
+export { Marker } from './Marker';
+export { Polygon } from './Polygon';
+export { Polyline } from './Polyline';
+export { Circle } from './Circle';
 const defaultNativeExpoMapViewProps = {
-    mapType: "normal",
+    mapType: 'normal',
     showZoomControls: true,
     showCompass: true,
     showMapToolbar: true,
@@ -48,7 +48,7 @@ export class ExpoMap extends React.Component {
                         iconPath = await Asset.fromModule(child.props.icon).downloadAsync();
                     }
                     let markerObject = {
-                        type: "marker",
+                        type: 'marker',
                         latitude: child.props.latitude,
                         longitude: child.props.longitude,
                         title: child.props.title,
@@ -61,7 +61,7 @@ export class ExpoMap extends React.Component {
                         opacity: child.props.opacity ? child.props.opacity : 1,
                     };
                     if (child.props.defaultMarkerColor != undefined) {
-                        if (typeof child.props.defaultMarkerColor === "number") {
+                        if (typeof child.props.defaultMarkerColor === 'number') {
                             markerObject.defaultMarkerColor =
                                 child.props.defaultMarkerColor;
                         }
@@ -73,7 +73,7 @@ export class ExpoMap extends React.Component {
                 }
                 else if (Utils.isPolygon(child)) {
                     return {
-                        type: "polygon",
+                        type: 'polygon',
                         points: child.props.points,
                         fillColor: child.props.fillColor,
                         strokeColor: child.props.strokeColor,
@@ -84,7 +84,7 @@ export class ExpoMap extends React.Component {
                 }
                 else if (Utils.isPolyline(child)) {
                     return {
-                        type: "polyline",
+                        type: 'polyline',
                         points: child.props.points,
                         color: child.props.color,
                         width: child.props.width,
@@ -95,7 +95,7 @@ export class ExpoMap extends React.Component {
                 }
                 else if (Utils.isCircle(child)) {
                     return {
-                        type: "circle",
+                        type: 'circle',
                         center: child.props.center,
                         radius: child.props.radius,
                         fillColor: child.props.fillColor,
@@ -111,27 +111,27 @@ export class ExpoMap extends React.Component {
             let propObjects = await Promise.all(childrenArray);
             if (this._ismounted) {
                 this.setState({
-                    markers: propObjects.filter((elem) => elem?.type === "marker"),
-                    polygons: propObjects.filter((elem) => elem?.type === "polygon"),
-                    polylines: propObjects.filter((elem) => elem?.type === "polyline"),
-                    circles: propObjects.filter((elem) => elem?.type === "circle"),
+                    markers: propObjects.filter((elem) => elem?.type === 'marker'),
+                    polygons: propObjects.filter((elem) => elem?.type === 'polygon'),
+                    polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
+                    circles: propObjects.filter((elem) => elem?.type === 'circle'),
                 });
             }
         }
     }
     render() {
-        if (Platform.OS == "ios" && this.props.provider == "apple") {
+        if (Platform.OS == 'ios' && this.props.provider == 'apple') {
             return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles }));
         }
         return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString
                 ? this.props.googleMapsJsonStyleString
-                : "", markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles }));
+                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles }));
     }
 }
 function warnIfChildIsIncompatible(child) {
-    if (typeof child == "string" ||
-        typeof child == "boolean" ||
-        typeof child == "number") {
+    if (typeof child == 'string' ||
+        typeof child == 'boolean' ||
+        typeof child == 'number') {
         console.warn(`Warning! Child of type ${typeof child} isn't valid ExpoMap child!`);
     }
     else if (child != null && child != undefined) {
@@ -141,31 +141,31 @@ function warnIfChildIsIncompatible(child) {
 }
 function mapColor(color) {
     switch (color) {
-        case "azure": {
+        case 'azure': {
             return 210;
         }
-        case "blue": {
+        case 'blue': {
             return 240;
         }
-        case "cyan": {
+        case 'cyan': {
             return 180;
         }
-        case "green": {
+        case 'green': {
             return 120;
         }
-        case "magenta": {
+        case 'magenta': {
             return 300;
         }
-        case "orange": {
+        case 'orange': {
             return 30;
         }
-        case "rose": {
+        case 'rose': {
             return 330;
         }
-        case "violet": {
+        case 'violet': {
             return 270;
         }
-        case "yellow": {
+        case 'yellow': {
             return 60;
         }
         default: {

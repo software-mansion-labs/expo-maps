@@ -68,7 +68,7 @@ enum Cap: String, EnumArgument {
 struct CircleObject: Record {
   @Field var center: Point = Point()
   @Field var radius: Double = 0
-  @Field var strokeColor: UIColor? = nil
-  @Field var fillColor: UIColor? = nil
-  @Field var strokeWidth: Float? = nil
+  @Field var strokeColor: UIColor?
+  @Field var fillColor: UIColor?
+  @Field var strokeWidth: Float?
 }

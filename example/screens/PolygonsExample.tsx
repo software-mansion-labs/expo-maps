@@ -24,8 +24,8 @@ export default function PolygonsExample() {
             { latitude: 44, longitude: 22 },
           ]}
           strokeWidth={4}
-          fillColor={"#00FF0080"}
-          strokeColor={"#FF0000"}
+          fillColor={'#00FF0080'}
+          strokeColor={'#FF0000'}
         />
         <Maps.Polygon
           points={[
@@ -34,8 +34,8 @@ export default function PolygonsExample() {
             { latitude: 47, longitude: 5 },
           ]}
           strokePattern={[
-            { type: "stroke", length: 20 },
-            { type: "gap", length: 10 },
+            { type: 'stroke', length: 20 },
+            { type: 'gap', length: 10 },
           ]}
         />
       </Maps.ExpoMap>
