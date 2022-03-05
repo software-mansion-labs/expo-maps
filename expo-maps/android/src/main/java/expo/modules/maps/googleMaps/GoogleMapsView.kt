@@ -19,7 +19,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var markers: GoogleMapsMarkers
   private lateinit var polygons: GoogleMapsPolygons
   private lateinit var polylines: GoogleMapsPolylines
-  private lateinit var controls: GoogleMapsControls
+  private lateinit var circles: GoogleMapsCircles
   private val mapReady = MutableStateFlow(false)
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
@@ -38,7 +38,6 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     markers = GoogleMapsMarkers(googleMap)
     polygons = GoogleMapsPolygons(googleMap)
     polylines = GoogleMapsPolylines(googleMap)
-    controls = GoogleMapsControls(googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
@@ -117,33 +116,9 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
-  fun setShowZoomControl(enable: Boolean) {
+  override fun setCircles(circleObjects: Array<CircleObject>) {
     updateMap {
-      controls.setShowZoomControl(enable)
-    }
-  }
-
-  fun setShowCompass(enable: Boolean) {
-   updateMap {
-      controls.setShowCompass(enable)
-    }
-  }
-
-  fun setShowMapToolbar(enable: Boolean) {
-    updateMap {
-      controls.setShowMapToolbar(enable)
-    }
-  }
-
-  fun setShowMyLocationButton(enable: Boolean) {
-    updateMap {
-      controls.setShowMyLocationButton(enable)
-    }
-  }
-
-  fun setShowLevelPicker(enable: Boolean) {
-    updateMap {
-      controls.setShowLevelPicker(enable)
+      circles.setCircles(circleObjects)
     }
   }
 

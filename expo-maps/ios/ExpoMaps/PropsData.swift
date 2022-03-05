@@ -27,8 +27,48 @@ struct Point: Record {
 
 struct PolygonObject: Record {
   @Field var points: [Point] = []
+  @Field var fillColor: UIColor?
+  @Field var strokeColor: UIColor?
+  @Field var strokeWidth: Float?
+  @Field var strokePattern: [PatternItem]? = nil
+  @Field var jointType: Joint?
 }
 
 struct PolylineObject: Record {
   @Field var points: [Point] = []
+  @Field var color: UIColor?
+  @Field var width: Float?
+  @Field var pattern: [PatternItem]? = nil
+  @Field var jointType: Joint?
+  @Field var capType: Cap?
+}
+
+struct PatternItem: Record {
+  @Field var type: PatternType = .stroke
+  @Field var length: Float = 1.0
+}
+
+enum PatternType: String, EnumArgument {
+  case stroke
+  case gap
+}
+
+enum Joint: String, EnumArgument {
+  case miter
+  case round
+  case bevel
+}
+
+enum Cap: String, EnumArgument {
+  case butt
+  case round
+  case square
+}
+
+struct CircleObject: Record {
+  @Field var center: Point = Point()
+  @Field var radius: Double = 0
+  @Field var strokeColor: UIColor?
+  @Field var fillColor: UIColor?
+  @Field var strokeWidth: Float?
 }

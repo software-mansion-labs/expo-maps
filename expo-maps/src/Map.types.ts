@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react';
 import { MarkerObject } from './Marker';
 import { PolygonObject } from './Polygon';
 import { PolylineObject } from './Polyline';
+import { CircleObject } from './Circle';
 
 export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 
@@ -20,6 +21,10 @@ export type Polygons = {
 
 export type Polylines = {
   polylines: PolylineObject[];
+};
+
+export type Circles = {
+  circles: CircleObject[];
 };
 
 export type GoogleMapsStyling = {
@@ -43,13 +48,33 @@ export type Controls = {
 
 export type GoogleMapsControls = Controls;
 
-export type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZoomControls'>;
+export type AppleMapsControls = Omit<
+  Controls,
+  'showMapToolbar' | 'showZoomControls'
+>;
 
 export type NativeExpoGoogleMapsViewProps = ViewProps &
-  PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls>;
+  PropsWithChildren<
+    MapType &
+      GoogleMapsStyling &
+      Gestures &
+      Markers &
+      Polygons &
+      Polylines &
+      Circles &
+      GoogleMapsControls
+  >;
 
 export type NativeExpoAppleMapsViewProps = ViewProps &
-  PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls>;
+  PropsWithChildren<
+    MapType &
+      Gestures &
+      Markers &
+      Polygons &
+      Polylines &
+      Circles &
+      AppleMapsControls
+  >;
 
 export type Providers = 'google' | 'apple';
 
@@ -58,8 +83,10 @@ export type Provider = {
 };
 
 export type ExpoMapViewProps = ViewProps &
-  PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures>>;
+  PropsWithChildren<
+    Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures>
+  >;
 
 export type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures;
 
-export type ExpoMapState = Markers & Polygons & Polylines;
+export type ExpoMapState = Markers & Polygons & Polylines & Circles;

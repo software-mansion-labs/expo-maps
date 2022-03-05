@@ -4,7 +4,7 @@ import type { StackScreenProps } from '@react-navigation/stack';
 import ExamplesListItem from '../components/ExamplesListItem';
 import { ExamplesStackNavigatorProps } from '../navigators/MainNavigator';
 import { CONCRETE_EXAMPLE_SCREENS } from '../constants/ConcreteExampleScreens';
-import { Providers } from 'expo-maps/build/Maps.types';
+import { Providers } from 'expo-maps/build/Map.types';
 
 type ExamplesListScreenProps = StackScreenProps<
   ExamplesStackNavigatorProps,

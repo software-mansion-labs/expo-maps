@@ -4,6 +4,7 @@ import GoogleMapsStylingExample from '../screens/GoogleMapsStylingExample';
 import MarkersExample from '../screens/MarkersExample';
 import PolygonsExample from '../screens/PolygonsExample';
 import PolylinesExample from '../screens/PolylinesExample';
+import CirclesExample from '../screens/CirclesExample';
 import MapTypesExample from '../screens/MapTypesExample';
 // TODO: Type this better
 interface ConcreteExampleScreen {
@@ -11,6 +12,7 @@ interface ConcreteExampleScreen {
     | 'Markers'
     | 'Polygons'
     | 'Polylines'
+    | 'Circles'
     | 'Controls'
     | 'Google Maps Styling'
     | 'Gestures'
@@ -30,6 +32,10 @@ export const CONCRETE_EXAMPLE_SCREENS: Array<ConcreteExampleScreen> = [
   {
     name: 'Polylines',
     screen: PolylinesExample,
+  },
+  {
+    name: 'Circles',
+    screen: CirclesExample,
   },
   {
     name: 'Controls',

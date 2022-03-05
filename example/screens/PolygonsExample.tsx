@@ -23,12 +23,19 @@ export default function PolygonsExample() {
             { latitude: 33, longitude: 2 },
             { latitude: 44, longitude: 22 },
           ]}
+          strokeWidth={4}
+          fillColor={'#00FF0080'}
+          strokeColor={'#FF0000'}
         />
         <Maps.Polygon
           points={[
             { latitude: 65, longitude: -5 },
             { latitude: 37, longitude: -11 },
             { latitude: 47, longitude: 5 },
+          ]}
+          strokePattern={[
+            { type: 'stroke', length: 20 },
+            { type: 'gap', length: 10 },
           ]}
         />
       </Maps.ExpoMap>

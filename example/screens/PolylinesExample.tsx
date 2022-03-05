@@ -17,6 +17,17 @@ export default function PolylinesExample() {
             { latitude: 48.16, longitude: 11.5 },
             { latitude: 52.5, longitude: 13.5 },
           ]}
+          width={4}
+          pattern={[
+            { type: "stroke", length: 10 },
+            { type: "stroke", length: 0 },
+            { type: "stroke", length: 10 },
+            { type: "gap", length: 10 },
+            { type: "stroke", length: 0 },
+            { type: "gap", length: 10 },
+          ]}
+          color={"#00FF00A0"}
+          capType="butt"
         />
       </Maps.ExpoMap>
     </View>

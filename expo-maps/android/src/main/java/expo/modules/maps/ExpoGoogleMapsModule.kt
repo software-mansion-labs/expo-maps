@@ -72,6 +72,10 @@ class ExpoGoogleMapsModule : Module() {
       prop("polylines") { view: GoogleMapsView, polylineObjects: Array<PolylineObject> ->
         view.setPolylines(polylineObjects)
       }
+
+      prop("circles") { view: GoogleMapsView, circleObjects: Array<CircleObject> ->
+        view.setCircles(circleObjects)
+      }
     }
   }
 }
