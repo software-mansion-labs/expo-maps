@@ -96,4 +96,13 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   func setShowLevelPicker(enable: Bool) {
     controls.setShowLevelPicker(enable: enable)
   }
+  
+  func setCameraPosition(cameraPosition: CameraPosition) {
+    let newCameraPosition = GMSCameraPosition(latitude: cameraPosition.latitude, longitude: cameraPosition.longitude, zoom: Float(cameraPosition.zoom))
+    if (cameraPosition.animate) {
+      mapView.animate(to: newCameraPosition)
+    } else {
+      mapView.camera = newCameraPosition
+    }
+  }
 }

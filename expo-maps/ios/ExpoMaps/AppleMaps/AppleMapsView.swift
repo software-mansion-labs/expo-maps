@@ -1,7 +1,6 @@
 import MapKit
 
 public final class AppleMapsView: UIView, ExpoMapView {
-
   private let mapView: MKMapView
   private let delegate: MKMapViewDelegate
   private let markers: AppleMapsMarkers
@@ -12,7 +11,6 @@ public final class AppleMapsView: UIView, ExpoMapView {
 
   init() {
     mapView = MKMapView()
-    mapView.camera = MKMapCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: 51.5, longitude: 0), fromDistance: CLLocationDistance(5000000), pitch: 0, heading: CLLocationDirection())
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     delegate = AppleMapsViewDelegate()
     mapView.delegate = delegate
@@ -81,5 +79,17 @@ public final class AppleMapsView: UIView, ExpoMapView {
     
   func setShowLevelPicker(enable: Bool) {
     controls.setShowLevelPicker(enable: enable)
+  }
+  
+  // imitating Google Maps zoom level behaviour
+  // based on https://gis.stackexchange.com/questions/7430/what-ratio-scales-do-google-maps-zoom-levels-correspond-to
+  func googleMapsZoomLevelToMeters(latitude: Double, zoom: Double) -> Double {
+    let metersPerPixel = 156543.03392 * cos(latitude * Double.pi / 180) / pow(2, zoom - 1)
+    return frame.width * metersPerPixel
+  }
+  
+  func setCameraPosition(cameraPosition: CameraPosition) {
+    let camera = MKMapCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: cameraPosition.latitude, longitude: cameraPosition.longitude), fromDistance: googleMapsZoomLevelToMeters(latitude: cameraPosition.latitude, zoom: cameraPosition.zoom), pitch: 0, heading: CLLocationDirection())
+    mapView.setCamera(camera, animated: cameraPosition.animate)
   }
 }

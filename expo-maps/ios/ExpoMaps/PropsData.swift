@@ -21,8 +21,8 @@ struct MarkerObject: Record {
 }
 
 struct Point: Record {
-  @Field var latitude: CGFloat = 0
-  @Field var longitude: CGFloat = 0
+  @Field var latitude: Double = 0
+  @Field var longitude: Double = 0
 }
 
 struct PolygonObject: Record {
@@ -31,4 +31,11 @@ struct PolygonObject: Record {
 
 struct PolylineObject: Record {
   @Field var points: [Point] = []
+}
+
+struct CameraPosition: Record {
+  @Field var latitude: Double = 0
+  @Field var longitude: Double = 0
+  @Field var zoom: Double = 0
+  @Field var animate: Bool = false
 }

@@ -6,4 +6,5 @@ protocol ExpoMapView: UIView {
   func setMarkers(markerObjects: [MarkerObject])
   func setPolygons(polygonObjects: [PolygonObject])
   func setPolylines(polylineObjects: [PolylineObject])
+  func setCameraPosition(cameraPosition: CameraPosition)
 }

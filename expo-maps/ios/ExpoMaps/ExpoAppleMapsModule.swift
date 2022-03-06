@@ -53,6 +53,10 @@ public class ExpoAppleMapsModule: Module {
       prop("showLevelPicker") { (view: AppleMapsView, enable: Bool) in
         view.setShowLevelPicker(enable: enable)
       }
+      
+      prop("cameraPosition") { (view: AppleMapsView, cameraPosition: CameraPosition) in
+        view.setCameraPosition(cameraPosition: cameraPosition)
+      }
     }
   }
 }
