@@ -28,8 +28,8 @@ data class Point(@Field val latitude: Double = 0.0, @Field val longitude: Double
 
 data class PolygonObject(
   @Field val points: Array<Point> = emptyArray(),
-  @Field val fillColor: Int?,
-  @Field val strokeColor: Int?,
+  @Field val fillColor: String?,
+  @Field val strokeColor: String?,
   @Field val strokeWidth: Float?,
   @Field val strokePattern: List<PatternItem>?,
   @Field val jointType: Int?,
@@ -37,7 +37,7 @@ data class PolygonObject(
 
 data class PolylineObject(
   @Field val points: Array<Point> = emptyArray(),
-  @Field val color: Int?,
+  @Field val color: String?,
   @Field val width: Float?,
   @Field val pattern: List<PatternItem>?,
   @Field val jointType: Joint?,
@@ -69,7 +69,7 @@ enum class Cap(val value: String) {
 data class CircleObject(
   @Field val center: Point,
   @Field val radius: Double,
-  @Field val strokeColor: Int?,
+  @Field val strokeColor: String?,
   @Field val strokeWidth: Float?,
-  @Field val fillColor: Int?,
+  @Field val fillColor: String?,
 ) : Record
