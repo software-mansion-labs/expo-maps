@@ -8,6 +8,7 @@ import SettingsContainer from '../components/SettingsContainer';
 import Colors from '../constants/Colors';
 import { Point } from 'expo-maps/src/Common.types';
 import SwitchContainer from '../components/SwitchContainer';
+import { ZoomLevels } from 'expo-maps/src/Map.types';
 
 type CameraExampleLocationCities =
   | 'Warsaw'
@@ -22,7 +23,7 @@ interface Coordinates {
   'San Francisco': Point;
 }
 
-const coordinates: Coordinates = {
+const COORDINATES: Coordinates = {
   Warsaw: {
     latitude: 52.24,
     longitude: 21.01,
@@ -41,23 +42,16 @@ const coordinates: Coordinates = {
   },
 };
 
-function getAvaliableZoomLevels() {
-  const zoomLevels = [];
-  for (let i = 0; i < 19; i++) {
-    zoomLevels.push({
-      label: i,
-      value: i,
-    });
-  }
-  return zoomLevels as unknown as ItemType[];
-}
+const AVALIABLE_ZOOM_LEVELS = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+];
 
 export default function CameraPositionExample() {
   const provider = useContext(ProviderContext);
 
   const [cameraExampleLocationCity, setCameraExampleLocationCity] =
     useState<CameraExampleLocationCities>('Warsaw');
-  const [zoom, setZoom] = useState<number>(5);
+  const [zoom, setZoom] = useState<ZoomLevels>(5);
   const [animate, setAnimate] = useState<boolean>(true);
   const [openCameraPositionDropdown, setOpenCameraPositionDropdown] =
     useState<boolean>(false);
@@ -69,8 +63,8 @@ export default function CameraPositionExample() {
         style={{ flex: 1, width: '100%' }}
         provider={provider}
         cameraPosition={{
-          latitude: coordinates[cameraExampleLocationCity].latitude,
-          longitude: coordinates[cameraExampleLocationCity].longitude,
+          latitude: COORDINATES[cameraExampleLocationCity].latitude,
+          longitude: COORDINATES[cameraExampleLocationCity].longitude,
           zoom: zoom,
           animate: animate,
         }}
@@ -107,9 +101,11 @@ export default function CameraPositionExample() {
           }}
         />
         <DropDownPicker
-          items={getAvaliableZoomLevels()}
+          items={AVALIABLE_ZOOM_LEVELS.map((zl) => {
+            return { label: String(zl), value: zl } as ItemType;
+          })}
           value={zoom}
-          setValue={(value) => setZoom(value as number)}
+          setValue={(value) => setZoom(value as ZoomLevels)}
           multiple={false}
           open={openZoomDropdown}
           setOpen={() => setOpenZoomDropdown(!openZoomDropdown)}

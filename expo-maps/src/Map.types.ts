@@ -44,9 +44,33 @@ export type Controls = {
 
 export type GoogleMapsControls = Controls;
 
+export type ZoomLevels =
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17
+  | 18
+  | 19
+  | 20
+  | 21
+  | 22;
+
 export type CameraPosition = {
   cameraPosition: Point & {
-    zoom: number;
+    zoom: ZoomLevels;
     animate: boolean;
   };
 };
