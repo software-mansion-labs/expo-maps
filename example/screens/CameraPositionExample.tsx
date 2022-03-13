@@ -91,13 +91,13 @@ export default function CameraPositionExample() {
             backgroundColor: Colors.gray,
             borderColor: Colors.white,
             shadowColor: Colors.white,
+            marginBottom: 5,
           }}
           textStyle={{
             color: Colors.white,
           }}
           listItemContainerStyle={{
             backgroundColor: Colors.gray,
-            zIndex: 2222,
           }}
         />
         <DropDownPicker
@@ -114,6 +114,7 @@ export default function CameraPositionExample() {
             backgroundColor: Colors.gray,
             borderColor: Colors.white,
             shadowColor: Colors.white,
+            marginBottom: 5,
           }}
           textStyle={{
             color: Colors.white,
