@@ -26,7 +26,7 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   cameraPosition: {
     latitude: 51.51,
     longitude: 0.13,
-    zoom: 7,
+    zoom: 4,
     animate: true,
   },
 };
