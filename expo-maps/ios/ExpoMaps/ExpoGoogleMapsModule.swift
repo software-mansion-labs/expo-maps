@@ -58,6 +58,10 @@ public class ExpoGoogleMapsModule: Module {
         view.setPolylines(polylineObjects: polylineObjects)
       }
 
+      prop("cameraPosition") { (view: GoogleMapsView, cameraPosition: CameraPosition) in
+        view.setCameraPosition(cameraPosition: cameraPosition)
+      }
+
       prop("circles") { (view: GoogleMapsView, circleObjects: [CircleObject]) in
         view.setCircles(circleObjects: circleObjects)
       }

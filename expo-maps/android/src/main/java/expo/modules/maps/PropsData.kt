@@ -35,6 +35,12 @@ data class PolygonObject(
   @Field val jointType: Int?,
 ) : Record
 
+data class CameraPosition(
+  @Field val latitude: Double = 0.0,
+  @Field val longitude: Double = 0.0,
+  @Field val zoom: Double = 0.0,
+  @Field val animate: Boolean = false
+) : Record
 data class PolylineObject(
   @Field val points: Array<Point> = emptyArray(),
   @Field val color: String?,

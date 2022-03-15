@@ -32,6 +32,12 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   enableScrollGestures: true,
   enableTiltGestures: false,
   enableZoomGestures: true,
+  cameraPosition: {
+    latitude: 51.51,
+    longitude: 0.13,
+    zoom: 4,
+    animate: true,
+  },
 };
 
 export class ExpoMap extends React.Component<ExpoMapViewProps> {

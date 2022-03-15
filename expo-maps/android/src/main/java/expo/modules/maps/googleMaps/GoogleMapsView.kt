@@ -2,9 +2,11 @@ package expo.modules.maps.googleMaps
 
 import android.content.Context
 import android.widget.LinearLayout
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import expo.modules.maps.*
 import kotlinx.coroutines.*
@@ -152,6 +154,19 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   override fun setCircles(circleObjects: Array<CircleObject>) {
     updateMap {
       circles.setCircles(circleObjects)
+    }
+  }
+
+  fun setCameraPosition(cameraPosition: CameraPosition) {
+    updateMap {
+      val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+              LatLng(cameraPosition.latitude, cameraPosition.longitude),
+              cameraPosition.zoom.toFloat())
+      if (cameraPosition.animate) {
+        googleMap.animateCamera(cameraUpdate)
+      } else {
+        googleMap.moveCamera(cameraUpdate)
+      }
     }
   }
 

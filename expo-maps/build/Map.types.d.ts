@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react';
 import { MarkerObject } from './Marker';
 import { PolygonObject } from './Polygon';
 import { PolylineObject } from './Polyline';
+import { Point } from './Common.types';
 import { CircleObject } from './Circle';
 export declare type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 export declare type MapType = {
@@ -37,13 +38,20 @@ export declare type Controls = {
     showLevelPicker: boolean;
 };
 export declare type GoogleMapsControls = Controls;
+export declare type ZoomLevels = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22;
+export declare type CameraPosition = {
+    cameraPosition: Point & {
+        zoom: ZoomLevels;
+        animate: boolean;
+    };
+};
 export declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZoomControls'>;
-export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & Circles & GoogleMapsControls>;
-export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & Circles & AppleMapsControls>;
+export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles>;
+export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles>;
 export declare type Providers = 'google' | 'apple';
 export declare type Provider = {
     provider: Providers;
 };
-export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures>>;
-export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures;
+export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition>>;
+export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition;
 export declare type ExpoMapState = Markers & Polygons & Polylines & Circles;

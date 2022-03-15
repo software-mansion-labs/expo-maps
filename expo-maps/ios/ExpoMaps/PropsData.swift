@@ -21,8 +21,8 @@ struct MarkerObject: Record {
 }
 
 struct Point: Record {
-  @Field var latitude: CGFloat = 0
-  @Field var longitude: CGFloat = 0
+  @Field var latitude: Double = 0
+  @Field var longitude: Double = 0
 }
 
 struct PolygonObject: Record {
@@ -71,4 +71,11 @@ struct CircleObject: Record {
   @Field var strokeColor: UIColor?
   @Field var fillColor: UIColor?
   @Field var strokeWidth: Float?
+}
+
+struct CameraPosition: Record {
+  @Field var latitude: Double = 0
+  @Field var longitude: Double = 0
+  @Field var zoom: Double = 0
+  @Field var animate: Bool = false
 }

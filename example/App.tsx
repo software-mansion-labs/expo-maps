@@ -7,6 +7,7 @@ import SettingsContainer from './components/SettingsContainer';
 import SwitchContainer from './components/SwitchContainer';
 import ProviderContext from './context/ProviderContext';
 import * as Location from 'expo-location';
+import Colors from './constants/Colors';
 
 export default function App() {
   const [provider, setProvider] = useState<Providers>('google');
@@ -25,12 +26,14 @@ export default function App() {
       <NavigationContainer>
         <MainNavigator />
         {Platform.OS === 'ios' && (
-          <SettingsContainer style={{ backgroundColor: 'white' }}>
+          <SettingsContainer style={{ backgroundColor: Colors.white }}>
             <SwitchContainer
-              title='Use Apple Maps'
+              title="Use Apple Maps"
               value={provider === 'apple'}
-              onValueChange={() => setProvider(provider === 'google' ? 'apple' : 'google')}
-              textColor='black'
+              onValueChange={() =>
+                setProvider(provider === 'google' ? 'apple' : 'google')
+              }
+              textColor="black"
             />
           </SettingsContainer>
         )}

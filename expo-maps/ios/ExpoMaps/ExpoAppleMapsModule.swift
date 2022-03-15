@@ -57,6 +57,10 @@ public class ExpoAppleMapsModule: Module {
       prop("circles") { (view: AppleMapsView, circleObjects: [CircleObject]) in
         view.setCircles(circleObjects: circleObjects)
       }
+      
+      prop("cameraPosition") { (view: AppleMapsView, cameraPosition: CameraPosition) in
+        view.setCameraPosition(cameraPosition: cameraPosition)
+      }
     }
   }
 }

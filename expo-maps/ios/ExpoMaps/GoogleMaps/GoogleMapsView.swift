@@ -117,4 +117,13 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   func updatePolygons() {
     polygons.updateStrokePatterns()
   }
+  
+  func setCameraPosition(cameraPosition: CameraPosition) {
+    let newCameraPosition = GMSCameraPosition(latitude: cameraPosition.latitude, longitude: cameraPosition.longitude, zoom: Float(cameraPosition.zoom))
+    if (cameraPosition.animate) {
+      mapView.animate(to: newCameraPosition)
+    } else {
+      mapView.camera = newCameraPosition
+    }
+  }
 }

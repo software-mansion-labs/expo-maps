@@ -15,6 +15,7 @@ export default function MarkerExample() {
           title="Paris"
           snippet="You can choose custom marker colors!"
           defaultMarkerColor="azure"
+          draggable={false}
         />
         <Maps.Marker
           latitude={44}
@@ -22,6 +23,8 @@ export default function MarkerExample() {
           title="Building"
           snippet="You can use custom marker icons!"
           icon={require('../assets/building.png')}
+          draggable={false}
+          defaultMarkerColor="red"
         />
         <Maps.Marker
           latitude={51.5}
@@ -29,6 +32,8 @@ export default function MarkerExample() {
           title="London"
           snippet="I'm semi transparent!"
           opacity={0.5}
+          draggable={false}
+          defaultMarkerColor="red"
         />
         <Maps.Marker
           latitude={40.4}

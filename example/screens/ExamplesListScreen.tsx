@@ -13,7 +13,6 @@ type ExamplesListScreenProps = StackScreenProps<
 
 export default function ExamplesListScreen({
   navigation,
-  route,
 }: ExamplesListScreenProps) {
   return (
     <View style={{ flex: 1 }}>
