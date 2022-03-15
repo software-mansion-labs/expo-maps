@@ -10,6 +10,18 @@ public class ExpoGoogleMapsModule: Module {
         GoogleMapsView()
       }
 
+      prop("showCompass") { (view: GoogleMapsView, enable: Bool) in
+        view.setShowCompass(enable: enable)
+      }
+
+      prop("showMyLocationButton") { (view: GoogleMapsView, enable: Bool) in
+        view.setShowMyLocationButton(enable: enable)
+      }
+
+      prop("showLevelPicker") { (view: GoogleMapsView, enable: Bool) in
+        view.setShowLevelPicker(enable: enable)
+      }
+
       prop("enableRotateGestures") { (view: GoogleMapsView, enable: Bool) in
         view.setEnabledRotateGestures(enabled: enable)
       }
@@ -30,18 +42,6 @@ public class ExpoGoogleMapsModule: Module {
         view.setMapType(mapType: mapType)
       }
 
-      prop ("showCompass") { (view: GoogleMapsView, enable: Bool) in
-        view.setShowCompass(enable: enable)
-      }
-
-      prop ("showMyLocationButton") { (view: GoogleMapsView, enable: Bool) in
-        view.setShowMyLocationButton(enable: enable)
-      }
-
-      prop ("showLevelPicker") { (view: GoogleMapsView, enable: Bool) in
-        view.setShowLevelPicker(enable: enable)
-      }
-
       prop("googleMapsJsonStyleString") { (view: GoogleMapsView, jsonStyleString: String) in
         view.setMapStyle(jsonStyleString: jsonStyleString)
       }
@@ -57,9 +57,13 @@ public class ExpoGoogleMapsModule: Module {
       prop("polylines") { (view: GoogleMapsView, polylineObjects: [PolylineObject]) in
         view.setPolylines(polylineObjects: polylineObjects)
       }
-      
+
       prop("cameraPosition") { (view: GoogleMapsView, cameraPosition: CameraPosition) in
         view.setCameraPosition(cameraPosition: cameraPosition)
+      }
+
+      prop("circles") { (view: GoogleMapsView, circleObjects: [CircleObject]) in
+        view.setCircles(circleObjects: circleObjects)
       }
     }
   }

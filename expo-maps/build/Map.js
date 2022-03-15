@@ -1,11 +1,12 @@
 import React from 'react';
-import { NativeExpoAppleMapsView, NativeExpoGoogleMapsView } from './NativeExpoMapView';
+import { NativeExpoAppleMapsView, NativeExpoGoogleMapsView, } from './NativeExpoMapView';
 import { Asset } from 'expo-asset';
 import { Platform } from 'react-native';
 import * as Utils from './Utils';
 export { Marker } from './Marker';
 export { Polygon } from './Polygon';
 export { Polyline } from './Polyline';
+export { Circle } from './Circle';
 const defaultNativeExpoMapViewProps = {
     mapType: 'normal',
     showZoomControls: true,
@@ -29,6 +30,7 @@ export class ExpoMap extends React.Component {
         markers: [],
         polygons: [],
         polylines: [],
+        circles: [],
     };
     _ismounted = false;
     componentDidMount() {
@@ -66,7 +68,8 @@ export class ExpoMap extends React.Component {
                     };
                     if (child.props.defaultMarkerColor != undefined) {
                         if (typeof child.props.defaultMarkerColor === 'number') {
-                            markerObject.defaultMarkerColor = child.props.defaultMarkerColor;
+                            markerObject.defaultMarkerColor =
+                                child.props.defaultMarkerColor;
                         }
                         else {
                             markerObject.defaultMarkerColor = mapColor(child.props.defaultMarkerColor);
@@ -78,12 +81,32 @@ export class ExpoMap extends React.Component {
                     return {
                         type: 'polygon',
                         points: child.props.points,
+                        fillColor: child.props.fillColor,
+                        strokeColor: child.props.strokeColor,
+                        strokeWidth: child.props.strokeWidth,
+                        strokePattern: child.props.strokePattern,
+                        jointType: child.props.jointType,
                     };
                 }
                 else if (Utils.isPolyline(child)) {
                     return {
                         type: 'polyline',
                         points: child.props.points,
+                        color: child.props.color,
+                        width: child.props.width,
+                        pattern: child.props.pattern,
+                        jointType: child.props.jointType,
+                        capType: child.props.capType,
+                    };
+                }
+                else if (Utils.isCircle(child)) {
+                    return {
+                        type: 'circle',
+                        center: child.props.center,
+                        radius: child.props.radius,
+                        fillColor: child.props.fillColor,
+                        strokeColor: child.props.strokeColor,
+                        strokeWidth: child.props.strokeWidth,
                     };
                 }
             }
@@ -97,19 +120,24 @@ export class ExpoMap extends React.Component {
                     markers: propObjects.filter((elem) => elem?.type === 'marker'),
                     polygons: propObjects.filter((elem) => elem?.type === 'polygon'),
                     polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
+                    circles: propObjects.filter((elem) => elem?.type === 'circle'),
                 });
             }
         }
     }
     render() {
         if (Platform.OS == 'ios' && this.props.provider == 'apple') {
-            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines }));
+            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles }));
         }
-        return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString ? this.props.googleMapsJsonStyleString : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines }));
+        return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString
+                ? this.props.googleMapsJsonStyleString
+                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles }));
     }
 }
 function warnIfChildIsIncompatible(child) {
-    if (typeof child == 'string' || typeof child == 'boolean' || typeof child == 'number') {
+    if (typeof child == 'string' ||
+        typeof child == 'boolean' ||
+        typeof child == 'number') {
         console.warn(`Warning! Child of type ${typeof child} isn't valid ExpoMap child!`);
     }
     else if (child != null && child != undefined) {

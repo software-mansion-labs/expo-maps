@@ -17,11 +17,12 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
+  private lateinit var controls: GoogleMapsControls
   private lateinit var gestures: GoogleMapsGestures
   private lateinit var markers: GoogleMapsMarkers
   private lateinit var polygons: GoogleMapsPolygons
   private lateinit var polylines: GoogleMapsPolylines
-  private lateinit var controls: GoogleMapsControls
+  private lateinit var circles: GoogleMapsCircles
   private val mapReady = MutableStateFlow(false)
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
@@ -36,13 +37,74 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   override fun onMapReady(googleMap: GoogleMap) {
     this.googleMap = googleMap
+    controls = GoogleMapsControls(googleMap)
     gestures = GoogleMapsGestures(googleMap)
     markers = GoogleMapsMarkers(googleMap)
     polygons = GoogleMapsPolygons(googleMap)
     polylines = GoogleMapsPolylines(googleMap)
-    controls = GoogleMapsControls(googleMap)
+    circles = GoogleMapsCircles(googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
+    }
+  }
+
+  fun setShowZoomControl(enable: Boolean) {
+    updateMap {
+      controls.setShowZoomControl(enable)
+    }
+  }
+
+  fun setShowCompass(enable: Boolean) {
+    updateMap {
+      controls.setShowCompass(enable)
+    }
+  }
+
+  fun setShowMapToolbar(enable: Boolean) {
+    updateMap {
+      controls.setShowMapToolbar(enable)
+    }
+  }
+
+  fun setShowMyLocationButton(enable: Boolean) {
+    updateMap {
+      controls.setShowMyLocationButton(enable)
+    }
+  }
+
+  fun setShowLevelPicker(enable: Boolean) {
+    updateMap {
+      controls.setShowLevelPicker(enable)
+    }
+  }
+
+  fun setEnabledRotateGestures(enabled: Boolean) {
+    updateMap {
+      gestures.setEnabledRotateGesture(enabled)
+    }
+  }
+
+  fun setEnabledScrollGestures(enabled: Boolean) {
+    updateMap {
+      gestures.setEnabledScrollGesture(enabled)
+    }
+  }
+
+  fun setEnabledTiltGestures(enabled: Boolean) {
+    updateMap {
+      gestures.setEnabledTiltGesture(enabled)
+    }
+  }
+
+  fun setEnabledZoomGestures(enabled: Boolean) {
+    updateMap {
+      gestures.setEnabledZoomGesture(enabled)
+    }
+  }
+
+  fun setEnabledAllGestures(enabled: Boolean) {
+    updateMap {
+      gestures.setEnabledAllGestures(enabled)
     }
   }
 
@@ -77,36 +139,6 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
-  fun setEnabledRotateGestures(enabled: Boolean) {
-    updateMap {
-      gestures.setEnabledRotateGesture(enabled)
-    }
-  }
-
-  fun setEnabledScrollGestures(enabled: Boolean) {
-    updateMap {
-      gestures.setEnabledScrollGesture(enabled)
-    }
-  }
-
-  fun setEnabledTiltGestures(enabled: Boolean) {
-    updateMap {
-      gestures.setEnabledTiltGesture(enabled)
-    }
-  }
-
-  fun setEnabledZoomGestures(enabled: Boolean) {
-    updateMap {
-      gestures.setEnabledZoomGesture(enabled)
-    }
-  }
-
-  fun setEnabledAllGestures(enabled: Boolean) {
-    updateMap {
-      gestures.setEnabledAllGestures(enabled)
-    }
-  }
-
   override fun setPolygons(polygonObjects: Array<PolygonObject>) {
     updateMap {
       polygons.setPolygons(polygonObjects)
@@ -119,33 +151,9 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
-  fun setShowZoomControl(enable: Boolean) {
+  override fun setCircles(circleObjects: Array<CircleObject>) {
     updateMap {
-      controls.setShowZoomControl(enable)
-    }
-  }
-
-  fun setShowCompass(enable: Boolean) {
-   updateMap {
-      controls.setShowCompass(enable)
-    }
-  }
-
-  fun setShowMapToolbar(enable: Boolean) {
-    updateMap {
-      controls.setShowMapToolbar(enable)
-    }
-  }
-
-  fun setShowMyLocationButton(enable: Boolean) {
-    updateMap {
-      controls.setShowMyLocationButton(enable)
-    }
-  }
-
-  fun setShowLevelPicker(enable: Boolean) {
-    updateMap {
-      controls.setShowLevelPicker(enable)
+      circles.setCircles(circleObjects)
     }
   }
 

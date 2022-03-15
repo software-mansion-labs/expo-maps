@@ -3,22 +3,24 @@ import MapKit
 public final class AppleMapsView: UIView, ExpoMapView {
   private let mapView: MKMapView
   private let delegate: MKMapViewDelegate
-  private let markers: AppleMapsMarkers
+  private let controls: AppleMapsControls
   private let gestures: AppleMapsGestures
+  private let markers: AppleMapsMarkers
   private let polygons: AppleMapsPolygons
   private let polylines: AppleMapsPolylines
-  private let controls: AppleMapsControls
+  private let circles: AppleMapsCircles
 
   init() {
     mapView = MKMapView()
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     delegate = AppleMapsViewDelegate()
     mapView.delegate = delegate
-    markers = AppleMapsMarkers(mapView: mapView)
+    controls = AppleMapsControls(mapView: mapView)
     gestures = AppleMapsGestures(mapView: mapView)
+    markers = AppleMapsMarkers(mapView: mapView)
     polygons = AppleMapsPolygons(mapView: mapView)
     polylines = AppleMapsPolylines(mapView: mapView)
-    controls = AppleMapsControls(mapView: mapView)
+    circles = AppleMapsCircles(mapView: mapView)
 
     super.init(frame: CGRect.zero)
     addSubview(mapView)
@@ -26,6 +28,18 @@ public final class AppleMapsView: UIView, ExpoMapView {
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  func setShowCompass(enable: Bool) {
+    controls.setShowCompass(enable: enable)
+  }
+
+  func setShowMyLocationButton(enable: Bool) {
+    controls.setShowMyLocationButton(enable: enable)
+  }
+
+  func setShowLevelPicker(enable: Bool) {
+    controls.setShowLevelPicker(enable: enable)
   }
 
   func setEnabledRotateGestures(enabled: Bool) {
@@ -69,16 +83,8 @@ public final class AppleMapsView: UIView, ExpoMapView {
     polylines.setPolylines(polylineObjects: polylineObjects)
   }
 
-  func setShowCompass(enable: Bool) {
-    controls.setShowCompass(enable: enable)
-  }
-
-  func setShowMyLocationButton(enable: Bool) {
-    controls.setShowMyLocationButton(enable: enable)
-  }
-    
-  func setShowLevelPicker(enable: Bool) {
-    controls.setShowLevelPicker(enable: enable)
+  func setCircles(circleObjects: [CircleObject]) {
+    circles.setCircles(circleObjects: circleObjects)
   }
   
   // imitating Google Maps zoom level behaviour

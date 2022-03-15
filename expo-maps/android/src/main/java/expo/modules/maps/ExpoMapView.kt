@@ -5,4 +5,5 @@ interface ExpoMapView {
   fun setMarkers(markerObjects: Array<MarkerObject>)
   fun setPolygons(polygonObjects: Array<PolygonObject>)
   fun setPolylines(polylineObjects: Array<PolylineObject>)
+  fun setCircles(circleObjects: Array<CircleObject>)
 }

@@ -1,4 +1,4 @@
-import { Providers } from 'expo-maps/build/Maps.types';
+import { Providers } from 'expo-maps/build/Map.types';
 import { createContext } from 'react';
 
 const ProviderContext = createContext<Providers>('google');

@@ -4,6 +4,7 @@ import { MarkerObject } from './Marker';
 import { PolygonObject } from './Polygon';
 import { PolylineObject } from './Polyline';
 import { Point } from './Common.types';
+import { CircleObject } from './Circle';
 
 export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 
@@ -21,6 +22,10 @@ export type Polygons = {
 
 export type Polylines = {
   polylines: PolylineObject[];
+};
+
+export type Circles = {
+  circles: CircleObject[];
 };
 
 export type GoogleMapsStyling = {
@@ -89,7 +94,8 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       Polygons &
       Polylines &
       GoogleMapsControls &
-      CameraPosition
+      CameraPosition &
+      Circles
   >;
 
 export type NativeExpoAppleMapsViewProps = ViewProps &
@@ -100,7 +106,8 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
       Polygons &
       Polylines &
       AppleMapsControls &
-      CameraPosition
+      CameraPosition &
+      Circles
   >;
 
 export type Providers = 'google' | 'apple';
@@ -126,4 +133,4 @@ export type DefaultNativeExpoMapViewProps = MapType &
   Gestures &
   CameraPosition;
 
-export type ExpoMapState = Markers & Polygons & Polylines;
+export type ExpoMapState = Markers & Polygons & Polylines & Circles;

@@ -14,6 +14,7 @@ export type ExamplesStackNavigatorProps = {
   Markers: undefined;
   Polygons: undefined;
   Polylines: undefined;
+  Circles: undefined;
   Controls: undefined;
   'Google Maps Styling': undefined;
   Gestures: undefined;

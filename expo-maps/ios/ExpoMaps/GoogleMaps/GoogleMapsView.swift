@@ -3,31 +3,52 @@ import GoogleMaps
 public final class GoogleMapsView: UIView, ExpoMapView {
 
   private let mapView: GMSMapView
-  private let markers: GoogleMapsMarkers
+  private let delegate: GoogleMapsViewDelegate
+  private let controls: GoogleMapsControls
   private let gestures: GoogleMapsGestures
+  private let markers: GoogleMapsMarkers
   private let polygons: GoogleMapsPolygons
   private let polylines: GoogleMapsPolylines
-  private let controls: GoogleMapsControls
+  private let circles: GoogleMapsCircles
 
   init() {
     // just for now we do authentication here
     // should be moved to module's function
     GMSServices.provideAPIKey("AIzaSyDbgaRNTr3PhYdj_PL7jY_o9u3R08Gf8Ao")
-    
-    mapView = GMSMapView(frame: CGRect.zero)
+
+    // random initial camera position
+    // TODO: use prop as a source for initial camera position
+    let camera = GMSCameraPosition.camera(withLatitude: 51.5, longitude: 0, zoom: 4.0)
+    mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+    delegate = GoogleMapsViewDelegate()
+    mapView.delegate = delegate
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    markers = GoogleMapsMarkers(mapView: mapView)
+    controls = GoogleMapsControls(mapView: mapView)
     gestures = GoogleMapsGestures(mapView: mapView)
+    markers = GoogleMapsMarkers(mapView: mapView)
     polygons = GoogleMapsPolygons(mapView: mapView)
     polylines = GoogleMapsPolylines(mapView: mapView)
-    controls = GoogleMapsControls(mapView: mapView)
-    
+    circles = GoogleMapsCircles(mapView: mapView)
+
     super.init(frame: CGRect.zero)
+    delegate.expoMapView = self
     addSubview(mapView)
   }
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  func setShowCompass(enable: Bool) {
+    controls.setShowCompass(enable: enable)
+  }
+
+  func setShowMyLocationButton(enable: Bool) {
+    controls.setShowMyLocationButton(enable: enable)
+  }
+
+  func setShowLevelPicker(enable: Bool) {
+    controls.setShowLevelPicker(enable: enable)
   }
 
   func setEnabledRotateGestures(enabled: Bool) {
@@ -62,7 +83,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   }
 
   func setMapStyle(jsonStyleString: String) {
-    if (jsonStyleString.count != 0) {
+    if jsonStyleString.count != 0 {
       do {
         mapView.mapStyle = try GMSMapStyle(jsonString: jsonStyleString)
       } catch {
@@ -84,17 +105,17 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   func setPolylines(polylineObjects: [PolylineObject]) {
     polylines.setPolylines(polylineObjects: polylineObjects)
   }
-    
-  func setShowCompass(enable: Bool) {
-    controls.setShowCompass(enable: enable)
+
+  func setCircles(circleObjects: [CircleObject]) {
+    circles.setCircles(circleObjects: circleObjects)
   }
 
-  func setShowMyLocationButton(enable: Bool) {
-    controls.setShowMyLocationButton(enable: enable)
+  func updatePolylines() {
+    polylines.updateStrokePatterns()
   }
 
-  func setShowLevelPicker(enable: Bool) {
-    controls.setShowLevelPicker(enable: enable)
+  func updatePolygons() {
+    polygons.updateStrokePatterns()
   }
   
   func setCameraPosition(cameraPosition: CameraPosition) {
