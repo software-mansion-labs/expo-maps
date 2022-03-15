@@ -6,9 +6,9 @@ import ProviderContext from '../context/ProviderContext';
 import DropDownPicker, { ItemType } from 'react-native-dropdown-picker';
 import SettingsContainer from '../components/SettingsContainer';
 import Colors from '../constants/Colors';
-import { Point } from 'expo-maps/src/Common.types';
+import { Point } from 'expo-maps/build/Common.types';
 import SwitchContainer from '../components/SwitchContainer';
-import { ZoomLevels } from 'expo-maps/src/Map.types';
+import { ZoomLevels } from 'expo-maps/build/Map.types';
 
 type CameraExampleLocationCities =
   | 'Warsaw'

@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import * as Maps from 'expo-maps';
 import ProviderContext from '../context/ProviderContext';
-import { MapTypes } from 'expo-maps/src/Map.types';
+import { MapTypes } from 'expo-maps/build/Map.types';
 import DropDownPicker from 'react-native-dropdown-picker';
 import SettingsContainer from '../components/SettingsContainer';
 import Colors from '../constants/Colors';
