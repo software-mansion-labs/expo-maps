@@ -12,3 +12,15 @@ export type PatternItem = {
   type: 'stroke' | 'gap';
   length: number;
 };
+
+export type Color =
+  | 'azure'
+  | 'blue'
+  | 'cyan'
+  | 'green'
+  | 'magenta'
+  | 'orange'
+  | 'red'
+  | 'rose'
+  | 'violet'
+  | 'yellow';

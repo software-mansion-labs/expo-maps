@@ -7,6 +7,7 @@ export { Marker } from './Marker';
 export { Polygon } from './Polygon';
 export { Polyline } from './Polyline';
 export { Circle } from './Circle';
+export { Cluster } from './Cluster';
 const defaultNativeExpoMapViewProps = {
     mapType: 'normal',
     showZoomControls: true,
@@ -31,6 +32,7 @@ export class ExpoMap extends React.Component {
         polygons: [],
         polylines: [],
         circles: [],
+        clusters: [],
     };
     _ismounted = false;
     componentDidMount() {
@@ -49,33 +51,7 @@ export class ExpoMap extends React.Component {
         const childrenArray = React.Children.map(this.props.children, async (child) => {
             if (!Utils.isSimpleType(child)) {
                 if (Utils.isMarker(child)) {
-                    let iconPath = undefined;
-                    if (child.props.icon !== undefined) {
-                        iconPath = await Asset.fromModule(child.props.icon).downloadAsync();
-                    }
-                    let markerObject = {
-                        type: 'marker',
-                        latitude: child.props.latitude,
-                        longitude: child.props.longitude,
-                        title: child.props.title,
-                        snippet: child.props.snippet,
-                        icon: iconPath?.localUri,
-                        defaultMarkerColor: 0,
-                        draggable: child.props.draggable ? child.props.draggable : false,
-                        anchorU: child.props.anchorU,
-                        anchorV: child.props.anchorV,
-                        opacity: child.props.opacity ? child.props.opacity : 1,
-                    };
-                    if (child.props.defaultMarkerColor != undefined) {
-                        if (typeof child.props.defaultMarkerColor === 'number') {
-                            markerObject.defaultMarkerColor =
-                                child.props.defaultMarkerColor;
-                        }
-                        else {
-                            markerObject.defaultMarkerColor = mapColor(child.props.defaultMarkerColor);
-                        }
-                    }
-                    return markerObject;
+                    return buildMarkerObject(child);
                 }
                 else if (Utils.isPolygon(child)) {
                     return {
@@ -109,8 +85,56 @@ export class ExpoMap extends React.Component {
                         strokeWidth: child.props.strokeWidth,
                     };
                 }
+                else if (Utils.isCluster(child)) {
+                    const clusterChildrenArray = React.Children.map(child.props.children, async (clusterChild) => {
+                        if (!Utils.isSimpleType(clusterChild)) {
+                            if (Utils.isMarker(clusterChild)) {
+                                return buildMarkerObject(clusterChild);
+                            }
+                        }
+                        Utils.warnIfChildIsIncompatible(clusterChild);
+                        return null;
+                    });
+                    if (clusterChildrenArray != undefined) {
+                        let iconPath = undefined;
+                        if (child.props.icon !== undefined) {
+                            iconPath = await Asset.fromModule(child.props.icon).downloadAsync();
+                        }
+                        let clusterPropObjects = await Promise.all(clusterChildrenArray);
+                        var minimumClusterSize;
+                        if (child.props.minimumClusterSize !== undefined &&
+                            child.props.minimumClusterSize > 0) {
+                            minimumClusterSize = child.props.minimumClusterSize;
+                        }
+                        else {
+                            minimumClusterSize = 4;
+                        }
+                        let clusterObject = {
+                            type: 'cluster',
+                            markers: clusterPropObjects,
+                            name: child.props.name,
+                            minimumClusterSize: minimumClusterSize,
+                            markerTitle: child.props.markerTitle,
+                            markerSnippet: child.props.markerSnippet,
+                            icon: iconPath?.localUri,
+                            color: 0,
+                            opacity: child.props.opacity ? child.props.opacity : 1,
+                        };
+                        if (child.props.color != undefined) {
+                            if (typeof child.props.color === 'number') {
+                                clusterObject.color = child.props.color;
+                            }
+                            else {
+                                clusterObject.color = Utils.mapColor(child.props.color);
+                            }
+                        }
+                        return clusterObject;
+                    }
+                }
+                Utils.warnIfChildIsIncompatible(child);
+                return null;
             }
-            warnIfChildIsIncompatible(child);
+            Utils.warnIfChildIsIncompatible(child);
             return null;
         });
         if (childrenArray != undefined) {
@@ -121,62 +145,46 @@ export class ExpoMap extends React.Component {
                     polygons: propObjects.filter((elem) => elem?.type === 'polygon'),
                     polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
                     circles: propObjects.filter((elem) => elem?.type === 'circle'),
+                    clusters: propObjects.filter((elem) => elem?.type === 'cluster'),
                 });
             }
         }
     }
     render() {
         if (Platform.OS == 'ios' && this.props.provider == 'apple') {
-            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles }));
+            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters }));
         }
         return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString
                 ? this.props.googleMapsJsonStyleString
-                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles }));
+                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters }));
     }
 }
-function warnIfChildIsIncompatible(child) {
-    if (typeof child == 'string' ||
-        typeof child == 'boolean' ||
-        typeof child == 'number') {
-        console.warn(`Warning! Child of type ${typeof child} isn't valid ExpoMap child!`);
+async function buildMarkerObject(child) {
+    let iconPath = undefined;
+    if (child.props.icon !== undefined) {
+        iconPath = await Asset.fromModule(child.props.icon).downloadAsync();
     }
-    else if (child != null && child != undefined) {
-        console.log(child.type);
-        console.warn(`Warning! Child of type ${child.type} isn't valid ExpoMap child!`);
-    }
-}
-function mapColor(color) {
-    switch (color) {
-        case 'azure': {
-            return 210;
+    let markerObject = {
+        type: 'marker',
+        latitude: child.props.latitude,
+        longitude: child.props.longitude,
+        markerTitle: child.props.markerTitle,
+        markerSnippet: child.props.markerSnippet,
+        icon: iconPath?.localUri,
+        color: 0,
+        draggable: child.props.draggable ? child.props.draggable : false,
+        anchorU: child.props.anchorU,
+        anchorV: child.props.anchorV,
+        opacity: child.props.opacity ? child.props.opacity : 1,
+    };
+    if (child.props.color != undefined) {
+        if (typeof child.props.color === 'number') {
+            markerObject.color = child.props.color;
         }
-        case 'blue': {
-            return 240;
-        }
-        case 'cyan': {
-            return 180;
-        }
-        case 'green': {
-            return 120;
-        }
-        case 'magenta': {
-            return 300;
-        }
-        case 'orange': {
-            return 30;
-        }
-        case 'rose': {
-            return 330;
-        }
-        case 'violet': {
-            return 270;
-        }
-        case 'yellow': {
-            return 60;
-        }
-        default: {
-            return 0;
+        else {
+            markerObject.color = Utils.mapColor(child.props.color);
         }
     }
+    return markerObject;
 }
 //# sourceMappingURL=Map.js.map

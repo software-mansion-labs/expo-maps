@@ -45,6 +45,10 @@ public class ExpoAppleMapsModule: Module {
       prop("markers") { (view: AppleMapsView, markerObjects: [MarkerObject]) in
         view.setMarkers(markerObjects: markerObjects)
       }
+      
+      prop("clusters") { (view: AppleMapsView, clusterObjects: [ClusterObject]) in
+        view.setClusters(clusterObjects: clusterObjects)
+      }
 
       prop("polygons") { (view: AppleMapsView, polygonObjects: [PolygonObject]) in
         view.setPolygons(polygonObjects: polygonObjects)

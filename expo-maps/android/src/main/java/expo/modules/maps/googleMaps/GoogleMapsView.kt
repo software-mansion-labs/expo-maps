@@ -20,6 +20,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var controls: GoogleMapsControls
   private lateinit var gestures: GoogleMapsGestures
   private lateinit var markers: GoogleMapsMarkers
+  private lateinit var clusters: GoogleMapsClusters
   private lateinit var polygons: GoogleMapsPolygons
   private lateinit var polylines: GoogleMapsPolylines
   private lateinit var circles: GoogleMapsCircles
@@ -40,6 +41,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     controls = GoogleMapsControls(googleMap)
     gestures = GoogleMapsGestures(googleMap)
     markers = GoogleMapsMarkers(googleMap)
+    clusters = GoogleMapsClusters(context, googleMap)
     polygons = GoogleMapsPolygons(googleMap)
     polylines = GoogleMapsPolylines(googleMap)
     circles = GoogleMapsCircles(googleMap)
@@ -157,16 +159,24 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
+
   fun setCameraPosition(cameraPosition: CameraPosition) {
     updateMap {
       val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-              LatLng(cameraPosition.latitude, cameraPosition.longitude),
-              cameraPosition.zoom.toFloat())
+        LatLng(cameraPosition.latitude, cameraPosition.longitude),
+        cameraPosition.zoom.toFloat()
+      )
       if (cameraPosition.animate) {
         googleMap.animateCamera(cameraUpdate)
       } else {
         googleMap.moveCamera(cameraUpdate)
       }
+    }
+  }
+
+  override fun setClusters(clusterObjects: Array<ClusterObject>) {
+    updateMap {
+      clusters.setClusters(clusterObjects)
     }
   }
 

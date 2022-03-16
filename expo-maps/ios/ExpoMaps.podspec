@@ -19,4 +19,5 @@ Pod::Spec.new do |s|
 
   s.dependency 'ExpoModulesCore'
   s.dependency 'GoogleMaps'
+  s.dependency 'Google-Maps-iOS-Utils'
 end

@@ -1,6 +1,7 @@
 import MapKit
 
 class AppleMapsPolylines: Polylines {
+  
   private let mapView: MKMapView
   private var polylines: [MKPolyline] = []
 
@@ -16,7 +17,7 @@ class AppleMapsPolylines: Polylines {
         overlayPoints.append(
           CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
       }
-      let polyline = ExpoAppleMapsPolyline(coordinates: &overlayPoints, count: overlayPoints.count)
+      let polyline = ExpoMKPolyline(coordinates: &overlayPoints, count: overlayPoints.count)
       if polylineObject.color != nil { polyline.color = polylineObject.color! }
       if polylineObject.width != nil { polyline.width = polylineObject.width! }
       let dotLength = polylineObject.capType == .butt ? polyline.width : 0
@@ -36,9 +37,7 @@ class AppleMapsPolylines: Polylines {
     polylines = []
   }
 
-  private func strokePatternToLineDashPattern(pattern: [PatternItem]?, dotLength: Float)
-    -> [NSNumber]?
-  {
+  private func strokePatternToLineDashPattern(pattern: [PatternItem]?, dotLength: Float) -> [NSNumber]? {
     if pattern == nil { return nil }
     var LDP: [NSNumber] = []
     for patternItem in pattern! {

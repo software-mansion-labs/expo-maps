@@ -11,7 +11,7 @@ class AppleMapsCircles: Circles {
   func setCircles(circleObjects: [CircleObject]) {
     detachAndDeleteCircles()
     for circleObject in circleObjects {
-      let circle = ExpoAppleMapsCircle(
+      let circle = ExpoMKCircle(
         center: CLLocationCoordinate2D(
           latitude: circleObject.center.latitude, longitude: circleObject.center.longitude),
         radius: circleObject.radius

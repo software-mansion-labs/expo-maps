@@ -5,6 +5,7 @@ import { PolygonObject } from './Polygon';
 import { PolylineObject } from './Polyline';
 import { Point } from './Common.types';
 import { CircleObject } from './Circle';
+import { ClusterObject } from './Cluster';
 export declare type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 export declare type MapType = {
     mapType: MapTypes;
@@ -20,6 +21,9 @@ export declare type Polylines = {
 };
 export declare type Circles = {
     circles: CircleObject[];
+};
+export declare type Clusters = {
+    clusters: ClusterObject[];
 };
 export declare type GoogleMapsStyling = {
     googleMapsJsonStyleString: string;
@@ -46,12 +50,12 @@ export declare type CameraPosition = {
     };
 };
 export declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZoomControls'>;
-export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles>;
-export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles>;
+export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters>;
+export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters>;
 export declare type Providers = 'google' | 'apple';
 export declare type Provider = {
     provider: Providers;
 };
 export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition>>;
 export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition;
-export declare type ExpoMapState = Markers & Polygons & Polylines & Circles;
+export declare type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters;

@@ -19,14 +19,14 @@ export default function PolylinesExample() {
           ]}
           width={4}
           pattern={[
-            { type: "stroke", length: 10 },
-            { type: "stroke", length: 0 },
-            { type: "stroke", length: 10 },
-            { type: "gap", length: 10 },
-            { type: "stroke", length: 0 },
-            { type: "gap", length: 10 },
+            { type: 'stroke', length: 10 },
+            { type: 'stroke', length: 0 },
+            { type: 'stroke', length: 10 },
+            { type: 'gap', length: 10 },
+            { type: 'stroke', length: 0 },
+            { type: 'gap', length: 10 },
           ]}
-          color={"#00FF00A0"}
+          color={'#00FF00A0'}
           capType="butt"
         />
       </Maps.ExpoMap>
