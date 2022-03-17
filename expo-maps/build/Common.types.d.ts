@@ -1,5 +1,16 @@
+/**
+ * Basic point type for representing a coordinate on a map.
+ */
 export declare type Point = {
+    /**
+     * The latitude of the point in degrees. Use decimal degrees as opposed to degrees/minutes/seconds.
+     * @required
+     */
     latitude: number;
+    /**
+     * The longitude of the point in degrees. Use decimal degrees as opposed to degrees/minutes/seconds.
+     * @required
+     */
     longitude: number;
 };
 /**
@@ -8,6 +19,14 @@ export declare type Point = {
  * Use an array of PatternItem to define a pattern.
  */
 export declare type PatternItem = {
+    /**
+     * The type of the pattern item.
+     * @required
+     */
     type: 'stroke' | 'gap';
+    /**
+     * Length of the pattern item in pixels.
+     * @required
+     */
     length: number;
 };
