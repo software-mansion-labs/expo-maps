@@ -80,6 +80,10 @@ class ExpoGoogleMapsModule : Module() {
       prop("circles") { view: GoogleMapsView, circleObjects: Array<CircleObject> ->
         view.setCircles(circleObjects)
       }
+
+      prop("clusters") { view: GoogleMapsView, clusterObjects: Array<ClusterObject> ->
+        view.setClusters(clusterObjects)
+      }
     }
   }
 }

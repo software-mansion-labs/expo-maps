@@ -13,8 +13,8 @@ export default function PolylinesExample() {
           center={{ latitude: 51.5, longitude: -0.13 }}
           radius={100000}
           strokeWidth={1}
-          fillColor={"#00FF00A0"}
-          strokeColor={"#FF0000"}
+          fillColor={'#00FF00A0'}
+          strokeColor={'#FF0000'}
         />
       </Maps.ExpoMap>
     </View>

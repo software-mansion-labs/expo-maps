@@ -49,6 +49,10 @@ public class ExpoGoogleMapsModule: Module {
       prop("markers") { (view: GoogleMapsView, markerObjects: [MarkerObject]) in
         view.setMarkers(markerObjects: markerObjects)
       }
+      
+      prop("clusters") { (view: GoogleMapsView, clusterObjects: [ClusterObject]) in
+        view.setClusters(clusterObjects: clusterObjects)
+      }
 
       prop("polygons") { (view: GoogleMapsView, polygonObjects: [PolygonObject]) in
         view.setPolygons(polygonObjects: polygonObjects)

@@ -20,6 +20,7 @@ PODS:
     - ExpoModulesCore
   - ExpoMaps (1.0.0):
     - ExpoModulesCore
+    - Google-Maps-iOS-Utils
     - GoogleMaps
   - ExpoModulesCore (0.7.0):
     - React-Core
@@ -33,6 +34,25 @@ PODS:
     - React-jsi (= 0.64.3)
     - ReactCommon/turbomodule/core (= 0.64.3)
   - glog (0.3.5)
+  - Google-Maps-iOS-Utils (4.1.0):
+    - Google-Maps-iOS-Utils/Clustering (= 4.1.0)
+    - Google-Maps-iOS-Utils/Geometry (= 4.1.0)
+    - Google-Maps-iOS-Utils/GeometryUtils (= 4.1.0)
+    - Google-Maps-iOS-Utils/Heatmap (= 4.1.0)
+    - Google-Maps-iOS-Utils/QuadTree (= 4.1.0)
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Clustering (4.1.0):
+    - Google-Maps-iOS-Utils/QuadTree
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Geometry (4.1.0):
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/GeometryUtils (4.1.0):
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Heatmap (4.1.0):
+    - Google-Maps-iOS-Utils/QuadTree
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/QuadTree (4.1.0):
+    - GoogleMaps
   - GoogleMaps (6.0.0):
     - GoogleMaps/Maps (= 6.0.0)
   - GoogleMaps/Base (6.0.0)
@@ -350,6 +370,7 @@ DEPENDENCIES:
   - FBLazyVector (from `../../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - Google-Maps-iOS-Utils (~> 4.1.0)
   - GoogleMaps (= 6.0.0)
   - RCT-Folly (from `../../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../../node_modules/react-native/Libraries/RCTRequired`)
@@ -386,6 +407,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - Google-Maps-iOS-Utils
     - GoogleMaps
 
 EXTERNAL SOURCES:
@@ -487,11 +509,12 @@ SPEC CHECKSUMS:
   EXKeepAwake: bf48d7f740a5cd2befed6cf9a49911d385c6c47d
   EXLocation: 013b5d07cca26c2d15d998766322e70b7a228b57
   Expo: 337c72b7e9314e93023af79c875930db8e008275
-  ExpoMaps: 0eec27d0df1f40a47868958a9016c8fc2977ba12
+  ExpoMaps: fc3bd829f44a65a6d949f6f687942abc8ee2bf7e
   ExpoModulesCore: 5ee50e40092c569518fe06977be5e747228c652a
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: 4b7389ce5a262927d5507b4fda95fc23542d8b02
+  FBReactNativeSpec: ed60192ff902c73f373ab8e99f67bf99220ebd76
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
+  Google-Maps-iOS-Utils: 3343332b18dfd5be8f1f44edd7d481ace3da4d9a
   GoogleMaps: 750f237920fa44dd32de0c0d2004d35cb2c688f3
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: d34bf57e17cb6e3b2681f4809b13843c021feb6c
@@ -523,6 +546,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 3184c93ecc290bd422c6e344badc89b601e9c29b
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
-PODFILE CHECKSUM: c8aa0d312be23a613d8cec127cd5d99f85141dfa
+PODFILE CHECKSUM: a6caf627026b910c1dcd9c17d213d56affaea1a5
 
 COCOAPODS: 1.11.2

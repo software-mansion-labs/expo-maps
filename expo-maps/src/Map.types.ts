@@ -5,6 +5,7 @@ import { PolygonObject } from './Polygon';
 import { PolylineObject } from './Polyline';
 import { Point } from './Common.types';
 import { CircleObject } from './Circle';
+import { ClusterObject } from './Cluster';
 
 export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 
@@ -26,6 +27,10 @@ export type Polylines = {
 
 export type Circles = {
   circles: CircleObject[];
+};
+
+export type Clusters = {
+  clusters: ClusterObject[];
 };
 
 export type GoogleMapsStyling = {
@@ -95,7 +100,8 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       Polylines &
       GoogleMapsControls &
       CameraPosition &
-      Circles
+      Circles &
+      Clusters
   >;
 
 export type NativeExpoAppleMapsViewProps = ViewProps &
@@ -107,7 +113,8 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
       Polylines &
       AppleMapsControls &
       CameraPosition &
-      Circles
+      Circles &
+      Clusters
   >;
 
 export type Providers = 'google' | 'apple';
@@ -133,4 +140,4 @@ export type DefaultNativeExpoMapViewProps = MapType &
   Gestures &
   CameraPosition;
 
-export type ExpoMapState = Markers & Polygons & Polylines & Circles;
+export type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters;

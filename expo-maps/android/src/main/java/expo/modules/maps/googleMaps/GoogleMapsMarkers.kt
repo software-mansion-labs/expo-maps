@@ -2,17 +2,15 @@ package expo.modules.maps.googleMaps
 
 import android.net.Uri
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import expo.modules.maps.MarkerObject
 import expo.modules.maps.interfaces.Markers
 
-class GoogleMapsMarkers(map: GoogleMap) : Markers {
+class GoogleMapsMarkers(private val map: GoogleMap) : Markers {
 
   private val markers = mutableListOf<Marker>()
-  private var googleMap: GoogleMap = map
 
   override fun setMarkers(markerObjects: Array<MarkerObject>) {
     detachAndDeleteMarkers()
@@ -22,32 +20,19 @@ class GoogleMapsMarkers(map: GoogleMap) : Markers {
       val localUri = markerObject.icon?.let { Uri.parse(it)?.path }
       markerOptions
         .position(LatLng(markerObject.latitude, markerObject.longitude))
-        .title(markerObject.title)
-        .snippet(markerObject.snippet)
+        .title(markerObject.markerTitle)
+        .snippet(markerObject.markerSnippet)
         .draggable(markerObject.draggable)
         .anchor((markerObject.anchorU ?: 0.5).toFloat(), (markerObject.anchorV ?: 1).toFloat())
         .alpha(markerObject.opacity.toFloat())
+        .icon(provideDescriptor(localUri, markerObject.color))
 
-      if (localUri != null) {
-        markerOptions.icon(BitmapDescriptorFactory.fromPath(localUri))
-      } else {
-        markerOptions.icon(
-          BitmapDescriptorFactory.defaultMarker(
-            (markerObject.defaultMarkerColor % HUE_WHEEL_MAX_VALUE).toFloat()
-          )
-        )
-      }
-
-      googleMap.addMarker(markerOptions)?.let { markers.add(it) }
+      map.addMarker(markerOptions)?.let { markers.add(it) }
     }
   }
 
   override fun detachAndDeleteMarkers() {
     markers.forEach { it.remove() }
     markers.clear()
-  }
-
-  companion object {
-    const val HUE_WHEEL_MAX_VALUE = 360
   }
 }

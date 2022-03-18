@@ -5,8 +5,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let mapView: GMSMapView
   private let delegate: GoogleMapsViewDelegate
   private let controls: GoogleMapsControls
-  private let gestures: GoogleMapsGestures
   private let markers: GoogleMapsMarkers
+  private let clusters: GoogleMapsClusters
+  private let gestures: GoogleMapsGestures
   private let polygons: GoogleMapsPolygons
   private let polylines: GoogleMapsPolylines
   private let circles: GoogleMapsCircles
@@ -24,8 +25,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     mapView.delegate = delegate
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     controls = GoogleMapsControls(mapView: mapView)
-    gestures = GoogleMapsGestures(mapView: mapView)
     markers = GoogleMapsMarkers(mapView: mapView)
+    clusters = GoogleMapsClusters(mapView: mapView)
+    gestures = GoogleMapsGestures(mapView: mapView)
     polygons = GoogleMapsPolygons(mapView: mapView)
     polylines = GoogleMapsPolylines(mapView: mapView)
     circles = GoogleMapsCircles(mapView: mapView)
@@ -125,5 +127,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     } else {
       mapView.camera = newCameraPosition
     }
+  }
+    
+  func setClusters(clusterObjects: [ClusterObject]) {
+    clusters.setClusters(clusterObjects: clusterObjects)
   }
 }

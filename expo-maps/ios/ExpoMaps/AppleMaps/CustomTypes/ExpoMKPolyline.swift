@@ -1,6 +1,6 @@
 import MapKit
 
-class ExpoAppleMapsPolyline: MKPolyline {
+class ExpoMKPolyline: MKPolyline {
   var color: UIColor = UIColor.blue
   var width: Float = 1.0
   var pattern: [NSNumber]? = nil

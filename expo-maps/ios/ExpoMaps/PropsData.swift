@@ -10,10 +10,10 @@ enum MapType: String, EnumArgument {
 struct MarkerObject: Record {
   @Field var latitude: Double = 0
   @Field var longitude: Double = 0
-  @Field var title: String? = nil
-  @Field var snippet: String? = nil
+  @Field var markerTitle: String? = nil
+  @Field var markerSnippet: String? = nil
   @Field var icon: String? = nil
-  @Field var defaultMarkerColor: Double = 0
+  @Field var color: Double = 0
   @Field var draggable: Bool = false
   @Field var anchorU: Double? = nil
   @Field var anchorV: Double? = nil
@@ -78,4 +78,15 @@ struct CameraPosition: Record {
   @Field var longitude: Double = 0
   @Field var zoom: Double = 0
   @Field var animate: Bool = false
+}
+
+struct ClusterObject: Record {
+  @Field var name: String = "default_cluster"
+  @Field var minimumClusterSize: Int = 2
+  @Field var markerTitle: String? = nil
+  @Field var markerSnippet: String? = nil
+  @Field var icon: String? = nil
+  @Field var color: Double = 0
+  @Field var opacity: Double = 1
+  @Field var markers: [MarkerObject] = []
 }

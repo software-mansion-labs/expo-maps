@@ -1,16 +1,17 @@
 import React from 'react';
-import { Point } from './Common.types';
-export declare type MarkerColor = 'azure' | 'blue' | 'cyan' | 'green' | 'magenta' | 'orange' | 'red' | 'rose' | 'violet' | 'yellow';
-export declare type MarkerOptions = {
-    title?: string;
-    snippet?: string;
+import { Color, Point } from './Common.types';
+export declare type BaseMarkerOptions = {
+    markerTitle?: string;
+    markerSnippet?: string;
     icon?: string;
-    defaultMarkerColor: number | MarkerColor;
-    draggable: boolean;
-    anchorU?: number;
-    anchorV?: number;
+    color?: number | Color;
     opacity?: number;
 };
+export declare type MarkerOptions = {
+    draggable?: boolean;
+    anchorU?: number;
+    anchorV?: number;
+} & BaseMarkerOptions;
 export declare type MarkerProps = MarkerOptions & Point;
 export declare type MarkerObject = {
     type: 'marker';

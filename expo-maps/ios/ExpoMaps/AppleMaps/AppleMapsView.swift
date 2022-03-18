@@ -2,10 +2,11 @@ import MapKit
 
 public final class AppleMapsView: UIView, ExpoMapView {
   private let mapView: MKMapView
-  private let delegate: MKMapViewDelegate
   private let controls: AppleMapsControls
-  private let gestures: AppleMapsGestures
+  private let delegate: AppleMapsDelegate
   private let markers: AppleMapsMarkers
+  private let clusters: AppleMapsClusters
+  private let gestures: AppleMapsGestures
   private let polygons: AppleMapsPolygons
   private let polylines: AppleMapsPolylines
   private let circles: AppleMapsCircles
@@ -13,11 +14,12 @@ public final class AppleMapsView: UIView, ExpoMapView {
   init() {
     mapView = MKMapView()
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    delegate = AppleMapsViewDelegate()
+    delegate = AppleMapsDelegate()
     mapView.delegate = delegate
     controls = AppleMapsControls(mapView: mapView)
-    gestures = AppleMapsGestures(mapView: mapView)
     markers = AppleMapsMarkers(mapView: mapView)
+    clusters = AppleMapsClusters(mapView: mapView)
+    gestures = AppleMapsGestures(mapView: mapView)
     polygons = AppleMapsPolygons(mapView: mapView)
     polylines = AppleMapsPolylines(mapView: mapView)
     circles = AppleMapsCircles(mapView: mapView)
@@ -73,6 +75,11 @@ public final class AppleMapsView: UIView, ExpoMapView {
 
   func setMarkers(markerObjects: [MarkerObject]) {
     markers.setMarkers(markerObjects: markerObjects)
+  }
+  
+  func setClusters(clusterObjects: [ClusterObject]) {
+    delegate.setClusters(clusterObjects: clusterObjects)
+    clusters.setClusters(clusterObjects: clusterObjects)
   }
 
   func setPolygons(polygonObjects: [PolygonObject]) {
