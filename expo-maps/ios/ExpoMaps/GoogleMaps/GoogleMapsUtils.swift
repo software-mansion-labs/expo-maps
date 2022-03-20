@@ -1,5 +1,8 @@
 import GoogleMaps
 
+/*
+ Returns asset based marker icon when markerObject.icon is not null, otherwise returns default marker with provided color.
+ */
 func createGoogleMarker(markerObject: MarkerObject) -> GMSMarker {
   let position = CLLocationCoordinate2D(latitude: markerObject.latitude, longitude: markerObject.longitude)
   let marker = GMSMarker(position: position)

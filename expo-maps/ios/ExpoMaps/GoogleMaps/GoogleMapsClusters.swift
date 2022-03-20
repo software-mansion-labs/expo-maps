@@ -21,7 +21,8 @@ class GoogleMapsClusters : Clusters {
     
     for clusterObject in clusterObjects {
       let color = clusterObject.color.truncatingRemainder(dividingBy: Resources.HUE_WHEEL_MAX_VALUE) / Resources.HUE_WHEEL_MAX_VALUE
-      // Set up the cluster manager with the supplied icon generator and renderer.
+      
+      // Cluster color has to be set in regard to number of clustered markers
       let iconGenerator = GMUDefaultClusterIconGenerator(
         buckets: [5, 10, 50, 100, 1000],
         backgroundColors: [

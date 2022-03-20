@@ -12,9 +12,11 @@ import expo.modules.maps.ClusterObject
 import expo.modules.maps.MarkerObject
 import expo.modules.maps.interfaces.Clusters
 
+// Context has to be passed in order to use custom cluster manager and renderer
 class GoogleMapsClusters(private val context: Context, private val map: GoogleMap) : Clusters {
   private val clusters: MutableList<ExpoClusterManager> = mutableListOf()
 
+  // After each cluster's items modification cluster() has to be called on cluster manager
   override fun setClusters(clusterObjects: Array<ClusterObject>) {
     clusters.forEach {
       it.clearItems()
@@ -60,6 +62,10 @@ class GoogleMapsClusters(private val context: Context, private val map: GoogleMa
     }
   }
 
+  /*
+    When using custom renderer one has to override additional methods as in:
+    https://github.com/googlemaps/android-maps-utils#clustering
+   */
   private inner class ExpoClusterRenderer(
     private val clusterManager: ExpoClusterManager
   ) : DefaultClusterRenderer<MarkerObject>(context, map, clusterManager) {

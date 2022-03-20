@@ -5,6 +5,10 @@ class AppleMapsMarkers: NSObject, Markers {
   private let mapView: MKMapView
   private var markers: [ExpoMKAnnotation] = []
   
+  /*
+   Two marker classes, which are used to display markers on a map, are here registered in order to reuse their instances
+   when user scrolls a map.
+   */
   init(mapView: MKMapView) {
     self.mapView = mapView
     mapView.register(ExpoMKImageAnnotationView.self, forAnnotationViewWithReuseIdentifier: "image_marker")

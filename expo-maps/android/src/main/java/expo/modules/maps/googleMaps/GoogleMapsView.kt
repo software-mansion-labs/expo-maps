@@ -180,6 +180,13 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
+  /*
+    Calls function provided as an argument when OnMapReadyCallback fires,
+    subscribes to StateFlow in a background but calls lambda on a main thread.
+    After calling lambda the subscription is canceled.
+    StateFlow holds the latest value so even if updateMap is called after
+    OnMapReadyCallback, StateFlow emits the latest value letting provided lambda to be executed.
+   */
   private fun updateMap(update: () -> Unit) {
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.collectLatest {
