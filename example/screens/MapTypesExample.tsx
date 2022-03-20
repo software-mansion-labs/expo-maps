@@ -23,7 +23,7 @@ export default function MapTypesExample() {
       <SettingsContainer>
         <DropDownPicker
           items={[
-            { label: 'normal', value: 'value' },
+            { label: 'normal', value: 'normal' },
             { label: 'satellite', value: 'satellite' },
             { label: 'hybrid', value: 'hybrid' },
             { label: 'terrain', value: 'terrain' },
