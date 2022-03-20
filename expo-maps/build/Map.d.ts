@@ -4,6 +4,11 @@ export { Marker } from './Marker';
 export { Polygon } from './Polygon';
 export { Polyline } from './Polyline';
 export { Circle } from './Circle';
+/**
+ * Main map component of Expo Maps library.
+ *
+ * See `ExpoMapViewProps` to learn more about props.
+ */
 export declare class ExpoMap extends React.Component<ExpoMapViewProps> {
     state: ExpoMapState;
     _ismounted: boolean;

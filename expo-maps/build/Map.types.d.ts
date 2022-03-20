@@ -4,71 +4,66 @@ import { MarkerObject } from './Marker';
 import { PolygonObject } from './Polygon';
 import { PolylineObject } from './Polyline';
 import { CircleObject } from './Circle';
-/**
- * Avaliable map types used in Expo Maps
- *
- * @value `normal` | `hybrid` | `satellite` | `terrain`
- */
 export declare type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 /**
- * Prop for managing map type
+ * Prop for managing map type.
  *
- * @ExpoMapsField mapType - see MapTypes type to learn more about avaliable map types in Expo Maps
+ * @field mapType - type of map (one of normal, hybrid, satellite, terrain')
  */
 export declare type MapType = {
     mapType: MapTypes;
 };
 /**
- * Prop for managing markers displayed on the map
+ * Internal prop for managing markers displayed on the map.
  *
- * @ExpoMapsField markers - array of MarkerObjects
+ * @field markers - array of MarkerObjects
  */
 export declare type Markers = {
     markers: MarkerObject[];
 };
 /**
- * Prop for managing polygons displayed on the map
+ * Internal prop for managing polygons displayed on the map.
  *
- * @ExpoMapsField polygons - array of PolygonObjects
+ * @field polygons - array of PolygonObjects
  */
 export declare type Polygons = {
     polygons: PolygonObject[];
 };
 /**
- * Prop for managing polylines displayed on the map
+ * Internal prop for managing polylines displayed on the map.
  *
- * @ExpoMapsField polylines - array of PolylineObjects
+ * @field polylines - array of PolylineObjects
  */
 export declare type Polylines = {
     polylines: PolylineObject[];
 };
 /**
- * Prop for managing circles displayed on the map
+ * Internal prop for managing circles displayed on the map.
  *
- * @ExpoMapsField circles - array of CircleObjects
+ * @field circles - array of CircleObjects
  */
 export declare type Circles = {
     circles: CircleObject[];
 };
 /**
- * Prop for managing Google Maps styling settings
+ * Prop for managing Google Maps styling settings.
  *
- * @GoogleMapsField googleMapsJsonStyleString - valid Google Maps style JSON string,
+ * @googleMapsfield googleMapsJsonStyleString - valid Google Maps style JSON string,
  * please use https://mapstyle.withgoogle.com to generate style JSONs
  */
 export declare type GoogleMapsStyling = {
     googleMapsJsonStyleString: string;
 };
 /**
- * Props for managing map gestures settings
+ * Props for managing map gestures settings.
  *
- * @ExpoMapsField enableRotateGestures - if `true` rotate gestures are enabled
+ * @field enableRotateGestures - if `true` rotate gestures are enabled
  *
- * @ExpoMapsField enableScrollGestures - if `true` scroll gestures are enabled
+ * @field enableScrollGestures - if `true` scroll gestures are enabled
  *
- * @ExpoMapsField enableTiltGestures - if `true` tilt gestures are enabled
+ * @field enableTiltGestures - if `true` tilt gestures are enabled
  *
- * @ExpoMapsField enableZoomGestures - if `true` zoom gestures are enabled
+ * @field enableZoomGestures - if `true` zoom gestures are enabled
  */
 export declare type Gestures = {
     enableRotateGestures: boolean;
@@ -77,15 +72,15 @@ export declare type Gestures = {
     enableZoomGestures: boolean;
 };
 /**
- * Props for managing map controls settings
+ * Props for managing map controls settings.
  *
- * @GoogleMapsField showZoomControls - if `true` zoom controls are visable
+ * @googleMapsfield showZoomControls - if `true` zoom controls are visable
  *
- * @ExpoMapsField showCompass - if `true` compass icon is visable
+ * @field showCompass - if `true` compass icon is visable
  *
- * @GoogleMapsField showMapToolbar - if `true` map toolbar is visable
+ * @googleMapsfield showMapToolbar - if `true` map toolbar is visable
  *
- * @ExpoMapsField showLevelPicker - if `true` level picker is visable when avaliable
+ * @field showLevelPicker - if `true` level picker is visable when avaliable
  */
 export declare type Controls = {
     showZoomControls: boolean;
@@ -98,25 +93,57 @@ declare type GoogleMapsControls = Controls;
 declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZoomControls'>;
 export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & Circles & GoogleMapsControls>;
 export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & Circles & AppleMapsControls>;
-/**
- * Avaliable map providers
- *
- * @value `google` | `apple` - please note `apple` provider is only avaliable on Apple devices
- */
 export declare type Providers = 'google' | 'apple';
 /**
- * Prop for managing map provider
+ * Prop for managing map provider.
  *
- * @ExpoMapsField provider - provider you want to use for your map, please note `apple` provider is only avaliable on Apple devices
+ * @field provider - provider you want to use for your map, please note `apple` provider is only avaliable on Apple devices,
+ * if `apple` provider is selected on Android device it is ignored
  */
 export declare type Provider = {
     provider: Providers;
 };
 /**
- * General Expo Map props
+ * General Expo Map props.
  *
- * Please see subtypes documentation for more details
- */
+ * All of the ExpoMap props are optional, if prop is not explicitly specified default will be used.
+ *
+ * @field mapType - type of map (one of normal, hybrid, satellite, terrain')
+ * @default 'normal'
+ *
+ * @googleMapsfield googleMapsJsonStyleString - valid Google Maps style JSON string,
+ * please use https://mapstyle.withgoogle.com to generate style JSONs
+ * @default undefined
+ *
+ * @field enableRotateGestures - if `true` rotate gestures are enabled
+ * @default false
+ *
+ * @field enableScrollGestures - if `true` scroll gestures are enabled
+ * @default true
+ *
+ * @field enableTiltGestures - if `true` tilt gestures are enabled
+ * @default false
+ *
+ * @field enableZoomGestures - if `true` zoom gestures are enabled
+ * @default true
+ *
+ * TODO more explanations on how zoom controls function
+ * @googleMapsfield showZoomControls - if `true` zoom controls are visable
+ * @default true
+ *
+ * @field showCompass - if `true` compass icon is visable
+ * @default true
+ *
+ * @googleMapsfield showMapToolbar - if `true` map toolbar is visable
+ * @default true
+ *
+ * @field showLevelPicker - if `true` level picker is visable when avaliable
+ * @default true
+ *
+ * @field provider - provider you want to use for your map, please note `apple` provider is only avaliable on Apple devices,
+ * if `apple` provider is selected on Android device it is ignored
+ * @default 'google'
+*/
 export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures>>;
 export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures;
 export declare type ExpoMapState = Markers & Polygons & Polylines & Circles;

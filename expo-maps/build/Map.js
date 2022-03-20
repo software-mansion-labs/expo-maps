@@ -19,6 +19,11 @@ const defaultNativeExpoMapViewProps = {
     enableTiltGestures: false,
     enableZoomGestures: true,
 };
+/**
+ * Main map component of Expo Maps library.
+ *
+ * See `ExpoMapViewProps` to learn more about props.
+ */
 export class ExpoMap extends React.Component {
     state = {
         markers: [],
