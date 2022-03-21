@@ -26,15 +26,16 @@ export declare type MarkerOptions = {
  * @field icon - custom marker icon (optional)
  * @default default marker icon for given provider
  *
- * @field defaultMarkerColor - TODO
+ * @field defaultMarkerColor - color of a marker when asset is not provided
  * @default 0
  *
  * @field draggable - `true` if marker should be draggable, otherwise `false` (optional)
  * @default false
  *
- * @field anchorU - TODO
- * @field anchorV - TODO
- * @field opacity - TODO
+ * @field anchorU - translation of latitude coordinate
+ * @field anchorV - translation of longitude coordinate
+ * @field opacity - opacity of a marker's icon, applied both to asset based icon
+ * as well as to default marker's icon
  */
 export declare type MarkerProps = MarkerOptions & Point;
 /**
