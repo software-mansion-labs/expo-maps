@@ -1,5 +1,8 @@
 import MapKit
 
+/*
+ Returns asset based marker icon when markerObject.icon is not null, otherwise returns default marker with provided color.
+ */
 func createAppleMarker(markerObject: MarkerObject) -> ExpoMKAnnotation {
   let iconURL = (markerObject.icon != nil) ? URL(fileURLWithPath: markerObject.icon!) : nil
   

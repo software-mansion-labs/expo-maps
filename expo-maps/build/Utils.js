@@ -61,38 +61,20 @@ export function isCluster(child) {
     return false;
 }
 export function mapColor(color) {
-    switch (color) {
-        case 'azure': {
-            return 210;
-        }
-        case 'blue': {
-            return 240;
-        }
-        case 'cyan': {
-            return 180;
-        }
-        case 'green': {
-            return 120;
-        }
-        case 'magenta': {
-            return 300;
-        }
-        case 'orange': {
-            return 30;
-        }
-        case 'rose': {
-            return 330;
-        }
-        case 'violet': {
-            return 270;
-        }
-        case 'yellow': {
-            return 60;
-        }
-        default: {
-            return 0;
-        }
-    }
+    const colors = {
+        azure: 210,
+        blue: 240,
+        cyan: 180,
+        green: 120,
+        magenta: 300,
+        orange: 30,
+        rose: 330,
+        violet: 270,
+        yellow: 60,
+        red: 0,
+        default: 0,
+    };
+    return colors[color] || colors['default'];
 }
 export function warnIfChildIsIncompatible(child) {
     if (typeof child == 'string' ||

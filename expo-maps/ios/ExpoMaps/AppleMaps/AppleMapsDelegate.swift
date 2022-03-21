@@ -2,6 +2,7 @@ import MapKit
 
 class AppleMapsDelegate : NSObject, MKMapViewDelegate {
   
+  // Dictionary which holds cluster names connected with clusters appearance data
   private var clusterObjects: [String : ClusterObject] = [:]
   
   func setClusters(clusterObjects: [ClusterObject]) {
@@ -40,8 +41,11 @@ class AppleMapsDelegate : NSObject, MKMapViewDelegate {
     }
   }
   
+  /*
+   annotation can be one of four possible MKAnnotation subclasses, for each of them queue is checked if it contains
+   the particular instance. If so, its fields are set, otherwise new instance is created.
+   */
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
     if let annotation = annotation as? ExpoMKImageAnnotation {
       let view = mapView.dequeueReusableAnnotationView(withIdentifier: "image_marker")
 
@@ -97,6 +101,10 @@ class AppleMapsDelegate : NSObject, MKMapViewDelegate {
     }
   }
   
+  /*
+   Depending on memberAnnotation's clusterName and data paired with the name in clusterObjects dictionary
+   ExpoMKClusterImageAnnotation or ExpoMKClusterColorAnnotation is created.
+   */
   func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
     if let expoAnnotation = memberAnnotations.first as? ExpoMKAnnotation {
       let clusterObject = clusterObjects[expoAnnotation.clusterName!]!

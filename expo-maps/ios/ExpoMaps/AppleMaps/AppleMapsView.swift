@@ -94,15 +94,15 @@ public final class AppleMapsView: UIView, ExpoMapView {
     circles.setCircles(circleObjects: circleObjects)
   }
   
-  // imitating Google Maps zoom level behaviour
-  // based on https://gis.stackexchange.com/questions/7430/what-ratio-scales-do-google-maps-zoom-levels-correspond-to
-  func googleMapsZoomLevelToMeters(latitude: Double, zoom: Double) -> Double {
-    let metersPerPixel = 156543.03392 * cos(latitude * Double.pi / 180) / pow(2, zoom - 1)
-    return UIScreen.main.bounds.size.width * metersPerPixel
-  }
-  
   func setCameraPosition(cameraPosition: CameraPosition) {
     let camera = MKMapCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: cameraPosition.latitude, longitude: cameraPosition.longitude), fromDistance: googleMapsZoomLevelToMeters(latitude: cameraPosition.latitude, zoom: cameraPosition.zoom), pitch: 0, heading: CLLocationDirection())
     mapView.setCamera(camera, animated: cameraPosition.animate)
+  }
+  
+  // imitating Google Maps zoom level behaviour
+  // based on https://gis.stackexchange.com/questions/7430/what-ratio-scales-do-google-maps-zoom-levels-correspond-to
+  private func googleMapsZoomLevelToMeters(latitude: Double, zoom: Double) -> Double {
+    let metersPerPixel = 156543.03392 * cos(latitude * Double.pi / 180) / pow(2, zoom - 1)
+    return UIScreen.main.bounds.size.width * metersPerPixel
   }
 }

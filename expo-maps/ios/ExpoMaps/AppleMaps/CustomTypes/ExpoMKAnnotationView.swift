@@ -5,12 +5,14 @@ class ExpoMKColorAnnotationView : MKMarkerAnnotationView {
   override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
     super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
     
+    // Set in order to display annotation even if user zooms out
     displayPriority = .required
   }
   
   init(annotation: ExpoMKColorAnnotation, reuseIdentifier: String?) {
     super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
     
+    // Set in order to display annotation even if user zooms out
     displayPriority = .required
     isDraggable = annotation.isDraggable
     centerOffset = CGPoint(x: annotation.centerOffsetX, y: annotation.centerOffsetY)
@@ -29,7 +31,9 @@ class ExpoMKImageAnnotationView : MKAnnotationView {
   override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
     super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
     
+    // Set in order to display annotation even if user zooms out
     displayPriority = .required
+    // For displaying data in a infoWindow when annotation is clicked
     canShowCallout = true
     isEnabled = true
   }
@@ -37,7 +41,9 @@ class ExpoMKImageAnnotationView : MKAnnotationView {
   init(annotation: ExpoMKImageAnnotation, reuseIdentifier: String?) {
     super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
     
+    // Set in order to display annotation even if user zooms out
     displayPriority = .required
+    // For displaying data in a infoWindow when annotation is clicked
     canShowCallout = true
     isEnabled = true
     isDraggable = annotation.isDraggable
