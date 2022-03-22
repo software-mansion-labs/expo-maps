@@ -3,9 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import * as Maps from 'expo-maps';
 import SwitchContainer from '../components/SwitchContainer';
-import SettingsContainer from '../components/SettingsContainer';
 import ProviderContext from '../context/ProviderContext';
-import Colors from '../constants/Colors';
 
 export default function ControlsExample() {
   const provider = useContext(ProviderContext);
@@ -28,42 +26,37 @@ export default function ControlsExample() {
         showLevelPicker={true}
         showMapToolbar={true}
       />
-      <SettingsContainer>
+      <View style={{ padding: 20 }}>
         {provider == 'google' && (
           <SwitchContainer
             title="Show zoom controls"
             value={showZoomControls}
             onValueChange={() => setShowZoomControls(!showZoomControls)}
-            textColor={Colors.white}
           />
         )}
         <SwitchContainer
           title="Show compass"
           value={showCompass}
           onValueChange={() => setShowCompass(!showCompass)}
-          textColor={Colors.white}
         />
         <SwitchContainer
           title="Show my location button"
           value={showMyLocationButton}
           onValueChange={() => setShowMyLocationButton(!showMyLocationButton)}
-          textColor={Colors.white}
         />
         <SwitchContainer
           title="Show level picker"
           value={showLevelPicker}
           onValueChange={() => setShowLevelPicker(!showLevelPicker)}
-          textColor={Colors.white}
         />
         {provider == 'google' && (
           <SwitchContainer
             title="Show map toolbar"
             value={showMapToolbar}
             onValueChange={() => setShowMapToolbar(!showMapToolbar)}
-            textColor={Colors.white}
           />
         )}
-      </SettingsContainer>
+      </View>
     </View>
   );
 }

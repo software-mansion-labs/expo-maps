@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import * as Maps from 'expo-maps';
-import SettingsContainer from '../components/SettingsContainer';
 import SwitchContainer from '../components/SwitchContainer';
 import ProviderContext from '../context/ProviderContext';
 
@@ -26,32 +25,28 @@ export default function GesturesExample() {
         enableTiltGestures={false}
         enableZoomGestures={false}
       />
-      <SettingsContainer>
+      <View style={{ padding: 20 }}>
         <SwitchContainer
           title="Enable rotate gestures"
           value={enableRotateGestures}
           onValueChange={() => setEnableRotateGestures(!enableRotateGestures)}
-          textColor="white"
         />
         <SwitchContainer
           title="Enable scroll gestures"
           value={enableScrollGestures}
           onValueChange={() => setEnableScrollGestures(!enableScrollGestures)}
-          textColor="white"
         />
         <SwitchContainer
           title="Enable tilt gestures"
           value={enableTiltGestures}
           onValueChange={() => setEnableTiltGestures(!enableTiltGestures)}
-          textColor="white"
         />
         <SwitchContainer
           title="Enable zoom gestures"
           value={enableZoomGestures}
           onValueChange={() => setEnableZoomGestures(!enableZoomGestures)}
-          textColor="white"
         />
-      </SettingsContainer>
+      </View>
     </View>
   );
 }

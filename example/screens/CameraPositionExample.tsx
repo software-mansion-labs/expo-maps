@@ -4,8 +4,6 @@ import { StyleSheet, View } from 'react-native';
 import * as Maps from 'expo-maps';
 import ProviderContext from '../context/ProviderContext';
 import DropDownPicker, { ItemType } from 'react-native-dropdown-picker';
-import SettingsContainer from '../components/SettingsContainer';
-import Colors from '../constants/Colors';
 import { Point } from 'expo-maps/build/Common.types';
 import SwitchContainer from '../components/SwitchContainer';
 import { ZoomLevels } from 'expo-maps/build/Map.types';
@@ -69,7 +67,7 @@ export default function CameraPositionExample() {
           animate: animate,
         }}
       />
-      <SettingsContainer>
+      <View style={{ padding: 20 }}>
         <DropDownPicker
           items={[
             { label: 'Warsaw', value: 'Warsaw' },
@@ -88,16 +86,7 @@ export default function CameraPositionExample() {
           }
           placeholder={cameraExampleLocationCity}
           style={{
-            backgroundColor: Colors.gray,
-            borderColor: Colors.white,
-            shadowColor: Colors.white,
             marginBottom: 5,
-          }}
-          textStyle={{
-            color: Colors.white,
-          }}
-          listItemContainerStyle={{
-            backgroundColor: Colors.gray,
           }}
         />
         <DropDownPicker
@@ -110,26 +99,13 @@ export default function CameraPositionExample() {
           open={openZoomDropdown}
           setOpen={() => setOpenZoomDropdown(!openZoomDropdown)}
           placeholder={String(zoom)}
-          style={{
-            backgroundColor: Colors.gray,
-            borderColor: Colors.white,
-            shadowColor: Colors.white,
-            marginBottom: 5,
-          }}
-          textStyle={{
-            color: Colors.white,
-          }}
-          listItemContainerStyle={{
-            backgroundColor: Colors.gray,
-          }}
         />
         <SwitchContainer
           title="Animate"
           value={animate}
           onValueChange={() => setAnimate(!animate)}
-          textColor={Colors.white}
         />
-      </SettingsContainer>
+      </View>
     </View>
   );
 }

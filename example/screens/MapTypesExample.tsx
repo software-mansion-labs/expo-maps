@@ -5,8 +5,6 @@ import * as Maps from 'expo-maps';
 import ProviderContext from '../context/ProviderContext';
 import { MapTypes } from 'expo-maps/build/Map.types';
 import DropDownPicker from 'react-native-dropdown-picker';
-import SettingsContainer from '../components/SettingsContainer';
-import Colors from '../constants/Colors';
 
 export default function MapTypesExample() {
   const provider = useContext(ProviderContext);
@@ -20,7 +18,7 @@ export default function MapTypesExample() {
         provider={provider}
         mapType={mapType}
       />
-      <SettingsContainer>
+      <View style={{ padding: 20 }}>
         <DropDownPicker
           items={[
             { label: 'normal', value: 'normal' },
@@ -34,19 +32,8 @@ export default function MapTypesExample() {
           open={open}
           setOpen={() => setOpen(!open)}
           placeholder={mapType}
-          style={{
-            backgroundColor: Colors.gray,
-            borderColor: Colors.white,
-            shadowColor: Colors.white,
-          }}
-          textStyle={{
-            color: Colors.white,
-          }}
-          listItemContainerStyle={{
-            backgroundColor: Colors.gray,
-          }}
         />
-      </SettingsContainer>
+      </View>
     </View>
   );
 }

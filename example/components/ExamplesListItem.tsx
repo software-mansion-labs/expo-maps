@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import Colors from '../constants/Colors';
 
 interface ExampleListItem {
   onExampleSelect: () => void;
@@ -26,7 +25,6 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.white,
     borderBottomWidth: 1,
     borderColor: '#999999',
   },

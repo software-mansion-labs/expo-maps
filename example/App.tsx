@@ -3,11 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import MainNavigator from './navigators/MainNavigator';
 import { Platform } from 'react-native';
 import { Providers } from 'expo-maps/build/Map.types';
-import SettingsContainer from './components/SettingsContainer';
 import SwitchContainer from './components/SwitchContainer';
 import ProviderContext from './context/ProviderContext';
+import { View } from 'react-native';
 import * as Location from 'expo-location';
-import Colors from './constants/Colors';
 
 export default function App() {
   const [provider, setProvider] = useState<Providers>('google');
@@ -26,16 +25,15 @@ export default function App() {
       <NavigationContainer>
         <MainNavigator />
         {Platform.OS === 'ios' && (
-          <SettingsContainer style={{ backgroundColor: Colors.white }}>
+          <View style={{ padding: 20 }}>
             <SwitchContainer
               title="Use Apple Maps"
               value={provider === 'apple'}
               onValueChange={() =>
                 setProvider(provider === 'google' ? 'apple' : 'google')
               }
-              textColor="black"
             />
-          </SettingsContainer>
+          </View>
         )}
       </NavigationContainer>
     </ProviderContext.Provider>
