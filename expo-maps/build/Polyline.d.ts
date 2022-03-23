@@ -1,21 +1,24 @@
 import React from 'react';
 import { Point, PatternItem } from './Common.types';
-export declare type PolylineObject = {
-    type: 'polyline';
-    points: Point[];
-};
+/**
+ * Props of Polyline component of Expo Maps library.
+ */
 export declare type PolylineProps = {
     /**
-     * Vertices of the polyline in order.
+     * Array of polygon's vertices.
+     *
+     * If empty, the polyline will be invisible, but logically it will be registered on the host map.
      * @required
      */
     points: Point[];
     /**
-     * Polyline stroke color in hex format. Example values:
-     * `'#7F0000'`
-     * `'#00990045'`
-     * `'#ABC'`
-     * `'#EEEF'`
+     * Polyline stroke color in hex format (optional).
+     *
+     * Accepted formats:
+     * * `'#RRGGBB'`
+     * * `'#RRGGBBAA'`
+     * * `'#RGB'`
+     * * `'#RGBA'`
      * @default '#000'
      */
     color?: string;
@@ -24,17 +27,40 @@ export declare type PolylineProps = {
      */
     width?: number;
     /**
-     * Pattern of dashes and gaps to draw the line.
-     * Unprovided will imply a solid line.
-     * Empty array will imply no visible line.
-     * Otherwise line pattern starts with first provided element and repeats.
+     * Array of objects of type PatternItem, specifying the pattern of the polyline's edge line (optional).
+     *
+     * * Unprovided will imply a solid line.
+     * * Empty array will imply no visible line.
+     * * Otherwise line pattern starts with first provided element and repeats.
+     *
+     * For detailed info see {@link PatternItem}
      */
     pattern?: PatternItem[];
     /**
-     * Joint style of the polyline.
+     * Style of joints between polyline's line segments (optional).
+     * * `'bevel'` - beveled joints between line segments
+     * * `'miter'` - sharp joints between line segments
+     * * `'round'` - rounded joints between line segments
+     * @default 'miter'
      */
-    jointType?: 'bevel' | 'default' | 'round';
+    jointType?: 'bevel' | 'miter' | 'round';
+    /**
+     * Style if polyline's line endings (optional).
+     * * `'butt'` - line ends are squared off exactly at the end point
+     * * `'round'` - line ends are rounded with a center point at the end point
+     * * `'square'` - line ends are enlongated by half the stroke width and squared off
+     * @default 'butt'
+     */
     capType?: 'butt' | 'round' | 'square';
+};
+/**
+ * Internal JSON object for representing polylines in Expo Maps library.
+ *
+ * See `PolylineProps` for more detail.
+ */
+export declare type PolylineObject = {
+    type: 'polyline';
+    points: Point[];
 };
 /**
  * Represents a polyline on the map.

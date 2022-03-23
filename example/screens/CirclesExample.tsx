@@ -12,7 +12,7 @@ export default function PolylinesExample() {
         <Maps.Circle
           center={{ latitude: 51.5, longitude: -0.13 }}
           radius={100000}
-          strokeWidth={1}
+          // strokeWidth={1}
           fillColor={"#00FF00A0"}
           strokeColor={"#FF0000"}
         />
