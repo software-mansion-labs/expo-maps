@@ -53,8 +53,9 @@ data class CameraPosition(
   @Field val latitude: Double = 0.0,
   @Field val longitude: Double = 0.0,
   @Field val zoom: Double = 0.0,
-  @Field val animate: Boolean = false
+  @Field val animate: Boolean = false,
 ) : Record
+
 data class PolylineObject(
   @Field val points: List<Point> = emptyList(),
   @Field val color: String?,

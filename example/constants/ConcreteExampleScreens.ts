@@ -7,6 +7,7 @@ import PolylinesExample from '../screens/PolylinesExample';
 import CirclesExample from '../screens/CirclesExample';
 import MapTypesExample from '../screens/MapTypesExample';
 import CameraPositionExample from '../screens/CameraPositionExample';
+import TrafficExample from '../screens/TrafficExample';
 // TODO: Type this better
 interface ConcreteExampleScreen {
   name:
@@ -18,7 +19,8 @@ interface ConcreteExampleScreen {
     | 'Google Maps Styling'
     | 'Gestures'
     | 'Map Types'
-    | 'Camera Position';
+    | 'Camera Position'
+    | 'Traffic';
   screen: (props: any) => JSX.Element;
 }
 
@@ -58,5 +60,9 @@ export const CONCRETE_EXAMPLE_SCREENS: Array<ConcreteExampleScreen> = [
   {
     name: 'Camera Position',
     screen: CameraPositionExample,
+  },
+  {
+    name: 'Traffic',
+    screen: TrafficExample,
   },
 ];

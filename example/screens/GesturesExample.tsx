@@ -21,10 +21,10 @@ export default function GesturesExample() {
       <Maps.ExpoMap
         style={{ flex: 1, width: '100%' }}
         provider={provider}
-        enableRotateGestures={false}
-        enableScrollGestures={false}
-        enableTiltGestures={false}
-        enableZoomGestures={false}
+        enableRotateGestures={enableRotateGestures}
+        enableScrollGestures={enableScrollGestures}
+        enableTiltGestures={enableTiltGestures}
+        enableZoomGestures={enableZoomGestures}
       />
       <SettingsContainer>
         <SwitchContainer

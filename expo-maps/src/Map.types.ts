@@ -52,6 +52,10 @@ export type Controls = {
   showLevelPicker: boolean;
 };
 
+export type Traffic = {
+  enableTraffic: boolean;
+};
+
 export type GoogleMapsControls = Controls;
 
 export type ZoomLevels =
@@ -101,7 +105,8 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       GoogleMapsControls &
       CameraPosition &
       Circles &
-      Clusters
+      Clusters &
+      Traffic
   >;
 
 export type NativeExpoAppleMapsViewProps = ViewProps &
@@ -114,7 +119,8 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
       AppleMapsControls &
       CameraPosition &
       Circles &
-      Clusters
+      Clusters &
+      Traffic
   >;
 
 export type Providers = 'google' | 'apple';
@@ -131,13 +137,15 @@ export type ExpoMapViewProps = ViewProps &
         Controls &
         GoogleMapsStyling &
         Gestures &
-        CameraPosition
+        CameraPosition &
+        Traffic
     >
   >;
 
 export type DefaultNativeExpoMapViewProps = MapType &
   Controls &
   Gestures &
-  CameraPosition;
+  CameraPosition &
+  Traffic;
 
 export type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters;

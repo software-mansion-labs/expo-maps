@@ -99,6 +99,10 @@ public final class AppleMapsView: UIView, ExpoMapView {
     mapView.setCamera(camera, animated: cameraPosition.animate)
   }
   
+  func setEnabledTraffic(enableTraffic: Bool) {
+    mapView.showsTraffic = enableTraffic
+  }
+  
   // imitating Google Maps zoom level behaviour
   // based on https://gis.stackexchange.com/questions/7430/what-ratio-scales-do-google-maps-zoom-levels-correspond-to
   private func googleMapsZoomLevelToMeters(latitude: Double, zoom: Double) -> Double {

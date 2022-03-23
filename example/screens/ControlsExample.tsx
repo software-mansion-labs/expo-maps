@@ -22,11 +22,11 @@ export default function ControlsExample() {
       <Maps.ExpoMap
         style={{ flex: 1, width: '100%' }}
         provider={provider}
-        showZoomControls={true}
-        showCompass={true}
-        showMyLocationButton={true}
-        showLevelPicker={true}
-        showMapToolbar={true}
+        showZoomControls={showZoomControls}
+        showCompass={showCompass}
+        showMyLocationButton={showMyLocationButton}
+        showLevelPicker={showLevelPicker}
+        showMapToolbar={showMapToolbar}
       />
       <SettingsContainer>
         {provider == 'google' && (

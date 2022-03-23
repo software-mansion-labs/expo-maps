@@ -65,6 +65,10 @@ public class ExpoAppleMapsModule: Module {
       prop("cameraPosition") { (view: AppleMapsView, cameraPosition: CameraPosition) in
         view.setCameraPosition(cameraPosition: cameraPosition)
       }
+      
+      prop("enableTraffic") { (view: AppleMapsView, enable: Bool) in
+        view.setEnabledTraffic(enableTraffic: enable)
+      }
     }
   }
 }
