@@ -21,6 +21,8 @@ export declare type Point = {
 export declare type PatternItem = {
     /**
      * The type of the pattern item.
+     * * `'stroke'` - rendered line segment
+     * * `'gap'` - transparent gap between pattern items
      * @required
      */
     type: 'stroke' | 'gap';
