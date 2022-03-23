@@ -31,11 +31,13 @@ export type CircleProps = {
    */
   strokeWidth?: number;
   /**
-   * Circle fill color in hex format. Example values:
-   * * '#7F0000'
-   * * '#00990045'
-   * * '#ABC'
-   * * '#EEEF'
+   * Circle fill color in hex format (optional).
+
+   * Accepted formats:
+   * * `'#RRGGBB'`
+   * * `'#RRGGBBAA'`
+   * * `'#RGB'`
+   * * `'#RGBA'`
    * @default '#00000000'
    */
   fillColor?: string;
