@@ -2,10 +2,12 @@ import React from 'react';
 /**
  * Circle component of Expo Maps library.
  *
- * Draws customizable circle on ExpoMap.
+ * Draws customizable flat circle on ExpoMap.
+ * Drawn circle does not follow curvature of the Earth.
+ *
  * This component should be ExpoMap component child to work properly.
  *
- * See `CircleProps` to learn more about props.
+ * See {@link CircleProps} to learn more about props.
  */
 export class Circle extends React.Component {
     render() {

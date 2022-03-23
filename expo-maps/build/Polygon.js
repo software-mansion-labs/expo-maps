@@ -5,7 +5,7 @@ import React from 'react';
  * Draws customizable polygon on ExpoMap.
  * This component should be ExpoMap component child to work properly.
  *
- * See `PolygonProps` to learn more about props.
+ * See {@link PolygonProps} to learn more about props.
  */
 export class Polygon extends React.Component {
     render() {

@@ -1,11 +1,6 @@
 import React from 'react';
 /**
- * Polyline component of Expo Maps library.
- *
- * Draws customizable polyline on ExpoMap.
- * This component should be ExpoMap component child to work properly.
- *
- * See `PolylineProps` to learn more about props.
+ * Represents a polyline on the map.
  */
 export class Polyline extends React.Component {
     render() {
