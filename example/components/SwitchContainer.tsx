@@ -5,18 +5,16 @@ interface SwitchContainerProps {
   title: string;
   onValueChange: () => void;
   value: boolean;
-  textColor: string;
 }
 
 export default function SwitchContainer({
   title,
   onValueChange,
   value,
-  textColor,
 }: SwitchContainerProps) {
   return (
     <View style={styles.switchContainer}>
-      <Text style={{ color: textColor }}>{title}</Text>
+      <Text>{title}</Text>
       <Switch
         value={value}
         onValueChange={() => onValueChange()}
