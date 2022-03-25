@@ -69,6 +69,10 @@ public class ExpoGoogleMapsModule: Module {
       prop("circles") { (view: GoogleMapsView, circleObjects: [CircleObject]) in
         view.setCircles(circleObjects: circleObjects)
       }
+      
+      prop("enableTraffic") { (view: GoogleMapsView, enable: Bool) in
+        view.setEnabledTraffic(enableTraffic: enable)
+      }
     }
   }
 }

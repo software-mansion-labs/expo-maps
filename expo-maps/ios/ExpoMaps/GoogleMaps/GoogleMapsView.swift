@@ -132,4 +132,8 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   func setClusters(clusterObjects: [ClusterObject]) {
     clusters.setClusters(clusterObjects: clusterObjects)
   }
+  
+  func setEnabledTraffic(enableTraffic: Bool) {
+    mapView.isTrafficEnabled = enableTraffic
+  }
 }

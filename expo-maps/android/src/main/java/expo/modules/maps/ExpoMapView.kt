@@ -7,4 +7,5 @@ interface ExpoMapView {
   fun setPolylines(polylineObjects: Array<PolylineObject>)
   fun setCircles(circleObjects: Array<CircleObject>)
   fun setClusters(clusterObjects: Array<ClusterObject>)
+  fun setEnabledTraffic(enableTraffic: Boolean)
 }

@@ -20,7 +20,6 @@ class GoogleMapsControls(private val map: GoogleMap): Controls {
         // the toolbar slides in when the user taps a marker
         // and slides out again when the marker is no longer in focus
         map.uiSettings.isMapToolbarEnabled = enable
-
     }
 
     override fun setShowMyLocationButton(enable: Boolean) {

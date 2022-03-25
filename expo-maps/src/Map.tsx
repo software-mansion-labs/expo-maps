@@ -40,6 +40,7 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
     zoom: 4,
     animate: true,
   },
+  enableTraffic: false,
 };
 
 export class ExpoMap extends React.Component<ExpoMapViewProps> {

@@ -84,6 +84,10 @@ class ExpoGoogleMapsModule : Module() {
       prop("clusters") { view: GoogleMapsView, clusterObjects: Array<ClusterObject> ->
         view.setClusters(clusterObjects)
       }
+
+      prop("enableTraffic") { view: GoogleMapsView, enable: Boolean ->
+        view.setEnabledTraffic(enable)
+      }
     }
   }
 }

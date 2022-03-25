@@ -7,4 +7,5 @@ protocol ExpoMapView: UIView {
   func setPolygons(polygonObjects: [PolygonObject])
   func setPolylines(polylineObjects: [PolylineObject])
   func setCameraPosition(cameraPosition: CameraPosition)
+  func setEnabledTraffic(enableTraffic: Bool)
 }
