@@ -16,12 +16,14 @@ import { PolygonObject } from './Polygon';
 import { PolylineObject } from './Polyline';
 import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
+import { KMLObject } from './KML';
 
 export { Marker } from './Marker';
 export { Polygon } from './Polygon';
 export { Polyline } from './Polyline';
 export { Circle } from './Circle';
 export { Cluster } from './Cluster';
+export { KML } from './KML';
 
 const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   mapType: 'normal',
@@ -55,6 +57,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
     polylines: [],
     circles: [],
     clusters: [],
+    kmls: [],
   };
   _ismounted = false;
 
@@ -109,6 +112,14 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
               strokeColor: child.props.strokeColor,
               strokeWidth: child.props.strokeWidth,
             } as CircleObject;
+          } else if (Utils.isKML(child)) {
+            let filePath = await Asset.fromModule(
+              child.props.filePath
+            ).downloadAsync();
+            return {
+              type: 'kml',
+              filePath: filePath.localUri,
+            } as KMLObject;
           } else if (Utils.isCluster(child)) {
             const clusterChildrenArray = React.Children.map(
               child.props.children,
@@ -182,6 +193,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
           polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
           circles: propObjects.filter((elem) => elem?.type === 'circle'),
           clusters: propObjects.filter((elem) => elem?.type === 'cluster'),
+          kmls: propObjects.filter((elem) => elem?.type === 'kml'),
         });
       }
     }
@@ -216,6 +228,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
         polylines={this.state.polylines}
         circles={this.state.circles}
         clusters={this.state.clusters}
+        kmls={this.state.kmls}
       />
     );
   }

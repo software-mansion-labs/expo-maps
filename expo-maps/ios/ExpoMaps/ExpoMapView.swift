@@ -8,4 +8,5 @@ protocol ExpoMapView: UIView {
   func setPolylines(polylineObjects: [PolylineObject])
   func setCameraPosition(cameraPosition: CameraPosition)
   func setEnabledTraffic(enableTraffic: Bool)
+  func setKMLs(kmlObjects: [KMLObject])
 }

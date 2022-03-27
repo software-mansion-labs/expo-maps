@@ -3,9 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import * as Maps from 'expo-maps';
 import SwitchContainer from '../components/SwitchContainer';
-import SettingsContainer from '../components/SettingsContainer';
 import ProviderContext from '../context/ProviderContext';
-import Colors from '../constants/Colors';
 
 export default function TrafficExample() {
   const provider = useContext(ProviderContext);
@@ -19,14 +17,13 @@ export default function TrafficExample() {
         provider={provider}
         enableTraffic={showTraffic}
       />
-      <SettingsContainer>
+      <View style={styles.switchContainer}>
         <SwitchContainer
           title="Show traffic"
           value={showTraffic}
           onValueChange={() => setShowTraffic(!showTraffic)}
-          textColor={Colors.white}
         />
-      </SettingsContainer>
+      </View>
     </View>
   );
 }
@@ -34,5 +31,10 @@ export default function TrafficExample() {
 const styles = StyleSheet.create({
   mapContainer: {
     flex: 1,
+  },
+  switchContainer: {
+    margin: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

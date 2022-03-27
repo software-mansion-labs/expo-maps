@@ -11,6 +11,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let polygons: GoogleMapsPolygons
   private let polylines: GoogleMapsPolylines
   private let circles: GoogleMapsCircles
+  private let kmls: GoogleMapsKMLs
 
   init() {
     // just for now we do authentication here
@@ -31,6 +32,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     polygons = GoogleMapsPolygons(mapView: mapView)
     polylines = GoogleMapsPolylines(mapView: mapView)
     circles = GoogleMapsCircles(mapView: mapView)
+    kmls = GoogleMapsKMLs(mapView: mapView)
 
     super.init(frame: CGRect.zero)
     delegate.expoMapView = self
@@ -135,5 +137,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   
   func setEnabledTraffic(enableTraffic: Bool) {
     mapView.isTrafficEnabled = enableTraffic
+  }
+  
+  func setKMLs(kmlObjects: [KMLObject]) {
+    kmls.setKMLs(kmlObjects: kmlObjects)
   }
 }

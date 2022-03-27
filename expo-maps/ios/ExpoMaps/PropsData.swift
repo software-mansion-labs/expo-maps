@@ -90,3 +90,7 @@ struct ClusterObject: Record {
   @Field var opacity: Double = 1
   @Field var markers: [MarkerObject] = []
 }
+
+struct KMLObject: Record {
+  @Field var filePath: String
+}

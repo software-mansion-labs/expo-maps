@@ -105,3 +105,5 @@ data class ClusterObject(
   @Field val opacity: Double = 1.0,
   @Field val markers: List<MarkerObject> = emptyList(),
 ) : Record
+
+data class KMLObject(@Field val filePath: String) : Record

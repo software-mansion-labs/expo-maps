@@ -55,10 +55,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  settingsContainer: {
-    padding: 20,
-    backgroundColor: 'white',
-  },
   switchContainer: {
     margin: 5,
     flexDirection: 'row',

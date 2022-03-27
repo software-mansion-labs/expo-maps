@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>test</name>
+	<gx:CascadingStyle kml:id="__managed_style_183FAC6BD62101AF66AE">
+		<styleUrl>https://earth.google.com/balloon_components/base/1.0.23.0/card_template.kml#main</styleUrl>
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ffa21f7b</color>
+				<width>2</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40bc47ab</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_0E8DA1A7562101AF66AE">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_183FAC6BD62101AF66AE</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_276985515C2101AF66AE</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_276985515C2101AF66AE">
+		<styleUrl>https://earth.google.com/balloon_components/base/1.0.23.0/card_template.kml#main</styleUrl>
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ffa21f7b</color>
+				<width>3</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40bc47ab</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_20156A76BD2101AEEE75">
+		<styleUrl>https://earth.google.com/balloon_components/base/1.0.23.0/card_template.kml#main</styleUrl>
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=66bb6a&amp;id=2176&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>3</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_14168BB4D72101AEEE75">
+		<styleUrl>https://earth.google.com/balloon_components/base/1.0.23.0/card_template.kml#main</styleUrl>
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=66bb6a&amp;id=2176&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>2</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_0FF93F9E7A2101AEEE75">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_14168BB4D72101AEEE75</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_20156A76BD2101AEEE75</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Placemark id="0C13B51DA12101AE95B5">
+		<name>test placemark</name>
+		<description><![CDATA[<div>testestest</div>]]></description>
+		<LookAt>
+			<longitude>16.69596631484254</longitude>
+			<latitude>51.38794388543032</latitude>
+			<altitude>958.8049024726502</altitude>
+			<heading>7.905454782508979e-06</heading>
+			<tilt>2.232853668159493</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>4610778.080568911</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0FF93F9E7A2101AEEE75</styleUrl>
+		<Point>
+			<coordinates>16.75507240893838,51.46164571391334,938.5571048607593</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0F8E3915B02101AF3A6F">
+		<name>test polygon</name>
+		<description><![CDATA[<div>aaaaa</div>]]></description>
+		<LookAt>
+			<longitude>16.69596631758059</longitude>
+			<latitude>51.38794320506857</latitude>
+			<altitude>958.8076100785624</altitude>
+			<heading>7.951419334453468e-06</heading>
+			<tilt>2.232852987795955</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>4610777.700827122</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0E8DA1A7562101AF66AE</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						14.27094230786818,52.47386941749838,-1204.311595018008 17.66454399620879,49.80172807419694,2302.580746501536 25.32350586841313,50.66949954335768,-255.0894067501536 25.89795982163388,53.62953477156534,-619.126554610144 14.68378968225266,55.1308599847098,-1120.908274338557 14.27094230786818,52.47386941749838,-1204.311595018008 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>
