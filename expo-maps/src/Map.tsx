@@ -37,7 +37,7 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
 /**
  * Main map component of Expo Maps library.
  *
- * See `ExpoMapViewProps` to learn more about props.
+ * See {@link ExpoMapViewProps} to learn more about props.
  */
 export class ExpoMap extends React.Component<ExpoMapViewProps> {
   state: ExpoMapState = {

@@ -5,7 +5,7 @@ import React from 'react';
  * Draws customizable marker on ExpoMap.
  * This component should be ExpoMap component child to work properly.
  *
- * See `MarkerProps` to learn more about props.
+ * See {@link MarkerProps} for more details.
  */
 export class Marker extends React.Component {
     render() {

@@ -1,47 +1,56 @@
 import React from 'react';
 import { Point } from './Common.types';
 export declare type MarkerColor = 'azure' | 'blue' | 'cyan' | 'green' | 'magenta' | 'orange' | 'red' | 'rose' | 'violet' | 'yellow';
+/**
+ * Marker specific props.
+ */
 export declare type MarkerOptions = {
+    /**
+     * Title of the marker, avaliable in annotation box.
+     */
     title?: string;
+    /**
+     * Short description of the marker, avaliable in annotation box.
+     */
     snippet?: string;
+    /**
+     * Custom marker icon.
+     */
     icon?: string;
+    /**
+     * Color of a marker when icon is not provided.
+     *
+     * @default 'red'
+     */
     defaultMarkerColor: number | MarkerColor;
+    /**
+     * If 'true` marker is draggable.
+     *
+     * @default false
+     */
     draggable?: boolean;
+    /**
+     * Translation of latitude coordinate.
+     */
     anchorU?: number;
+    /**
+     * Translation of longitude coordinate.
+     */
     anchorV?: number;
+    /**
+     * Opacity of a marker's icon, applied both to asset based icon
+     * as well as to default marker's icon.
+     */
     opacity?: number;
 };
 /**
  * Props of Marker component of Expo Maps library.
- *
- * @field latitude - latitude coordinate of the marker
- * @field longitude - longitude coordinate of the marker
- *
- * @field title - title of the marker, avaliable in annotation box (optional)
- * @default undefined, not present
- *
- * @field snippet - short description of the marker, avaliable in annotation box (optional)
- * @default undefined, not present
- *
- * @field icon - custom marker icon (optional)
- * @default default marker icon for given provider
- *
- * @field defaultMarkerColor - color of a marker when asset is not provided
- * @default 0
- *
- * @field draggable - `true` if marker should be draggable, otherwise `false` (optional)
- * @default false
- *
- * @field anchorU - translation of latitude coordinate
- * @field anchorV - translation of longitude coordinate
- * @field opacity - opacity of a marker's icon, applied both to asset based icon
- * as well as to default marker's icon
  */
 export declare type MarkerProps = MarkerOptions & Point;
 /**
  * Internal JSON object for representing markers in Expo Maps library.
  *
- * See `MarkerProps` for more detail.
+ * See {@link MarkerProps} for more details.
  */
 export declare type MarkerObject = {
     type: 'marker';
@@ -52,7 +61,7 @@ export declare type MarkerObject = {
  * Draws customizable marker on ExpoMap.
  * This component should be ExpoMap component child to work properly.
  *
- * See `MarkerProps` to learn more about props.
+ * See {@link MarkerProps} for more details.
  */
 export declare class Marker extends React.Component<MarkerProps> {
     render(): null;
