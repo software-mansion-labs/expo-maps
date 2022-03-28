@@ -44,6 +44,9 @@ export declare type MarkerOptions = {
      */
     anchorV?: number;
 } & BaseMarkerOptions;
+/**
+ * Props of Marker component of Expo Maps library.
+ */
 export declare type MarkerProps = MarkerOptions & Point;
 /**
  * Internal JSON object for representing markers in Expo Maps library.

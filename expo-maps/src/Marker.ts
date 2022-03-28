@@ -47,6 +47,9 @@ export type MarkerOptions = {
   anchorV?: number;
 } & BaseMarkerOptions;
 
+/**
+ * Props of Marker component of Expo Maps library.
+ */
 export type MarkerProps = MarkerOptions & Point;
 
 /**

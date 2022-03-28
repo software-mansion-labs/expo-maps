@@ -190,9 +190,24 @@ export type ZoomLevels =
   | 21
   | 22;
 
+
+/**
+ * Prop for setting camera position.
+ */
 export type CameraPosition = {
+  /**
+   * Camera position object
+   *
+   * @default London
+   */
   cameraPosition: Point & {
+    /**
+     * Zoom level. Number from range 1-22.
+     */
     zoom: ZoomLevels;
+    /**
+     * Indicates if camera should be gently animated from old position to new one or maybe "teleported".
+     */
     animate: boolean;
   };
 };
