@@ -6,6 +6,7 @@ import { PolylineObject } from './Polyline';
 import { Point } from './Common.types';
 import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
+import { KMLObject } from './KML';
 export declare type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 /**
  * Prop for managing map type.
@@ -62,6 +63,15 @@ export declare type Clusters = {
      * Array of {@link ClusterObject}.
      */
     clusters: ClusterObject[];
+};
+/**
+ * Internal prop for managing provided KMLs
+ */
+export declare type KMLs = {
+    /**
+     * Array of {@link KMLObject}
+     */
+    kmls: KMLObject[];
 };
 /**
  * Prop for managing Google Maps styling settings.
@@ -149,7 +159,15 @@ export declare type Controls = {
      */
     showLevelPicker: boolean;
 };
+/**
+ * Props for managing traffic layer.
+ */
 export declare type Traffic = {
+    /**
+     * If `true` traffic data is displayed on map.
+     *
+     * @default false
+     */
     enableTraffic: boolean;
 };
 export declare type GoogleMapsControls = Controls;
@@ -178,7 +196,7 @@ export declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZ
 /**
  * Props for Google Maps implementation.
  */
-export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic>;
+export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs>;
 /**
  * Props for Apple Maps implementation.
  */
@@ -199,7 +217,7 @@ export declare type Provider = {
  * General Expo Map props.
  *
  * All of the ExpoMap props are optional.
-*/
-export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic>>;
+ */
+export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic & KMLs>>;
 export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition & Traffic;
-export declare type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters;
+export declare type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters & KMLs;

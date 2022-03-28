@@ -8,6 +8,7 @@ export { Polygon } from './Polygon';
 export { Polyline } from './Polyline';
 export { Circle } from './Circle';
 export { Cluster } from './Cluster';
+export { KML } from './KML';
 const defaultNativeExpoMapViewProps = {
     mapType: 'normal',
     showZoomControls: true,
@@ -39,6 +40,7 @@ export class ExpoMap extends React.Component {
         polylines: [],
         circles: [],
         clusters: [],
+        kmls: [],
     };
     _ismounted = false;
     componentDidMount() {
@@ -89,6 +91,13 @@ export class ExpoMap extends React.Component {
                         fillColor: child.props.fillColor,
                         strokeColor: child.props.strokeColor,
                         strokeWidth: child.props.strokeWidth,
+                    };
+                }
+                else if (Utils.isKML(child)) {
+                    let filePath = await Asset.fromModule(child.props.filePath).downloadAsync();
+                    return {
+                        type: 'kml',
+                        filePath: filePath.localUri,
                     };
                 }
                 else if (Utils.isCluster(child)) {
@@ -152,6 +161,7 @@ export class ExpoMap extends React.Component {
                     polylines: propObjects.filter((elem) => elem?.type === 'polyline'),
                     circles: propObjects.filter((elem) => elem?.type === 'circle'),
                     clusters: propObjects.filter((elem) => elem?.type === 'cluster'),
+                    kmls: propObjects.filter((elem) => elem?.type === 'kml'),
                 });
             }
         }
@@ -162,7 +172,7 @@ export class ExpoMap extends React.Component {
         }
         return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString
                 ? this.props.googleMapsJsonStyleString
-                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters }));
+                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls }));
     }
 }
 async function buildMarkerObject(child) {

@@ -8,4 +8,5 @@ interface ExpoMapView {
   fun setCircles(circleObjects: Array<CircleObject>)
   fun setClusters(clusterObjects: Array<ClusterObject>)
   fun setEnabledTraffic(enableTraffic: Boolean)
+  fun setKMLs(kmlObjects: Array<KMLObject>)
 }

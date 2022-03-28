@@ -60,6 +60,17 @@ export function isCluster(child) {
     }
     return false;
 }
+export function isKML(child) {
+    if ('type' in child &&
+        String(child.type).includes('KML') &&
+        'props' in child) {
+        let props = Object.keys(child.props);
+        if (props.includes('filePath')) {
+            return true;
+        }
+    }
+    return false;
+}
 export function mapColor(color) {
     const colors = {
         azure: 210,

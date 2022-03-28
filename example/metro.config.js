@@ -12,4 +12,6 @@ config.resolver.nodeModulesPath = [
   path.resolve(workspaceRoot, 'node_modules'),
 ];
 
+config.resolver.assetExts.push('kml');
+
 module.exports = config;

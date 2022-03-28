@@ -4,6 +4,7 @@ import { Marker } from './Marker';
 import { Polygon } from './Polygon';
 import { Polyline } from './Polyline';
 import { Circle } from './Circle';
+import { KML } from './KML';
 
 export function isSimpleType(child: any) {
   return (
@@ -79,6 +80,20 @@ export function isCluster(child: any): child is Cluster {
   ) {
     let props = Object.keys(child.props);
     if (props.includes('name')) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function isKML(child: any): child is KML {
+  if (
+    'type' in child &&
+    String(child.type).includes('KML') &&
+    'props' in child
+  ) {
+    let props = Object.keys(child.props);
+    if (props.includes('filePath')) {
       return true;
     }
   }

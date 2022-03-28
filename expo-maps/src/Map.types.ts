@@ -6,6 +6,7 @@ import { PolylineObject } from './Polyline';
 import { Point } from './Common.types';
 import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
+import { KML, KMLObject } from './KML';
 
 export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 
@@ -69,6 +70,16 @@ export type Clusters = {
    * Array of {@link ClusterObject}.
    */
   clusters: ClusterObject[];
+};
+
+/**
+ * Internal prop for managing provided KMLs
+ */
+export type KMLs = {
+  /**
+   * Array of {@link KMLObject}
+   */
+  kmls: KMLObject[];
 };
 
 /**
@@ -160,7 +171,15 @@ export type Controls = {
   showLevelPicker: boolean;
 };
 
+/**
+ * Props for managing traffic layer.
+ */
 export type Traffic = {
+  /**
+   * If `true` traffic data is displayed on map.
+   *
+   * @default false
+   */
   enableTraffic: boolean;
 };
 
@@ -189,7 +208,6 @@ export type ZoomLevels =
   | 20
   | 21
   | 22;
-
 
 /**
  * Prop for setting camera position.
@@ -232,13 +250,14 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       CameraPosition &
       Circles &
       Clusters &
-      Traffic
+      Traffic &
+      KMLs
   >;
 
 /**
  * Props for Apple Maps implementation.
  */
-  export type NativeExpoAppleMapsViewProps = ViewProps &
+export type NativeExpoAppleMapsViewProps = ViewProps &
   PropsWithChildren<
     MapType &
       Gestures &
@@ -270,7 +289,7 @@ export type Provider = {
  * General Expo Map props.
  *
  * All of the ExpoMap props are optional.
-*/
+ */
 export type ExpoMapViewProps = ViewProps &
   PropsWithChildren<
     Partial<
@@ -280,7 +299,8 @@ export type ExpoMapViewProps = ViewProps &
         GoogleMapsStyling &
         Gestures &
         CameraPosition &
-        Traffic
+        Traffic &
+        KMLs
     >
   >;
 
@@ -290,4 +310,9 @@ export type DefaultNativeExpoMapViewProps = MapType &
   CameraPosition &
   Traffic;
 
-export type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters;
+export type ExpoMapState = Markers &
+  Polygons &
+  Polylines &
+  Circles &
+  Clusters &
+  KMLs;

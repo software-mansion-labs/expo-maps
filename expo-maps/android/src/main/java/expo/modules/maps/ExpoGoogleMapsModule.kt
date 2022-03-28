@@ -88,6 +88,10 @@ class ExpoGoogleMapsModule : Module() {
       prop("enableTraffic") { view: GoogleMapsView, enable: Boolean ->
         view.setEnabledTraffic(enable)
       }
+
+      prop("kmls") { view: GoogleMapsView, kmlObjects: Array<KMLObject> ->
+        view.setKMLs(kmlObjects)
+      }
     }
   }
 }
