@@ -154,9 +154,23 @@ export declare type Traffic = {
 };
 export declare type GoogleMapsControls = Controls;
 export declare type ZoomLevels = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22;
+/**
+ * Prop for setting camera position.
+ */
 export declare type CameraPosition = {
+    /**
+     * Camera position object
+     *
+     * @default London
+     */
     cameraPosition: Point & {
+        /**
+         * Zoom level. Number from range 1-22.
+         */
         zoom: ZoomLevels;
+        /**
+         * Indicates if camera should be gently animated from old position to new one or maybe "teleported".
+         */
         animate: boolean;
     };
 };
