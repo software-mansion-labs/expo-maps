@@ -11,6 +11,11 @@ class GoogleMapsKMLs: KMLs {
   }
 
   func setKMLs(kmlObjects: [KMLObject]) {
+    for renderer in renderers {
+      renderer.clear()
+    }
+    renderers = []
+    
     for kmlObject in kmlObjects {
       let url = URL(fileURLWithPath: kmlObject.filePath)
       let kmlParser = GMUKMLParser(url: url.standardized)

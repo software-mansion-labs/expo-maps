@@ -10,11 +10,17 @@ import java.io.File
 
 class GoogleMapsKMLs(private val context: Context, private val map: GoogleMap) : KMLs {
 
+  private val layers = mutableListOf<KmlLayer>()
+
   override fun setKMLs(kmlObjects: Array<KMLObject>) {
+    layers.forEach { it.removeLayerFromMap() }
+    layers.clear()
+
     kmlObjects.forEach {
       val path = File(Uri.parse(it.filePath).path!!)
       val layer = KmlLayer(map, path.inputStream(), context)
       layer.addLayerToMap()
+      layers.add(layer)
     }
   }
 }
