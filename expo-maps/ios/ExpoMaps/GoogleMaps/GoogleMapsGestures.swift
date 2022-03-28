@@ -1,17 +1,13 @@
 import GoogleMaps
 
-final class GoogleMapsGestures: Gestures {
-
-  internal var mapView: GMSMapView
-
+class GoogleMapsGestures : Gestures {
+  
+  private let mapView: GMSMapView
+  
   init(mapView: GMSMapView) {
     self.mapView = mapView
   }
-
-  init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
+  
   func setEnabledRotateGesture(enabled: Bool) {
     mapView.settings.rotateGestures = enabled
   }

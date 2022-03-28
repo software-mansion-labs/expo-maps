@@ -4,6 +4,7 @@ export { Marker } from './Marker';
 export { Polygon } from './Polygon';
 export { Polyline } from './Polyline';
 export { Circle } from './Circle';
+export { Cluster } from './Cluster';
 /**
  * Main map component of Expo Maps library.
  *

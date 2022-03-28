@@ -1,6 +1,7 @@
 import MapKit
 
 class AppleMapsPolygons: Polygons {
+  
   private let mapView: MKMapView
   private var polygons: [MKPolygon] = []
 
@@ -16,7 +17,7 @@ class AppleMapsPolygons: Polygons {
         overlayPoints.append(
           CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
       }
-      let polygon = ExpoAppleMapsPolygon(coordinates: &overlayPoints, count: overlayPoints.count)
+      let polygon = ExpoMKPolygon(coordinates: &overlayPoints, count: overlayPoints.count)
       if polygonObject.fillColor != nil { polygon.fillColor = polygonObject.fillColor! }
       if polygonObject.strokeColor != nil { polygon.strokeColor = polygonObject.strokeColor! }
       if polygonObject.strokeWidth != nil { polygon.strokeWidth = polygonObject.strokeWidth! }
@@ -51,9 +52,7 @@ class AppleMapsPolygons: Polygons {
     }
   }
 
-  private func strokePatternToLineDashPattern(pattern: [PatternItem]?, width: Float = 2)
-    -> [NSNumber]?
-  {
+  private func strokePatternToLineDashPattern(pattern: [PatternItem]?, width: Float = 2) -> [NSNumber]? {
     if pattern == nil { return nil }
     var LDP: [NSNumber] = []
     for patternItem in pattern! {

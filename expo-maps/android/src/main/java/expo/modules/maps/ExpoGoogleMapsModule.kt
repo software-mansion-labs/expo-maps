@@ -57,7 +57,7 @@ class ExpoGoogleMapsModule : Module() {
         view.setShowLevelPicker(enable)
       }
 
-      prop("jsonStyleString") { view: GoogleMapsView, jsonStyleString: String ->
+      prop("googleMapsJsonStyleString") { view: GoogleMapsView, jsonStyleString: String ->
         view.setMapStyle(jsonStyleString)
       }
 
@@ -73,8 +73,20 @@ class ExpoGoogleMapsModule : Module() {
         view.setPolylines(polylineObjects)
       }
 
+      prop("cameraPosition") { view: GoogleMapsView, cameraPosition: CameraPosition ->
+        view.setCameraPosition(cameraPosition)
+      }
+
       prop("circles") { view: GoogleMapsView, circleObjects: Array<CircleObject> ->
         view.setCircles(circleObjects)
+      }
+
+      prop("clusters") { view: GoogleMapsView, clusterObjects: Array<ClusterObject> ->
+        view.setClusters(clusterObjects)
+      }
+
+      prop("enableTraffic") { view: GoogleMapsView, enable: Boolean ->
+        view.setEnabledTraffic(enable)
       }
     }
   }

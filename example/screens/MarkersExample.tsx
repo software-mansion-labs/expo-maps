@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import * as Maps from 'expo-maps';
@@ -6,38 +6,52 @@ import ProviderContext from '../context/ProviderContext';
 
 export default function MarkerExample() {
   const provider = useContext(ProviderContext);
+
   return (
     <View style={styles.container}>
       <Maps.ExpoMap style={{ flex: 1, width: '100%' }} provider={provider}>
         <Maps.Marker
           latitude={48.85}
           longitude={2.35}
-          title="Paris"
-          snippet="You can choose custom marker colors!"
-          defaultMarkerColor="azure"
+          markerTitle="Paris"
+          markerSnippet="You can choose custom marker colors!"
+          color="azure"
         />
         <Maps.Marker
           latitude={44}
           longitude={3}
-          title="Building"
-          snippet="You can use custom marker icons!"
+          markerTitle="Building"
+          markerSnippet="You can use custom marker icons!"
           icon={require('../assets/building.png')}
-        />
-        <Maps.Marker
-          latitude={51.5}
-          longitude={-0.13}
-          title="London"
-          snippet="I'm semi transparent!"
-          opacity={0.5}
         />
         <Maps.Marker
           latitude={40.4}
           longitude={-3.7}
-          title="Madrid"
-          snippet="I'm dragable"
+          markerTitle="Madrid"
+          markerSnippet="I'm dragable"
           draggable={true}
-          defaultMarkerColor="green"
+          color="green"
         />
+        <Maps.Marker
+          latitude={51.5}
+          longitude={-0.13}
+          markerTitle="London"
+          markerSnippet="I'm semi transparent!"
+          opacity={0.5}
+        />
+        <Maps.Cluster
+          name="sample_cluster_group"
+          minimumClusterSize={2}
+          color="orange"
+          opacity={0.5}
+          markerTitle="Cluster"
+          markerSnippet="Zoom in to see particular markers"
+        >
+          <Maps.Marker latitude={50} longitude={10} />
+          <Maps.Marker latitude={51} longitude={10} />
+          <Maps.Marker latitude={52} longitude={10.15} />
+          <Maps.Marker latitude={52} longitude={9.85} />
+        </Maps.Cluster>
       </Maps.ExpoMap>
     </View>
   );

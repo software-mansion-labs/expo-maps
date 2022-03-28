@@ -2,9 +2,11 @@ package expo.modules.maps.googleMaps
 
 import android.content.Context
 import android.widget.LinearLayout
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import expo.modules.maps.*
 import kotlinx.coroutines.*
@@ -18,6 +20,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var controls: GoogleMapsControls
   private lateinit var gestures: GoogleMapsGestures
   private lateinit var markers: GoogleMapsMarkers
+  private lateinit var clusters: GoogleMapsClusters
   private lateinit var polygons: GoogleMapsPolygons
   private lateinit var polylines: GoogleMapsPolylines
   private lateinit var circles: GoogleMapsCircles
@@ -38,6 +41,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     controls = GoogleMapsControls(googleMap)
     gestures = GoogleMapsGestures(googleMap)
     markers = GoogleMapsMarkers(googleMap)
+    clusters = GoogleMapsClusters(context, googleMap)
     polygons = GoogleMapsPolygons(googleMap)
     polylines = GoogleMapsPolylines(googleMap)
     circles = GoogleMapsCircles(googleMap)
@@ -155,6 +159,40 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
+
+  fun setCameraPosition(cameraPosition: CameraPosition) {
+    updateMap {
+      val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+        LatLng(cameraPosition.latitude, cameraPosition.longitude),
+        cameraPosition.zoom.toFloat()
+      )
+      if (cameraPosition.animate) {
+        googleMap.animateCamera(cameraUpdate)
+      } else {
+        googleMap.moveCamera(cameraUpdate)
+      }
+    }
+  }
+
+  override fun setClusters(clusterObjects: Array<ClusterObject>) {
+    updateMap {
+      clusters.setClusters(clusterObjects)
+    }
+  }
+
+  override fun setEnabledTraffic(enableTraffic: Boolean) {
+    updateMap {
+      googleMap.isTrafficEnabled = enableTraffic
+    }
+  }
+
+  /*
+      Calls function provided as an argument when OnMapReadyCallback fires,
+      subscribes to StateFlow in a background but calls lambda on a main thread.
+      After calling lambda the subscription is canceled.
+      StateFlow holds the latest value so even if updateMap is called after
+      OnMapReadyCallback, StateFlow emits the latest value letting provided lambda to be executed.
+     */
   private fun updateMap(update: () -> Unit) {
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.collectLatest {

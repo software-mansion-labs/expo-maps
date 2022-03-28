@@ -32,3 +32,4 @@ export declare type PatternItem = {
      */
     length: number;
 };
+export declare type Color = 'azure' | 'blue' | 'cyan' | 'green' | 'magenta' | 'orange' | 'red' | 'rose' | 'violet' | 'yellow';

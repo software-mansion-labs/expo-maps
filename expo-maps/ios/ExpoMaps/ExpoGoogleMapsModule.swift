@@ -49,6 +49,10 @@ public class ExpoGoogleMapsModule: Module {
       prop("markers") { (view: GoogleMapsView, markerObjects: [MarkerObject]) in
         view.setMarkers(markerObjects: markerObjects)
       }
+      
+      prop("clusters") { (view: GoogleMapsView, clusterObjects: [ClusterObject]) in
+        view.setClusters(clusterObjects: clusterObjects)
+      }
 
       prop("polygons") { (view: GoogleMapsView, polygonObjects: [PolygonObject]) in
         view.setPolygons(polygonObjects: polygonObjects)
@@ -58,8 +62,16 @@ public class ExpoGoogleMapsModule: Module {
         view.setPolylines(polylineObjects: polylineObjects)
       }
 
+      prop("cameraPosition") { (view: GoogleMapsView, cameraPosition: CameraPosition) in
+        view.setCameraPosition(cameraPosition: cameraPosition)
+      }
+
       prop("circles") { (view: GoogleMapsView, circleObjects: [CircleObject]) in
         view.setCircles(circleObjects: circleObjects)
+      }
+      
+      prop("enableTraffic") { (view: GoogleMapsView, enable: Bool) in
+        view.setEnabledTraffic(enableTraffic: enable)
       }
     }
   }

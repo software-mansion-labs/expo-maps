@@ -3,7 +3,9 @@ import { PropsWithChildren } from 'react';
 import { MarkerObject } from './Marker';
 import { PolygonObject } from './Polygon';
 import { PolylineObject } from './Polyline';
+import { Point } from './Common.types';
 import { CircleObject } from './Circle';
+import { ClusterObject } from './Cluster';
 export declare type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 /**
  * Prop for managing map type.
@@ -51,6 +53,15 @@ export declare type Circles = {
      * Array of {@link CircleObject}.
      */
     circles: CircleObject[];
+};
+/**
+ * Internal prop for managing clusters displayed on the map.
+ */
+export declare type Clusters = {
+    /**
+     * Array of {@link ClusterObject}.
+     */
+    clusters: ClusterObject[];
 };
 /**
  * Prop for managing Google Maps styling settings.
@@ -138,16 +149,26 @@ export declare type Controls = {
      */
     showLevelPicker: boolean;
 };
-declare type GoogleMapsControls = Controls;
-declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZoomControls'>;
+export declare type Traffic = {
+    enableTraffic: boolean;
+};
+export declare type GoogleMapsControls = Controls;
+export declare type ZoomLevels = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22;
+export declare type CameraPosition = {
+    cameraPosition: Point & {
+        zoom: ZoomLevels;
+        animate: boolean;
+    };
+};
+export declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZoomControls'>;
 /**
  * Props for Google Maps implementation.
  */
-export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & Circles & GoogleMapsControls>;
+export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic>;
 /**
  * Props for Apple Maps implementation.
  */
-export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & Circles & AppleMapsControls>;
+export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters & Traffic>;
 export declare type Providers = 'google' | 'apple';
 /**
  * Prop for managing map provider.
@@ -165,7 +186,6 @@ export declare type Provider = {
  *
  * All of the ExpoMap props are optional.
 */
-export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures>>;
-export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures;
-export declare type ExpoMapState = Markers & Polygons & Polylines & Circles;
-export {};
+export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic>>;
+export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition & Traffic;
+export declare type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters;

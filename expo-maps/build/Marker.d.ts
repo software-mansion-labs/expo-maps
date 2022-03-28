@@ -1,18 +1,17 @@
 import React from 'react';
-import { Point } from './Common.types';
-export declare type MarkerColor = 'azure' | 'blue' | 'cyan' | 'green' | 'magenta' | 'orange' | 'red' | 'rose' | 'violet' | 'yellow';
+import { Color, Point } from './Common.types';
 /**
  * Marker specific props.
  */
-export declare type MarkerOptions = {
+export declare type BaseMarkerOptions = {
     /**
      * Title of the marker, avaliable in annotation box.
      */
-    title?: string;
+    markerTitle?: string;
     /**
      * Short description of the marker, avaliable in annotation box.
      */
-    snippet?: string;
+    markerSnippet?: string;
     /**
      * Custom marker icon.
      */
@@ -22,7 +21,14 @@ export declare type MarkerOptions = {
      *
      * @default 'red'
      */
-    defaultMarkerColor: number | MarkerColor;
+    color?: number | Color;
+    /**
+     * Opacity of a marker's icon, applied both to asset based icon
+     * as well as to default marker's icon.
+     */
+    opacity?: number;
+};
+export declare type MarkerOptions = {
     /**
      * If 'true` marker is draggable.
      *
@@ -37,15 +43,7 @@ export declare type MarkerOptions = {
      * Translation of longitude coordinate.
      */
     anchorV?: number;
-    /**
-     * Opacity of a marker's icon, applied both to asset based icon
-     * as well as to default marker's icon.
-     */
-    opacity?: number;
-};
-/**
- * Props of Marker component of Expo Maps library.
- */
+} & BaseMarkerOptions;
 export declare type MarkerProps = MarkerOptions & Point;
 /**
  * Internal JSON object for representing markers in Expo Maps library.

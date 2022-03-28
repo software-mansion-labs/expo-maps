@@ -7,9 +7,8 @@ import expo.modules.maps.*
 import expo.modules.maps.PatternItem
 import expo.modules.maps.interfaces.Polygons
 
-class GoogleMapsPolygons(map: GoogleMap) : Polygons {
+class GoogleMapsPolygons(private val map: GoogleMap) : Polygons {
   private val polygons = mutableListOf<Polygon>()
-  private var googleMap: GoogleMap = map
 
   override fun setPolygons(polygonObjects: Array<PolygonObject>) {
     detachAndDeletePolygons()
@@ -18,6 +17,7 @@ class GoogleMapsPolygons(map: GoogleMap) : Polygons {
       for (point in polygonObject.points) {
         polygonOptions.add(LatLng(point.latitude, point.longitude))
       }
+
       polygonObject.fillColor?.let { polygonOptions.fillColor(colorStringtoInt(it)) }
       polygonObject.strokeColor?.let { polygonOptions.strokeColor(colorStringtoInt(it)) }
       polygonObject.strokeWidth?.let { polygonOptions.strokeWidth(it) }
@@ -26,7 +26,7 @@ class GoogleMapsPolygons(map: GoogleMap) : Polygons {
       }
       polygonObject.jointType?.let { polygonOptions.strokeJointType(it) }
 
-      val polygon = googleMap.addPolygon(polygonOptions)
+      val polygon = map.addPolygon(polygonOptions)
       polygons.add(polygon)
     }
   }
@@ -40,8 +40,8 @@ class GoogleMapsPolygons(map: GoogleMap) : Polygons {
 
   private fun patternItemToNative(patternItem: PatternItem): com.google.android.gms.maps.model.PatternItem {
     return when (patternItem.type) {
-      PatternItemType.gap -> Gap(patternItem.length)
-      PatternItemType.stroke -> when (patternItem.length) {
+      PatternItemType.Gap -> Gap(patternItem.length)
+      PatternItemType.Stroke -> when (patternItem.length) {
         0F, -0F -> Dot()
         else -> Dash(patternItem.length)
       }
@@ -50,9 +50,9 @@ class GoogleMapsPolygons(map: GoogleMap) : Polygons {
 
   private fun jointToNative(joint: Joint): Int {
     return when (joint) {
-      Joint.miter -> JointType.DEFAULT
-      Joint.bevel -> JointType.BEVEL
-      Joint.round -> JointType.ROUND
+      Joint.Miter -> JointType.DEFAULT
+      Joint.Bevel -> JointType.BEVEL
+      Joint.Round -> JointType.ROUND
     }
   }
 

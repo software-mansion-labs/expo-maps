@@ -45,6 +45,10 @@ public class ExpoAppleMapsModule: Module {
       prop("markers") { (view: AppleMapsView, markerObjects: [MarkerObject]) in
         view.setMarkers(markerObjects: markerObjects)
       }
+      
+      prop("clusters") { (view: AppleMapsView, clusterObjects: [ClusterObject]) in
+        view.setClusters(clusterObjects: clusterObjects)
+      }
 
       prop("polygons") { (view: AppleMapsView, polygonObjects: [PolygonObject]) in
         view.setPolygons(polygonObjects: polygonObjects)
@@ -56,6 +60,14 @@ public class ExpoAppleMapsModule: Module {
 
       prop("circles") { (view: AppleMapsView, circleObjects: [CircleObject]) in
         view.setCircles(circleObjects: circleObjects)
+      }
+      
+      prop("cameraPosition") { (view: AppleMapsView, cameraPosition: CameraPosition) in
+        view.setCameraPosition(cameraPosition: cameraPosition)
+      }
+      
+      prop("enableTraffic") { (view: AppleMapsView, enable: Bool) in
+        view.setEnabledTraffic(enableTraffic: enable)
       }
     }
   }

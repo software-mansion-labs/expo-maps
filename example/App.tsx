@@ -3,9 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import MainNavigator from './navigators/MainNavigator';
 import { Platform } from 'react-native';
 import { Providers } from 'expo-maps/build/Map.types';
-import SettingsContainer from './components/SettingsContainer';
 import SwitchContainer from './components/SwitchContainer';
 import ProviderContext from './context/ProviderContext';
+import { View } from 'react-native';
 import * as Location from 'expo-location';
 
 export default function App() {
@@ -25,14 +25,15 @@ export default function App() {
       <NavigationContainer>
         <MainNavigator />
         {Platform.OS === 'ios' && (
-          <SettingsContainer style={{ backgroundColor: 'white' }}>
+          <View style={{ padding: 20 }}>
             <SwitchContainer
-              title='Use Apple Maps'
+              title="Use Apple Maps"
               value={provider === 'apple'}
-              onValueChange={() => setProvider(provider === 'google' ? 'apple' : 'google')}
-              textColor='black'
+              onValueChange={() =>
+                setProvider(provider === 'google' ? 'apple' : 'google')
+              }
             />
-          </SettingsContainer>
+          </View>
         )}
       </NavigationContainer>
     </ProviderContext.Provider>
