@@ -13,7 +13,7 @@ class GoogleMapsGeoJsons: GeoJsons {
   func setGeoJsons(geoJsonObjects: [GeoJsonObject]) {
     deleteGeoJsons()
     for geoJsonObject in geoJsonObjects {
-      let geoJsonParser = GMUGeoJSONParser(data: geoJsonObject.geoJsonString)
+      let geoJsonParser = GMUGeoJSONParser(data: geoJsonObject.geoJsonString.data(using: .utf8))
       geoJsonParser.parse()
 
       let renderer = GMUGeometryRenderer(
