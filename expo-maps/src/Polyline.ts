@@ -7,20 +7,42 @@ import { Point, PatternItem } from './Common.types';
 export type PolylineProps = {
   /**
    * Array of polygon's vertices.
-   * 
+   *
    * If empty, the polyline will be invisible, but logically it will be registered on the host map.
    * @required
    */
   points: Point[];
   /**
    * Polyline stroke color in hex format (optional).
-   * 
+   *
    * Accepted formats:
    * * `'#RRGGBB'`
    * * `'#RRGGBBAA'`
    * * `'#RGB'`
    * * `'#RGBA'`
-   * @default '#000'
+   * * RGBA Ints
+   * * 'red'
+   * * 'blue'
+   * * 'green'
+   * * 'black'
+   * * 'white'
+   * * 'gray'
+   * * 'cyan'
+   * * 'magenta'
+   * * 'yellow'
+   * * 'lightgray'
+   * * 'darkgray'
+   * * 'grey'
+   * * 'aqua'
+   * * 'fuchsia'
+   * * 'lime'
+   * * 'maroon'
+   * * 'navy'
+   * * 'olive'
+   * * 'purple'
+   * * 'silver'
+   * * 'teal'
+   * @default 'black'
    */
   color?: string;
   /**
@@ -29,11 +51,11 @@ export type PolylineProps = {
   width?: number;
   /**
    * Array of objects of type PatternItem, specifying the pattern of the polyline's edge line (optional).
-   * 
+   *
    * * Unprovided will imply a solid line.
    * * Empty array will imply no visible line.
    * * Otherwise line pattern starts with first provided element and repeats.
-   * 
+   *
    * For detailed info see {@link PatternItem}
    */
   pattern?: PatternItem[];

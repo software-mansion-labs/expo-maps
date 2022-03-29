@@ -35,15 +35,19 @@
           ]
         ]
       },
-      "style": {
-        "__comment": "all SVG styles allowed",
-        "fill": "red",
-        "stroke-width": "3",
-        "fill-opacity": 0.6
-      },
       "properties": {
-        "prop0": "value0",
-        "prop1": { "this": "that" }
+        "fillColor": "blue",
+        "strokeColor": "#000000",
+        "strokeWidth": 10,
+        "strokeJointType": "bevel",
+        "strokePattern": [
+          { "type": "stroke", "length": 10 },
+          { "type": "stroke", "length": 0 },
+          { "type": "stroke", "length": 10 },
+          { "type": "gap", "length": 10 },
+          { "type": "stroke", "length": 0 },
+          { "type": "gap", "length": 10 }
+        ]
       }
     }
   ]

@@ -14,9 +14,36 @@ export declare type PolygonProps = {
      */
     points: Point[];
     /**
-     * Color filling interior of the polygon (optional).
+     * Color of the polygon's interior (optional).
      *
-     * If the polygon is self-overlapping, the area of overlap will be transparent.
+     * Accepted formats:
+     * * `'#RRGGBB'`
+     * * `'#RRGGBBAA'`
+     * * `'#RGB'`
+     * * `'#RGBA'`
+     * * RGBA Ints
+     * * 'red'
+     * * 'blue'
+     * * 'green'
+     * * 'black'
+     * * 'white'
+     * * 'gray'
+     * * 'cyan'
+     * * 'magenta'
+     * * 'yellow'
+     * * 'lightgray'
+     * * 'darkgray'
+     * * 'grey'
+     * * 'aqua'
+     * * 'fuchsia'
+     * * 'lime'
+     * * 'maroon'
+     * * 'navy'
+     * * 'olive'
+     * * 'purple'
+     * * 'silver'
+     * * 'teal'
+     * @default transparent
      */
     fillColor?: string;
     /**
@@ -27,7 +54,29 @@ export declare type PolygonProps = {
      * * `'#RRGGBBAA'`
      * * `'#RGB'`
      * * `'#RGBA'`
-     * @default '#000000'
+     * * RGBA Ints
+     * * 'red'
+     * * 'blue'
+     * * 'green'
+     * * 'black'
+     * * 'white'
+     * * 'gray'
+     * * 'cyan'
+     * * 'magenta'
+     * * 'yellow'
+     * * 'lightgray'
+     * * 'darkgray'
+     * * 'grey'
+     * * 'aqua'
+     * * 'fuchsia'
+     * * 'lime'
+     * * 'maroon'
+     * * 'navy'
+     * * 'olive'
+     * * 'purple'
+     * * 'silver'
+     * * 'teal'
+     * @default 'black'
      */
     strokeColor?: string;
     /**

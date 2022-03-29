@@ -7,42 +7,91 @@ import { Point, PatternItem } from './Common.types';
 export type PolygonProps = {
   /**
    * Array of polygon's vertices.
-   * 
+   *
    * The polygon is closed automatically, so there is no need to repeat the first vertex at the end.
-   * 
+   *
    * If empty, the polygon will be invisible, but logically it will be registered on the host map.
    * @required
    */
   points: Point[];
   /**
-   * Color filling interior of the polygon (optional).
-   * 
-   * If the polygon is self-overlapping, the area of overlap will be transparent.
-   */
-  fillColor?: string;
-  /**
-   * Color of the polygon's edge line (optional).
-   * 
+   * Color of the polygon's interior (optional).
+   *
    * Accepted formats:
    * * `'#RRGGBB'`
    * * `'#RRGGBBAA'`
    * * `'#RGB'`
    * * `'#RGBA'`
-   * @default '#000000'
+   * * RGBA Ints
+   * * 'red'
+   * * 'blue'
+   * * 'green'
+   * * 'black'
+   * * 'white'
+   * * 'gray'
+   * * 'cyan'
+   * * 'magenta'
+   * * 'yellow'
+   * * 'lightgray'
+   * * 'darkgray'
+   * * 'grey'
+   * * 'aqua'
+   * * 'fuchsia'
+   * * 'lime'
+   * * 'maroon'
+   * * 'navy'
+   * * 'olive'
+   * * 'purple'
+   * * 'silver'
+   * * 'teal'
+   * @default transparent
+   */
+  fillColor?: string;
+  /**
+   * Color of the polygon's edge line (optional).
+   *
+   * Accepted formats:
+   * * `'#RRGGBB'`
+   * * `'#RRGGBBAA'`
+   * * `'#RGB'`
+   * * `'#RGBA'`
+   * * RGBA Ints
+   * * 'red'
+   * * 'blue'
+   * * 'green'
+   * * 'black'
+   * * 'white'
+   * * 'gray'
+   * * 'cyan'
+   * * 'magenta'
+   * * 'yellow'
+   * * 'lightgray'
+   * * 'darkgray'
+   * * 'grey'
+   * * 'aqua'
+   * * 'fuchsia'
+   * * 'lime'
+   * * 'maroon'
+   * * 'navy'
+   * * 'olive'
+   * * 'purple'
+   * * 'silver'
+   * * 'teal'
+   * @default 'black'
    */
   strokeColor?: string;
-  /** 
+  /**
    * Width of the polygon's edge line (optional).
    * @default 1.0
    */
   strokeWidth?: number;
   /**
    * Array of objects of type PatternItem, specifying the pattern of the polygon's edge line (optional).
-   * 
+   *
    * * Unprovided will imply a solid line.
    * * Empty array will imply no visible line.
    * * Otherwise line pattern starts with first provided element and repeats.
-   * 
+   *
    * For detailed info see {@link PatternItem}
    */
   strokePattern?: PatternItem[];
