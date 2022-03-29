@@ -1,0 +1,50 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [102.0, 0.5] },
+      "properties": { "prop0": "value0" }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [1.75, 47.69],
+          [21.89, 42.79],
+          [43.65, 53.22],
+          [58.58, 48.58]
+        ]
+      },
+      "properties": {
+        "prop0": "value0",
+        "prop1": 0.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [15.73, 53.84],
+            [16.31, 51.11],
+            [50.14, 22.07],
+            [53.18, 22.11]
+          ]
+        ]
+      },
+      "style": {
+        "__comment": "all SVG styles allowed",
+        "fill": "red",
+        "stroke-width": "3",
+        "fill-opacity": 0.6
+      },
+      "properties": {
+        "prop0": "value0",
+        "prop1": { "this": "that" }
+      }
+    }
+  ]
+}

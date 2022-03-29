@@ -25,6 +25,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var polylines: GoogleMapsPolylines
   private lateinit var circles: GoogleMapsCircles
   private lateinit var kmls: GoogleMapsKMLs
+  private lateinit var geojsons: GoogleMapsGeoJsons
   private val mapReady = MutableStateFlow(false)
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
@@ -47,6 +48,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     polylines = GoogleMapsPolylines(googleMap)
     circles = GoogleMapsCircles(googleMap)
     kmls = GoogleMapsKMLs(context, googleMap)
+    geojsons = GoogleMapsGeoJsons(googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
@@ -194,13 +196,19 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
+  override fun setGeoJsons(geoJsonObjects: Array<GeoJsonObject>) {
+    updateMap {
+      geojsons.setGeoJsons(geoJsonObjects)
+    }
+  }
+
   /*
-        Calls function provided as an argument when OnMapReadyCallback fires,
-        subscribes to StateFlow in a background but calls lambda on a main thread.
-        After calling lambda the subscription is canceled.
-        StateFlow holds the latest value so even if updateMap is called after
-        OnMapReadyCallback, StateFlow emits the latest value letting provided lambda to be executed.
-       */
+      Calls function provided as an argument when OnMapReadyCallback fires,
+      subscribes to StateFlow in a background but calls lambda on a main thread.
+      After calling lambda the subscription is canceled.
+      StateFlow holds the latest value so even if updateMap is called after
+      OnMapReadyCallback, StateFlow emits the latest value letting provided lambda to be executed.
+  */
   private fun updateMap(update: () -> Unit) {
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.collectLatest {

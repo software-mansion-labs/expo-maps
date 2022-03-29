@@ -6,7 +6,8 @@ import { PolylineObject } from './Polyline';
 import { Point } from './Common.types';
 import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
-import { KML, KMLObject } from './KML';
+import { KMLObject } from './KML';
+import { GeoJsonObject } from './GeoJson';
 
 export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 
@@ -80,6 +81,16 @@ export type KMLs = {
    * Array of {@link KMLObject}
    */
   kmls: KMLObject[];
+};
+
+/**
+ * Internal prop for managing provided KMLs
+ */
+export type GeoJsons = {
+  /**
+   * Array of {@link GeoJsonObject}
+   */
+  geojsons: GeoJsonObject[];
 };
 
 /**
@@ -251,7 +262,8 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       Circles &
       Clusters &
       Traffic &
-      KMLs
+      KMLs &
+      GeoJsons
   >;
 
 /**
@@ -268,7 +280,8 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
       CameraPosition &
       Circles &
       Clusters &
-      Traffic
+      Traffic &
+      GeoJsons
   >;
 
 export type Providers = 'google' | 'apple';
@@ -299,8 +312,7 @@ export type ExpoMapViewProps = ViewProps &
         GoogleMapsStyling &
         Gestures &
         CameraPosition &
-        Traffic &
-        KMLs
+        Traffic
     >
   >;
 
@@ -315,4 +327,5 @@ export type ExpoMapState = Markers &
   Polylines &
   Circles &
   Clusters &
-  KMLs;
+  KMLs &
+  GeoJsons;

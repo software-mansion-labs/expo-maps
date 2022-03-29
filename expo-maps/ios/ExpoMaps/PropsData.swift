@@ -94,3 +94,7 @@ struct ClusterObject: Record {
 struct KMLObject: Record {
   @Field var filePath: String
 }
+
+struct GeoJsonObject: Record {
+  @Field var geoJsonString: String
+}

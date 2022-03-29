@@ -13,8 +13,7 @@ class GoogleMapsKMLs(private val context: Context, private val map: GoogleMap) :
   private val layers = mutableListOf<KmlLayer>()
 
   override fun setKMLs(kmlObjects: Array<KMLObject>) {
-    layers.forEach { it.removeLayerFromMap() }
-    layers.clear()
+    deleteKMLs()
 
     kmlObjects.forEach {
       val path = File(Uri.parse(it.filePath).path!!)
@@ -22,5 +21,10 @@ class GoogleMapsKMLs(private val context: Context, private val map: GoogleMap) :
       layer.addLayerToMap()
       layers.add(layer)
     }
+  }
+
+  private fun deleteKMLs() {
+    layers.forEach { it.removeLayerFromMap() }
+    layers.clear()
   }
 }

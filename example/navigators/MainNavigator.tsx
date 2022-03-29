@@ -20,6 +20,9 @@ export type ExamplesStackNavigatorProps = {
   Gestures: undefined;
   'Map Types': undefined;
   'Camera Position': undefined;
+  Traffic: undefined;
+  KML: undefined;
+  GeoJson: undefined;
 };
 
 const ExamplesStackNavigator =

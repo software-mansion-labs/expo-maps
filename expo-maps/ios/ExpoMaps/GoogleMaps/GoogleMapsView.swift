@@ -12,6 +12,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let polylines: GoogleMapsPolylines
   private let circles: GoogleMapsCircles
   private let kmls: GoogleMapsKMLs
+  private let geojsons: GoogleMapsGeoJsons
 
   init() {
     // just for now we do authentication here
@@ -33,6 +34,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     polylines = GoogleMapsPolylines(mapView: mapView)
     circles = GoogleMapsCircles(mapView: mapView)
     kmls = GoogleMapsKMLs(mapView: mapView)
+    geojsons = GoogleMapsGeoJsons(mapView: mapView)
 
     super.init(frame: CGRect.zero)
     delegate.expoMapView = self
@@ -141,5 +143,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   
   func setKMLs(kmlObjects: [KMLObject]) {
     kmls.setKMLs(kmlObjects: kmlObjects)
+  }
+  
+  func setGeoJsons(geoJsonObjects: [GeoJsonObject]) {
+    geojsons.setGeoJsons(geoJsonObjects: geoJsonObjects)
   }
 }

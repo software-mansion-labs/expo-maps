@@ -71,6 +71,17 @@ export function isKML(child) {
     }
     return false;
 }
+export function isGeoJson(child) {
+    if ('type' in child &&
+        String(child.type).includes('GeoJson') &&
+        'props' in child) {
+        let props = Object.keys(child.props);
+        if (props.includes('geoJsonString')) {
+            return true;
+        }
+    }
+    return false;
+}
 export function mapColor(color) {
     const colors = {
         azure: 210,

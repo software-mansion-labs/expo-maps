@@ -107,3 +107,5 @@ data class ClusterObject(
 ) : Record
 
 data class KMLObject(@Field val filePath: String) : Record
+
+data class GeoJsonObject(@Field val geoJsonString: String) : Record

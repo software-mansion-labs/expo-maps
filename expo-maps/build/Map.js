@@ -9,6 +9,7 @@ export { Polyline } from './Polyline';
 export { Circle } from './Circle';
 export { Cluster } from './Cluster';
 export { KML } from './KML';
+export { GeoJson } from './GeoJson';
 const defaultNativeExpoMapViewProps = {
     mapType: 'normal',
     showZoomControls: true,
@@ -41,6 +42,7 @@ export class ExpoMap extends React.Component {
         circles: [],
         clusters: [],
         kmls: [],
+        geojsons: [],
     };
     _ismounted = false;
     componentDidMount() {
@@ -98,6 +100,12 @@ export class ExpoMap extends React.Component {
                     return {
                         type: 'kml',
                         filePath: filePath.localUri,
+                    };
+                }
+                else if (Utils.isGeoJson(child)) {
+                    return {
+                        type: 'geojson',
+                        geoJsonString: child.props.geoJsonString,
                     };
                 }
                 else if (Utils.isCluster(child)) {
@@ -162,17 +170,18 @@ export class ExpoMap extends React.Component {
                     circles: propObjects.filter((elem) => elem?.type === 'circle'),
                     clusters: propObjects.filter((elem) => elem?.type === 'cluster'),
                     kmls: propObjects.filter((elem) => elem?.type === 'kml'),
+                    geojsons: propObjects.filter((elem) => elem?.type === 'geojson'),
                 });
             }
         }
     }
     render() {
         if (Platform.OS == 'ios' && this.props.provider == 'apple') {
-            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters }));
+            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, geojsons: this.state.geojsons }));
         }
         return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString
                 ? this.props.googleMapsJsonStyleString
-                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls }));
+                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons }));
     }
 }
 async function buildMarkerObject(child) {

@@ -5,6 +5,7 @@ import { Polygon } from './Polygon';
 import { Polyline } from './Polyline';
 import { Circle } from './Circle';
 import { KML } from './KML';
+import { GeoJson } from './GeoJson';
 
 export function isSimpleType(child: any) {
   return (
@@ -94,6 +95,20 @@ export function isKML(child: any): child is KML {
   ) {
     let props = Object.keys(child.props);
     if (props.includes('filePath')) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function isGeoJson(child: any): child is GeoJson {
+  if (
+    'type' in child &&
+    String(child.type).includes('GeoJson') &&
+    'props' in child
+  ) {
+    let props = Object.keys(child.props);
+    if (props.includes('geoJsonString')) {
       return true;
     }
   }

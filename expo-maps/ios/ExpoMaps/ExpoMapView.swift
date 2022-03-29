@@ -9,4 +9,5 @@ protocol ExpoMapView: UIView {
   func setCameraPosition(cameraPosition: CameraPosition)
   func setEnabledTraffic(enableTraffic: Bool)
   func setKMLs(kmlObjects: [KMLObject])
+  func setGeoJsons(geoJsonObjects: [GeoJsonObject])
 }
