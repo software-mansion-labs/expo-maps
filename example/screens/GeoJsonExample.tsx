@@ -10,7 +10,7 @@ export default function GeoJsonExample() {
     <View style={styles.container}>
       <Maps.ExpoMap style={{ flex: 1, width: '100%' }} provider={provider}>
         <Maps.GeoJson
-          geoJsonString={JSON.stringify(require('../assets/sample.json'))}
+          geoJsonString={JSON.stringify(require('../assets/sample.geo.json'))}
         />
       </Maps.ExpoMap>
     </View>
