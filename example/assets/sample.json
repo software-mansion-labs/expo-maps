@@ -4,7 +4,11 @@
     {
       "type": "Feature",
       "geometry": { "type": "Point", "coordinates": [102.0, 0.5] },
-      "properties": { "prop0": "value0" }
+      "properties": {
+        "color": "blue",
+        "title": "Marker",
+        "snippet": "This is marker from GeoJSON"
+      }
     },
     {
       "type": "Feature",
@@ -18,8 +22,15 @@
         ]
       },
       "properties": {
-        "prop0": "value0",
-        "prop1": 0.0
+        "color": "magenta",
+        "pattern": [
+          { "type": "stroke", "length": 10 },
+          { "type": "stroke", "length": 0 },
+          { "type": "stroke", "length": 10 },
+          { "type": "gap", "length": 10 },
+          { "type": "stroke", "length": 0 },
+          { "type": "gap", "length": 10 }
+        ]
       }
     },
     {

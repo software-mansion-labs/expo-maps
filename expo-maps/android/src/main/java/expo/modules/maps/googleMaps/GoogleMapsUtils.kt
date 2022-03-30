@@ -132,3 +132,19 @@ fun patternItemToNative(patternItem: PatternItem): com.google.android.gms.maps.m
     }
   }
 }
+
+fun colorStringToHueFloat(colorString: String): Float {
+  return when(colorString) {
+    "azure" -> 210F
+    "blue" -> 240F
+    "cyan" -> 180F
+    "green" -> 120F
+    "magenta" -> 300F
+    "orange" -> 30F
+    "rose" -> 330F
+    "violet" -> 270F
+    "yellow" -> 60F
+    "red" -> 0F
+    else -> colorString.toFloat()
+  }
+}
