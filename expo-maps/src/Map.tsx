@@ -127,6 +127,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             return {
               type: 'geojson',
               geoJsonString: child.props.geoJsonString,
+              defaultStyle: child.props.defaultStyle,
             } as GeoJsonObject;
           } else if (Utils.isCluster(child)) {
             const clusterChildrenArray = React.Children.map(

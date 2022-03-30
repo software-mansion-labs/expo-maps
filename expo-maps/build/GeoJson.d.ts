@@ -1,4 +1,5 @@
 import React from 'react';
+import { PatternItem } from './Common.types';
 /**
  * GeoJson specific props.
  */
@@ -7,6 +8,24 @@ export declare type GeoJsonProps = {
      * JSON string containing GeoJSON
      */
     geoJsonString: string;
+    defaultStyle?: {
+        polygon?: {
+            fillColor?: string;
+            strokeColor?: string;
+            strokeWidth?: number;
+            strokeJointType?: 'bevel' | 'miter' | 'round';
+            strokePattern?: PatternItem[];
+        };
+        polyline?: {
+            color?: string;
+            pattern?: PatternItem[];
+        };
+        marker?: {
+            color?: string;
+            title?: string;
+            snippet?: string;
+        };
+    };
 };
 /**
  * Internal JSON object for representing GeoJSON in Expo Maps library.

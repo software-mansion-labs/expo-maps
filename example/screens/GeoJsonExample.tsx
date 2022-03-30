@@ -11,6 +11,11 @@ export default function GeoJsonExample() {
       <Maps.ExpoMap style={{ flex: 1, width: '100%' }} provider={provider}>
         <Maps.GeoJson
           geoJsonString={JSON.stringify(require('../assets/sample.geo.json'))}
+          defaultStyle={{
+            polygon: {
+              fillColor: 'magenta',
+            },
+          }}
         />
       </Maps.ExpoMap>
     </View>

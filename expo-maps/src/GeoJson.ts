@@ -2,6 +2,7 @@ import React from 'react';
 import { PolygonProps } from './Polygon';
 import { PolylineProps } from './Polyline';
 import { MarkerProps } from './Marker';
+import { PatternItem } from './Common.types';
 
 /**
  * GeoJson specific props.
@@ -11,6 +12,24 @@ export type GeoJsonProps = {
    * JSON string containing GeoJSON
    */
   geoJsonString: string;
+  defaultStyle?: {
+    polygon?: {
+      fillColor?: string;
+      strokeColor?: string;
+      strokeWidth?: number;
+      strokeJointType?: 'bevel' | 'miter' | 'round';
+      strokePattern?: PatternItem[];
+    };
+    polyline?: {
+      color?: string;
+      pattern?: PatternItem[];
+    };
+    marker?: {
+      color?: string;
+      title?: string;
+      snippet?: string;
+    };
+  };
 };
 
 /**

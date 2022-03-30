@@ -31,28 +31,28 @@ fun provideDescriptor(localUri: String?, color: Double): BitmapDescriptor {
 private fun colorHexStringToInt(hexColorString: String): Int {
   return when (hexColorString.length) {
     4 -> Color.argb(
-            0xFF,
-            Integer.decode("0x" + hexColorString[1] + hexColorString[1]),
-            Integer.decode("0x" + hexColorString[2] + hexColorString[2]),
-            Integer.decode("0x" + hexColorString[3] + hexColorString[3]),
+      0xFF,
+      Integer.decode("0x" + hexColorString[1] + hexColorString[1]),
+      Integer.decode("0x" + hexColorString[2] + hexColorString[2]),
+      Integer.decode("0x" + hexColorString[3] + hexColorString[3]),
     )
     5 -> Color.argb(
-            Integer.decode("0x" + hexColorString[4] + hexColorString[4]),
-            Integer.decode("0x" + hexColorString[1] + hexColorString[1]),
-            Integer.decode("0x" + hexColorString[2] + hexColorString[2]),
-            Integer.decode("0x" + hexColorString[3] + hexColorString[3]),
+      Integer.decode("0x" + hexColorString[4] + hexColorString[4]),
+      Integer.decode("0x" + hexColorString[1] + hexColorString[1]),
+      Integer.decode("0x" + hexColorString[2] + hexColorString[2]),
+      Integer.decode("0x" + hexColorString[3] + hexColorString[3]),
     )
     7 -> Color.argb(
-            0xFF,
-            Integer.decode("0x" + hexColorString.substring(1..2)),
-            Integer.decode("0x" + hexColorString.substring(3..4)),
-            Integer.decode("0x" + hexColorString.substring(5..6)),
+      0xFF,
+      Integer.decode("0x" + hexColorString.substring(1..2)),
+      Integer.decode("0x" + hexColorString.substring(3..4)),
+      Integer.decode("0x" + hexColorString.substring(5..6)),
     )
     9 -> Color.argb(
-            Integer.decode("0x" + hexColorString.substring(7..8)),
-            Integer.decode("0x" + hexColorString.substring(1..2)),
-            Integer.decode("0x" + hexColorString.substring(3..4)),
-            Integer.decode("0x" + hexColorString.substring(5..6)),
+      Integer.decode("0x" + hexColorString.substring(7..8)),
+      Integer.decode("0x" + hexColorString.substring(1..2)),
+      Integer.decode("0x" + hexColorString.substring(3..4)),
+      Integer.decode("0x" + hexColorString.substring(5..6)),
     )
     else -> throw IllegalArgumentException("String $hexColorString is not a valid hex color representation")
   }
@@ -83,7 +83,7 @@ fun jointTypeStringToInt(jointTypeString: String): Int {
 }
 
 fun patternItemStringToGoogleMapsPatternItemList(
-        patternItemsString: String
+  patternItemsString: String
 ): MutableList<com.google.android.gms.maps.model.PatternItem> {
   val patternItems = mutableListOf<com.google.android.gms.maps.model.PatternItem>()
 
@@ -95,7 +95,7 @@ fun patternItemStringToGoogleMapsPatternItemList(
 
     val patternItem = when (patternItemType) {
       "gap" -> Gap(patternItemLength)
-      "stroke" -> when(patternItemLength) {
+      "stroke" -> when (patternItemLength) {
         0F -> Dot()
         else -> Dash(patternItemLength)
       }
@@ -134,7 +134,7 @@ fun patternItemToNative(patternItem: PatternItem): com.google.android.gms.maps.m
 }
 
 fun colorStringToHueFloat(colorString: String): Float {
-  return when(colorString) {
+  return when (colorString) {
     "azure" -> 210F
     "blue" -> 240F
     "cyan" -> 180F

@@ -108,4 +108,33 @@ data class ClusterObject(
 
 data class KMLObject(@Field val filePath: String) : Record
 
-data class GeoJsonObject(@Field val geoJsonString: String) : Record
+data class GeoJsonObject(
+  @Field val geoJsonString: String,
+  @Field val defaultStyle: GeoJsonObjectDefaultStyle?
+) : Record
+
+data class GeoJsonObjectDefaultStyle(
+  @Field val polygon: GeoJsonObjectDefaultStylePolygon?,
+  @Field val polyline: GeoJsonObjectDefaultStylePolyline?,
+  @Field val marker: GeoJsonObjectDefaultStyleMarker?
+) : Record
+
+data class GeoJsonObjectDefaultStylePolygon(
+  @Field val fillColor: String?,
+  @Field val strokeColor: String?,
+  @Field val strokeWidth: Float?,
+  @Field val strokeJointType: String?,
+  @Field val strokePattern: List<PatternItem>?
+) : Record
+
+data class GeoJsonObjectDefaultStylePolyline(
+  @Field val color: String?,
+  @Field val pattern: List<PatternItem>?
+) : Record
+
+data class GeoJsonObjectDefaultStyleMarker(
+  @Field val color: String?,
+  @Field val title: String?,
+  @Field val snippet: String?
+) : Record
+

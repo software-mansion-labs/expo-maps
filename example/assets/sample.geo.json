@@ -60,6 +60,32 @@
           { "type": "gap", "length": 10 }
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [11.73, 52.84],
+            [13.31, 50.11],
+            [50.14, 22.07]
+          ]
+        ]
+      },
+      "properties": {
+        "strokeColor": "#000000",
+        "strokeWidth": 10,
+        "strokeJointType": "bevel",
+        "strokePattern": [
+          { "type": "stroke", "length": 10 },
+          { "type": "stroke", "length": 0 },
+          { "type": "stroke", "length": 10 },
+          { "type": "gap", "length": 10 },
+          { "type": "stroke", "length": 0 },
+          { "type": "gap", "length": 10 }
+        ]
+      }
     }
   ]
 }
