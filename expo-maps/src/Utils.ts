@@ -6,6 +6,7 @@ import { Polyline } from './Polyline';
 import { Circle } from './Circle';
 import { KML } from './KML';
 import { GeoJson } from './GeoJson';
+import { Heatmap } from './Heatmap';
 
 export function isSimpleType(child: any) {
   return (
@@ -109,6 +110,20 @@ export function isGeoJson(child: any): child is GeoJson {
   ) {
     let props = Object.keys(child.props);
     if (props.includes('geoJsonString')) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function isHeatmap(child: any): child is Heatmap {
+  if(
+    'type' in child &&
+    String(child.type).includes('Heatmap') &&
+    'props' in child
+  ) {
+    let props = Object.keys(child.props);
+    if (props.includes('points')) {
       return true;
     }
   }

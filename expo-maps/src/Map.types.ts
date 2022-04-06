@@ -6,9 +6,10 @@ import { PolylineObject } from './Polyline';
 import { Point } from './Common.types';
 import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
-import { KMLObject } from './KML';
 import { GeoJsonObject } from './GeoJson';
 import { ExpoMap } from './Map';
+import { KMLObject } from './KML';
+import { HeatmapObject } from './Heatmap';
 
 export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 
@@ -238,6 +239,12 @@ export type GoogleMapsPOI = Omit<
   POI,
   'enablePOISearching' | 'enablePOIFilter'
 >;
+export type Heatmaps = {
+  /**
+   * Array of {@link HeatmapObject}.
+   */
+  heatmaps: HeatmapObject[];
+}
 
 export type GoogleMapsControls = Controls;
 
@@ -316,7 +323,8 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       Traffic &
       KMLs &
       GeoJsons &
-      GoogleMapsPOI
+      GoogleMapsPOI &
+      Heatmaps
   >;
 
 /**
@@ -371,7 +379,9 @@ export type ExpoMapViewProps = ViewProps &
         Gestures &
         CameraPosition &
         Traffic &
-        POI
+        POI &
+        KMLs &
+        Heatmaps
     >
   >;
 
@@ -388,4 +398,5 @@ export type ExpoMapState = Markers &
   Circles &
   Clusters &
   KMLs &
-  GeoJsons;
+  GeoJsons &
+  Heatmaps;

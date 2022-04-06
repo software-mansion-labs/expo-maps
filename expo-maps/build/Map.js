@@ -10,6 +10,7 @@ export { Circle } from './Circle';
 export { Cluster } from './Cluster';
 export { KML } from './KML';
 export { GeoJson } from './GeoJson';
+export { Heatmap } from './Heatmap';
 const defaultNativeExpoMapViewProps = {
     mapType: 'normal',
     showZoomControls: true,
@@ -47,6 +48,7 @@ export class ExpoMap extends React.Component {
         clusters: [],
         kmls: [],
         geojsons: [],
+        heatmaps: [],
     };
     _ismounted = false;
     mapView = React.createRef();
@@ -138,6 +140,15 @@ export class ExpoMap extends React.Component {
                 else if (Utils.isGeoJson(child)) {
                     return buildGeoJsonObject(child);
                 }
+                else if (Utils.isHeatmap(child)) {
+                    return {
+                        type: 'heatmap',
+                        points: child.props.points,
+                        radius: child.props.radius,
+                        gradient: child.props.gradient,
+                        opacity: child.props.opacity,
+                    };
+                }
                 else if (Utils.isCluster(child)) {
                     const clusterChildrenArray = React.Children.map(child.props.children, async (clusterChild) => {
                         if (!Utils.isSimpleType(clusterChild)) {
@@ -197,6 +208,7 @@ export class ExpoMap extends React.Component {
                     clusters: propObjects.filter((elem) => elem?.type === 'cluster'),
                     kmls: propObjects.filter((elem) => elem?.type === 'kml'),
                     geojsons: propObjects.filter((elem) => elem?.type === 'geojson'),
+                    heatmaps: propObjects.filter((elem) => elem?.type === 'heatmap'),
                 });
             }
         }
@@ -213,7 +225,7 @@ export class ExpoMap extends React.Component {
         }
         return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString
                 ? this.props.googleMapsJsonStyleString
-                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons, ref: this.mapView }));
+                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons, ref: this.mapView, heatmaps: this.state.heatmaps }));
     }
 }
 function buildGeoJsonObject(child) {
