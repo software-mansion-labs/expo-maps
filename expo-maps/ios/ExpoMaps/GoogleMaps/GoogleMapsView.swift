@@ -148,8 +148,17 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   func setKMLs(kmlObjects: [KMLObject]) {
     kmls.setKMLs(kmlObjects: kmlObjects)
   }
+<<<<<<< HEAD
   
   func setGeoJsons(geoJsonObjects: [GeoJsonObject]) {
     geojsons.setGeoJsons(geoJsonObjects: geoJsonObjects)
+=======
+
+  func setHeatmaps(heatmapObjects: [HeatmapObject]) {
+    if !heatmapObjects.isEmpty {
+      let first = heatmapObjects[0]
+      debugPrint("Heatmaps: ", first.points[0], first.radius, first.gradient)
+    }
+>>>>>>> 7d3c60e (Add implementation for heatmaps)
   }
 }

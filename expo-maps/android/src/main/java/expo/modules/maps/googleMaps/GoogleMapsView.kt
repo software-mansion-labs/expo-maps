@@ -25,7 +25,11 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var polylines: GoogleMapsPolylines
   private lateinit var circles: GoogleMapsCircles
   private lateinit var kmls: GoogleMapsKMLs
+<<<<<<< HEAD
   private lateinit var geojsons: GoogleMapsGeoJsons
+=======
+  private lateinit var heatmaps: GoogleMapsHeatmaps
+>>>>>>> 7d3c60e (Add implementation for heatmaps)
   private val mapReady = MutableStateFlow(false)
   private var wasInitialCameraPositionSet = false
 
@@ -49,7 +53,11 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     polylines = GoogleMapsPolylines(googleMap)
     circles = GoogleMapsCircles(googleMap)
     kmls = GoogleMapsKMLs(context, googleMap)
+<<<<<<< HEAD
     geojsons = GoogleMapsGeoJsons(googleMap)
+=======
+    heatmaps = GoogleMapsHeatmaps(context, googleMap)
+>>>>>>> 7d3c60e (Add implementation for heatmaps)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
@@ -200,9 +208,15 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
+<<<<<<< HEAD
   override fun setGeoJsons(geoJsonObjects: Array<GeoJsonObject>) {
     updateMap {
       geojsons.setGeoJsons(geoJsonObjects)
+=======
+  override fun setHeatmaps(heatmapObjects: Array<HeatmapObject>) {
+    updateMap {
+      heatmaps.setHeatmaps(heatmapObjects)
+>>>>>>> 7d3c60e (Add implementation for heatmaps)
     }
   }
 

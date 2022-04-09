@@ -37,6 +37,9 @@ export declare type HeatmapOptions = {
  */
 export declare type HeatmapObject = {
     type: 'heatmap';
+    points: PointWithData[];
+    radius?: number;
+    opacity?: number;
 } & HeatmapProps;
 /**
  * Heatmap component of Expo Maps library.

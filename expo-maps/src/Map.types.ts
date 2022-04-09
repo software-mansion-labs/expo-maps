@@ -244,7 +244,7 @@ export type Heatmaps = {
    * Array of {@link HeatmapObject}.
    */
   heatmaps: HeatmapObject[];
-}
+};
 
 export type GoogleMapsControls = Controls;
 
@@ -398,5 +398,8 @@ export type ExpoMapState = Markers &
   Circles &
   Clusters &
   KMLs &
+<<<<<<< HEAD
   GeoJsons &
+=======
+>>>>>>> 7d3c60e (Add implementation for heatmaps)
   Heatmaps;

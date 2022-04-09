@@ -1,5 +1,4 @@
 import React from 'react';
-import { PropsWithChildren } from 'react';
 import { PointWithData } from './Common.types';
 import { ExpoLinearGradient } from 'expo-module-scripts';
 
@@ -41,6 +40,9 @@ export type HeatmapOptions = {
  */
 export type HeatmapObject = {
   type: 'heatmap';
+  points: PointWithData[];
+  radius?: number;
+  opacity?: number;
 } & HeatmapProps;
 
 /**

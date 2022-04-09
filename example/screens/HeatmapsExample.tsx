@@ -4,7 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import * as Maps from 'expo-maps';
 import ProviderContext from '../context/ProviderContext';
 
-import * as data from '../assets/points.json';
+import * as points from '../assets/points.json';
+import * as pointsWithData from '../assets/pointsWithData.json';
 
 export default function HeatmapExample() {
   const provider = useContext(ProviderContext);
@@ -13,8 +14,11 @@ export default function HeatmapExample() {
     <View style={styles.container}>
       <Maps.ExpoMap style={{ flex: 1, width: '100%' }} provider={provider}>
         <Maps.Heatmap
-          points={data}
+          points={points}
         />
+        {/* <Maps.Heatmap
+          points={pointsWithData}
+        /> */}
       </Maps.ExpoMap>
     </View>
   );

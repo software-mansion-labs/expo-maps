@@ -94,9 +94,15 @@ class ExpoGoogleMapsModule : Module() {
         view.setKMLs(kmlObjects)
       }
 
+<<<<<<< HEAD
       Prop("geojsons") { view: GoogleMapsView, geoJsonObjects: Array<GeoJsonObject> ->
         view.setGeoJsons(geoJsonObjects)
       }
+=======
+//      prop("heatmaps") { view: GoogleMapsView, heatmapObjects: Array<HeatmapObject> ->
+//        view.setHeatmaps(heatmapObjects)
+//      }
+>>>>>>> 7d3c60e (Add implementation for heatmaps)
     }
   }
 }
