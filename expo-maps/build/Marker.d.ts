@@ -1,5 +1,5 @@
 import React from 'react';
-import { Color, Point } from './Common.types';
+import { MarkerColor, Point } from './Common.types';
 /**
  * Marker specific props.
  */
@@ -21,7 +21,7 @@ export declare type BaseMarkerOptions = {
      *
      * @default 'red'
      */
-    color?: number | Color;
+    color?: number | MarkerColor;
     /**
      * Opacity of a marker's icon, applied both to asset based icon
      * as well as to default marker's icon.

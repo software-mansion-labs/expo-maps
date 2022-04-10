@@ -1,5 +1,5 @@
 import React from 'react';
-import { Color, PatternItem } from './Common.types';
+import { Color, MarkerColor, PatternItem } from './Common.types';
 /**
  * GeoJson specific props.
  */
@@ -8,21 +8,63 @@ export declare type GeoJsonProps = {
      * JSON string containing GeoJSON
      */
     geoJsonString: string;
+    /**
+     * Default style for different GeoJSON feature types
+     */
     defaultStyle?: {
+        /**
+         * Default style for `Polygon` GeoJSON feature
+         */
         polygon?: {
-            fillColor?: string;
-            strokeColor?: string;
+            /**
+             * See {@link PolygonProps}
+             */
+            fillColor?: string | Color;
+            /**
+             * See {@link PolygonProps}
+             */
+            strokeColor?: string | Color;
+            /**
+             * See {@link PolygonProps}
+             */
             strokeWidth?: number;
+            /**
+             * See {@link PolygonProps}
+             */
             strokeJointType?: 'bevel' | 'miter' | 'round';
+            /**
+             * See {@link PolygonProps}
+             */
             strokePattern?: PatternItem[];
         };
+        /**
+         * Default style for `LineString` GeoJSON feature
+         */
         polyline?: {
-            color?: string;
+            /**
+             * See {@link PolylineProps}
+             */
+            color?: string | Color;
+            /**
+             * See {@link PolylineProps}
+             */
             pattern?: PatternItem[];
         };
+        /**
+         * Default style for `Point` GeoJSON feature
+         */
         marker?: {
-            color?: number | Color;
+            /**
+             * See {@link MarkerProps}
+             */
+            color?: number | MarkerColor;
+            /**
+             * See {@link MarkerProps}
+             */
             title?: string;
+            /**
+             * See {@link MarkerProps}
+             */
             snippet?: string;
         };
     };

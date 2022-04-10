@@ -110,9 +110,8 @@ export type PolygonProps = {
  *
  * See {@link PolygonProps} for more detail.
  */
-export type PolygonObject = {
+export type PolygonObject = PolygonProps & {
   type: 'polygon';
-  points: Point[];
 };
 
 /**

@@ -97,4 +97,30 @@ struct KMLObject: Record {
 
 struct GeoJsonObject: Record {
   @Field var geoJsonString: String
+  @Field var defaultStyle: GeoJsonObjectDefaultStyle?
+}
+
+struct GeoJsonObjectDefaultStyle: Record {
+  @Field var marker: GeoJsonObjectDefaultStyleMarker?
+  @Field var polygon: GeoJsonObjectDefaultStylePolygon?
+//  @Field var polyline: GeoJsonObjectDefaultStylePolyline?
+}
+
+struct GeoJsonObjectDefaultStylePolygon: Record {
+  @Field var fillColor: UIColor?
+  @Field var strokeColor: UIColor?
+  @Field var strokeWidth: Float?
+  @Field var strokeJointType: String?
+  @Field var strokePattern: [PatternItem]?
+}
+
+struct GeoJsonObjectDefaultStylePolyline: Record {
+  @Field var color: UIColor?
+  @Field var pattern: [PatternItem]?
+}
+
+struct GeoJsonObjectDefaultStyleMarker: Record {
+  @Field var color: Double?
+  @Field var title: String?
+  @Field var snippet: String?
 }

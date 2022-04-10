@@ -82,9 +82,8 @@ export type PolylineProps = {
  *
  * See `PolylineProps` for more detail.
  */
-export type PolylineObject = {
+export type PolylineObject = PolylineProps & {
   type: 'polyline';
-  points: Point[];
 };
 
 /**

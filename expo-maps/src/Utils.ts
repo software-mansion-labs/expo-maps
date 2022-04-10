@@ -1,5 +1,5 @@
 import { Cluster } from './Cluster';
-import { Color } from './Common.types';
+import { MarkerColor, Color } from './Common.types';
 import { Marker } from './Marker';
 import { Polygon } from './Polygon';
 import { Polyline } from './Polyline';
@@ -115,8 +115,12 @@ export function isGeoJson(child: any): child is GeoJson {
   return false;
 }
 
-export function mapColor(color: Color): number {
-  const colors: Record<Color | 'default', number> = {
+export function isHexColor(color: any): color is Color {
+  return color.length > 0 && color[0] == '#';
+}
+
+export function mapColorToNativeMarkerColor(color: MarkerColor): number {
+  const colors: Record<MarkerColor | 'default', number> = {
     azure: 210,
     blue: 240,
     cyan: 180,
@@ -128,6 +132,34 @@ export function mapColor(color: Color): number {
     yellow: 60,
     red: 0,
     default: 0,
+  };
+
+  return colors[color] || colors['default'];
+}
+
+export function mapColorToHexColor(color: Color): string {
+  const colors: Record<Color | 'default', string> = {
+    red: '#ff0000',
+    blue: '#0000ff',
+    green: '#00ff00',
+    black: '#000000',
+    white: '#ffffff',
+    gray: '#808080',
+    cyan: '#00ffff',
+    magenta: '#ff00ff',
+    yellow: '#ffff00',
+    lightgray: '#d3d3d3',
+    darkgray: '#a9a9a9',
+    aqua: '#00ffff',
+    fuchsia: '#ca2c92',
+    lime: '#bfff00',
+    maroon: '#800000',
+    navy: '#000080',
+    olive: '#808000',
+    purple: '#800080',
+    silver: '#c0c0c0',
+    teal: '#008080',
+    default: '#000000',
   };
 
   return colors[color] || colors['default'];

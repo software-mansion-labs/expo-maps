@@ -108,9 +108,8 @@ export declare type PolygonProps = {
  *
  * See {@link PolygonProps} for more detail.
  */
-export declare type PolygonObject = {
+export declare type PolygonObject = PolygonProps & {
     type: 'polygon';
-    points: Point[];
 };
 /**
  * Polygon component of Expo Maps library.

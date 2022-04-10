@@ -80,9 +80,8 @@ export declare type PolylineProps = {
  *
  * See `PolylineProps` for more detail.
  */
-export declare type PolylineObject = {
+export declare type PolylineObject = PolylineProps & {
     type: 'polyline';
-    points: Point[];
 };
 /**
  * Represents a polyline on the map.

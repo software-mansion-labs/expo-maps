@@ -15,6 +15,23 @@ class GoogleMapsGeoJsons: GeoJsons {
     for geoJsonObject in geoJsonObjects {
       let geoJsonParser = GMUGeoJSONParser(data: geoJsonObject.geoJsonString.data(using: .utf8)!)
       geoJsonParser.parse()
+      
+//      for feature in geoJsonParser.features {
+//        let defaultStyle = GMUStyle()
+//        feature.style = GMUStyle(
+//          styleID: "defaultExpoMapsStyle",
+//          stroke: geoJsonObject.defaultStyle?.polygon?.strokeColor,
+//          fill: geoJsonObject.defaultStyle?.polygon?.fillColor,
+//          width: geoJsonObject.defaultStyle?.polygon?.strokeWidth != nil ? CGFloat(geoJsonObject.defaultStyle!.polygon!.strokeWidth!) : defaultStyle.width,
+//          scale: defaultStyle.scale,
+//          heading: defaultStyle.heading,
+//          anchor: defaultStyle.anchor,
+//          iconUrl: defaultStyle.iconUrl,
+//          title: geoJsonObject.defaultStyle?.marker?.title,
+//          hasFill: geoJsonObject.defaultStyle?.polygon?.fillColor != nil,
+//          hasStroke: geoJsonObject.defaultStyle?.polygon?.strokeColor != nil
+//        )
+//      }
 
       let renderer = GMUGeometryRenderer(
         map: mapView,

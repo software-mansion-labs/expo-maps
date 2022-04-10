@@ -34,7 +34,7 @@ export type PatternItem = {
   length: number;
 };
 
-export type Color =
+export type MarkerColor =
   | 'azure'
   | 'blue'
   | 'cyan'
@@ -45,3 +45,25 @@ export type Color =
   | 'rose'
   | 'violet'
   | 'yellow';
+
+export type Color =
+  | 'red'
+  | 'blue'
+  | 'green'
+  | 'black'
+  | 'white'
+  | 'gray'
+  | 'cyan'
+  | 'magenta'
+  | 'yellow'
+  | 'lightgray'
+  | 'darkgray'
+  | 'aqua'
+  | 'fuchsia'
+  | 'lime'
+  | 'maroon'
+  | 'navy'
+  | 'olive'
+  | 'purple'
+  | 'silver'
+  | 'teal';

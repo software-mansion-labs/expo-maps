@@ -64,7 +64,7 @@ export class ExpoMap extends React.Component {
                     return buildMarkerObject(child);
                 }
                 else if (Utils.isPolygon(child)) {
-                    return {
+                    const polygonObject = {
                         type: 'polygon',
                         points: child.props.points,
                         fillColor: child.props.fillColor,
@@ -73,9 +73,14 @@ export class ExpoMap extends React.Component {
                         strokePattern: child.props.strokePattern,
                         jointType: child.props.jointType,
                     };
+                    if (polygonObject.fillColor != undefined &&
+                        !Utils.isHexColor(polygonObject.fillColor)) {
+                        polygonObject.fillColor = Utils.mapColorToHexColor(polygonObject.fillColor);
+                    }
+                    return polygonObject;
                 }
                 else if (Utils.isPolyline(child)) {
-                    return {
+                    const polylineObject = {
                         type: 'polyline',
                         points: child.props.points,
                         color: child.props.color,
@@ -84,6 +89,11 @@ export class ExpoMap extends React.Component {
                         jointType: child.props.jointType,
                         capType: child.props.capType,
                     };
+                    if (polylineObject.color != undefined &&
+                        !Utils.isHexColor(polylineObject.color)) {
+                        polylineObject.color = Utils.mapColorToHexColor(polylineObject.color);
+                    }
+                    return polylineObject;
                 }
                 else if (Utils.isCircle(child)) {
                     return {
@@ -105,8 +115,24 @@ export class ExpoMap extends React.Component {
                 else if (Utils.isGeoJson(child)) {
                     if (child.props.defaultStyle?.marker?.color != undefined) {
                         if (typeof child.props.defaultStyle?.marker.color !== 'number') {
-                            child.props.defaultStyle.marker.color = Utils.mapColor(child.props.defaultStyle.marker.color);
+                            child.props.defaultStyle.marker.color =
+                                Utils.mapColorToNativeMarkerColor(child.props.defaultStyle.marker.color);
                         }
+                    }
+                    if (child.props.defaultStyle?.polygon?.fillColor != undefined &&
+                        !Utils.isHexColor(child.props.defaultStyle.polygon.fillColor)) {
+                        child.props.defaultStyle.polygon.fillColor =
+                            Utils.mapColorToHexColor(child.props.defaultStyle.polygon.fillColor);
+                    }
+                    if (child.props.defaultStyle?.polygon?.strokeColor != undefined &&
+                        !Utils.isHexColor(child.props.defaultStyle.polygon.strokeColor)) {
+                        child.props.defaultStyle.polygon.strokeColor =
+                            Utils.mapColorToHexColor(child.props.defaultStyle.polygon.strokeColor);
+                    }
+                    if (child.props.defaultStyle?.polyline?.color != undefined &&
+                        !Utils.isHexColor(child.props.defaultStyle.polyline.color)) {
+                        child.props.defaultStyle.polyline.color =
+                            Utils.mapColorToHexColor(child.props.defaultStyle.polyline.color);
                     }
                     return {
                         type: 'geojson',
@@ -154,7 +180,7 @@ export class ExpoMap extends React.Component {
                                 clusterObject.color = child.props.color;
                             }
                             else {
-                                clusterObject.color = Utils.mapColor(child.props.color);
+                                clusterObject.color = Utils.mapColorToNativeMarkerColor(child.props.color);
                             }
                         }
                         return clusterObject;
@@ -213,7 +239,7 @@ async function buildMarkerObject(child) {
             markerObject.color = child.props.color;
         }
         else {
-            markerObject.color = Utils.mapColor(child.props.color);
+            markerObject.color = Utils.mapColorToNativeMarkerColor(child.props.color);
         }
     }
     return markerObject;

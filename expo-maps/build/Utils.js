@@ -82,7 +82,10 @@ export function isGeoJson(child) {
     }
     return false;
 }
-export function mapColor(color) {
+export function isHexColor(color) {
+    return color.length > 0 && color[0] == '#';
+}
+export function mapColorToNativeMarkerColor(color) {
     const colors = {
         azure: 210,
         blue: 240,
@@ -95,6 +98,32 @@ export function mapColor(color) {
         yellow: 60,
         red: 0,
         default: 0,
+    };
+    return colors[color] || colors['default'];
+}
+export function mapColorToHexColor(color) {
+    const colors = {
+        red: '#ff0000',
+        blue: '#0000ff',
+        green: '#00ff00',
+        black: '#000000',
+        white: '#ffffff',
+        gray: '#808080',
+        cyan: '#00ffff',
+        magenta: '#ff00ff',
+        yellow: '#ffff00',
+        lightgray: '#d3d3d3',
+        darkgray: '#a9a9a9',
+        aqua: '#00ffff',
+        fuchsia: '#ca2c92',
+        lime: '#bfff00',
+        maroon: '#800000',
+        navy: '#000080',
+        olive: '#808000',
+        purple: '#800080',
+        silver: '#c0c0c0',
+        teal: '#008080',
+        default: '#000000',
     };
     return colors[color] || colors['default'];
 }
