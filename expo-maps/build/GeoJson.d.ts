@@ -30,10 +30,12 @@ export declare type GeoJsonProps = {
             strokeWidth?: number;
             /**
              * See {@link PolygonProps}
+             * Works only on `Android`.
              */
             strokeJointType?: 'bevel' | 'miter' | 'round';
             /**
              * See {@link PolygonProps}
+             * Works only on `Android`.
              */
             strokePattern?: PatternItem[];
         };
@@ -47,23 +49,33 @@ export declare type GeoJsonProps = {
             color?: string | Color;
             /**
              * See {@link PolylineProps}
+             * Works only on `Android`.
              */
             pattern?: PatternItem[];
+            /**
+             * See {@link PolylineProps}
+             * Works only on `iOS`.
+             */
+            width?: number;
         };
         /**
          * Default style for `Point` GeoJSON feature
+         * Works only on `Android`.
          */
         marker?: {
             /**
              * See {@link MarkerProps}
+             * Works only on `Android`.
              */
             color?: number | MarkerColor;
             /**
              * See {@link MarkerProps}
+             * Works only on `Android`.
              */
             title?: string;
             /**
              * See {@link MarkerProps}
+             * Works only on `Android`.
              */
             snippet?: string;
         };

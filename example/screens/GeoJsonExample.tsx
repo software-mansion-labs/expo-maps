@@ -13,10 +13,16 @@ export default function GeoJsonExample() {
           geoJsonString={JSON.stringify(require('../assets/sample.geo.json'))}
           defaultStyle={{
             polygon: {
-              fillColor: 'gray',
+              fillColor: 'red',
+              strokeColor: 'yellow',
+              strokeWidth: 5,
             },
             marker: {
               color: 'azure',
+            },
+            polyline: {
+              color: 'magenta',
+              width: 10,
             },
           }}
         />

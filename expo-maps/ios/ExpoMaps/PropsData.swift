@@ -103,7 +103,7 @@ struct GeoJsonObject: Record {
 struct GeoJsonObjectDefaultStyle: Record {
   @Field var marker: GeoJsonObjectDefaultStyleMarker?
   @Field var polygon: GeoJsonObjectDefaultStylePolygon?
-//  @Field var polyline: GeoJsonObjectDefaultStylePolyline?
+  @Field var polyline: GeoJsonObjectDefaultStylePolyline?
 }
 
 struct GeoJsonObjectDefaultStylePolygon: Record {
@@ -116,11 +116,12 @@ struct GeoJsonObjectDefaultStylePolygon: Record {
 
 struct GeoJsonObjectDefaultStylePolyline: Record {
   @Field var color: UIColor?
+  @Field var width: Double?
   @Field var pattern: [PatternItem]?
 }
 
 struct GeoJsonObjectDefaultStyleMarker: Record {
-  @Field var color: Double?
+  @Field var color: Double = 0
   @Field var title: String?
   @Field var snippet: String?
 }
