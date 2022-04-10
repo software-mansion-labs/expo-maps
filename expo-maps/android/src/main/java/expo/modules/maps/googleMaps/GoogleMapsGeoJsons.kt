@@ -119,7 +119,7 @@ class GoogleMapsGeoJsons(private val map: GoogleMap) : GeoJsons {
       }
       geoJsonObject.defaultStyle.marker.color?.let {
         defaultMarkerStyle.icon = BitmapDescriptorFactory
-          .defaultMarker(colorStringToHueFloat(it))
+          .defaultMarker(it)
       }
     }
 

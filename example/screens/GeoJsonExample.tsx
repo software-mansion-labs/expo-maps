@@ -15,6 +15,9 @@ export default function GeoJsonExample() {
             polygon: {
               fillColor: 'magenta',
             },
+            marker: {
+              color: 'azure',
+            },
           }}
         />
       </Maps.ExpoMap>

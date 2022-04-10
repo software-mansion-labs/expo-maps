@@ -1,5 +1,5 @@
 import React from 'react';
-import { PatternItem } from './Common.types';
+import { Color, PatternItem } from './Common.types';
 /**
  * GeoJson specific props.
  */
@@ -21,7 +21,7 @@ export declare type GeoJsonProps = {
             pattern?: PatternItem[];
         };
         marker?: {
-            color?: string;
+            color?: number | Color;
             title?: string;
             snippet?: string;
         };
@@ -34,7 +34,25 @@ export declare type GeoJsonProps = {
  */
 export declare type GeoJsonObject = {
     type: 'geojson';
-} & GeoJsonProps;
+    defaultStyle?: {
+        polygon?: {
+            fillColor?: string;
+            strokeColor?: string;
+            strokeWidth?: number;
+            strokeJointType?: 'bevel' | 'miter' | 'round';
+            strokePattern?: PatternItem[];
+        };
+        polyline?: {
+            color?: string;
+            pattern?: PatternItem[];
+        };
+        marker?: {
+            color?: number;
+            title?: string;
+            snippet?: string;
+        };
+    };
+} & Omit<GeoJsonProps, 'defaultStyle'>;
 /**
  * GeoJSON component of Expo Maps library.
  *

@@ -133,7 +133,7 @@ data class GeoJsonObjectDefaultStylePolyline(
 ) : Record
 
 data class GeoJsonObjectDefaultStyleMarker(
-  @Field val color: String?,
+  @Field val color: Float?,
   @Field val title: String?,
   @Field val snippet: String?
 ) : Record

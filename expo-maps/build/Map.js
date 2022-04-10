@@ -103,6 +103,11 @@ export class ExpoMap extends React.Component {
                     };
                 }
                 else if (Utils.isGeoJson(child)) {
+                    if (child.props.defaultStyle?.marker?.color != undefined) {
+                        if (typeof child.props.defaultStyle?.marker.color !== 'number') {
+                            child.props.defaultStyle.marker.color = Utils.mapColor(child.props.defaultStyle.marker.color);
+                        }
+                    }
                     return {
                         type: 'geojson',
                         geoJsonString: child.props.geoJsonString,
