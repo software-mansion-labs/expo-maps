@@ -9,4 +9,5 @@ interface ExpoMapView {
   fun setClusters(clusterObjects: Array<ClusterObject>)
   fun setEnabledTraffic(enableTraffic: Boolean)
   fun setKMLs(kmlObjects: Array<KMLObject>)
+  fun setInitialCameraPosition(initialCameraPosition: CameraPosition)
 }

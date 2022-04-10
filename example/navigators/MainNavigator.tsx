@@ -19,7 +19,8 @@ export type ExamplesStackNavigatorProps = {
   'Google Maps Styling': undefined;
   Gestures: undefined;
   'Map Types': undefined;
-  'Camera Position': undefined;
+  Traffic: undefined;
+  KML: undefined;
 };
 
 const ExamplesStackNavigator =

@@ -12,6 +12,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let polylines: GoogleMapsPolylines
   private let circles: GoogleMapsCircles
   private let kmls: GoogleMapsKMLs
+  private var wasInitialCameraPositionSet = false
 
   init() {
     // just for now we do authentication here
@@ -122,12 +123,15 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     polygons.updateStrokePatterns()
   }
   
-  func setCameraPosition(cameraPosition: CameraPosition) {
-    let newCameraPosition = GMSCameraPosition(latitude: cameraPosition.latitude, longitude: cameraPosition.longitude, zoom: Float(cameraPosition.zoom))
-    if (cameraPosition.animate) {
-      mapView.animate(to: newCameraPosition)
-    } else {
-      mapView.camera = newCameraPosition
+  func setInitialCameraPosition(initialCameraPosition: CameraPosition) {
+    if (!wasInitialCameraPositionSet) {
+      let newCameraPosition = GMSCameraPosition(latitude: initialCameraPosition.latitude, longitude: initialCameraPosition.longitude, zoom: Float(initialCameraPosition.zoom))
+      if (initialCameraPosition.animate) {
+        mapView.animate(to: newCameraPosition)
+      } else {
+        mapView.camera = newCameraPosition
+      }
+      wasInitialCameraPositionSet = true
     }
   }
     

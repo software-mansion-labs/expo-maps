@@ -26,6 +26,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var circles: GoogleMapsCircles
   private lateinit var kmls: GoogleMapsKMLs
   private val mapReady = MutableStateFlow(false)
+  private var wasInitialCameraPositionSet = false
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
@@ -162,17 +163,20 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   }
 
 
-  fun setCameraPosition(cameraPosition: CameraPosition) {
-    updateMap {
-      val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-        LatLng(cameraPosition.latitude, cameraPosition.longitude),
-        cameraPosition.zoom.toFloat()
-      )
-      if (cameraPosition.animate) {
-        googleMap.animateCamera(cameraUpdate)
-      } else {
-        googleMap.moveCamera(cameraUpdate)
+  override fun setInitialCameraPosition(initialCameraPosition: CameraPosition) {
+    if (!wasInitialCameraPositionSet) {
+      updateMap {
+        val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+          LatLng(initialCameraPosition.latitude, initialCameraPosition.longitude),
+          initialCameraPosition.zoom.toFloat()
+        )
+        if (initialCameraPosition.animate) {
+          googleMap.animateCamera(cameraUpdate)
+        } else {
+          googleMap.moveCamera(cameraUpdate)
+        }
       }
+      wasInitialCameraPositionSet = true
     }
   }
 

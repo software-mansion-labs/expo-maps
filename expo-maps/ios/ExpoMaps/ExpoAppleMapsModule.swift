@@ -62,8 +62,8 @@ public class ExpoAppleMapsModule: Module {
         view.setCircles(circleObjects: circleObjects)
       }
       
-      prop("cameraPosition") { (view: AppleMapsView, cameraPosition: CameraPosition) in
-        view.setCameraPosition(cameraPosition: cameraPosition)
+      prop("initialCameraPosition") { (view: AppleMapsView, cameraPosition: CameraPosition) in
+        view.setInitialCameraPosition(initialCameraPosition: cameraPosition)
       }
       
       prop("enableTraffic") { (view: AppleMapsView, enable: Bool) in

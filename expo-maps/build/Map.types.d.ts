@@ -179,9 +179,15 @@ export declare type CameraPosition = {
     /**
      * Camera position object
      *
-     * @default London
+     * @default
+     * {
+     *   latitude: 51.51,
+     *   longitude: 0.13,
+     *   zoom: 4,
+     *   animate: true,
+     * }
      */
-    cameraPosition: Point & {
+    initialCameraPosition: Point & {
         /**
          * Zoom level. Number from range 1-22.
          */

@@ -10,6 +10,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let polygons: AppleMapsPolygons
   private let polylines: AppleMapsPolylines
   private let circles: AppleMapsCircles
+  private var wasInitialCameraPositionSet = false
 
   init() {
     mapView = MKMapView()
@@ -94,9 +95,12 @@ public final class AppleMapsView: UIView, ExpoMapView {
     circles.setCircles(circleObjects: circleObjects)
   }
   
-  func setCameraPosition(cameraPosition: CameraPosition) {
-    let camera = MKMapCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: cameraPosition.latitude, longitude: cameraPosition.longitude), fromDistance: googleMapsZoomLevelToMeters(latitude: cameraPosition.latitude, zoom: cameraPosition.zoom), pitch: 0, heading: CLLocationDirection())
-    mapView.setCamera(camera, animated: cameraPosition.animate)
+  func setInitialCameraPosition(initialCameraPosition: CameraPosition) {
+    if (!wasInitialCameraPositionSet) {
+      let camera = MKMapCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: initialCameraPosition.latitude, longitude: initialCameraPosition.longitude), fromDistance: googleMapsZoomLevelToMeters(latitude: initialCameraPosition.latitude, zoom: initialCameraPosition.zoom), pitch: 0, heading: CLLocationDirection())
+      mapView.setCamera(camera, animated: initialCameraPosition.animate)
+      wasInitialCameraPositionSet = true
+    }
   }
   
   func setEnabledTraffic(enableTraffic: Bool) {
