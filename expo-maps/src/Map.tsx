@@ -17,7 +17,7 @@ import { PolylineObject } from './Polyline';
 import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
 import { KMLObject } from './KML';
-import { GeoJsonObject } from './GeoJson';
+import { GeoJson, GeoJsonObject } from './GeoJson';
 import { Color } from './Common.types';
 
 export { Marker } from './Marker';
@@ -143,50 +143,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
               filePath: filePath.localUri,
             } as KMLObject;
           } else if (Utils.isGeoJson(child)) {
-            if (child.props.defaultStyle?.marker?.color != undefined) {
-              if (typeof child.props.defaultStyle?.marker.color !== 'number') {
-                child.props.defaultStyle.marker.color =
-                  Utils.mapColorToNativeMarkerColor(
-                    child.props.defaultStyle.marker.color
-                  );
-              }
-            }
-
-            if (
-              child.props.defaultStyle?.polygon?.fillColor != undefined &&
-              !Utils.isHexColor(child.props.defaultStyle.polygon.fillColor)
-            ) {
-              child.props.defaultStyle.polygon.fillColor =
-                Utils.mapColorToHexColor(
-                  child.props.defaultStyle.polygon.fillColor as Color
-                );
-            }
-
-            if (
-              child.props.defaultStyle?.polygon?.strokeColor != undefined &&
-              !Utils.isHexColor(child.props.defaultStyle.polygon.strokeColor)
-            ) {
-              child.props.defaultStyle.polygon.strokeColor =
-                Utils.mapColorToHexColor(
-                  child.props.defaultStyle.polygon.strokeColor as Color
-                );
-            }
-
-            if (
-              child.props.defaultStyle?.polyline?.color != undefined &&
-              !Utils.isHexColor(child.props.defaultStyle.polyline.color)
-            ) {
-              child.props.defaultStyle.polyline.color =
-                Utils.mapColorToHexColor(
-                  child.props.defaultStyle.polyline.color as Color
-                );
-            }
-
-            return {
-              type: 'geojson',
-              geoJsonString: child.props.geoJsonString,
-              defaultStyle: child.props.defaultStyle,
-            } as GeoJsonObject;
+            return buildGeoJsonObject(child);
           } else if (Utils.isCluster(child)) {
             const clusterChildrenArray = React.Children.map(
               child.props.children,
@@ -304,6 +261,49 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
       />
     );
   }
+}
+
+function buildGeoJsonObject(child: GeoJson): GeoJsonObject {
+  if (child.props.defaultStyle?.marker?.color != undefined) {
+    if (typeof child.props.defaultStyle?.marker.color !== 'number') {
+      child.props.defaultStyle.marker.color = Utils.mapColorToNativeMarkerColor(
+        child.props.defaultStyle.marker.color
+      );
+    }
+  }
+
+  if (
+    child.props.defaultStyle?.polygon?.fillColor != undefined &&
+    !Utils.isHexColor(child.props.defaultStyle.polygon.fillColor)
+  ) {
+    child.props.defaultStyle.polygon.fillColor = Utils.mapColorToHexColor(
+      child.props.defaultStyle.polygon.fillColor as Color
+    );
+  }
+
+  if (
+    child.props.defaultStyle?.polygon?.strokeColor != undefined &&
+    !Utils.isHexColor(child.props.defaultStyle.polygon.strokeColor)
+  ) {
+    child.props.defaultStyle.polygon.strokeColor = Utils.mapColorToHexColor(
+      child.props.defaultStyle.polygon.strokeColor as Color
+    );
+  }
+
+  if (
+    child.props.defaultStyle?.polyline?.color != undefined &&
+    !Utils.isHexColor(child.props.defaultStyle.polyline.color)
+  ) {
+    child.props.defaultStyle.polyline.color = Utils.mapColorToHexColor(
+      child.props.defaultStyle.polyline.color as Color
+    );
+  }
+
+  return {
+    type: 'geojson',
+    geoJsonString: child.props.geoJsonString,
+    defaultStyle: child.props.defaultStyle,
+  } as GeoJsonObject;
 }
 
 async function buildMarkerObject(child: Marker): Promise<MarkerObject> {

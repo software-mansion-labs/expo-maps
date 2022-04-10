@@ -113,32 +113,7 @@ export class ExpoMap extends React.Component {
                     };
                 }
                 else if (Utils.isGeoJson(child)) {
-                    if (child.props.defaultStyle?.marker?.color != undefined) {
-                        if (typeof child.props.defaultStyle?.marker.color !== 'number') {
-                            child.props.defaultStyle.marker.color =
-                                Utils.mapColorToNativeMarkerColor(child.props.defaultStyle.marker.color);
-                        }
-                    }
-                    if (child.props.defaultStyle?.polygon?.fillColor != undefined &&
-                        !Utils.isHexColor(child.props.defaultStyle.polygon.fillColor)) {
-                        child.props.defaultStyle.polygon.fillColor =
-                            Utils.mapColorToHexColor(child.props.defaultStyle.polygon.fillColor);
-                    }
-                    if (child.props.defaultStyle?.polygon?.strokeColor != undefined &&
-                        !Utils.isHexColor(child.props.defaultStyle.polygon.strokeColor)) {
-                        child.props.defaultStyle.polygon.strokeColor =
-                            Utils.mapColorToHexColor(child.props.defaultStyle.polygon.strokeColor);
-                    }
-                    if (child.props.defaultStyle?.polyline?.color != undefined &&
-                        !Utils.isHexColor(child.props.defaultStyle.polyline.color)) {
-                        child.props.defaultStyle.polyline.color =
-                            Utils.mapColorToHexColor(child.props.defaultStyle.polyline.color);
-                    }
-                    return {
-                        type: 'geojson',
-                        geoJsonString: child.props.geoJsonString,
-                        defaultStyle: child.props.defaultStyle,
-                    };
+                    return buildGeoJsonObject(child);
                 }
                 else if (Utils.isCluster(child)) {
                     const clusterChildrenArray = React.Children.map(child.props.children, async (clusterChild) => {
@@ -215,6 +190,30 @@ export class ExpoMap extends React.Component {
                 ? this.props.googleMapsJsonStyleString
                 : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons }));
     }
+}
+function buildGeoJsonObject(child) {
+    if (child.props.defaultStyle?.marker?.color != undefined) {
+        if (typeof child.props.defaultStyle?.marker.color !== 'number') {
+            child.props.defaultStyle.marker.color = Utils.mapColorToNativeMarkerColor(child.props.defaultStyle.marker.color);
+        }
+    }
+    if (child.props.defaultStyle?.polygon?.fillColor != undefined &&
+        !Utils.isHexColor(child.props.defaultStyle.polygon.fillColor)) {
+        child.props.defaultStyle.polygon.fillColor = Utils.mapColorToHexColor(child.props.defaultStyle.polygon.fillColor);
+    }
+    if (child.props.defaultStyle?.polygon?.strokeColor != undefined &&
+        !Utils.isHexColor(child.props.defaultStyle.polygon.strokeColor)) {
+        child.props.defaultStyle.polygon.strokeColor = Utils.mapColorToHexColor(child.props.defaultStyle.polygon.strokeColor);
+    }
+    if (child.props.defaultStyle?.polyline?.color != undefined &&
+        !Utils.isHexColor(child.props.defaultStyle.polyline.color)) {
+        child.props.defaultStyle.polyline.color = Utils.mapColorToHexColor(child.props.defaultStyle.polyline.color);
+    }
+    return {
+        type: 'geojson',
+        geoJsonString: child.props.geoJsonString,
+        defaultStyle: child.props.defaultStyle,
+    };
 }
 async function buildMarkerObject(child) {
     let iconPath = undefined;
