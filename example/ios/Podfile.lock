@@ -512,7 +512,7 @@ SPEC CHECKSUMS:
   ExpoMaps: fc3bd829f44a65a6d949f6f687942abc8ee2bf7e
   ExpoModulesCore: 5ee50e40092c569518fe06977be5e747228c652a
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: ed60192ff902c73f373ab8e99f67bf99220ebd76
+  FBReactNativeSpec: 425c84a81fa471c0f0a966186a1f76e5487cba74
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   Google-Maps-iOS-Utils: 3343332b18dfd5be8f1f44edd7d481ace3da4d9a
   GoogleMaps: 750f237920fa44dd32de0c0d2004d35cb2c688f3
@@ -546,6 +546,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 3184c93ecc290bd422c6e344badc89b601e9c29b
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
-PODFILE CHECKSUM: a6caf627026b910c1dcd9c17d213d56affaea1a5
+PODFILE CHECKSUM: a84f4fe0f9ce12f263f60b605cadd2ebd6ac7fba
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
