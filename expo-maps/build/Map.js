@@ -21,7 +21,7 @@ const defaultNativeExpoMapViewProps = {
     enableScrollGestures: true,
     enableTiltGestures: false,
     enableZoomGestures: true,
-    cameraPosition: {
+    initialCameraPosition: {
         latitude: 51.51,
         longitude: 0.13,
         zoom: 4,

@@ -6,7 +6,6 @@ import PolygonsExample from '../screens/PolygonsExample';
 import PolylinesExample from '../screens/PolylinesExample';
 import CirclesExample from '../screens/CirclesExample';
 import MapTypesExample from '../screens/MapTypesExample';
-import CameraPositionExample from '../screens/CameraPositionExample';
 import TrafficExample from '../screens/TrafficExample';
 import KMLExample from '../screens/KMLExample';
 import GeoJsonExample from '../screens/GeoJsonExample';
@@ -22,7 +21,6 @@ interface ConcreteExampleScreen {
     | 'Google Maps Styling'
     | 'Gestures'
     | 'Map Types'
-    | 'Camera Position'
     | 'Traffic'
     | 'KML'
     | 'GeoJson';
@@ -61,10 +59,6 @@ export const CONCRETE_EXAMPLE_SCREENS: Array<ConcreteExampleScreen> = [
   {
     name: 'Map Types',
     screen: MapTypesExample,
-  },
-  {
-    name: 'Camera Position',
-    screen: CameraPositionExample,
   },
   {
     name: 'Traffic',
