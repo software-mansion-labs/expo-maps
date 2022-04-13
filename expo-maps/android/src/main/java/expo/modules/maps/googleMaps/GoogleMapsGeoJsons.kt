@@ -36,34 +36,34 @@ class GoogleMapsGeoJsons(private val map: GoogleMap) : GeoJsons {
   private fun setPolygonFeatureStyle(feature: GeoJsonFeature, layer: GeoJsonLayer) {
     val polygonStyle = GeoJsonPolygonStyle()
 
-    if (feature.hasProperty("strokeColor")) {
-      polygonStyle.strokeColor = colorStringToARGBInt(feature.getProperty("strokeColor"))
+    polygonStyle.strokeColor = if (feature.hasProperty("strokeColor")) {
+       colorStringToARGBInt(feature.getProperty("strokeColor"))
     } else {
-      polygonStyle.strokeColor = layer.defaultPolygonStyle.strokeColor
+      layer.defaultPolygonStyle.strokeColor
     }
 
-    if (feature.hasProperty("fillColor")) {
-      polygonStyle.fillColor = colorStringToARGBInt(feature.getProperty("fillColor"))
+    polygonStyle.fillColor = if (feature.hasProperty("fillColor")) {
+      colorStringToARGBInt(feature.getProperty("fillColor"))
     } else {
-      polygonStyle.fillColor = layer.defaultPolygonStyle.fillColor
+      layer.defaultPolygonStyle.fillColor
     }
 
-    if (feature.hasProperty("strokeWidth")) {
-      polygonStyle.strokeWidth = feature.getProperty("strokeWidth").toFloat()
+    polygonStyle.strokeWidth = if (feature.hasProperty("strokeWidth")) {
+      feature.getProperty("strokeWidth").toFloat()
     } else {
-      polygonStyle.strokeWidth = layer.defaultPolygonStyle.strokeWidth
+      layer.defaultPolygonStyle.strokeWidth
     }
 
-    if (feature.hasProperty("strokeJointType")) {
-      polygonStyle.strokeJointType = jointTypeStringToInt(feature.getProperty("strokeJointType"))
+    polygonStyle.strokeJointType = if (feature.hasProperty("strokeJointType")) {
+      jointTypeStringToInt(feature.getProperty("strokeJointType"))
     } else {
-      polygonStyle.strokeJointType = layer.defaultPolygonStyle.strokeJointType
+      layer.defaultPolygonStyle.strokeJointType
     }
 
-    if (feature.hasProperty("strokePattern")) {
-      polygonStyle.strokePattern = patternItemStringToGoogleMapsPatternItemList(feature.getProperty("strokePattern"))
+    polygonStyle.strokePattern = if (feature.hasProperty("strokePattern")) {
+      patternItemStringToGoogleMapsPatternItemList(feature.getProperty("strokePattern"))
     } else {
-      polygonStyle.strokePattern= layer.defaultPolygonStyle.strokePattern
+      layer.defaultPolygonStyle.strokePattern
     }
     feature.polygonStyle = polygonStyle
   }
@@ -71,39 +71,39 @@ class GoogleMapsGeoJsons(private val map: GoogleMap) : GeoJsons {
   private fun setPolylineFeatureStyle(feature: GeoJsonFeature, layer: GeoJsonLayer) {
     val polylineStyle = GeoJsonLineStringStyle()
 
-    if (feature.hasProperty("color")) {
-      polylineStyle.color = colorStringToARGBInt(feature.getProperty("color"))
+    polylineStyle.color = if (feature.hasProperty("color")) {
+      colorStringToARGBInt(feature.getProperty("color"))
     } else {
-      polylineStyle.color = layer.defaultLineStringStyle.color
+      layer.defaultLineStringStyle.color
     }
 
-    if (feature.hasProperty("pattern")) {
-      polylineStyle.pattern = patternItemStringToGoogleMapsPatternItemList(feature.getProperty("pattern"))
+    polylineStyle.pattern = if (feature.hasProperty("pattern")) {
+      patternItemStringToGoogleMapsPatternItemList(feature.getProperty("pattern"))
     } else {
-      polylineStyle.pattern = layer.defaultLineStringStyle.pattern
+      layer.defaultLineStringStyle.pattern
     }
     feature.lineStringStyle = polylineStyle
   }
 
   private fun setMarkerFeatureStyle(feature: GeoJsonFeature, layer: GeoJsonLayer) {
     val markerStyle = GeoJsonPointStyle()
-    if (feature.hasProperty("title")) {
-      markerStyle.title = feature.getProperty("title")
+    markerStyle.title = if (feature.hasProperty("title")) {
+      feature.getProperty("title")
     } else {
-      markerStyle.title = layer.defaultPointStyle.title
+      layer.defaultPointStyle.title
     }
 
-    if (feature.hasProperty("snippet")) {
-      markerStyle.snippet = feature.getProperty("snippet")
+    markerStyle.snippet = if (feature.hasProperty("snippet")) {
+      feature.getProperty("snippet")
     } else {
-      markerStyle.snippet = layer.defaultPointStyle.snippet
+      layer.defaultPointStyle.snippet
     }
 
-    if (feature.hasProperty("color")) {
-      markerStyle.icon = BitmapDescriptorFactory
+    markerStyle.icon = if (feature.hasProperty("color")) {
+      BitmapDescriptorFactory
         .defaultMarker(colorStringToHueFloat(feature.getProperty("color")))
     } else {
-      markerStyle.icon = layer.defaultPointStyle.icon
+      layer.defaultPointStyle.icon
     }
     feature.pointStyle = markerStyle
   }
