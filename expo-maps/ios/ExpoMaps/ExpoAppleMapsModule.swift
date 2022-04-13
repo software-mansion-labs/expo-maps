@@ -70,8 +70,8 @@ public class ExpoAppleMapsModule: Module {
         view.setEnabledTraffic(enableTraffic: enable)
       }
       
-      prop("geojsons") { (view: GoogleMapsView, geoJsonObjects: [GeoJsonObject]) in
-        
+      prop("geojsons") { (view: AppleMapsView, geoJsonObjects: [GeoJsonObject]) in
+        view.setGeoJsons(geoJsonObjects: geoJsonObjects)
       }
     }
   }

@@ -10,6 +10,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let polygons: AppleMapsPolygons
   private let polylines: AppleMapsPolylines
   private let circles: AppleMapsCircles
+  private let geoJsons: AppleMapsGeoJsons
   private var wasInitialCameraPositionSet = false
 
   init() {
@@ -24,6 +25,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
     polygons = AppleMapsPolygons(mapView: mapView)
     polylines = AppleMapsPolylines(mapView: mapView)
     circles = AppleMapsCircles(mapView: mapView)
+    geoJsons = AppleMapsGeoJsons(mapView: mapView)
 
     super.init(frame: CGRect.zero)
     addSubview(mapView)
@@ -112,7 +114,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   }
   
   func setGeoJsons(geoJsonObjects: [GeoJsonObject]) {
-    
+    geoJsons.setGeoJsons(geoJsonObjects: geoJsonObjects)
   }
   
   // imitating Google Maps zoom level behaviour
