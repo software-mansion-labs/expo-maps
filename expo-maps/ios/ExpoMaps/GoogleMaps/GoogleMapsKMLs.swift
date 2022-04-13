@@ -11,10 +11,7 @@ class GoogleMapsKMLs: KMLs {
   }
 
   func setKMLs(kmlObjects: [KMLObject]) {
-    for renderer in renderers {
-      renderer.clear()
-    }
-    renderers = []
+    deleteKMLs()
     
     for kmlObject in kmlObjects {
       let url = URL(fileURLWithPath: kmlObject.filePath)
@@ -30,5 +27,12 @@ class GoogleMapsKMLs: KMLs {
       renderer.render()
       renderers.append(renderer)
     }
+  }
+  
+  private func deleteKMLs() {
+    for renderer in renderers {
+      renderer.clear()
+    }
+    renderers = []
   }
 }

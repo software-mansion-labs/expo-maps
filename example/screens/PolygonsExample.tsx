@@ -24,7 +24,7 @@ export default function PolygonsExample() {
             { latitude: 44, longitude: 22 },
           ]}
           strokeWidth={4}
-          fillColor={'#00FF0080'}
+          fillColor={'purple'}
           strokeColor={'#FF0000'}
         />
         <Maps.Polygon

@@ -19,7 +19,29 @@ export declare type PolylineProps = {
      * * `'#RRGGBBAA'`
      * * `'#RGB'`
      * * `'#RGBA'`
-     * @default '#000'
+     * * RGBA Ints
+     * * 'red'
+     * * 'blue'
+     * * 'green'
+     * * 'black'
+     * * 'white'
+     * * 'gray'
+     * * 'cyan'
+     * * 'magenta'
+     * * 'yellow'
+     * * 'lightgray'
+     * * 'darkgray'
+     * * 'grey'
+     * * 'aqua'
+     * * 'fuchsia'
+     * * 'lime'
+     * * 'maroon'
+     * * 'navy'
+     * * 'olive'
+     * * 'purple'
+     * * 'silver'
+     * * 'teal'
+     * @default 'black'
      */
     color?: string;
     /**
@@ -58,9 +80,8 @@ export declare type PolylineProps = {
  *
  * See `PolylineProps` for more detail.
  */
-export declare type PolylineObject = {
+export declare type PolylineObject = PolylineProps & {
     type: 'polyline';
-    points: Point[];
 };
 /**
  * Represents a polyline on the map.

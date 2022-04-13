@@ -9,6 +9,7 @@ export { Polyline } from './Polyline';
 export { Circle } from './Circle';
 export { Cluster } from './Cluster';
 export { KML } from './KML';
+export { GeoJson } from './GeoJson';
 const defaultNativeExpoMapViewProps = {
     mapType: 'normal',
     showZoomControls: true,
@@ -41,6 +42,7 @@ export class ExpoMap extends React.Component {
         circles: [],
         clusters: [],
         kmls: [],
+        geojsons: [],
     };
     _ismounted = false;
     componentDidMount() {
@@ -62,7 +64,7 @@ export class ExpoMap extends React.Component {
                     return buildMarkerObject(child);
                 }
                 else if (Utils.isPolygon(child)) {
-                    return {
+                    const polygonObject = {
                         type: 'polygon',
                         points: child.props.points,
                         fillColor: child.props.fillColor,
@@ -71,9 +73,14 @@ export class ExpoMap extends React.Component {
                         strokePattern: child.props.strokePattern,
                         jointType: child.props.jointType,
                     };
+                    if (polygonObject.fillColor != undefined &&
+                        !Utils.isHexColor(polygonObject.fillColor)) {
+                        polygonObject.fillColor = Utils.mapColorToHexColor(polygonObject.fillColor);
+                    }
+                    return polygonObject;
                 }
                 else if (Utils.isPolyline(child)) {
-                    return {
+                    const polylineObject = {
                         type: 'polyline',
                         points: child.props.points,
                         color: child.props.color,
@@ -82,6 +89,11 @@ export class ExpoMap extends React.Component {
                         jointType: child.props.jointType,
                         capType: child.props.capType,
                     };
+                    if (polylineObject.color != undefined &&
+                        !Utils.isHexColor(polylineObject.color)) {
+                        polylineObject.color = Utils.mapColorToHexColor(polylineObject.color);
+                    }
+                    return polylineObject;
                 }
                 else if (Utils.isCircle(child)) {
                     return {
@@ -99,6 +111,9 @@ export class ExpoMap extends React.Component {
                         type: 'kml',
                         filePath: filePath.localUri,
                     };
+                }
+                else if (Utils.isGeoJson(child)) {
+                    return buildGeoJsonObject(child);
                 }
                 else if (Utils.isCluster(child)) {
                     const clusterChildrenArray = React.Children.map(child.props.children, async (clusterChild) => {
@@ -140,7 +155,7 @@ export class ExpoMap extends React.Component {
                                 clusterObject.color = child.props.color;
                             }
                             else {
-                                clusterObject.color = Utils.mapColor(child.props.color);
+                                clusterObject.color = Utils.mapColorToNativeMarkerColor(child.props.color);
                             }
                         }
                         return clusterObject;
@@ -162,18 +177,43 @@ export class ExpoMap extends React.Component {
                     circles: propObjects.filter((elem) => elem?.type === 'circle'),
                     clusters: propObjects.filter((elem) => elem?.type === 'cluster'),
                     kmls: propObjects.filter((elem) => elem?.type === 'kml'),
+                    geojsons: propObjects.filter((elem) => elem?.type === 'geojson'),
                 });
             }
         }
     }
     render() {
         if (Platform.OS == 'ios' && this.props.provider == 'apple') {
-            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters }));
+            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, geojsons: this.state.geojsons }));
         }
         return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString
                 ? this.props.googleMapsJsonStyleString
-                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls }));
+                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons }));
     }
+}
+function buildGeoJsonObject(child) {
+    if (child.props.defaultStyle?.marker?.color != undefined) {
+        if (typeof child.props.defaultStyle?.marker.color !== 'number') {
+            child.props.defaultStyle.marker.color = Utils.mapColorToNativeMarkerColor(child.props.defaultStyle.marker.color);
+        }
+    }
+    if (child.props.defaultStyle?.polygon?.fillColor != undefined &&
+        !Utils.isHexColor(child.props.defaultStyle.polygon.fillColor)) {
+        child.props.defaultStyle.polygon.fillColor = Utils.mapColorToHexColor(child.props.defaultStyle.polygon.fillColor);
+    }
+    if (child.props.defaultStyle?.polygon?.strokeColor != undefined &&
+        !Utils.isHexColor(child.props.defaultStyle.polygon.strokeColor)) {
+        child.props.defaultStyle.polygon.strokeColor = Utils.mapColorToHexColor(child.props.defaultStyle.polygon.strokeColor);
+    }
+    if (child.props.defaultStyle?.polyline?.color != undefined &&
+        !Utils.isHexColor(child.props.defaultStyle.polyline.color)) {
+        child.props.defaultStyle.polyline.color = Utils.mapColorToHexColor(child.props.defaultStyle.polyline.color);
+    }
+    return {
+        type: 'geojson',
+        geoJsonString: child.props.geoJsonString,
+        defaultStyle: child.props.defaultStyle,
+    };
 }
 async function buildMarkerObject(child) {
     let iconPath = undefined;
@@ -198,7 +238,7 @@ async function buildMarkerObject(child) {
             markerObject.color = child.props.color;
         }
         else {
-            markerObject.color = Utils.mapColor(child.props.color);
+            markerObject.color = Utils.mapColorToNativeMarkerColor(child.props.color);
         }
     }
     return markerObject;

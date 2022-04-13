@@ -111,6 +111,10 @@ public final class AppleMapsView: UIView, ExpoMapView {
     
   }
   
+  func setGeoJsons(geoJsonObjects: [GeoJsonObject]) {
+    
+  }
+  
   // imitating Google Maps zoom level behaviour
   // based on https://gis.stackexchange.com/questions/7430/what-ratio-scales-do-google-maps-zoom-levels-correspond-to
   private func googleMapsZoomLevelToMeters(latitude: Double, zoom: Double) -> Double {

@@ -77,6 +77,10 @@ public class ExpoGoogleMapsModule: Module {
       prop("kmls") { (view: GoogleMapsView, kmlObjects: [KMLObject]) in
         view.setKMLs(kmlObjects: kmlObjects)
       }
+      
+      prop("geojsons") { (view: GoogleMapsView, geoJsonObjects: [GeoJsonObject]) in
+        view.setGeoJsons(geoJsonObjects: geoJsonObjects)
+      }
     }
   }
 }

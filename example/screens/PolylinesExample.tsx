@@ -26,7 +26,7 @@ export default function PolylinesExample() {
             { type: 'stroke', length: 0 },
             { type: 'gap', length: 10 },
           ]}
-          color={'#00FF00A0'}
+          color="red"
           capType="butt"
         />
       </Maps.ExpoMap>

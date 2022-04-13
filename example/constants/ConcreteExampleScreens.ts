@@ -8,6 +8,7 @@ import CirclesExample from '../screens/CirclesExample';
 import MapTypesExample from '../screens/MapTypesExample';
 import TrafficExample from '../screens/TrafficExample';
 import KMLExample from '../screens/KMLExample';
+import GeoJsonExample from '../screens/GeoJsonExample';
 
 // TODO: Type this better
 interface ConcreteExampleScreen {
@@ -21,7 +22,8 @@ interface ConcreteExampleScreen {
     | 'Gestures'
     | 'Map Types'
     | 'Traffic'
-    | 'KML';
+    | 'KML'
+    | 'GeoJson';
   screen: (props: any) => JSX.Element;
 }
 
@@ -65,5 +67,9 @@ export const CONCRETE_EXAMPLE_SCREENS: Array<ConcreteExampleScreen> = [
   {
     name: 'KML',
     screen: KMLExample,
+  },
+  {
+    name: 'GeoJson',
+    screen: GeoJsonExample,
   },
 ];
