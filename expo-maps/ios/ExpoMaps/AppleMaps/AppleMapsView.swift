@@ -11,6 +11,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let polylines: AppleMapsPolylines
   private let circles: AppleMapsCircles
   private let geoJsons: AppleMapsGeoJsons
+  private let pointsOfInterest: AppleMapsPOI
   private var wasInitialCameraPositionSet = false
 
   init() {
@@ -26,6 +27,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
     polylines = AppleMapsPolylines(mapView: mapView)
     circles = AppleMapsCircles(mapView: mapView)
     geoJsons = AppleMapsGeoJsons(mapView: mapView)
+    pointsOfInterest = AppleMapsPOI(mapView: mapView, markers: markers)
 
     super.init(frame: CGRect.zero)
     addSubview(mapView)
@@ -75,9 +77,19 @@ public final class AppleMapsView: UIView, ExpoMapView {
     }
     mapView.mapType = mapViewType
   }
+  
+//  func setEnabledPOISearching(enabled: Bool) {
+//    pointsOfInterest.markers = markers
+//    pointsOfInterest.enablePOISearching(enabled: true)
+//    pointsOfInterest.displayFilteredPOI()
+//  }
 
   func setMarkers(markerObjects: [MarkerObject]) {
-    markers.setMarkers(markerObjects: markerObjects)
+    //markers.setMarkers(markerObjects: markerObjects)
+    //pointsOfInterest.enablePOISearching(enabled: true)
+    if #available(iOS 14.0, *) {
+      pointsOfInterest.displayFilteredPOI()
+    }
   }
   
   func setClusters(clusterObjects: [ClusterObject]) {
