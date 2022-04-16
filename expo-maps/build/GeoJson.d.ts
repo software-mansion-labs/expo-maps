@@ -115,6 +115,8 @@ export declare type GeoJsonObject = {
  *
  * See {@link GeoJsonProps} for more details.
  *
+ * Please note that GeoJSONs are only supported on Apple Maps for iOS versions >= 13.
+ *
  * On Android you can style your features individually by specifing supported properties for given feature type:
  *
  * For polygon you can use:
