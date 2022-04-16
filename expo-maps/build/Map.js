@@ -184,9 +184,6 @@ export class ExpoMap extends React.Component {
     }
     render() {
         if (Platform.OS == 'ios' && this.props.provider == 'apple') {
-            if (parseInt(Platform.Version) < 13 && this.state.geojsons.length > 0) {
-                console.warn("Versions of iOS < 13 doesn't support GeoJSON features for Apple Maps. Adding of GeoJSON for these versions will be omitted.");
-            }
             return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, geojsons: this.state.geojsons }));
         }
         return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString

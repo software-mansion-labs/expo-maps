@@ -228,11 +228,6 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
 
   render() {
     if (Platform.OS == 'ios' && this.props.provider == 'apple') {
-      if (parseInt(Platform.Version) < 13 && this.state.geojsons.length > 0) {
-        console.warn(
-          "Versions of iOS < 13 doesn't support GeoJSON features for Apple Maps. Adding of GeoJSON for these versions will be omitted."
-        );
-      }
       return (
         <NativeExpoAppleMapsView
           {...defaultNativeExpoMapViewProps}
