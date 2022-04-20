@@ -46,6 +46,8 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
     animate: true,
   },
   enableTraffic: false,
+  enablePOISearching: false,
+  enablePOIDisplay: false,
 };
 
 /**

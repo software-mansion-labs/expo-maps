@@ -193,6 +193,25 @@ export type Traffic = {
    */
   enableTraffic: boolean;
 };
+/**
+ * Props for POI handling.
+ */
+ export declare type POI = {
+  /**
+   * If 'true' search bar for searching pois is enabled.
+   * 
+   * @default false
+   */
+  enablePOISearching: boolean;
+  /**
+   * TODO: compare with google maps and select types present in both
+   * If 'true' only given poi types will be displayed.
+   * If 'false' all poi types will be displayed.
+   * 
+   * @default false
+   */
+  enablePOIDisplay: boolean;
+}
 
 export type GoogleMapsControls = Controls;
 
@@ -269,7 +288,8 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       Clusters &
       Traffic &
       KMLs &
-      GeoJsons
+      GeoJsons &
+      POI
   >;
 
 /**
@@ -287,7 +307,8 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
       Circles &
       Clusters &
       Traffic &
-      GeoJsons
+      GeoJsons &
+      POI
   >;
 
 export type Providers = 'google' | 'apple';
@@ -318,7 +339,8 @@ export type ExpoMapViewProps = ViewProps &
         GoogleMapsStyling &
         Gestures &
         CameraPosition &
-        Traffic
+        Traffic &
+        POI
     >
   >;
 
@@ -326,7 +348,8 @@ export type DefaultNativeExpoMapViewProps = MapType &
   Controls &
   Gestures &
   CameraPosition &
-  Traffic;
+  Traffic &
+  POI;
 
 export type ExpoMapState = Markers &
   Polygons &

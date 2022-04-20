@@ -78,18 +78,24 @@ public final class AppleMapsView: UIView, ExpoMapView {
     mapView.mapType = mapViewType
   }
   
-//  func setEnabledPOISearching(enabled: Bool) {
-//    pointsOfInterest.markers = markers
-//    pointsOfInterest.enablePOISearching(enabled: true)
-//    pointsOfInterest.displayFilteredPOI()
-//  }
+  func setEnabledPOISearching(enabled: Bool) {
+    pointsOfInterest.setEnabledPOISearching(enabled: enabled)
+  }
+  
+  func setEnabledPOIFilter(categories: [POICategoryType]) {
+    if #available(iOS 13.0, *) {
+      pointsOfInterest.setEnabledPOIFilter(categories: categories)
+    }
+  }
+  
+  func setEnabledShowPOI(enabled: Bool) {
+    if #available(iOS 14.0, *) {
+      pointsOfInterest.setEnabledShowPOI(enabled: enabled)
+    }
+  }
 
   func setMarkers(markerObjects: [MarkerObject]) {
-    //markers.setMarkers(markerObjects: markerObjects)
-    //pointsOfInterest.enablePOISearching(enabled: true)
-    if #available(iOS 14.0, *) {
-      pointsOfInterest.displayFilteredPOI()
-    }
+    markers.setMarkers(markerObjects: markerObjects)
   }
   
   func setClusters(clusterObjects: [ClusterObject]) {

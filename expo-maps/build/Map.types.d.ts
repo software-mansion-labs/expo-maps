@@ -216,7 +216,7 @@ export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildre
 /**
  * Props for Apple Maps implementation.
  */
-export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters & Traffic & GeoJsons>;
+export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters & Traffic & GeoJsons & POI>;
 export declare type Providers = 'google' | 'apple';
 /**
  * Prop for managing map provider.
@@ -234,6 +234,6 @@ export declare type Provider = {
  *
  * All of the ExpoMap props are optional.
  */
-export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic>>;
+export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic & POI>>;
 export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition & Traffic;
 export declare type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters & KMLs & GeoJsons;
