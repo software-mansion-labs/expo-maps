@@ -11,7 +11,15 @@ enum MapType: String, EnumArgument {
 enum POICategoryType: String, EnumArgument {
   case airport
   case atm
-  case parking
+  case bank
+  case beach
+  case cafe
+  case hospital
+  case hotel
+  case museum
+  case pharmacy
+  case store
+  case zoo
 }
 
 struct MarkerObject: Record {
