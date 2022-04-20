@@ -196,7 +196,7 @@ export type Traffic = {
 /**
  * Props for POI handling.
  */
- export declare type POI = {
+ export type POI = {
   /**
    * If 'true' search bar for searching pois is enabled.
    * 
@@ -204,9 +204,7 @@ export type Traffic = {
    */
   enablePOISearching: boolean;
   /**
-   * TODO: compare with google maps and select types present in both
-   * If 'true' only given poi types will be displayed.
-   * If 'false' all poi types will be displayed.
+   * If 'true' POI in range of current view are being displayed.
    * 
    * @default false
    */
