@@ -7,6 +7,13 @@ enum MapType: String, EnumArgument {
   case terrain
 }
 
+//TODO: unify with google maps
+enum POICategoryType: String, EnumArgument {
+  case airport
+  case atm
+  case parking
+}
+
 struct MarkerObject: Record {
   @Field var latitude: Double = 0
   @Field var longitude: Double = 0

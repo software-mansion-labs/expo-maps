@@ -4,9 +4,12 @@ class AppleMapsPOISearch {
   
   private var mapView: MKMapView
   private var markers: AppleMapsMarkers
+  
+  private var poiFilterCategories: [MKPointOfInterestCategory] = []
+  private var searchResultRegion: MKCoordinateRegion?
   private var places: [MKMapItem]? {
     didSet {
-      prepareMarkers()
+      displayMarkerks()
     }
   }
   private var localSearch: MKLocalSearch? {
@@ -21,39 +24,27 @@ class AppleMapsPOISearch {
     self.markers = markers
   }
   
-  
-  func search(using searchRequest: MKLocalSearch.Request) {
-    searchRequest.region = mapView.region
-    if #available(iOS 13.0, *) {
-      searchRequest.resultTypes = .pointOfInterest
-    }
-    localSearch = MKLocalSearch(request: searchRequest)
-    search()
-  }
-  
-  @available(iOS 14.0, *)
-  func search(using searchRequest: MKLocalPointsOfInterestRequest) {
-    let request = MKLocalPointsOfInterestRequest(coordinateRegion: mapView.region)
-//    request.pointOfInterestFilter = MKPointOfInterestFilter(excluding: [MKPointOfInterestCategory.airport])
-    localSearch = MKLocalSearch(request: request)
-    search()
-  }
-  
   private func search() {
     localSearch?.start { [unowned self] (response, error) in
       guard error == nil else {
+        //handle error
           return
       }
       places = response?.mapItems
-      
-      if let region = response?.boundingRegion {
-        mapView.region = region
-      }
+      searchResultRegion = response?.boundingRegion
     }
   }
   
-  private func prepareMarkers() {
-    guard let places = places else { return }
+  private func displayMarkerks() {
+    let pointsOfInterestToDisplay = getMarkersToDisplay()
+    if let region = searchResultRegion {
+      mapView.region = region
+    }
+    markers.setMarkers(markerObjects: pointsOfInterestToDisplay)
+  }
+  
+  private func getMarkersToDisplay() -> [MarkerObject] {
+    guard let places = places else { return [] }
     let annotations = places.compactMap { item -> MarkerObject? in
       let marker = MarkerObject()
       marker.latitude = item.placemark.coordinate.latitude
@@ -64,9 +55,77 @@ class AppleMapsPOISearch {
       marker.draggable = false
       return marker
     }
-    markers.setMarkers(markerObjects: annotations)
+    return annotations
+  }
+  
+}
+
+//MKLocalPointsOfInterestRequest
+@available(iOS 14.0, *)
+extension AppleMapsPOISearch {
+  
+  func createSearchRequest() {
+    let searchRequest = MKLocalPointsOfInterestRequest(coordinateRegion: mapView.region)
+    setSearchRequestDetails(searchRequest: searchRequest)
+    search(using: searchRequest)
+  }
+  
+  private func setSearchRequestDetails(searchRequest: MKLocalPointsOfInterestRequest) {
+    if poiFilterCategories.isEmpty {
+      return
+    }
+    searchRequest.pointOfInterestFilter = MKPointOfInterestFilter(including: poiFilterCategories)
+  }
+  
+  private func search(using searchRequest: MKLocalPointsOfInterestRequest) {
+    localSearch = MKLocalSearch(request: searchRequest)
+    search()
+  }
+  
+}
+
+//MKLocalSearch.Request
+extension AppleMapsPOISearch {
+  
+  func createSearchRequest(for suggestedCompletion: MKLocalSearchCompletion) {
+    let searchRequest = MKLocalSearch.Request(completion: suggestedCompletion)
+    setSearchRequestDetails(searchRequest: searchRequest)
+    search(using: searchRequest)
+  }
+  
+  func createSearchRequest(for queryString: String?) {
+    let searchRequest = MKLocalSearch.Request()
+    searchRequest.naturalLanguageQuery = queryString
+    setSearchRequestDetails(searchRequest: searchRequest)
+    search(using: searchRequest)
+  }
+  
+  private func setSearchRequestDetails(searchRequest: MKLocalSearch.Request) {
+    searchRequest.region = mapView.region
     if #available(iOS 13.0, *) {
-      mapView.pointOfInterestFilter = MKPointOfInterestFilter(excluding: [MKPointOfInterestCategory.airport])
+      searchRequest.resultTypes = .pointOfInterest
     }
   }
+  
+  private func search(using searchRequest: MKLocalSearch.Request) {
+    localSearch = MKLocalSearch(request: searchRequest)
+    search()
+  }
+  
+}
+
+//set filter on mapView
+extension AppleMapsPOISearch {
+  
+  func setPOIFilterCategories(categories: [MKPointOfInterestCategory]) {
+    poiFilterCategories = categories
+    if #available(iOS 13.0, *) {
+      if !poiFilterCategories.isEmpty {
+          mapView.pointOfInterestFilter = MKPointOfInterestFilter(including: poiFilterCategories)
+      } else {
+        mapView.pointOfInterestFilter = MKPointOfInterestFilter.includingAll
+      }
+    }
+  }
+  
 }

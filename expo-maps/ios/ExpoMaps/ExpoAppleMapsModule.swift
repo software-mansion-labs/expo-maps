@@ -1,4 +1,5 @@
 import ExpoModulesCore
+import simd
 
 public class ExpoAppleMapsModule: Module {
 
@@ -77,6 +78,19 @@ public class ExpoAppleMapsModule: Module {
       Prop("geojsons") { (view: AppleMapsView, geoJsonObjects: [GeoJsonObject]) in
         view.setGeoJsons(geoJsonObjects: geoJsonObjects)
       }
+      
+      prop("enablePOISearching") { (view: AppleMapsView, enable: Bool) in
+        view.setEnabledPOISearching(enabled: enable)
+      }
+      
+      prop("enablePOIFilter") { (view: AppleMapsView, categories: [POICategoryType]) in
+        view.setEnabledPOIFilter(categories: categories)
+      }
+      
+      prop("enablePOIDisplay") { (view: AppleMapsView, enabled: Bool) in
+        view.setEnabledShowPOI(enabled: enabled)
+      }
+      
     }
   }
 }

@@ -1,6 +1,6 @@
 import MapKit
 
-class AppleMapsPOITableView: UITableViewController {
+class AppleMapsPOISearchResultsView: UITableViewController {
   
   private var searchCompleter: MKLocalSearchCompleter?
   var searchCompleterResults: [MKLocalSearchCompletion]?
@@ -60,13 +60,13 @@ class AppleMapsPOITableView: UITableViewController {
   }
 }
 
-extension AppleMapsPOITableView: UISearchResultsUpdating {
+extension AppleMapsPOISearchResultsView: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     searchCompleter?.queryFragment = searchController.searchBar.text ?? ""
   }
 }
 
-extension AppleMapsPOITableView: MKLocalSearchCompleterDelegate {
+extension AppleMapsPOISearchResultsView: MKLocalSearchCompleterDelegate {
   func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
     searchCompleterResults = completer.results
     tableView.reloadData()
