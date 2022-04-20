@@ -33,12 +33,28 @@ class AppleMapsPOI: NSObject {
     let categories = categories.compactMap {item -> MKPointOfInterestCategory? in
       var category: MKPointOfInterestCategory
       switch item {
-      case .atm:
-        category = MKPointOfInterestCategory.atm
       case .airport:
-        category = MKPointOfInterestCategory.airport
-      case.parking:
-        category = MKPointOfInterestCategory.parking
+        category = .airport
+      case .atm:
+        category = .atm
+      case .bank:
+        category = .bank
+      case .beach:
+        category = .beach
+      case .cafe:
+        category = .cafe
+      case .hospital:
+        category = .hospital
+      case .hotel:
+        category = .hotel
+      case .museum:
+        category = .museum
+      case .pharmacy:
+        category = .pharmacy
+      case .store:
+        category = .pharmacy
+      case .zoo:
+        category = .zoo
       }
       return category
     }
