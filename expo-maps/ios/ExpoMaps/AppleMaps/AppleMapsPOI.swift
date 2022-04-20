@@ -14,14 +14,14 @@ class AppleMapsPOI: NSObject {
     self.mapView = mapView
     self.markers = markers
     searchService = AppleMapsPOISearch(mapView: mapView, markers: markers)
+    searchControllerView = AppleMapsPOISearchController(searchService: searchService)
   }
   
   func setEnabledPOISearching(enabled: Bool) {
     if (enabled) {
-      searchControllerView = AppleMapsPOISearchController(searchService: searchService)
       searchControllerView?.enablePOISearchController(mapView: mapView)
     } else {
-      searchControllerView = nil
+      searchControllerView?.disablePOISearchController()
     }
   }
   
