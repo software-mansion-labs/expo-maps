@@ -30,8 +30,8 @@ class AppleMapsPOISearch {
         //handle error
           return
       }
-      places = response?.mapItems
       searchResultRegion = response?.boundingRegion
+      places = response?.mapItems
     }
   }
   
@@ -89,7 +89,6 @@ extension AppleMapsPOISearch {
   
   func createSearchRequest(for suggestedCompletion: MKLocalSearchCompletion) {
     let searchRequest = MKLocalSearch.Request(completion: suggestedCompletion)
-    setSearchRequestDetails(searchRequest: searchRequest)
     search(using: searchRequest)
   }
   

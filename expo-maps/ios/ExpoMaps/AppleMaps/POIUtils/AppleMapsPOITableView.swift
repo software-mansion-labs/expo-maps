@@ -58,31 +58,35 @@ class AppleMapsPOISearchResultsView: UITableViewController {
     }
     return highlightedString
   }
+  
 }
 
 extension AppleMapsPOISearchResultsView: UISearchResultsUpdating {
+  
   func updateSearchResults(for searchController: UISearchController) {
     searchCompleter?.queryFragment = searchController.searchBar.text ?? ""
   }
+  
 }
 
 extension AppleMapsPOISearchResultsView: MKLocalSearchCompleterDelegate {
+  
   func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
     searchCompleterResults = completer.results
     tableView.reloadData()
   }
+  
 }
 
 private class PlacesSearchTableViewCell: UITableViewCell {
   
   static let reuseID = "PlacesSearchTableViewCellReuseID"
-
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
   }
-
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
 }
 
