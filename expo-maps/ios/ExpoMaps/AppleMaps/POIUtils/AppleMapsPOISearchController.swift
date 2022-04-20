@@ -14,6 +14,7 @@ class AppleMapsPOISearchController: NSObject {
     navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100))
     navigationItem = UINavigationItem()
     navigationItem.hidesSearchBarWhenScrolling = false
+    navigationItem.title = "Search:"
     navigationBar.setItems([navigationItem], animated: false)
   }
   
@@ -32,6 +33,10 @@ class AppleMapsPOISearchController: NSObject {
     searchController?.hidesNavigationBarDuringPresentation = false
     setSearchBar()
     navigationItem.searchController = searchController
+  }
+  
+  func disablePOISearchController() {
+    navigationBar.removeFromSuperview()
   }
   
   private func setSearchBar() {
