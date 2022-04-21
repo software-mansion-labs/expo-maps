@@ -14,11 +14,14 @@ export default function HeatmapExample() {
     <View style={styles.container}>
       <Maps.ExpoMap style={{ flex: 1, width: '100%' }} provider={provider}>
         <Maps.Heatmap
-          points={points}
+          points={require("../assets/points.json")}
+          radius={20}
+          gradient={{colors: ["#12345600","#abcdef"], locations: [0,1]}}
         />
-        {/* <Maps.Heatmap
-          points={pointsWithData}
-        /> */}
+        <Maps.Heatmap
+          points={require("../assets/pointsWithData.json")}
+          radius={50}
+        />
       </Maps.ExpoMap>
     </View>
   );
