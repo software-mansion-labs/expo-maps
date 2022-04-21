@@ -170,9 +170,13 @@ data class Gradient(
 }
 
 data class HeatmapObject(
-//  @Field val points: List<PointWithData> = emptyList(),
+  @Field val points: List<PointWithData> = emptyList(),
   @Field val radius: Int?,
-//  @Field val gradient: Gradient? = null,
+  @Field val gradient: Gradient? = null,
   @Field val opacity: Double?,
+<<<<<<< HEAD
 )
 >>>>>>> 7d3c60e (Add implementation for heatmaps)
+=======
+) : Record
+>>>>>>> a427a98 (Fix type problems)

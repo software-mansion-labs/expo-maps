@@ -21,26 +21,26 @@ class GoogleMapsHeatmaps(private val context: Context, private val map: GoogleMa
     heatmapOverlays.forEach { it.remove() }
     heatmapOverlays.clear()
 
-    heatmapObjects.forEach {
-//      var builder = HeatmapTileProvider.Builder()
-//        .weightedData(it.points.map {
-//          WeightedLatLng(LatLng(it.latitude, it.longitude), it.data ?: 1.0)
-//        })
-////      it.gradient.let {
-////        builder = builder.gradient(
-////          Gradient(
-////            it?.colors?.map { colorStringtoInt(it) }?.toIntArray(),
-////            it?.locations))
-////      }
-//      it.radius.let {
-//        builder = builder.radius(it ?: 20)
-//      }
-//      it.opacity.let {
-//        builder = builder.opacity(it ?: 1.0)
-//      }
-//      var provider = builder.build()
-//      val tileOverlay = map.addTileOverlay(TileOverlayOptions().tileProvider(provider))
-//      tileOverlay.let { heatmapOverlays.add(it!!) }
+    for(it in heatmapObjects) {
+      var builder = HeatmapTileProvider.Builder()
+        .weightedData(it.points.map {
+          WeightedLatLng(LatLng(it.latitude, it.longitude), it.data ?: 1.0)
+        })
+      it.gradient?.let {
+        builder = builder.gradient(
+          Gradient(
+            it.colors.map { colorStringtoInt(it) }.toIntArray(),
+            it.locations))
+      }
+      it.radius.let {
+        builder = builder.radius(it ?: 20)
+      }
+      it.opacity.let {
+        builder = builder.opacity(it ?: 1.0)
+      }
+      var provider = builder.build()
+      val tileOverlay = map.addTileOverlay(TileOverlayOptions().tileProvider(provider))
+      tileOverlay.let { heatmapOverlays.add(it!!) }
     }
   }
 
