@@ -120,7 +120,7 @@ extension AppleMapsPOISearch {
     poiFilterCategories = categories
     if #available(iOS 13.0, *) {
       if !poiFilterCategories.isEmpty {
-          mapView.pointOfInterestFilter = MKPointOfInterestFilter(including: poiFilterCategories)
+        mapView.pointOfInterestFilter = MKPointOfInterestFilter(including: poiFilterCategories)
       } else {
         mapView.pointOfInterestFilter = MKPointOfInterestFilter.includingAll
       }
