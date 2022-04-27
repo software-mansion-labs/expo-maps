@@ -52,7 +52,7 @@ class AppleMapsPOI: NSObject {
       case .pharmacy:
         category = .pharmacy
       case .store:
-        category = .pharmacy
+        category = .store
       case .zoo:
         category = .zoo
       }
