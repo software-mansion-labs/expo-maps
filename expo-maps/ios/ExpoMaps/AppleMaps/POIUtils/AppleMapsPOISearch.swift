@@ -27,7 +27,7 @@ class AppleMapsPOISearch {
   private func search() {
     localSearch?.start { [unowned self] (response, error) in
       guard error == nil else {
-        //handle error
+          // TODO: handle error
           return
       }
       searchResultRegion = response?.boundingRegion
