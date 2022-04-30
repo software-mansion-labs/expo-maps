@@ -7,6 +7,7 @@ export { Circle } from './Circle';
 export { Cluster } from './Cluster';
 export { KML } from './KML';
 export { GeoJson } from './GeoJson';
+export { ExpoMapRef } from './Map.types';
 /**
  * Main map component of Expo Maps library.
  *
@@ -15,6 +16,8 @@ export { GeoJson } from './GeoJson';
 export declare class ExpoMap extends React.Component<ExpoMapViewProps> {
     state: ExpoMapState;
     _ismounted: boolean;
+    mapView: React.RefObject<React.Component<any, {}, any>>;
+    test(): Promise<void>;
     componentDidMount(): void;
     componentWillUnmount(): void;
     componentDidUpdate(_: any, prevState: ExpoMapState): void;

@@ -1,7 +1,9 @@
 import React from 'react';
 import {
   NativeExpoAppleMapsView,
+  NativeExpoAppleMapsModule,
   NativeExpoGoogleMapsView,
+  NativeExpoAppleMapsViewType,
 } from './NativeExpoMapView';
 import {
   DefaultNativeExpoMapViewProps,
@@ -9,7 +11,7 @@ import {
   ExpoMapViewProps,
 } from './Map.types';
 import { Asset } from 'expo-asset';
-import { Platform } from 'react-native';
+import { Platform, findNodeHandle } from 'react-native';
 import * as Utils from './Utils';
 import { Marker, MarkerObject } from './Marker';
 import { PolygonObject } from './Polygon';
@@ -27,6 +29,7 @@ export { Circle } from './Circle';
 export { Cluster } from './Cluster';
 export { KML } from './KML';
 export { GeoJson } from './GeoJson';
+export { ExpoMapRef } from './Map.types';
 
 const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   mapType: 'normal',
@@ -66,6 +69,13 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
     geojsons: [],
   };
   _ismounted = false;
+  mapView = React.createRef<React.Component<any>>();
+
+  async test() {
+    const nodeHandel = findNodeHandle(this.mapView.current);
+    const x = await NativeExpoAppleMapsModule.test(nodeHandel);
+    console.log({ x });
+  }
 
   componentDidMount() {
     this.mapChildren();
@@ -229,44 +239,44 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
   }
 
   render() {
-    if (Platform.OS == 'ios' && this.props.provider == 'apple') {
-      if (parseInt(Platform.Version) < 13 && this.state.geojsons.length > 0) {
-        console.warn(
-          "Versions of iOS < 13 doesn't support GeoJSON features for Apple Maps. Adding of GeoJSON for these versions will be omitted."
-        );
-      }
-      return (
-        <NativeExpoAppleMapsView
-          {...defaultNativeExpoMapViewProps}
-          {...this.props}
-          markers={this.state.markers}
-          polygons={this.state.polygons}
-          polylines={this.state.polylines}
-          circles={this.state.circles}
-          clusters={this.state.clusters}
-          geojsons={this.state.geojsons}
-        />
-      );
-    }
-
+    // if (Platform.OS == 'ios' && this.props.provider == 'apple') {
+    //   if (parseInt(Platform.Version) < 13 && this.state.geojsons.length > 0) {
+    //     console.warn(
+    //       "Versions of iOS < 13 doesn't support GeoJSON features for Apple Maps. Adding of GeoJSON for these versions will be omitted."
+    //     );
+    //   }
     return (
-      <NativeExpoGoogleMapsView
+      <NativeExpoAppleMapsView
         {...defaultNativeExpoMapViewProps}
         {...this.props}
-        googleMapsJsonStyleString={
-          this.props.googleMapsJsonStyleString
-            ? this.props.googleMapsJsonStyleString
-            : ''
-        }
         markers={this.state.markers}
         polygons={this.state.polygons}
         polylines={this.state.polylines}
         circles={this.state.circles}
         clusters={this.state.clusters}
-        kmls={this.state.kmls}
         geojsons={this.state.geojsons}
+        ref={this.mapView}
       />
     );
+
+    // return (
+    //   <NativeExpoGoogleMapsView
+    //     {...defaultNativeExpoMapViewProps}
+    //     {...this.props}
+    //     googleMapsJsonStyleString={
+    //       this.props.googleMapsJsonStyleString
+    //         ? this.props.googleMapsJsonStyleString
+    //         : ''
+    //     }
+    //     markers={this.state.markers}
+    //     polygons={this.state.polygons}
+    //     polylines={this.state.polylines}
+    //     circles={this.state.circles}
+    //     clusters={this.state.clusters}
+    //     kmls={this.state.kmls}
+    //     geojsons={this.state.geojsons}
+    //   />
+    // );
   }
 }
 

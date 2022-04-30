@@ -5,6 +5,17 @@ public class ExpoAppleMapsModule: Module {
 
   public func definition() -> ModuleDefinition {
     name("ExpoAppleMaps")
+    
+    
+    function("test") { (viewHandle: Int) in
+      print(viewHandle)
+      DispatchQueue.main.async {
+        let view = self.appContext?.reactBridge?.uiManager?.view(forReactTag: NSNumber(value: viewHandle)) as? AppleMapsView
+        view?.test()
+      }
+
+      return 123
+    }
 
     viewManager {
       view {
