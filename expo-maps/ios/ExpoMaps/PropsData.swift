@@ -40,6 +40,12 @@ struct Point: Record {
   @Field var longitude: Double = 0
 }
 
+struct PointWithData: Record {
+  @Field var latitude: Double = 0
+  @Field var longitude: Double = 0
+  @Field var data: Float? = nil
+}
+
 struct PolygonObject: Record {
   @Field var points: [Point] = []
   @Field var fillColor: UIColor? = nil
@@ -111,6 +117,7 @@ struct KMLObject: Record {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct GeoJsonObject: Record {
   @Field var geoJsonString: String
   @Field var defaultStyle: GeoJsonObjectDefaultStyle?
@@ -149,3 +156,16 @@ struct HeatmapObject: Record {
   @Field var opacity: Double = 0
 }
 >>>>>>> 7d3c60e (Add implementation for heatmaps)
+=======
+struct Gradient: Record {
+  @Field var colors: [UIColor] = []
+  @Field var locations: [Double] = []
+}
+
+struct HeatmapObject: Record {
+  @Field var points: [PointWithData] = []
+  @Field var gradient: Gradient? = nil
+  @Field var radius: UInt? = nil
+  @Field var opacity: Float? = nil
+}
+>>>>>>> 0728098 (Add support for iOS GoogleMaps)

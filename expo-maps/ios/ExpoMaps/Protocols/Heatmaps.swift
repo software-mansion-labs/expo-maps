@@ -1,3 +1,3 @@
 protocol Heatmaps {
-  func Heatmaps(heatmapObjects: [HeatmapObject])
+  func setHeatmaps(heatmapObjects: [HeatmapObject])
 }
