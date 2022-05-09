@@ -18,7 +18,7 @@ data class MarkerObject(
   @Field val markerTitle: String? = null,
   @Field val markerSnippet: String? = null,
   @Field val icon: String? = null,
-  @Field val color: Double = 0.0,
+  @Field val color: String? = null,
   @Field val draggable: Boolean = false,
   @Field val anchorU: Double? = null,
   @Field val anchorV: Double? = null,
@@ -101,7 +101,7 @@ data class ClusterObject(
   @Field val markerTitle: String? = null,
   @Field val markerSnippet: String? = null,
   @Field val icon: String? = null,
-  @Field val color: Double = 0.0,
+  @Field val color: String? = null,
   @Field val opacity: Double = 1.0,
   @Field val markers: List<MarkerObject> = emptyList(),
 ) : Record
@@ -133,7 +133,7 @@ data class GeoJsonObjectDefaultStylePolyline(
 ) : Record
 
 data class GeoJsonObjectDefaultStyleMarker(
-  @Field val color: Float?,
+  @Field val color: String?,
   @Field val title: String?,
   @Field val snippet: String?
 ) : Record

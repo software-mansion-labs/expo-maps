@@ -216,7 +216,7 @@ export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildre
 /**
  * Props for Apple Maps implementation.
  */
-export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters & Traffic & GeoJsons>;
+export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons>;
 export declare type Providers = 'google' | 'apple';
 /**
  * Prop for managing map provider.

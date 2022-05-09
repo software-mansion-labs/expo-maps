@@ -85,23 +85,10 @@ export function isGeoJson(child) {
 export function isHexColor(color) {
     return color.length > 0 && color[0] == '#';
 }
-export function mapColorToNativeMarkerColor(color) {
-    const colors = {
-        azure: 210,
-        blue: 240,
-        cyan: 180,
-        green: 120,
-        magenta: 300,
-        orange: 30,
-        rose: 330,
-        violet: 270,
-        yellow: 60,
-        red: 0,
-        default: 0,
-    };
-    return colors[color] || colors['default'];
-}
-export function mapColorToHexColor(color) {
+export function mapColorToHexColor(color, defaultColor) {
+    let defColor = defaultColor;
+    if (defColor == undefined)
+        defColor = '#000000';
     const colors = {
         red: '#ff0000',
         blue: '#0000ff',
@@ -123,7 +110,7 @@ export function mapColorToHexColor(color) {
         purple: '#800080',
         silver: '#c0c0c0',
         teal: '#008080',
-        default: '#000000',
+        default: defColor,
     };
     return colors[color] || colors['default'];
 }

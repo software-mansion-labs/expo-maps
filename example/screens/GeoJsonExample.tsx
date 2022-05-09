@@ -18,7 +18,7 @@ export default function GeoJsonExample() {
               strokeWidth: 5,
             },
             marker: {
-              color: 'azure',
+              color: 'blue',
             },
             polyline: {
               color: 'magenta',

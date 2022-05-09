@@ -13,7 +13,7 @@ struct MarkerObject: Record {
   @Field var markerTitle: String? = nil
   @Field var markerSnippet: String? = nil
   @Field var icon: String? = nil
-  @Field var color: Double = 0
+  @Field var color: UIColor? = nil
   @Field var draggable: Bool = false
   @Field var anchorU: Double? = nil
   @Field var anchorV: Double? = nil
@@ -27,20 +27,20 @@ struct Point: Record {
 
 struct PolygonObject: Record {
   @Field var points: [Point] = []
-  @Field var fillColor: UIColor?
-  @Field var strokeColor: UIColor?
-  @Field var strokeWidth: Float?
+  @Field var fillColor: UIColor? = nil
+  @Field var strokeColor: UIColor? = nil
+  @Field var strokeWidth: Float? = nil
   @Field var strokePattern: [PatternItem]? = nil
-  @Field var jointType: Joint?
+  @Field var jointType: Joint? = nil
 }
 
 struct PolylineObject: Record {
   @Field var points: [Point] = []
-  @Field var color: UIColor?
-  @Field var width: Float?
+  @Field var color: UIColor? = nil
+  @Field var width: Float? = nil
   @Field var pattern: [PatternItem]? = nil
-  @Field var jointType: Joint?
-  @Field var capType: Cap?
+  @Field var jointType: Joint? = nil
+  @Field var capType: Cap? = nil
 }
 
 struct PatternItem: Record {
@@ -86,7 +86,7 @@ struct ClusterObject: Record {
   @Field var markerTitle: String? = nil
   @Field var markerSnippet: String? = nil
   @Field var icon: String? = nil
-  @Field var color: Double = 0
+  @Field var color: UIColor? = nil
   @Field var opacity: Double = 1
   @Field var markers: [MarkerObject] = []
 }
@@ -121,7 +121,7 @@ struct GeoJsonObjectDefaultStylePolyline: Record {
 }
 
 struct GeoJsonObjectDefaultStyleMarker: Record {
-  @Field var color: Double = 0
+  @Field var color: UIColor?
   @Field var title: String?
   @Field var snippet: String?
 }

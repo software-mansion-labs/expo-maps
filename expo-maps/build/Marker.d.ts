@@ -1,5 +1,5 @@
 import React from 'react';
-import { MarkerColor, Point } from './Common.types';
+import { Point } from './Common.types';
 /**
  * Marker specific props.
  */
@@ -19,9 +19,35 @@ export declare type BaseMarkerOptions = {
     /**
      * Color of a marker when icon is not provided.
      *
+     * Accepted formats:
+     * * `'#RRGGBB'`
+     * * `'#RRGGBBAA'`
+     * * `'#RGB'`
+     * * `'#RGBA'`
+     * * 'red'
+     * * 'blue'
+     * * 'green'
+     * * 'black'
+     * * 'white'
+     * * 'gray'
+     * * 'cyan'
+     * * 'magenta'
+     * * 'yellow'
+     * * 'lightgray'
+     * * 'darkgray'
+     * * 'grey'
+     * * 'aqua'
+     * * 'fuchsia'
+     * * 'lime'
+     * * 'maroon'
+     * * 'navy'
+     * * 'olive'
+     * * 'purple'
+     * * 'silver'
+     * * 'teal'
      * @default 'red'
      */
-    color?: number | MarkerColor;
+    color?: string;
     /**
      * Opacity of a marker's icon, applied both to asset based icon
      * as well as to default marker's icon.

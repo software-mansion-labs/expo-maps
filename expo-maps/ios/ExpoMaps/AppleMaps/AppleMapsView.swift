@@ -11,6 +11,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let polylines: AppleMapsPolylines
   private let circles: AppleMapsCircles
   private let geoJsons: AppleMapsGeoJsons
+  private let kmls: AppleMapsKMLs
   private var wasInitialCameraPositionSet = false
 
   init() {
@@ -26,6 +27,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
     polylines = AppleMapsPolylines(mapView: mapView)
     circles = AppleMapsCircles(mapView: mapView)
     geoJsons = AppleMapsGeoJsons(mapView: mapView)
+    kmls = AppleMapsKMLs(mapView: mapView, markers: markers, polylines: polylines, polygons: polygons)
 
     super.init(frame: CGRect.zero)
     addSubview(mapView)
@@ -110,7 +112,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   }
   
   func setKMLs(kmlObjects: [KMLObject]) {
-    
+    kmls.setKMLs(kmlObjects: kmlObjects)
   }
   
   func setGeoJsons(geoJsonObjects: [GeoJsonObject]) {

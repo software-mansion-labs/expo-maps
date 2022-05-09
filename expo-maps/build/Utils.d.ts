@@ -1,5 +1,5 @@
 import { Cluster } from './Cluster';
-import { MarkerColor, Color } from './Common.types';
+import { Color } from './Common.types';
 import { Marker } from './Marker';
 import { Polygon } from './Polygon';
 import { Polyline } from './Polyline';
@@ -15,6 +15,5 @@ export declare function isCluster(child: any): child is Cluster;
 export declare function isKML(child: any): child is KML;
 export declare function isGeoJson(child: any): child is GeoJson;
 export declare function isHexColor(color: any): color is Color;
-export declare function mapColorToNativeMarkerColor(color: MarkerColor): number;
-export declare function mapColorToHexColor(color: Color): string;
+export declare function mapColorToHexColor(color: Color, defaultColor?: string): string;
 export declare function warnIfChildIsIncompatible(child: any): void;

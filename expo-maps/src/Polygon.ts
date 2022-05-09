@@ -22,7 +22,6 @@ export type PolygonProps = {
    * * `'#RRGGBBAA'`
    * * `'#RGB'`
    * * `'#RGBA'`
-   * * RGBA Ints
    * * 'red'
    * * 'blue'
    * * 'green'
@@ -55,7 +54,6 @@ export type PolygonProps = {
    * * `'#RRGGBBAA'`
    * * `'#RGB'`
    * * `'#RGBA'`
-   * * RGBA Ints
    * * 'red'
    * * 'blue'
    * * 'green'

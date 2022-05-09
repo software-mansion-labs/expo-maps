@@ -1,7 +1,6 @@
 package expo.modules.maps.googleMaps
 
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.maps.android.data.geojson.*
 import expo.modules.maps.GeoJsonObject
 import expo.modules.maps.interfaces.GeoJsons
@@ -100,8 +99,7 @@ class GoogleMapsGeoJsons(private val map: GoogleMap) : GeoJsons {
     }
 
     markerStyle.icon = if (feature.hasProperty("color")) {
-      BitmapDescriptorFactory
-        .defaultMarker(colorStringToHueFloat(feature.getProperty("color")))
+      provideDescriptor(null, feature.getProperty("color"))
     } else {
       layer.defaultPointStyle.icon
     }
@@ -118,8 +116,7 @@ class GoogleMapsGeoJsons(private val map: GoogleMap) : GeoJsons {
         defaultMarkerStyle.snippet = it
       }
       geoJsonObject.defaultStyle.marker.color?.let {
-        defaultMarkerStyle.icon = BitmapDescriptorFactory
-          .defaultMarker(it)
+        provideDescriptor(null, it)
       }
     }
 

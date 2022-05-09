@@ -21,7 +21,6 @@ export declare type PolygonProps = {
      * * `'#RRGGBBAA'`
      * * `'#RGB'`
      * * `'#RGBA'`
-     * * RGBA Ints
      * * 'red'
      * * 'blue'
      * * 'green'
@@ -54,7 +53,6 @@ export declare type PolygonProps = {
      * * `'#RRGGBBAA'`
      * * `'#RGB'`
      * * `'#RGBA'`
-     * * RGBA Ints
      * * 'red'
      * * 'blue'
      * * 'green'

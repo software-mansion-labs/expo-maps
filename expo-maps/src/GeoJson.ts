@@ -1,8 +1,5 @@
 import React from 'react';
-import { PolygonProps } from './Polygon';
-import { PolylineProps } from './Polyline';
-import { MarkerProps } from './Marker';
-import { Color, MarkerColor, PatternItem } from './Common.types';
+import { Color, PatternItem } from './Common.types';
 
 /**
  * GeoJson specific props.
@@ -71,7 +68,7 @@ export type GeoJsonProps = {
        * See {@link MarkerProps}
        * Works only on `Android`.
        */
-      color?: number | MarkerColor;
+      color?: string;
       /**
        * See {@link MarkerProps}
        * Works only on `Android`.
