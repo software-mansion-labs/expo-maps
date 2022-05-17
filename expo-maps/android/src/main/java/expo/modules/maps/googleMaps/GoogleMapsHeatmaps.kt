@@ -40,7 +40,7 @@ class GoogleMapsHeatmaps(private val context: Context, private val map: GoogleMa
       }
       var provider = builder.build()
       val tileOverlay = map.addTileOverlay(TileOverlayOptions().tileProvider(provider))
-      tileOverlay.let { heatmapOverlays.add(it!!) }
+      tileOverlay?.let { heatmapOverlays.add(it) }
     }
   }
 
