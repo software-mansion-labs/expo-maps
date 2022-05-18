@@ -122,8 +122,9 @@ class AppleMapsDelegate : NSObject, MKMapViewDelegate {
         return clusterAnnotation
       } else {
         let clusterAnnotation = ExpoMKClusterColorAnnotation(memberAnnotations: memberAnnotations)
-        let color = clusterObject.color.truncatingRemainder(dividingBy: Resources.HUE_WHEEL_MAX_VALUE) / Resources.HUE_WHEEL_MAX_VALUE
-        clusterAnnotation.color = color
+        var hue: CGFloat = 0
+        clusterObject.color?.getHue(&hue, saturation: nil, brightness: nil, alpha: nil)
+        clusterAnnotation.color = hue
         clusterAnnotation.minimumClusterSize = clusterObject.minimumClusterSize
         clusterAnnotation.title = clusterObject.markerTitle
         clusterAnnotation.subtitle = clusterObject.markerSnippet

@@ -15,7 +15,7 @@ export default function MarkerExample() {
           longitude={2.35}
           markerTitle="Paris"
           markerSnippet="You can choose custom marker colors!"
-          color="azure"
+          color="blue"
         />
         <Maps.Marker
           latitude={44}
@@ -42,7 +42,7 @@ export default function MarkerExample() {
         <Maps.Cluster
           name="sample_cluster_group"
           minimumClusterSize={2}
-          color="orange"
+          color="purple"
           opacity={0.5}
           markerTitle="Cluster"
           markerSnippet="Zoom in to see particular markers"

@@ -287,6 +287,7 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
       Circles &
       Clusters &
       Traffic &
+      KMLs &
       GeoJsons
   >;
 

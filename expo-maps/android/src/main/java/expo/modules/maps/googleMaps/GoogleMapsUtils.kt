@@ -1,7 +1,6 @@
 package expo.modules.maps.googleMaps
 
 import android.graphics.Color
-import android.util.Log
 import com.google.android.gms.maps.model.*
 import expo.modules.maps.Cap
 import expo.modules.maps.Joint
@@ -10,21 +9,15 @@ import expo.modules.maps.PatternItemType
 import org.json.JSONArray
 import kotlin.IllegalArgumentException
 
-/*
-  Returns asset based marker icon if localUri is not null, otherwise returns default marker with
-  provided color. Hue value must be between 0 and 360, this constraint comes from google api.
-  https://developers.google.com/android/reference/com/google/android/gms/maps/model/BitmapDescriptorFactory#public-static-bitmapdescriptor-defaultmarker-float-hue
-
-  annotation can be one of four possible MKAnnotation subclasses, for each of them queue is checked if it contains
-  the particular instance
- */
-fun provideDescriptor(localUri: String?, color: Double): BitmapDescriptor {
-  val hueWheelMaxValue = 360
-
+fun provideDescriptor(localUri: String?, color: String?): BitmapDescriptor {
   return if (localUri != null) {
     BitmapDescriptorFactory.fromPath(localUri)
+  } else if (color != null) {
+    val hsv = FloatArray(3)
+    Color.colorToHSV(colorStringToARGBInt(color), hsv)
+    BitmapDescriptorFactory.defaultMarker(hsv.first())
   } else {
-    BitmapDescriptorFactory.defaultMarker((color % hueWheelMaxValue).toFloat())
+    BitmapDescriptorFactory.defaultMarker()
   }
 }
 
@@ -59,9 +52,6 @@ private fun colorHexStringToInt(hexColorString: String): Int {
 }
 
 fun colorStringToARGBInt(colorString: String): Int {
-  if (colorString.toIntOrNull() != null) {
-    return colorString.toInt()
-  }
   if (colorString[0] == '#') {
     return colorHexStringToInt(colorString)
   }
@@ -130,21 +120,5 @@ fun patternItemToNative(patternItem: PatternItem): com.google.android.gms.maps.m
       0F, -0F -> Dot()
       else -> Dash(patternItem.length)
     }
-  }
-}
-
-fun colorStringToHueFloat(colorString: String): Float {
-  return when (colorString) {
-    "azure" -> 210F
-    "blue" -> 240F
-    "cyan" -> 180F
-    "green" -> 120F
-    "magenta" -> 300F
-    "orange" -> 30F
-    "rose" -> 330F
-    "violet" -> 270F
-    "yellow" -> 60F
-    "red" -> 0F
-    else -> colorString.toFloat()
   }
 }

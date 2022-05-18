@@ -53,7 +53,7 @@ class GoogleMapsClusters(private val context: Context, private val map: GoogleMa
     val title: String?,
     val snippet: String?,
     val icon: String?,
-    val color: Double,
+    val color: String?,
     val opacity: Double
   ) : ClusterManager<MarkerObject>(context, map) {
 
@@ -75,8 +75,11 @@ class GoogleMapsClusters(private val context: Context, private val map: GoogleMa
     }
 
     override fun getColor(clusterSize: Int): Int {
-      val hueWheelMaxValue = 360
-      return Color.HSVToColor(floatArrayOf((clusterManager.color % hueWheelMaxValue).toFloat(), 1f, 1f))
+      return if (clusterManager.color != null) {
+        colorStringToARGBInt(clusterManager.color)
+      } else {
+        0
+      }
     }
 
     override fun onBeforeClusterItemRendered(item: MarkerObject, markerOptions: MarkerOptions) {

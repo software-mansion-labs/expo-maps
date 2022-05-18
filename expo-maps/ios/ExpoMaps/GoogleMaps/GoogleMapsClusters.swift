@@ -20,17 +20,18 @@ class GoogleMapsClusters : Clusters {
     clusters.removeAll()
     
     for clusterObject in clusterObjects {
-      let color = clusterObject.color.truncatingRemainder(dividingBy: Resources.HUE_WHEEL_MAX_VALUE) / Resources.HUE_WHEEL_MAX_VALUE
-      
+      var hue: CGFloat = 0
+      clusterObject.color?.getHue(&hue, saturation: nil, brightness: nil, alpha: nil)
+      let color = clusterObject.color ?? UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
       // Cluster color has to be set in regard to number of clustered markers
       let iconGenerator = GMUDefaultClusterIconGenerator(
         buckets: [5, 10, 50, 100, 1000],
         backgroundColors: [
-          UIColor(hue: color, saturation: 1, brightness: 1, alpha: 1),
-          UIColor(hue: color, saturation: 1, brightness: 1, alpha: 1),
-          UIColor(hue: color, saturation: 1, brightness: 1, alpha: 1),
-          UIColor(hue: color, saturation: 1, brightness: 1, alpha: 1),
-          UIColor(hue: color, saturation: 1, brightness: 1, alpha: 1),
+          color,
+          color,
+          color,
+          color,
+          color,
         ]
       )
       let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
@@ -39,7 +40,7 @@ class GoogleMapsClusters : Clusters {
         title: clusterObject.markerTitle,
         snippet: clusterObject.markerSnippet,
         icon: clusterObject.icon,
-        color: clusterObject.color,
+        color: hue,
         opacity: clusterObject.opacity
       )
       renderer.delegate = rendererDelegate

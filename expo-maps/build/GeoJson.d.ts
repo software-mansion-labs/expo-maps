@@ -1,5 +1,5 @@
 import React from 'react';
-import { Color, MarkerColor, PatternItem } from './Common.types';
+import { Color, PatternItem } from './Common.types';
 /**
  * GeoJson specific props.
  */
@@ -67,7 +67,7 @@ export declare type GeoJsonProps = {
              * See {@link MarkerProps}
              * Works only on `Android`.
              */
-            color?: number | MarkerColor;
+            color?: string;
             /**
              * See {@link MarkerProps}
              * Works only on `Android`.

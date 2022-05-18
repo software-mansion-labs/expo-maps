@@ -16,8 +16,7 @@ func createGoogleMarker(markerObject: MarkerObject) -> GMSMarker {
   if (iconURL != nil) {
     marker.icon = UIImage(contentsOfFile: iconURL!.standardized.path)
   } else {
-    let color = markerObject.color.truncatingRemainder(dividingBy: Resources.HUE_WHEEL_MAX_VALUE) / Resources.HUE_WHEEL_MAX_VALUE
-    marker.icon = GMSMarker.markerImage(with: UIColor(hue: color, saturation: 1, brightness: 1, alpha: 1))
+    marker.icon = GMSMarker.markerImage(with: markerObject.color)
   }
   
   return marker

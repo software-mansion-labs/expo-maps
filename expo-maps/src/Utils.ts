@@ -1,5 +1,5 @@
 import { Cluster } from './Cluster';
-import { MarkerColor, Color } from './Common.types';
+import { Color } from './Common.types';
 import { Marker } from './Marker';
 import { Polygon } from './Polygon';
 import { Polyline } from './Polyline';
@@ -119,25 +119,13 @@ export function isHexColor(color: any): color is Color {
   return color.length > 0 && color[0] == '#';
 }
 
-export function mapColorToNativeMarkerColor(color: MarkerColor): number {
-  const colors: Record<MarkerColor | 'default', number> = {
-    azure: 210,
-    blue: 240,
-    cyan: 180,
-    green: 120,
-    magenta: 300,
-    orange: 30,
-    rose: 330,
-    violet: 270,
-    yellow: 60,
-    red: 0,
-    default: 0,
-  };
+export function mapColorToHexColor(
+  color: Color,
+  defaultColor?: string
+): string {
+  let defColor = defaultColor;
+  if (defColor == undefined) defColor = '#000000';
 
-  return colors[color] || colors['default'];
-}
-
-export function mapColorToHexColor(color: Color): string {
   const colors: Record<Color | 'default', string> = {
     red: '#ff0000',
     blue: '#0000ff',
@@ -159,7 +147,7 @@ export function mapColorToHexColor(color: Color): string {
     purple: '#800080',
     silver: '#c0c0c0',
     teal: '#008080',
-    default: '#000000',
+    default: defColor,
   };
 
   return colors[color] || colors['default'];

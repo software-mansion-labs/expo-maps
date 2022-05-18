@@ -20,7 +20,6 @@ export type PolylineProps = {
    * * `'#RRGGBBAA'`
    * * `'#RGB'`
    * * `'#RGBA'`
-   * * RGBA Ints
    * * 'red'
    * * 'blue'
    * * 'green'

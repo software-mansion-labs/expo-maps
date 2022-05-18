@@ -186,18 +186,18 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
                 markerTitle: child.props.markerTitle,
                 markerSnippet: child.props.markerSnippet,
                 icon: iconPath?.localUri,
-                color: 0,
+                color: child.props.color,
                 opacity: child.props.opacity ? child.props.opacity : 1,
               } as ClusterObject;
 
-              if (child.props.color != undefined) {
-                if (typeof child.props.color === 'number') {
-                  clusterObject.color = child.props.color!;
-                } else {
-                  clusterObject.color = Utils.mapColorToNativeMarkerColor(
-                    child.props.color
-                  );
-                }
+              if (
+                clusterObject.color != undefined &&
+                !Utils.isHexColor(clusterObject.color)
+              ) {
+                clusterObject.color = Utils.mapColorToHexColor(
+                  clusterObject.color as Color,
+                  '#ff0000'
+                );
               }
               return clusterObject;
             }
@@ -242,6 +242,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
           polylines={this.state.polylines}
           circles={this.state.circles}
           clusters={this.state.clusters}
+          kmls={this.state.kmls}
           geojsons={this.state.geojsons}
         />
       );
@@ -269,12 +270,14 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
 }
 
 function buildGeoJsonObject(child: GeoJson): GeoJsonObject {
-  if (child.props.defaultStyle?.marker?.color != undefined) {
-    if (typeof child.props.defaultStyle?.marker.color !== 'number') {
-      child.props.defaultStyle.marker.color = Utils.mapColorToNativeMarkerColor(
-        child.props.defaultStyle.marker.color
-      );
-    }
+  if (
+    child.props.defaultStyle?.marker?.color != undefined &&
+    !Utils.isHexColor(child.props.defaultStyle.marker.color)
+  ) {
+    child.props.defaultStyle.marker.color = Utils.mapColorToHexColor(
+      child.props.defaultStyle?.marker.color as Color,
+      '#ff0000'
+    );
   }
 
   if (
@@ -324,19 +327,21 @@ async function buildMarkerObject(child: Marker): Promise<MarkerObject> {
     markerTitle: child.props.markerTitle,
     markerSnippet: child.props.markerSnippet,
     icon: iconPath?.localUri,
-    color: 0,
+    color: child.props.color,
     draggable: child.props.draggable ? child.props.draggable : false,
     anchorU: child.props.anchorU,
     anchorV: child.props.anchorV,
     opacity: child.props.opacity ? child.props.opacity : 1,
   } as MarkerObject;
 
-  if (child.props.color != undefined) {
-    if (typeof child.props.color === 'number') {
-      markerObject.color = child.props.color!;
-    } else {
-      markerObject.color = Utils.mapColorToNativeMarkerColor(child.props.color);
-    }
+  if (
+    markerObject.color != undefined &&
+    !Utils.isHexColor(markerObject.color)
+  ) {
+    markerObject.color = Utils.mapColorToHexColor(
+      markerObject.color as Color,
+      '#ff0000'
+    );
   }
   return markerObject;
 }

@@ -19,11 +19,12 @@ func createAppleMarker(markerObject: MarkerObject) -> ExpoMKAnnotation {
     return marker
   } else {
     let marker = ExpoMKColorAnnotation(coordinate: CLLocationCoordinate2D(latitude: markerObject.latitude, longitude: markerObject.longitude))
-    let color = markerObject.color.truncatingRemainder(dividingBy: Resources.HUE_WHEEL_MAX_VALUE) / Resources.HUE_WHEEL_MAX_VALUE
+    var hue: CGFloat = 0
+    markerObject.color?.getHue(&hue, saturation: nil, brightness: nil, alpha: nil)
     marker.title = markerObject.markerTitle
     marker.subtitle = markerObject.markerSnippet
     marker.isDraggable = markerObject.draggable
-    marker.color = color
+    marker.color = hue
     marker.centerOffsetX = markerObject.anchorU ?? 0
     marker.centerOffsetY = markerObject.anchorV ?? 0
     marker.alpha = markerObject.opacity

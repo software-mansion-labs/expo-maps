@@ -147,16 +147,12 @@ export class ExpoMap extends React.Component {
                             markerTitle: child.props.markerTitle,
                             markerSnippet: child.props.markerSnippet,
                             icon: iconPath?.localUri,
-                            color: 0,
+                            color: child.props.color,
                             opacity: child.props.opacity ? child.props.opacity : 1,
                         };
-                        if (child.props.color != undefined) {
-                            if (typeof child.props.color === 'number') {
-                                clusterObject.color = child.props.color;
-                            }
-                            else {
-                                clusterObject.color = Utils.mapColorToNativeMarkerColor(child.props.color);
-                            }
+                        if (clusterObject.color != undefined &&
+                            !Utils.isHexColor(clusterObject.color)) {
+                            clusterObject.color = Utils.mapColorToHexColor(clusterObject.color, '#ff0000');
                         }
                         return clusterObject;
                     }
@@ -187,7 +183,7 @@ export class ExpoMap extends React.Component {
             if (parseInt(Platform.Version) < 13 && this.state.geojsons.length > 0) {
                 console.warn("Versions of iOS < 13 doesn't support GeoJSON features for Apple Maps. Adding of GeoJSON for these versions will be omitted.");
             }
-            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, geojsons: this.state.geojsons }));
+            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons }));
         }
         return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString
                 ? this.props.googleMapsJsonStyleString
@@ -195,10 +191,9 @@ export class ExpoMap extends React.Component {
     }
 }
 function buildGeoJsonObject(child) {
-    if (child.props.defaultStyle?.marker?.color != undefined) {
-        if (typeof child.props.defaultStyle?.marker.color !== 'number') {
-            child.props.defaultStyle.marker.color = Utils.mapColorToNativeMarkerColor(child.props.defaultStyle.marker.color);
-        }
+    if (child.props.defaultStyle?.marker?.color != undefined &&
+        !Utils.isHexColor(child.props.defaultStyle.marker.color)) {
+        child.props.defaultStyle.marker.color = Utils.mapColorToHexColor(child.props.defaultStyle?.marker.color, '#ff0000');
     }
     if (child.props.defaultStyle?.polygon?.fillColor != undefined &&
         !Utils.isHexColor(child.props.defaultStyle.polygon.fillColor)) {
@@ -230,19 +225,15 @@ async function buildMarkerObject(child) {
         markerTitle: child.props.markerTitle,
         markerSnippet: child.props.markerSnippet,
         icon: iconPath?.localUri,
-        color: 0,
+        color: child.props.color,
         draggable: child.props.draggable ? child.props.draggable : false,
         anchorU: child.props.anchorU,
         anchorV: child.props.anchorV,
         opacity: child.props.opacity ? child.props.opacity : 1,
     };
-    if (child.props.color != undefined) {
-        if (typeof child.props.color === 'number') {
-            markerObject.color = child.props.color;
-        }
-        else {
-            markerObject.color = Utils.mapColorToNativeMarkerColor(child.props.color);
-        }
+    if (markerObject.color != undefined &&
+        !Utils.isHexColor(markerObject.color)) {
+        markerObject.color = Utils.mapColorToHexColor(markerObject.color, '#ff0000');
     }
     return markerObject;
 }

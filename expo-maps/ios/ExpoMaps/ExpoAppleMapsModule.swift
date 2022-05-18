@@ -70,6 +70,10 @@ public class ExpoAppleMapsModule: Module {
         view.setEnabledTraffic(enableTraffic: enable)
       }
       
+      prop("kmls") { (view: AppleMapsView, kmlObjects: [KMLObject]) in
+        view.setKMLs(kmlObjects: kmlObjects)
+      }
+      
       prop("geojsons") { (view: AppleMapsView, geoJsonObjects: [GeoJsonObject]) in
         view.setGeoJsons(geoJsonObjects: geoJsonObjects)
       }
