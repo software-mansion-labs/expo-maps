@@ -110,7 +110,7 @@ struct GeoJsonObjectDefaultStylePolygon: Record {
   @Field var fillColor: UIColor?
   @Field var strokeColor: UIColor?
   @Field var strokeWidth: Float?
-  @Field var strokeJointType: String?
+  @Field var strokeJointType: Joint?
   @Field var strokePattern: [PatternItem]?
 }
 
