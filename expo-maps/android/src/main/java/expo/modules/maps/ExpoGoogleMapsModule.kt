@@ -8,92 +8,93 @@ import expo.modules.maps.googleMaps.GoogleMapsView
 class ExpoGoogleMapsModule : Module() {
 
   override fun definition() = ModuleDefinition {
-    name("ExpoGoogleMaps")
+    Name("ExpoGoogleMaps")
 
-    viewManager {
-      view {
+    ViewManager {
+      View {
         GoogleMapsView(it).also { googleMapsView ->
           appContext.legacyModule<UIManager>()
             ?.registerLifecycleEventListener(googleMapsView.lifecycleEventListener)
         }
       }
 
-      prop("enableRotateGestures") { view: GoogleMapsView, enable: Boolean ->
+      Prop("enableRotateGestures") { view: GoogleMapsView, enable: Boolean ->
         view.setEnabledRotateGestures(enable)
       }
 
-      prop("enableScrollGestures") { view: GoogleMapsView, enable: Boolean ->
+      Prop("enableScrollGestures") { view: GoogleMapsView, enable: Boolean ->
         view.setEnabledScrollGestures(enable)
       }
 
-      prop("enableTiltRotateGestures") { view: GoogleMapsView, enable: Boolean ->
+      Prop("enableTiltRotateGestures") { view: GoogleMapsView, enable: Boolean ->
         view.setEnabledTiltGestures(enable)
       }
 
-      prop("enableZoomGestures") { view: GoogleMapsView, enable: Boolean ->
+      Prop("enableZoomGestures") { view: GoogleMapsView, enable: Boolean ->
         view.setEnabledZoomGestures(enable)
       }
 
-      prop("mapType") { view: GoogleMapsView, mapType: MapType ->
+      Prop("mapType") { view: GoogleMapsView, mapType: MapType ->
         view.setMapType(mapType)
       }
 
-      prop("showZoomControls") { view: GoogleMapsView, enable: Boolean ->
+      Prop("showZoomControls") { view: GoogleMapsView, enable: Boolean ->
         view.setShowZoomControl(enable)
       }
 
-      prop("showCompass") { view: GoogleMapsView, enable: Boolean ->
+      Prop("showCompass") { view: GoogleMapsView, enable: Boolean ->
         view.setShowCompass(enable)
       }
 
-      prop("showMapToolbar") { view: GoogleMapsView, enable: Boolean ->
+      Prop("showMapToolbar") { view: GoogleMapsView, enable: Boolean ->
         view.setShowMapToolbar(enable)
       }
 
-      prop("showMyLocationButton") { view: GoogleMapsView, enable: Boolean ->
+      Prop("showMyLocationButton") { view: GoogleMapsView, enable: Boolean ->
         view.setShowMyLocationButton(enable)
       }
-      prop("showLevelPicker") { view: GoogleMapsView, enable: Boolean ->
+
+      Prop("showLevelPicker") { view: GoogleMapsView, enable: Boolean ->
         view.setShowLevelPicker(enable)
       }
 
-      prop("googleMapsJsonStyleString") { view: GoogleMapsView, jsonStyleString: String ->
+      Prop("googleMapsJsonStyleString") { view: GoogleMapsView, jsonStyleString: String ->
         view.setMapStyle(jsonStyleString)
       }
 
-      prop("markers") { view: GoogleMapsView, markerObjects: Array<MarkerObject> ->
+      Prop("markers") { view: GoogleMapsView, markerObjects: Array<MarkerObject> ->
         view.setMarkers(markerObjects)
       }
 
-      prop("polygons") { view: GoogleMapsView, polygonObjects: Array<PolygonObject> ->
+      Prop("polygons") { view: GoogleMapsView, polygonObjects: Array<PolygonObject> ->
         view.setPolygons(polygonObjects)
       }
 
-      prop("polylines") { view: GoogleMapsView, polylineObjects: Array<PolylineObject> ->
+      Prop("polylines") { view: GoogleMapsView, polylineObjects: Array<PolylineObject> ->
         view.setPolylines(polylineObjects)
       }
 
-      prop("initialCameraPosition") { view: GoogleMapsView, initialCameraPosition: CameraPosition ->
+      Prop("initialCameraPosition") { view: GoogleMapsView, initialCameraPosition: CameraPosition ->
         view.setInitialCameraPosition(initialCameraPosition)
       }
 
-      prop("circles") { view: GoogleMapsView, circleObjects: Array<CircleObject> ->
+      Prop("circles") { view: GoogleMapsView, circleObjects: Array<CircleObject> ->
         view.setCircles(circleObjects)
       }
 
-      prop("clusters") { view: GoogleMapsView, clusterObjects: Array<ClusterObject> ->
+      Prop("clusters") { view: GoogleMapsView, clusterObjects: Array<ClusterObject> ->
         view.setClusters(clusterObjects)
       }
 
-      prop("enableTraffic") { view: GoogleMapsView, enable: Boolean ->
+      Prop("enableTraffic") { view: GoogleMapsView, enable: Boolean ->
         view.setEnabledTraffic(enable)
       }
 
-      prop("kmls") { view: GoogleMapsView, kmlObjects: Array<KMLObject> ->
+      Prop("kmls") { view: GoogleMapsView, kmlObjects: Array<KMLObject> ->
         view.setKMLs(kmlObjects)
       }
 
-      prop("geojsons") { view: GoogleMapsView, geoJsonObjects: Array<GeoJsonObject> ->
+      Prop("geojsons") { view: GoogleMapsView, geoJsonObjects: Array<GeoJsonObject> ->
         view.setGeoJsons(geoJsonObjects)
       }
     }
