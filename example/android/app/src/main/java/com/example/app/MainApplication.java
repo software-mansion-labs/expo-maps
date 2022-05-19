@@ -1,22 +1,24 @@
 package com.example.app;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.res.Configuration;
-
 import androidx.annotation.NonNull;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.bridge.JSIModulePackage;
+import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
-import com.swmansion.reanimated.ReanimatedJSIModulePackage;
-
-import java.util.List;
+import com.example.app.newarchitecture.MainApplicationReactNativeHost;
 
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(
@@ -40,22 +42,28 @@ public class MainApplication extends Application implements ReactApplication {
     protected String getJSMainModuleName() {
       return "index";
     }
-
-    @Override
-    protected JSIModulePackage getJSIModulePackage() {
-      return new ReanimatedJSIModulePackage();
-    }
   });
+
+  private final ReactNativeHost mNewArchitectureNativeHost =
+      new ReactNativeHostWrapper(this, new MainApplicationReactNativeHost(this));
 
   @Override
   public ReactNativeHost getReactNativeHost() {
-    return mReactNativeHost;
+    if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
+      return mNewArchitectureNativeHost;
+    } else {
+      return mReactNativeHost;
+    }
   }
 
   @Override
   public void onCreate() {
     super.onCreate();
+    // If you opted-in for the New Architecture, we enable the TurboModule system
+    ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
     SoLoader.init(this, /* native exopackage */ false);
+
+    initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     ApplicationLifecycleDispatcher.onApplicationCreate(this);
   }
 
@@ -63,5 +71,36 @@ public class MainApplication extends Application implements ReactApplication {
   public void onConfigurationChanged(@NonNull Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
     ApplicationLifecycleDispatcher.onConfigurationChanged(this, newConfig);
+  }
+
+  /**
+   * Loads Flipper in React Native templates. Call this in the onCreate method with something like
+   * initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+   *
+   * @param context
+   * @param reactInstanceManager
+   */
+  private static void initializeFlipper(
+      Context context, ReactInstanceManager reactInstanceManager) {
+    if (BuildConfig.DEBUG) {
+      try {
+        /*
+         We use reflection here to pick up the class that initializes Flipper,
+        since Flipper library is not available in release mode
+        */
+        Class<?> aClass = Class.forName("com.example.app.ReactNativeFlipper");
+        aClass
+            .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
+            .invoke(null, context, reactInstanceManager);
+      } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+      } catch (NoSuchMethodException e) {
+        e.printStackTrace();
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      } catch (InvocationTargetException e) {
+        e.printStackTrace();
+      }
+    }
   }
 }

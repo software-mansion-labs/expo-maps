@@ -5,7 +5,13 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "com.example.app"
+    },
+    "ios": {
+      "bundleIdentifier": "com.example.app"
+    }
   },
   "name": "example"
 }
