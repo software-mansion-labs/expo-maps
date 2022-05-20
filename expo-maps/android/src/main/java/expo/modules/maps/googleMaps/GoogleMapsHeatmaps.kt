@@ -24,7 +24,7 @@ class GoogleMapsHeatmaps(private val map: GoogleMap) : Heatmaps {
     for(heatmapObject in heatmapObjects) {
       var builder = HeatmapTileProvider.Builder()
         .weightedData(heatmapObject.points.map {
-          WeightedLatLng(LatLng(heatmapObject.latitude, heatmapObject.longitude), heatmapObject.data ?: 1.0)
+          WeightedLatLng(LatLng(it.latitude, it.longitude), it.data ?: 1.0)
         })
       heatmapObject.gradient?.let {
         builder = builder.gradient(
