@@ -13,7 +13,7 @@ import com.google.maps.android.heatmaps.WeightedLatLng
 import expo.modules.maps.HeatmapObject
 import expo.modules.maps.interfaces.Heatmaps
 
-class GoogleMapsHeatmaps(private val context: Context, private val map: GoogleMap) : Heatmaps {
+class GoogleMapsHeatmaps(private val map: GoogleMap) : Heatmaps {
 
   private val heatmapOverlays = mutableListOf<TileOverlay>()
 
@@ -21,21 +21,21 @@ class GoogleMapsHeatmaps(private val context: Context, private val map: GoogleMa
     heatmapOverlays.forEach { it.remove() }
     heatmapOverlays.clear()
 
-    for(it in heatmapObjects) {
+    for(heatmapObject in heatmapObjects) {
       var builder = HeatmapTileProvider.Builder()
-        .weightedData(it.points.map {
-          WeightedLatLng(LatLng(it.latitude, it.longitude), it.data ?: 1.0)
+        .weightedData(heatmapObject.points.map {
+          WeightedLatLng(LatLng(heatmapObject.latitude, heatmapObject.longitude), heatmapObject.data ?: 1.0)
         })
-      it.gradient?.let {
+      heatmapObject.gradient?.let {
         builder = builder.gradient(
           Gradient(
             it.colors.map { colorStringtoInt(it) }.toIntArray(),
             it.locations))
       }
-      it.radius.let {
+      heatmapObject.radius.let {
         builder = builder.radius(it ?: 20)
       }
-      it.opacity.let {
+      heatmapObject.opacity.let {
         builder = builder.opacity(it ?: 1.0)
       }
       var provider = builder.build()

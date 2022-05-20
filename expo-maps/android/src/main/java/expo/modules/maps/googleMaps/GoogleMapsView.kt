@@ -54,10 +54,14 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     circles = GoogleMapsCircles(googleMap)
     kmls = GoogleMapsKMLs(context, googleMap)
 <<<<<<< HEAD
+<<<<<<< HEAD
     geojsons = GoogleMapsGeoJsons(googleMap)
 =======
     heatmaps = GoogleMapsHeatmaps(context, googleMap)
 >>>>>>> 7d3c60e (Add implementation for heatmaps)
+=======
+    heatmaps = GoogleMapsHeatmaps(googleMap)
+>>>>>>> 57d213f (Remove context and reneme `it` to `heatmapObject`)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
