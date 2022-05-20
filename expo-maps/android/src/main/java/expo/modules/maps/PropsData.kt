@@ -176,8 +176,12 @@ data class HeatmapObject(
   @Field val gradient: Gradient? = null,
   @Field val opacity: Double?,
 <<<<<<< HEAD
+<<<<<<< HEAD
 )
 >>>>>>> 7d3c60e (Add implementation for heatmaps)
 =======
 ) : Record
 >>>>>>> a427a98 (Fix type problems)
+=======
+) : Record
+>>>>>>> 3fa1867 (Update expo-maps/android/src/main/java/expo/modules/maps/PropsData.kt)
