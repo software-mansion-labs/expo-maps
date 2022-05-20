@@ -40,6 +40,7 @@ data class MarkerObject(
 }
 
 data class Point(@Field val latitude: Double = 0.0, @Field val longitude: Double = 0.0) : Record
+
 data class PointWithData(
   @Field val latitude: Double = 0.0,
   @Field val longitude: Double = 0.0,
