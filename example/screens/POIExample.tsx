@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useContext, useState, useRef } from 'react';
+import { StyleSheet, View, Button } from 'react-native';
 
 import * as Maps from 'expo-maps';
 import SwitchContainer from '../components/SwitchContainer';
@@ -7,7 +7,7 @@ import ProviderContext from '../context/ProviderContext';
 
 export default function POIExample() {
   const provider = useContext(ProviderContext);
-
+  const ref = useRef<Maps.ExpoMap>(null);
   const [enablePOISearching, setEnablePOISearching] = useState<boolean>(false);
   const [enablePOIDisplay, setEnablePOIDisplay] = useState<boolean>(false);
 
@@ -18,6 +18,7 @@ export default function POIExample() {
         provider={provider}
         enablePOISearching={enablePOISearching}
         enablePOIDisplay={enablePOIDisplay}
+        ref={ref}
       />
       <View style={styles.switchContainer}>
         <SwitchContainer
@@ -29,6 +30,13 @@ export default function POIExample() {
           title="Display POI"
           value={enablePOIDisplay}
           onValueChange={() => setEnablePOIDisplay(!enablePOIDisplay)}
+        />
+        <Button
+          title="Test"
+          onPress={async () => {
+            console.log('pressed button');
+            await ref.current?.test();
+          }}
         />
       </View>
     </View>
