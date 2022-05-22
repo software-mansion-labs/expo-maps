@@ -5,6 +5,21 @@ public class ExpoAppleMapsModule: Module {
 
   public func definition() -> ModuleDefinition {
     Name("ExpoAppleMaps")
+    
+    function("getSearchCompletions") { (viewHandle: Int) -> Int in
+      print(viewHandle)
+      var result: [String] = ["empty results"] {
+        willSet {
+          print("NEW VALUE: \(newValue)")
+        }
+      }
+      DispatchQueue.main.async {
+        let view = self.appContext?.reactBridge?.uiManager?.view(forReactTag: NSNumber(value: viewHandle)) as? AppleMapsView
+        result = view?.getPOISearchCompletions(searchQueryFragment: "Air") ?? []
+      }
+      print ("RESULT \(result)")
+      return 123
+     }
 
     ViewManager {
       View {

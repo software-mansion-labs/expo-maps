@@ -2,9 +2,9 @@ import MapKit
 
 class AppleMapsPOISearchResultsView: UITableViewController {
   
-  private var searchCompleter: MKLocalSearchCompleter?
   var searchCompleterResults: [MKLocalSearchCompletion]?
   var mapView: MKMapView?
+  private var appleMapsPOISearchCompleter: AppleMapsPOISearchCompleter?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -13,26 +13,14 @@ class AppleMapsPOISearchResultsView: UITableViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    setSearchCompleter()
+    if (appleMapsPOISearchCompleter == nil) {
+      appleMapsPOISearchCompleter = AppleMapsPOISearchCompleter(delegate: self)
+    }
   }
   
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    searchCompleter = nil
-  }
-  
-  private func setSearchCompleter() {
-    searchCompleter = MKLocalSearchCompleter()
-    searchCompleter?.delegate = self
-    if #available(iOS 13.0, *) {
-      searchCompleter?.resultTypes = .pointOfInterest
-    }
-    
-    if let region = mapView?.region {
-      searchCompleter?.region = region
-    } else {
-      searchCompleter?.region = MKCoordinateRegion(MKMapRect.world)
-    }
+    appleMapsPOISearchCompleter = nil
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,7 +52,7 @@ class AppleMapsPOISearchResultsView: UITableViewController {
 extension AppleMapsPOISearchResultsView: UISearchResultsUpdating {
   
   func updateSearchResults(for searchController: UISearchController) {
-    searchCompleter?.queryFragment = searchController.searchBar.text ?? ""
+    appleMapsPOISearchCompleter?.autoComplete(searchController.searchBar.text ?? "")
   }
   
 }
@@ -73,7 +61,7 @@ extension AppleMapsPOISearchResultsView: MKLocalSearchCompleterDelegate {
   
   func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
     searchCompleterResults = completer.results
-    tableView.reloadData()
+    tableView?.reloadData()
   }
   
 }

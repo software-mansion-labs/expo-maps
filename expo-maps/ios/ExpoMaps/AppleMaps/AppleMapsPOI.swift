@@ -1,73 +1,100 @@
 import MapKit
 
 class AppleMapsPOI: NSObject {
+    
+  private var pointsOfInterestSearchCompleter: AppleMapsPOISearchCompleter
+  private var pointsOfInterestSearchService: AppleMapsPOISearch
+  private var pointsOfInterestSearchController: AppleMapsPOISearchController
   
-  private let mapView: MKMapView
-  private let markers: AppleMapsMarkers
-  private var searchService: AppleMapsPOISearch
-  private var searchControllerView: AppleMapsPOISearchController?
-  private var poiFilterCategories: [MKPointOfInterestCategory] = []
-  
-  private var POIFilters: [MKPointOfInterestCategory]?
+  private var mapView: MKMapView
+  private var markers: AppleMapsMarkers
   
   init(mapView: MKMapView, markers: AppleMapsMarkers) {
     self.mapView = mapView
     self.markers = markers
-    searchService = AppleMapsPOISearch(mapView: mapView, markers: markers)
-    searchControllerView = AppleMapsPOISearchController(searchService: searchService)
+    
+    pointsOfInterestSearchCompleter = AppleMapsPOISearchCompleter(delegate: nil)
+    pointsOfInterestSearchService = AppleMapsPOISearch(mapView: mapView, markers: markers)
+    pointsOfInterestSearchController = AppleMapsPOISearchController(searchService: pointsOfInterestSearchService)
+  }
+  
+  func getSearchCompletions(searchQueryFragment: String) -> [String] {
+    pointsOfInterestSearchCompleter.setSearchCompleterRegion(mapView: mapView)
+    pointsOfInterestSearchCompleter.autoComplete(searchQueryFragment)
+    var searchCompletions: [String] = []
+    let results = pointsOfInterestSearchCompleter.getSearchCompletions()
+    for result in results {
+      searchCompletions.append(result.title + ";" + result.subtitle)
+    }
+    return searchCompletions
+  }
+  
+  func createSearchRequest(searchQuery: String) {
+    pointsOfInterestSearchService.createSearchRequest(for: searchQuery)
   }
   
   func setEnabledPOISearching(enabled: Bool) {
     if (enabled) {
-      searchControllerView?.enablePOISearchController(mapView: mapView)
+      pointsOfInterestSearchController.enablePOISearchController(mapView: mapView)
     } else {
-      searchControllerView?.disablePOISearchController()
+      pointsOfInterestSearchController.disablePOISearchController()
     }
   }
   
-  @available(iOS 13.0, *)
-  func setEnabledPOIFilter(categories: [POICategoryType]) {
-    if categories.isEmpty {
-      return;
-    }
-    let categories = categories.compactMap {item -> MKPointOfInterestCategory? in
-      var category: MKPointOfInterestCategory
-      switch item {
-      case .airport:
-        category = .airport
-      case .atm:
-        category = .atm
-      case .bank:
-        category = .bank
-      case .beach:
-        category = .beach
-      case .cafe:
-        category = .cafe
-      case .hospital:
-        category = .hospital
-      case .hotel:
-        category = .hotel
-      case .museum:
-        category = .museum
-      case .pharmacy:
-        category = .pharmacy
-      case .store:
-        category = .store
-      case .zoo:
-        category = .zoo
-      }
-      return category
-    }
-    searchService.setPOIFilterCategories(categories: categories)
-  }
   
+  //dispaying poi on map
   @available(iOS 14.0, *)
   func setEnabledShowPOI(enabled: Bool) {
     if (enabled) {
-      searchService.createSearchRequest()
+      pointsOfInterestSearchService.createSearchRequest()
     } else {
       markers.setMarkers(markerObjects: [])
     }
   }
+
 }
 
+//adding filter with specified categories
+@available(iOS 13.0, *)
+extension AppleMapsPOI {
+  
+  func setEnabledPOIFilter(categories: [POICategoryType]) {
+    if categories.isEmpty {
+      return;
+    }
+    let categories = categories.compactMap(mapToMKPOICategories)
+    pointsOfInterestSearchService.setPointsOfInterestCategories(categories: categories)
+    let filter = MKPointOfInterestFilter.init(including: categories)
+    pointsOfInterestSearchCompleter.setSearchCompleterFilters(filter: filter)
+  }
+
+  private func mapToMKPOICategories(category: POICategoryType) -> MKPointOfInterestCategory {
+    var mappedCategory: MKPointOfInterestCategory
+    switch category {
+    case .airport:
+      mappedCategory = .airport
+    case .atm:
+      mappedCategory = .atm
+    case .bank:
+      mappedCategory = .bank
+    case .beach:
+      mappedCategory = .beach
+    case .cafe:
+      mappedCategory = .cafe
+    case .hospital:
+      mappedCategory = .hospital
+    case .hotel:
+      mappedCategory = .hotel
+    case .museum:
+      mappedCategory = .museum
+    case .pharmacy:
+      mappedCategory = .pharmacy
+    case .store:
+      mappedCategory = .store
+    case .zoo:
+      mappedCategory = .zoo
+    }
+    return mappedCategory
+  }
+  
+}

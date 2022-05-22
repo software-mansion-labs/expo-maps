@@ -95,6 +95,16 @@ public final class AppleMapsView: UIView, ExpoMapView {
       pointsOfInterest.setEnabledShowPOI(enabled: enabled)
     }
   }
+  
+  func getPOISearchCompletions(searchQueryFragment: String) -> [String] {
+    print("👋👋👋")
+    let searchCompletions = pointsOfInterest.getSearchCompletions(searchQueryFragment: searchQueryFragment)
+    return searchCompletions
+  }
+  
+  func createPOISearchRequest(searchQuery: String) {
+    pointsOfInterest.createSearchRequest(searchQuery: searchQuery)
+  }
 
   func setMarkers(markerObjects: [MarkerObject]) {
     markers.setMarkers(markerObjects: markerObjects)
