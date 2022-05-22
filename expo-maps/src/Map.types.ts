@@ -196,20 +196,20 @@ export type Traffic = {
 /**
  * Props for POI handling.
  */
- export type POI = {
+export type POI = {
   /**
    * If 'true' search bar for searching pois is enabled.
-   * 
+   *
    * @default false
    */
   enablePOISearching: boolean;
   /**
    * If 'true' POI in range of current view are being displayed.
-   * 
+   *
    * @default false
    */
   enablePOIDisplay: boolean;
-}
+};
 
 export type GoogleMapsControls = Controls;
 
@@ -294,6 +294,7 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
  * Props for Apple Maps implementation.
  */
 export type NativeExpoAppleMapsViewProps = ViewProps &
+  React.RefAttributes<React.Component<any>> &
   PropsWithChildren<
     MapType &
       Gestures &
@@ -309,6 +310,8 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
       GeoJsons &
       POI
   >;
+
+export type ExpoMapRef = { test: () => Promise<void> };
 
 export type Providers = 'google' | 'apple';
 

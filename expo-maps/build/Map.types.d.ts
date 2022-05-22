@@ -180,6 +180,23 @@ export declare type Traffic = {
      */
     enableTraffic: boolean;
 };
+/**
+ * Props for POI handling.
+ */
+export declare type POI = {
+    /**
+     * If 'true' search bar for searching pois is enabled.
+     *
+     * @default false
+     */
+    enablePOISearching: boolean;
+    /**
+     * If 'true' POI in range of current view are being displayed.
+     *
+     * @default false
+     */
+    enablePOIDisplay: boolean;
+};
 export declare type GoogleMapsControls = Controls;
 export declare type ZoomLevels = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22;
 /**
@@ -212,11 +229,14 @@ export declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZ
 /**
  * Props for Google Maps implementation.
  */
-export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons>;
+export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & POI>;
 /**
  * Props for Apple Maps implementation.
  */
-export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & POI>;
+export declare type NativeExpoAppleMapsViewProps = ViewProps & React.RefAttributes<React.Component<any>> & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & POI>;
+export declare type ExpoMapRef = {
+    test: () => Promise<void>;
+};
 export declare type Providers = 'google' | 'apple';
 /**
  * Prop for managing map provider.
@@ -235,5 +255,5 @@ export declare type Provider = {
  * All of the ExpoMap props are optional.
  */
 export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic & POI>>;
-export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition & Traffic;
+export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition & Traffic & POI;
 export declare type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters & KMLs & GeoJsons;

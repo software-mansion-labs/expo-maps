@@ -1,6 +1,8 @@
 import React from 'react';
 import {
   NativeExpoAppleMapsView,
+  NativeExpoAppleMapsModule,
+  NativeExpoAppleMapsViewType,
   NativeExpoGoogleMapsView,
 } from './NativeExpoMapView';
 import {
@@ -9,7 +11,7 @@ import {
   ExpoMapViewProps,
 } from './Map.types';
 import { Asset } from 'expo-asset';
-import { Platform } from 'react-native';
+import { Platform, findNodeHandle } from 'react-native';
 import * as Utils from './Utils';
 import { Marker, MarkerObject } from './Marker';
 import { PolygonObject } from './Polygon';
@@ -27,6 +29,7 @@ export { Circle } from './Circle';
 export { Cluster } from './Cluster';
 export { KML } from './KML';
 export { GeoJson } from './GeoJson';
+export { ExpoMapRef } from './Map.types';
 
 const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   mapType: 'normal',
@@ -66,6 +69,15 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
     geojsons: [],
   };
   _ismounted = false;
+  mapView = React.createRef<React.Component<any>>();
+
+  async test() {
+    const nodeHandle = findNodeHandle(this.mapView.current);
+    const val = await NativeExpoAppleMapsModule.getSearchCompletions(
+      nodeHandle
+    );
+    console.log({ val });
+  }
 
   componentDidMount() {
     this.mapChildren();
@@ -246,6 +258,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
           clusters={this.state.clusters}
           kmls={this.state.kmls}
           geojsons={this.state.geojsons}
+          ref={this.mapView}
         />
       );
     }
