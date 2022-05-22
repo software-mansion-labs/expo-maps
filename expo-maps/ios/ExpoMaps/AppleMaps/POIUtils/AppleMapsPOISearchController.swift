@@ -20,19 +20,21 @@ class AppleMapsPOISearchController: NSObject {
   
   func enablePOISearchController(mapView: MKMapView) {
     mapView.addSubview(navigationBar)
-    searchResultsTable = AppleMapsPOISearchResultsView(style: .grouped)
+    let poiSearchResultsView = AppleMapsPOISearchResultsView(style: .grouped)
+    searchResultsTable = poiSearchResultsView
     searchResultsTable?.tableView.delegate = self
     searchResultsTable?.mapView = mapView
     searchResultsTable?.definesPresentationContext = false
-    setSearchController()
+    setSearchController(mapView)
   }
   
-  private func setSearchController() {
-    searchController = UISearchController(searchResultsController: searchResultsTable)
+  private func setSearchController(_ mapView: MKMapView) {
+    let sC = UISearchController(searchResultsController: searchResultsTable)
+    searchController = sC
     searchController?.searchResultsUpdater = searchResultsTable
-    searchController?.hidesNavigationBarDuringPresentation = false
     setSearchBar()
     navigationItem.searchController = searchController
+    mapView.addSubview(sC.view)
   }
   
   func disablePOISearchController() {
