@@ -2,7 +2,7 @@
   "name": "expo-maps",
   "version": "1.0.0",
   "description": "ExpoMaps standalone module",
-  "main": "build/Map.js",
+  "main": "build/Maps.js",
   "types": "build/Map.d.ts",
   "scripts": {
     "build": "expo-module build",

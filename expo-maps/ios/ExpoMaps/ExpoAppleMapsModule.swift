@@ -4,10 +4,12 @@ public class ExpoAppleMapsModule: Module {
 
   public func definition() -> ModuleDefinition {
     Name("ExpoAppleMaps")
+    
+    Events(MapEventsNames.ON_CAMERA_MOVE_STARTED_EVENT.rawValue, MapEventsNames.ON_CAMERA_MOVE_ENDED_EVENT.rawValue, MapEventsNames.ON_MARKER_CLICK_EVENT.rawValue, MapEventsNames.ON_MARKER_DRAG_STARTED_EVENT.rawValue, MapEventsNames.ON_MARKER_DRAG_ENDED_EVENT.rawValue)
 
     ViewManager {
       View {
-        AppleMapsView()
+        AppleMapsView(sendEvent: self.sendEvent)
       }
 
       Prop("showCompass") { (view: AppleMapsView, enable: Bool) in

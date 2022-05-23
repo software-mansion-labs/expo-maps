@@ -23,6 +23,7 @@ export type ExamplesStackNavigatorProps = {
   Traffic: undefined;
   KML: undefined;
   GeoJson: undefined;
+  Callbacks: undefined;
 };
 
 const ExamplesStackNavigator =

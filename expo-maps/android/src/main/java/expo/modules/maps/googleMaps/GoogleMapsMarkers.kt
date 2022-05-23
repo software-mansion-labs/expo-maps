@@ -5,12 +5,15 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.collections.MarkerManager
 import expo.modules.maps.MarkerObject
+import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import expo.modules.maps.interfaces.Markers
 
-class GoogleMapsMarkers(private val map: GoogleMap) : Markers {
+class GoogleMapsMarkers(markerManager: MarkerManager) : Markers {
 
-  private val markers = mutableListOf<Marker>()
+  private val markers = mutableMapOf<Marker, String?>()
+  private val markerManagerCollection: MarkerManager.Collection = markerManager.Collection()
 
   override fun setMarkers(markerObjects: Array<MarkerObject>) {
     detachAndDeleteMarkers()
@@ -27,12 +30,42 @@ class GoogleMapsMarkers(private val map: GoogleMap) : Markers {
         .alpha(markerObject.opacity.toFloat())
         .icon(provideDescriptor(localUri, markerObject.color))
 
-      map.addMarker(markerOptions)?.let { markers.add(it) }
+      markerManagerCollection.addMarker(markerOptions).let {
+        markers[it] = markerObject.id
+      }
     }
   }
 
+  fun setOnMarkerClickListener(eventEmitterManager: GoogleMapsEventEmitterManager) {
+    markerManagerCollection.setOnMarkerClickListener { marker ->
+      markers[marker]?.let {
+        eventEmitterManager.sendMarkerClickEvent(it)
+      }
+      false
+    }
+  }
+
+  fun setOnMarkerDragListener(eventEmitterManager: GoogleMapsEventEmitterManager) {
+    markerManagerCollection.setOnMarkerDragListener(object : GoogleMap.OnMarkerDragListener {
+
+      override fun onMarkerDrag(marker: Marker) = Unit
+
+      override fun onMarkerDragEnd(marker: Marker) {
+        markers[marker]?.let {
+          eventEmitterManager.sendMarkerDragEndedEvent(it, marker.position.latitude, marker.position.longitude)
+        }
+      }
+
+      override fun onMarkerDragStart(marker: Marker) {
+        markers[marker]?.let {
+          eventEmitterManager.sendMarkerDragStartedEvent(it)
+        }
+      }
+    })
+  }
+
   override fun detachAndDeleteMarkers() {
-    markers.forEach { it.remove() }
+    markerManagerCollection.clear()
     markers.clear()
   }
 }

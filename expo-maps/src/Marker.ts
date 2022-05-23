@@ -6,6 +6,10 @@ import { Point } from './Common.types';
  */
 export type BaseMarkerOptions = {
   /**
+   * Id of the marker, should be unique.
+   */
+  id?: string;
+  /**
    * Title of the marker, avaliable in annotation box.
    */
   markerTitle?: string;
@@ -58,7 +62,7 @@ export type BaseMarkerOptions = {
 
 export type MarkerOptions = {
   /**
-   * If 'true` marker is draggable.
+   * If 'true' marker is draggable, clustered markers can't be dragged on Android.
    *
    * @default false
    */

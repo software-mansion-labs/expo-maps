@@ -2,8 +2,16 @@ import MapKit
 
 class AppleMapsDelegate : NSObject, MKMapViewDelegate {
   
+  private let markersManager: AppleMapsMarkersManager
+  private let sendEvent: (String, [String: Any?]) -> Void
   // Dictionary which holds cluster names connected with clusters appearance data
   private var clusterObjects: [String : ClusterObject] = [:]
+  
+  init(sendEvent: @escaping (String, [String: Any?]) -> Void, markersManager: AppleMapsMarkersManager) {
+    self.sendEvent = sendEvent
+    self.markersManager = markersManager
+    super.init()
+  }
   
   func setClusters(clusterObjects: [ClusterObject]) {
     self.clusterObjects = [:]
@@ -114,6 +122,7 @@ class AppleMapsDelegate : NSObject, MKMapViewDelegate {
       if (iconURL != nil) {
         let clusterAnnotation = ExpoMKClusterImageAnnotation(memberAnnotations: memberAnnotations)
         clusterAnnotation.icon = iconURL!.standardized.path
+        clusterAnnotation.id = clusterObject.id
         clusterAnnotation.minimumClusterSize = clusterObject.minimumClusterSize
         clusterAnnotation.title = clusterObject.markerTitle
         clusterAnnotation.subtitle = clusterObject.markerSnippet
@@ -125,6 +134,7 @@ class AppleMapsDelegate : NSObject, MKMapViewDelegate {
         var hue: CGFloat = 0
         clusterObject.color?.getHue(&hue, saturation: nil, brightness: nil, alpha: nil)
         clusterAnnotation.color = hue
+        clusterAnnotation.id = clusterObject.id
         clusterAnnotation.minimumClusterSize = clusterObject.minimumClusterSize
         clusterAnnotation.title = clusterObject.markerTitle
         clusterAnnotation.subtitle = clusterObject.markerSnippet
@@ -135,5 +145,39 @@ class AppleMapsDelegate : NSObject, MKMapViewDelegate {
     }
 
     return ExpoMKClusterColorAnnotation(memberAnnotations: memberAnnotations)
+  }
+  
+  func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+    let position = mapView.camera.centerCoordinate
+    sendEvent(MapEventsNames.ON_CAMERA_MOVE_STARTED_EVENT.rawValue, createCameraEventContent(latitude: position.latitude, longitude: position.longitude))
+  }
+  
+  func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    let position = mapView.camera.centerCoordinate
+    sendEvent(MapEventsNames.ON_CAMERA_MOVE_ENDED_EVENT.rawValue, createCameraEventContent(latitude: position.latitude, longitude: position.longitude))
+  }
+  
+  func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+    if let annotation = view.annotation as? ExpoMKAnnotation {
+      if let id = annotation.id {
+        sendEvent(MapEventsNames.ON_MARKER_CLICK_EVENT.rawValue, createMarkerClickEventContent(id: id))
+      }
+    } else if let annotation = view.annotation as? ExpoMKClusterAnnotation {
+      if let id = annotation.id {
+        sendEvent(MapEventsNames.ON_MARKER_CLICK_EVENT.rawValue, createMarkerClickEventContent(id: id))
+      }
+    }
+  }
+  
+  func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
+    if let annotation = view.annotation as? ExpoMKAnnotation {
+      if let id = annotation.id {
+        if (newState == MKAnnotationView.DragState.starting) {
+          sendEvent(MapEventsNames.ON_MARKER_DRAG_STARTED_EVENT.rawValue, createMarkerDragStartedEventContent(id: id))
+        } else if (newState == MKAnnotationView.DragState.ending) {
+          sendEvent(MapEventsNames.ON_MARKER_DRAG_ENDED_EVENT.rawValue, createMarkerDragEndedEventContent(id: id, latitude: view.annotation!.coordinate.latitude, longitude: view.annotation!.coordinate.longitude))
+        }
+      }
+    }
   }
 }

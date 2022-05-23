@@ -3,19 +3,21 @@ import GoogleMaps
 public final class GoogleMapsView: UIView, ExpoMapView {
 
   private let mapView: GMSMapView
-  private let delegate: GoogleMapsViewDelegate
+  private let googleMapsViewDelegate: GoogleMapsViewDelegate
   private let controls: GoogleMapsControls
   private let markers: GoogleMapsMarkers
   private let clusters: GoogleMapsClusters
+  private let googleMapsClusterManagerDelegate: GoogleMapsClusterManagerDelegate
   private let gestures: GoogleMapsGestures
   private let polygons: GoogleMapsPolygons
   private let polylines: GoogleMapsPolylines
   private let circles: GoogleMapsCircles
   private let kmls: GoogleMapsKMLs
   private let geojsons: GoogleMapsGeoJsons
+  private let googleMapsMarkersManager: GoogleMapsMarkersManager = GoogleMapsMarkersManager()
   private var wasInitialCameraPositionSet = false
 
-  init() {
+  init(sendEvent: @escaping (String, [String: Any?]) -> Void) {
     // just for now we do authentication here
     // should be moved to module's function
     GMSServices.provideAPIKey("AIzaSyDbgaRNTr3PhYdj_PL7jY_o9u3R08Gf8Ao")
@@ -24,12 +26,13 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     // TODO: use prop as a source for initial camera position
     let camera = GMSCameraPosition.camera(withLatitude: 51.5, longitude: 0, zoom: 4.0)
     mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-    delegate = GoogleMapsViewDelegate()
-    mapView.delegate = delegate
+    googleMapsViewDelegate = GoogleMapsViewDelegate(sendEvent: sendEvent, googleMapsMarkersManager: googleMapsMarkersManager)
+    mapView.delegate = googleMapsViewDelegate
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     controls = GoogleMapsControls(mapView: mapView)
-    markers = GoogleMapsMarkers(mapView: mapView)
-    clusters = GoogleMapsClusters(mapView: mapView)
+    markers = GoogleMapsMarkers(mapView: mapView, googleMapsMarkersManager: googleMapsMarkersManager)
+    googleMapsClusterManagerDelegate = GoogleMapsClusterManagerDelegate(sendEvent: sendEvent, googleMapsMarkersManager: googleMapsMarkersManager)
+    clusters = GoogleMapsClusters(mapView: mapView, googleMapsMarkersManager: googleMapsMarkersManager, googleMapsClusterManagerDelegate: googleMapsClusterManagerDelegate, googleMapsViewDelegate: googleMapsViewDelegate)
     gestures = GoogleMapsGestures(mapView: mapView)
     polygons = GoogleMapsPolygons(mapView: mapView)
     polylines = GoogleMapsPolylines(mapView: mapView)
@@ -38,7 +41,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     geojsons = GoogleMapsGeoJsons(mapView: mapView)
 
     super.init(frame: CGRect.zero)
-    delegate.expoMapView = self
+    googleMapsViewDelegate.expoMapView = self
     addSubview(mapView)
   }
 

@@ -8,6 +8,7 @@ enum MapType: String, EnumArgument {
 }
 
 struct MarkerObject: Record {
+  @Field var id: String? = nil
   @Field var latitude: Double = 0
   @Field var longitude: Double = 0
   @Field var markerTitle: String? = nil
@@ -81,6 +82,7 @@ struct CameraPosition: Record {
 }
 
 struct ClusterObject: Record {
+  @Field var id: String? = nil
   @Field var name: String = "default_cluster"
   @Field var minimumClusterSize: Int = 2
   @Field var markerTitle: String? = nil

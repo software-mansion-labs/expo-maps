@@ -1,20 +1,36 @@
 package expo.modules.maps.googleMaps
 
 import android.content.Context
-import android.graphics.Color
 import android.net.Uri
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
+import com.google.maps.android.collections.MarkerManager
 import expo.modules.maps.ClusterObject
 import expo.modules.maps.MarkerObject
+import expo.modules.maps.googleMaps.events.GoogleMapsCameraMoveEndedEventEmitter
+import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import expo.modules.maps.interfaces.Clusters
 
 // Context has to be passed in order to use custom cluster manager and renderer
-class GoogleMapsClusters(private val context: Context, private val map: GoogleMap) : Clusters {
+class GoogleMapsClusters(
+  private val context: Context,
+  private val map: GoogleMap,
+  private val markerManager: MarkerManager
+) : Clusters {
+
   private val clusters: MutableList<ExpoClusterManager> = mutableListOf()
+  var googleMapsEventEmitterManager: GoogleMapsEventEmitterManager? = null
+  set(value) {
+    field = value
+    setOnClusterItemClickedListener()
+    setOnClusterClickedListener()
+  }
 
   // After each cluster's items modification cluster() has to be called on cluster manager
   override fun setClusters(clusterObjects: Array<ClusterObject>) {
@@ -27,6 +43,7 @@ class GoogleMapsClusters(private val context: Context, private val map: GoogleMa
 
     clusterObjects.forEach { clusterObject ->
       val clusterManager = ExpoClusterManager(
+        clusterObject.id,
         clusterObject.minimumClusterSize,
         clusterObject.markerTitle,
         clusterObject.markerSnippet,
@@ -40,22 +57,50 @@ class GoogleMapsClusters(private val context: Context, private val map: GoogleMa
       clusters.add(clusterManager)
     }
 
+    setOnClusterItemClickedListener()
+    setOnClusterClickedListener()
+  }
+
+  fun setOnCameraIdleListener(eventEmitter: GoogleMapsCameraMoveEndedEventEmitter) {
     // Point the map's listeners at the listeners implemented by the cluster managers.
-    map.setOnCameraIdleListener {
+    eventEmitter.addListener {
       clusters.forEach {
         it.onCameraIdle()
       }
     }
   }
 
-  private inner class ExpoClusterManager(
+  private fun setOnClusterItemClickedListener() {
+    clusters.forEach { expoClusterManager ->
+      expoClusterManager.setOnClusterItemClickListener { markerObject ->
+        markerObject.id?.let {
+          googleMapsEventEmitterManager?.sendMarkerClickEvent(it)
+        }
+        false
+      }
+    }
+  }
+
+  private fun setOnClusterClickedListener() {
+    clusters.forEach { expoClusterManager ->
+      expoClusterManager.setOnClusterClickListener {
+        expoClusterManager.id?.let { id ->
+          googleMapsEventEmitterManager?.sendMarkerClickEvent(id)
+        }
+        false
+      }
+    }
+  }
+
+  inner class ExpoClusterManager(
+    val id: String?,
     val minimumClusterSize: Int,
     val title: String?,
     val snippet: String?,
     val icon: String?,
     val color: String?,
     val opacity: Double
-  ) : ClusterManager<MarkerObject>(context, map) {
+  ) : ClusterManager<MarkerObject>(context, map, markerManager) {
 
     init {
       renderer = ExpoClusterRenderer(this)
@@ -88,7 +133,6 @@ class GoogleMapsClusters(private val context: Context, private val map: GoogleMa
         .position(LatLng(item.latitude, item.longitude))
         .title(item.markerTitle)
         .snippet(item.markerSnippet)
-        .draggable(item.draggable)
         .anchor((item.anchorU ?: 0.5).toFloat(), (item.anchorV ?: 1).toFloat())
         .alpha(item.opacity.toFloat())
         .icon(provideDescriptor(localUri, item.color))
@@ -99,7 +143,6 @@ class GoogleMapsClusters(private val context: Context, private val map: GoogleMa
       marker.position = LatLng(item.latitude, item.longitude)
       marker.title = item.markerTitle
       marker.snippet = item.markerSnippet
-      marker.isDraggable = item.draggable
       marker.setAnchor((item.anchorU ?: 0.5).toFloat(), (item.anchorV ?: 1).toFloat())
       marker.alpha = item.opacity.toFloat()
       marker.setIcon(provideDescriptor(localUri, item.color))

@@ -8,7 +8,9 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.maps.android.collections.MarkerManager
 import expo.modules.maps.*
+import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -26,6 +28,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var circles: GoogleMapsCircles
   private lateinit var kmls: GoogleMapsKMLs
   private lateinit var geojsons: GoogleMapsGeoJsons
+  private lateinit var markerManager: MarkerManager
   private val mapReady = MutableStateFlow(false)
   private var wasInitialCameraPositionSet = false
 
@@ -41,10 +44,11 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   override fun onMapReady(googleMap: GoogleMap) {
     this.googleMap = googleMap
+    markerManager = MarkerManager(googleMap)
     controls = GoogleMapsControls(googleMap)
     gestures = GoogleMapsGestures(googleMap)
-    markers = GoogleMapsMarkers(googleMap)
-    clusters = GoogleMapsClusters(context, googleMap)
+    markers = GoogleMapsMarkers(markerManager)
+    clusters = GoogleMapsClusters(context, googleMap, markerManager)
     polygons = GoogleMapsPolygons(googleMap)
     polylines = GoogleMapsPolylines(googleMap)
     circles = GoogleMapsCircles(googleMap)
@@ -203,6 +207,16 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   override fun setGeoJsons(geoJsonObjects: Array<GeoJsonObject>) {
     updateMap {
       geojsons.setGeoJsons(geoJsonObjects)
+    }
+  }
+
+  fun registerEvents(mapsEventEmitterManager: GoogleMapsEventEmitterManager) {
+    updateMap {
+      mapsEventEmitterManager.createEmitters(googleMap)
+      clusters.googleMapsEventEmitterManager = mapsEventEmitterManager
+      clusters.setOnCameraIdleListener(mapsEventEmitterManager.mapsEventEmitterCameraMoveEnded)
+      markers.setOnMarkerClickListener(mapsEventEmitterManager)
+      markers.setOnMarkerDragListener(mapsEventEmitterManager)
     }
   }
 
