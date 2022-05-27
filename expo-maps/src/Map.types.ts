@@ -194,6 +194,25 @@ export type Traffic = {
   enableTraffic: boolean;
 };
 
+/**
+ * Props for managing POIs.
+ */
+export type POIs = {
+  /**
+   * If `true` POIs are displayed on the screen.
+   *
+   * @default true
+   */
+  enablePOIs: boolean;
+  /**
+   * If `true` POIs are clickable and after the click name of POI is displayed above the POI's location.
+   * Please note, this field is only effective when `enablePOI` option is equal to `true`.
+   *
+   * @default true
+   */
+  clickablePOIs: boolean;
+};
+
 export type GoogleMapsControls = Controls;
 
 export type ZoomLevels =
@@ -269,7 +288,8 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       Clusters &
       Traffic &
       KMLs &
-      GeoJsons
+      GeoJsons &
+      POIs
   >;
 
 /**
@@ -319,7 +339,8 @@ export type ExpoMapViewProps = ViewProps &
         GoogleMapsStyling &
         Gestures &
         CameraPosition &
-        Traffic
+        Traffic &
+        POIs
     >
   >;
 
@@ -327,7 +348,8 @@ export type DefaultNativeExpoMapViewProps = MapType &
   Controls &
   Gestures &
   CameraPosition &
-  Traffic;
+  Traffic &
+  POIs;
 
 export type ExpoMapState = Markers &
   Polygons &

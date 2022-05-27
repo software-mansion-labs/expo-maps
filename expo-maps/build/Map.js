@@ -28,6 +28,8 @@ const defaultNativeExpoMapViewProps = {
         animate: true,
     },
     enableTraffic: false,
+    enablePOIs: true,
+    clickablePOIs: true,
 };
 /**
  * Main map component of Expo Maps library.
@@ -185,9 +187,23 @@ export class ExpoMap extends React.Component {
             }
             return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons }));
         }
-        return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString
-                ? this.props.googleMapsJsonStyleString
-                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons }));
+        let googleMapsJsonStyleString = this.props.googleMapsJsonStyleString
+            ? this.props.googleMapsJsonStyleString
+            : '';
+        if (this.props.enablePOIs === false) {
+            if (this.props.googleMapsJsonStyleString) {
+                console.warn("Expo Maps enablePOIs prop isn't effective when custom Google Maps map style is active. Please adjust your style manually to disable the POIs. https://developers.google.com/maps/documentation/ios-sdk/poi");
+            }
+            else {
+                googleMapsJsonStyleString = JSON.stringify([
+                    {
+                        featureType: 'poi',
+                        stylers: [{ visibility: 'off' }],
+                    },
+                ]);
+            }
+        }
+        return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: googleMapsJsonStyleString, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons }));
     }
 }
 function buildGeoJsonObject(child) {

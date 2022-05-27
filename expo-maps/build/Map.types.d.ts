@@ -180,6 +180,24 @@ export declare type Traffic = {
      */
     enableTraffic: boolean;
 };
+/**
+ * Props for managing POIs.
+ */
+export declare type POIs = {
+    /**
+     * If `true` POIs are displayed on the screen.
+     *
+     * @default true
+     */
+    enablePOIs: boolean;
+    /**
+     * If `true` POIs are clickable and after the click name of POI is displayed above the POI's location.
+     * Please note, this field is only effective when `enablePOI` option is equal to `true`.
+     *
+     * @default true
+     */
+    clickablePOIs: boolean;
+};
 export declare type GoogleMapsControls = Controls;
 export declare type ZoomLevels = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22;
 /**
@@ -212,7 +230,7 @@ export declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZ
 /**
  * Props for Google Maps implementation.
  */
-export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons>;
+export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & POIs>;
 /**
  * Props for Apple Maps implementation.
  */
@@ -234,6 +252,6 @@ export declare type Provider = {
  *
  * All of the ExpoMap props are optional.
  */
-export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic>>;
-export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition & Traffic;
+export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic & POIs>>;
+export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition & Traffic & POIs;
 export declare type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters & KMLs & GeoJsons;

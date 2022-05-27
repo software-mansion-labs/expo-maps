@@ -81,6 +81,10 @@ public class ExpoGoogleMapsModule: Module {
       Prop("geojsons") { (view: GoogleMapsView, geoJsonObjects: [GeoJsonObject]) in
         view.setGeoJsons(geoJsonObjects: geoJsonObjects)
       }
+      
+      Prop("clickablePOIs") { (view: GoogleMapsView, clickablePOIs: Bool) in
+        view.setClickablePOIs(clickablePOIs: clickablePOIs)
+      }
     }
   }
 }

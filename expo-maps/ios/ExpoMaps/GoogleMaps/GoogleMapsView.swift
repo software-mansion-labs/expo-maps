@@ -14,6 +14,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let kmls: GoogleMapsKMLs
   private let geojsons: GoogleMapsGeoJsons
   private var wasInitialCameraPositionSet = false
+  public var clickablePOIs = true
 
   init() {
     // just for now we do authentication here
@@ -151,5 +152,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   
   func setGeoJsons(geoJsonObjects: [GeoJsonObject]) {
     geojsons.setGeoJsons(geoJsonObjects: geoJsonObjects)
+  }
+  
+  func setClickablePOIs(clickablePOIs: Bool) {
+    self.clickablePOIs = clickablePOIs
   }
 }
