@@ -216,6 +216,13 @@ export declare type POI = {
      *
      */
     createPOISearchRequest: string;
+    /**
+     * If `true` POIs are clickable and after the click name of POI is displayed above the POI's location.
+     * Please note, this field is only effective when `enablePOI` option is equal to `true`.
+     *
+     * @default false
+     */
+    clickablePOIs: boolean;
 };
 export declare type AppleMapsPOI = POI;
 export declare type GoogleMapsPOI = Omit<POI, 'enablePOISearching' | 'enablePOIFilter'>;

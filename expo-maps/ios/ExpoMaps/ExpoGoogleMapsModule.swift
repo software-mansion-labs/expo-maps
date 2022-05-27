@@ -85,6 +85,10 @@ public class ExpoGoogleMapsModule: Module {
       Prop("heatmaps") { (view: GoogleMapsView, heatmapObjects: [HeatmapObject]) in
         view.setHeatmaps(heatmapObjects: heatmapObjects)
       }
+      
+      Prop("clickablePOIs") { (view: GoogleMapsView, clickablePOIs: Bool) in
+        view.setClickablePOIs(clickablePOIs: clickablePOIs)
+      }
     }
   }
 }

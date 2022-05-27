@@ -15,6 +15,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let geojsons: GoogleMapsGeoJsons
   private var wasInitialCameraPositionSet = false
   private let heatmaps: GoogleMapsHeatmaps
+  public var clickablePOIs = true
 
   init() {
     // just for now we do authentication here
@@ -157,5 +158,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   
   func setHeatmaps(heatmapObjects: [HeatmapObject]) {
     heatmaps.setHeatmaps(heatmapObjects: heatmapObjects)
+  }
+  
+  func setClickablePOIs(clickablePOIs: Bool) {
+    self.clickablePOIs = clickablePOIs
   }
 }

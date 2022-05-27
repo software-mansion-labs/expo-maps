@@ -17,6 +17,7 @@ export default function POIExample() {
   const [text, onChangeText] = useState<string>('');
   const [placeToSearch, setPlaceToSearch] = useState<string>('');
   const [enablePlaceSearch, setEnablePlaceSearch] = useState<boolean>(false);
+  const [clickablePOIs, setClickablePOIs] = useState<boolean>(false);
 
   const appleMapsSearchRequest = 'Centrum Pompidou; Roue 1234';
   const googleMapsSearchRequest =
@@ -31,6 +32,7 @@ export default function POIExample() {
         enablePOIs={enablePOIs}
         enablePOIFilter={poiType}
         createPOISearchRequest={placeToSearch}
+        clickablePOIs={clickablePOIs}
         ref={ref}
         initialCameraPosition={{
           latitude: 48.85,
@@ -52,6 +54,13 @@ export default function POIExample() {
           value={enablePOIs}
           onValueChange={() => setEnablePOIs(!enablePOIs)}
         />
+        {provider == 'google' && (
+          <SwitchContainer
+            title="Clickable POIs"
+            value={clickablePOIs}
+            onValueChange={() => setClickablePOIs(!clickablePOIs)}
+          />
+        )}
         {provider == 'apple' && (
           <SwitchContainer
             title="Enable POI cafe filter"

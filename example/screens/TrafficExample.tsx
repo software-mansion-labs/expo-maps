@@ -33,8 +33,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   switchContainer: {
-    margin: 5,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    padding: 20,
   },
 });
