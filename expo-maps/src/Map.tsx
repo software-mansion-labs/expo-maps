@@ -4,6 +4,8 @@ import {
   NativeExpoAppleMapsModule,
   NativeExpoAppleMapsViewType,
   NativeExpoGoogleMapsView,
+  NativeExpoGoogleMapsModule,
+  NativeExpoGoogleMapsViewType,
 } from './NativeExpoMapView';
 import {
   DefaultNativeExpoMapViewProps,
@@ -21,6 +23,7 @@ import { ClusterObject } from './Cluster';
 import { KMLObject } from './KML';
 import { GeoJson, GeoJsonObject } from './GeoJson';
 import { Color } from './Common.types';
+import { ProxyNativeModule } from 'expo-modules-core';
 
 export { Marker } from './Marker';
 export { Polygon } from './Polygon';
@@ -74,10 +77,15 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
 
   async getSearchCompletions(queryFragment: string) {
     const nodeHandle = findNodeHandle(this.mapView.current);
-    await NativeExpoAppleMapsModule.getSearchCompletions(
-      nodeHandle,
-      queryFragment
-    )
+    var module: ProxyNativeModule;
+    if (Platform.OS == 'ios' && this.props.provider == 'apple') {
+      module = NativeExpoAppleMapsModule;
+    } else {
+      module = NativeExpoGoogleMapsModule;
+    }
+
+    await module
+      .getSearchCompletions(nodeHandle, queryFragment)
       .then((response: [String]) => {
         console.log(response);
       })
@@ -296,6 +304,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
         clusters={this.state.clusters}
         kmls={this.state.kmls}
         geojsons={this.state.geojsons}
+        ref={this.mapView}
       />
     );
   }

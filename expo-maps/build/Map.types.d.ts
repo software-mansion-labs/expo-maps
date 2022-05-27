@@ -238,7 +238,7 @@ export declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZ
 /**
  * Props for Google Maps implementation.
  */
-export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & GoogleMapsPOI>;
+export declare type NativeExpoGoogleMapsViewProps = ViewProps & React.RefAttributes<React.Component<any>> & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & GoogleMapsPOI>;
 /**
  * Props for Apple Maps implementation.
  */

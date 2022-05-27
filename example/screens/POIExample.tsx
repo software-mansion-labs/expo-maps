@@ -12,10 +12,10 @@ export default function POIExample() {
   const [enablePOISearching, setEnablePOISearching] = useState<boolean>(false);
   const [enablePOIDisplay, setEnablePOIDisplay] = useState<boolean>(false);
   const [enablePOIFilter, setEnablePOIFilter] = useState<boolean>(false);
+  const [poiType, setPoiType] = useState<[] | [POICategoryType]>([]);
   const [enableQueryCompletions, setEnableQueryCompletions] =
     useState<boolean>(false);
   const [text, onChangeText] = useState<string>('');
-  const [poiType, setPoiType] = useState<[] | [POICategoryType]>([]);
 
   return (
     <View style={styles.mapContainer}>
@@ -28,25 +28,29 @@ export default function POIExample() {
         ref={ref}
       />
       <View style={styles.switchContainer}>
-        <SwitchContainer
-          title="Enable POI search"
-          value={enablePOISearching}
-          onValueChange={() => setEnablePOISearching(!enablePOISearching)}
-        />
+        {provider == 'apple' && (
+          <SwitchContainer
+            title="Enable POI search"
+            value={enablePOISearching}
+            onValueChange={() => setEnablePOISearching(!enablePOISearching)}
+          />
+        )}
         <SwitchContainer
           title="Display POI"
           value={enablePOIDisplay}
           onValueChange={() => setEnablePOIDisplay(!enablePOIDisplay)}
         />
-        <SwitchContainer
-          title="Enable POI cafe filter"
-          value={enablePOIFilter}
-          onValueChange={() => {
-            setEnablePOIFilter(!enablePOIFilter);
-            if (enablePOIFilter) setPoiType([]);
-            else setPoiType(['cafe']);
-          }}
-        />
+        {provider == 'apple' && (
+          <SwitchContainer
+            title="Enable POI cafe filter"
+            value={enablePOIFilter}
+            onValueChange={() => {
+              setEnablePOIFilter(!enablePOIFilter);
+              if (enablePOIFilter) setPoiType([]);
+              else setPoiType(['cafe']);
+            }}
+          />
+        )}
         <SwitchContainer
           title="Fetch query completions (display in console)"
           value={enableQueryCompletions}
