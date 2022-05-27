@@ -180,6 +180,7 @@ export declare type Traffic = {
      */
     enableTraffic: boolean;
 };
+export declare type POICategoryType = 'airport' | 'atm' | 'bank' | 'beach' | 'cafe' | 'hospital' | 'hotel' | 'museum' | 'pharmacy' | 'store';
 /**
  * Props for POI handling.
  */
@@ -196,7 +197,15 @@ export declare type POI = {
      * @default false
      */
     enablePOIDisplay: boolean;
+    /**
+     * If not empty POIs use will be filterd to specified types.
+     *
+     * @default []
+     */
+    enablePOIFilter: [POICategoryType] | [];
 };
+export declare type AppleMapsPOI = POI;
+export declare type GoogleMapsPOI = Omit<POI, 'enablePOISearching' | 'enablePOIFilter'>;
 export declare type GoogleMapsControls = Controls;
 export declare type ZoomLevels = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22;
 /**
@@ -229,13 +238,13 @@ export declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZ
 /**
  * Props for Google Maps implementation.
  */
-export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & POI>;
+export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & GoogleMapsPOI>;
 /**
  * Props for Apple Maps implementation.
  */
-export declare type NativeExpoAppleMapsViewProps = ViewProps & React.RefAttributes<React.Component<any>> & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & POI>;
+export declare type NativeExpoAppleMapsViewProps = ViewProps & React.RefAttributes<React.Component<any>> & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & AppleMapsPOI>;
 export declare type ExpoMapRef = {
-    test: () => Promise<void>;
+    getSearchCompletions: () => Promise<void>;
 };
 export declare type Providers = 'google' | 'apple';
 /**

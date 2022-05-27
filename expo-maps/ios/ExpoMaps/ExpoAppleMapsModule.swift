@@ -6,19 +6,11 @@ public class ExpoAppleMapsModule: Module {
   public func definition() -> ModuleDefinition {
     Name("ExpoAppleMaps")
     
-    function("getSearchCompletions") { (viewHandle: Int) -> Int in
-      print(viewHandle)
-      var result: [String] = ["empty results"] {
-        willSet {
-          print("NEW VALUE: \(newValue)")
-        }
-      }
+    AsyncFunction("getSearchCompletions") { (viewHandle: Int, searchQueryFragment: String, promise: Promise) in
       DispatchQueue.main.async {
         let view = self.appContext?.reactBridge?.uiManager?.view(forReactTag: NSNumber(value: viewHandle)) as? AppleMapsView
-        result = view?.getPOISearchCompletions(searchQueryFragment: "Air") ?? []
+        view?.fetchPOISearchCompletions(searchQueryFragment: searchQueryFragment, promise: promise)
       }
-      print ("RESULT \(result)")
-      return 123
      }
 
     ViewManager {
@@ -94,15 +86,15 @@ public class ExpoAppleMapsModule: Module {
         view.setGeoJsons(geoJsonObjects: geoJsonObjects)
       }
       
-      prop("enablePOISearching") { (view: AppleMapsView, enable: Bool) in
+      Prop("enablePOISearching") { (view: AppleMapsView, enable: Bool) in
         view.setEnabledPOISearching(enabled: enable)
       }
       
-      prop("enablePOIFilter") { (view: AppleMapsView, categories: [POICategoryType]) in
+      Prop("enablePOIFilter") { (view: AppleMapsView, categories: [POICategoryType]) in
         view.setEnabledPOIFilter(categories: categories)
       }
       
-      prop("enablePOIDisplay") { (view: AppleMapsView, enabled: Bool) in
+      Prop("enablePOIDisplay") { (view: AppleMapsView, enabled: Bool) in
         view.setEnabledShowPOI(enabled: enabled)
       }
       

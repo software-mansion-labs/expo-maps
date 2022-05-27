@@ -1,4 +1,5 @@
 import MapKit
+import ExpoModulesCore
 
 public final class AppleMapsView: UIView, ExpoMapView {
   private let mapView: MKMapView
@@ -96,10 +97,8 @@ public final class AppleMapsView: UIView, ExpoMapView {
     }
   }
   
-  func getPOISearchCompletions(searchQueryFragment: String) -> [String] {
-    print("👋👋👋")
-    let searchCompletions = pointsOfInterest.getSearchCompletions(searchQueryFragment: searchQueryFragment)
-    return searchCompletions
+  func fetchPOISearchCompletions(searchQueryFragment: String, promise: Promise) {
+    pointsOfInterest.fetchSearchCompletions(searchQueryFragment: searchQueryFragment, promise: promise)
   }
   
   func createPOISearchRequest(searchQuery: String) {

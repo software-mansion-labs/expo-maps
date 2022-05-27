@@ -1,4 +1,5 @@
 import MapKit
+import ExpoModulesCore
 
 class AppleMapsPOI: NSObject {
     
@@ -18,15 +19,9 @@ class AppleMapsPOI: NSObject {
     pointsOfInterestSearchController = AppleMapsPOISearchController(searchService: pointsOfInterestSearchService)
   }
   
-  func getSearchCompletions(searchQueryFragment: String) -> [String] {
-    pointsOfInterestSearchCompleter.setSearchCompleterRegion(mapView: mapView)
-    pointsOfInterestSearchCompleter.autoComplete(searchQueryFragment)
-    var searchCompletions: [String] = []
-    let results = pointsOfInterestSearchCompleter.getSearchCompletions()
-    for result in results {
-      searchCompletions.append(result.title + ";" + result.subtitle)
-    }
-    return searchCompletions
+  func fetchSearchCompletions(searchQueryFragment: String, promise: Promise) {
+    pointsOfInterestSearchCompleter.setSearchCompleterRegion(region: mapView.region)
+    pointsOfInterestSearchCompleter.autoComplete(searchQueryFragment: searchQueryFragment, promise: promise)
   }
   
   func createSearchRequest(searchQuery: String) {
@@ -59,12 +54,9 @@ class AppleMapsPOI: NSObject {
 extension AppleMapsPOI {
   
   func setEnabledPOIFilter(categories: [POICategoryType]) {
-    if categories.isEmpty {
-      return;
-    }
     let categories = categories.compactMap(mapToMKPOICategories)
     pointsOfInterestSearchService.setPointsOfInterestCategories(categories: categories)
-    let filter = MKPointOfInterestFilter.init(including: categories)
+    let filter = categories.isEmpty ? nil : MKPointOfInterestFilter.init(including: categories)
     pointsOfInterestSearchCompleter.setSearchCompleterFilters(filter: filter)
   }
 
