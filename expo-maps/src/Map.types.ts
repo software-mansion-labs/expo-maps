@@ -288,6 +288,7 @@ export type AppleMapsControls = Omit<
  * Props for Google Maps implementation.
  */
 export type NativeExpoGoogleMapsViewProps = ViewProps &
+  React.RefAttributes<React.Component<any>> &
   PropsWithChildren<
     MapType &
       GoogleMapsStyling &

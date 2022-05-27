@@ -10,12 +10,14 @@ import {
 
 export const NativeExpoGoogleMapsView = requireNativeViewManager(
   'ExpoGoogleMaps'
-) as React.FC<NativeExpoGoogleMapsViewProps>;
+) as React.ComponentType<NativeExpoGoogleMapsViewProps>;
 
 export const NativeExpoAppleMapsView = requireNativeViewManager(
   'ExpoAppleMaps'
 ) as React.ComponentType<NativeExpoAppleMapsViewProps>;
 
 export const NativeExpoAppleMapsModule = NativeModulesProxy.ExpoAppleMaps;
+export const NativeExpoGoogleMapsModule = NativeModulesProxy.ExpoGoogleMaps;
 
 export type NativeExpoAppleMapsViewType = typeof NativeExpoAppleMapsView;
+export type NativeExpoGoogleMapsViewType = typeof NativeExpoGoogleMapsView;

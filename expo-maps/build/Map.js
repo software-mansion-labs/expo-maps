@@ -1,5 +1,5 @@
 import React from 'react';
-import { NativeExpoAppleMapsView, NativeExpoAppleMapsModule, NativeExpoGoogleMapsView, } from './NativeExpoMapView';
+import { NativeExpoAppleMapsView, NativeExpoAppleMapsModule, NativeExpoGoogleMapsView, NativeExpoGoogleMapsModule, } from './NativeExpoMapView';
 import { Asset } from 'expo-asset';
 import { Platform, findNodeHandle } from 'react-native';
 import * as Utils from './Utils';
@@ -51,7 +51,15 @@ export class ExpoMap extends React.Component {
     mapView = React.createRef();
     async getSearchCompletions(queryFragment) {
         const nodeHandle = findNodeHandle(this.mapView.current);
-        await NativeExpoAppleMapsModule.getSearchCompletions(nodeHandle, queryFragment)
+        var module;
+        if (Platform.OS == 'ios' && this.props.provider == 'apple') {
+            module = NativeExpoAppleMapsModule;
+        }
+        else {
+            module = NativeExpoGoogleMapsModule;
+        }
+        await module
+            .getSearchCompletions(nodeHandle, queryFragment)
             .then((response) => {
             console.log(response);
         })
@@ -207,7 +215,7 @@ export class ExpoMap extends React.Component {
         }
         return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString
                 ? this.props.googleMapsJsonStyleString
-                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons }));
+                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons, ref: this.mapView }));
     }
 }
 function buildGeoJsonObject(child) {
