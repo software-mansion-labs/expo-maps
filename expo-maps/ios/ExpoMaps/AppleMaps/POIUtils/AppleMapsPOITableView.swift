@@ -16,6 +16,9 @@ class AppleMapsPOISearchResultsView: UITableViewController {
     if (appleMapsPOISearchCompleter == nil) {
       appleMapsPOISearchCompleter = AppleMapsPOISearchCompleter(delegate: self)
     }
+    if let mapView = mapView {
+      appleMapsPOISearchCompleter?.setSearchCompleterRegion(region: mapView.region)
+    }
   }
   
   override func viewDidDisappear(_ animated: Bool) {
@@ -52,7 +55,7 @@ class AppleMapsPOISearchResultsView: UITableViewController {
 extension AppleMapsPOISearchResultsView: UISearchResultsUpdating {
   
   func updateSearchResults(for searchController: UISearchController) {
-    appleMapsPOISearchCompleter?.autoComplete(searchController.searchBar.text ?? "")
+    appleMapsPOISearchCompleter?.autoComplete(searchQueryFragment: searchController.searchBar.text ?? "")
   }
   
 }

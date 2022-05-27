@@ -193,6 +193,9 @@ export type Traffic = {
    */
   enableTraffic: boolean;
 };
+
+export type POICategoryType = 'airport' | 'atm' | 'bank' | 'beach' | 'cafe' | 'hospital' | 'hotel' | 'museum' | 'pharmacy' | 'store';
+
 /**
  * Props for POI handling.
  */
@@ -209,7 +212,19 @@ export type POI = {
    * @default false
    */
   enablePOIDisplay: boolean;
+  /**
+   * If not empty POIs use will be filterd to specified types.
+   *
+   * @default []
+   */
+  enablePOIFilter: [POICategoryType] | []
 };
+
+export type AppleMapsPOI = POI;
+export type GoogleMapsPOI = Omit<
+  POI,
+  'enablePOISearching' | 'enablePOIFilter'
+>;
 
 export type GoogleMapsControls = Controls;
 
@@ -287,7 +302,7 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       Traffic &
       KMLs &
       GeoJsons &
-      POI
+      GoogleMapsPOI
   >;
 
 /**
@@ -308,10 +323,10 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
       Traffic &
       KMLs &
       GeoJsons &
-      POI
+      AppleMapsPOI
   >;
 
-export type ExpoMapRef = { test: () => Promise<void> };
+export type ExpoMapRef = { getSearchCompletions: () => Promise<void> };
 
 export type Providers = 'google' | 'apple';
 

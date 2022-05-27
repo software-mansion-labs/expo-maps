@@ -31,8 +31,7 @@ class AppleMapsPOISearch {
   private func search() {
     localSearch?.start { [unowned self] (response, error) in
       guard error == nil else {
-        //TODO: ERRROR HANDLING
-          print ("Local Search ")
+          print("MKLocalSearch search start resulted in an error")
           return
       }
       searchResultRegion = response?.boundingRegion
@@ -55,7 +54,8 @@ extension AppleMapsPOISearch {
     guard let categories = pointOfInterestCategories else {
       return
     }
-    request.pointOfInterestFilter = MKPointOfInterestFilter.init(including:categories)
+    let filter = categories.isEmpty ? nil : MKPointOfInterestFilter.init(including: categories)
+    request.pointOfInterestFilter = filter
   }
   
   private func search(using searchRequest: MKLocalPointsOfInterestRequest) {
@@ -87,7 +87,8 @@ extension AppleMapsPOISearch {
     guard #available(iOS 13.0, *), let categories = pointOfInterestCategories else {
       return
     }
-    request.pointOfInterestFilter = MKPointOfInterestFilter.init(including:categories)
+    let filter = categories.isEmpty ? nil : MKPointOfInterestFilter.init(including: categories)
+    request.pointOfInterestFilter = filter
 
   }
   
@@ -120,7 +121,7 @@ extension AppleMapsPOISearch {
       marker.longitude = item.placemark.coordinate.longitude
       marker.markerTitle = item.name
       marker.opacity = 1
-      marker.color = 1
+      marker.color = UIColor.clear
       marker.draggable = false
       return marker
     }
@@ -138,7 +139,8 @@ extension AppleMapsPOISearch {
     guard #available(iOS 13.0, *), let categories = pointOfInterestCategories else {
       return
     }
-    mapView.pointOfInterestFilter = MKPointOfInterestFilter.init(including:categories)
+    let filter = categories.isEmpty ? nil : MKPointOfInterestFilter.init(including: categories)
+    mapView.pointOfInterestFilter = filter
   }
   
 }

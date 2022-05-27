@@ -17,7 +17,7 @@ export declare class ExpoMap extends React.Component<ExpoMapViewProps> {
     state: ExpoMapState;
     _ismounted: boolean;
     mapView: React.RefObject<React.Component<any, {}, any>>;
-    test(): Promise<void>;
+    getSearchCompletions(queryFragment: string): Promise<void>;
     componentDidMount(): void;
     componentWillUnmount(): void;
     componentDidUpdate(_: any, prevState: ExpoMapState): void;

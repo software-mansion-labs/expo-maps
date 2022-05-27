@@ -51,6 +51,7 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   enableTraffic: false,
   enablePOISearching: false,
   enablePOIDisplay: false,
+  enablePOIFilter: [],
 };
 
 /**
@@ -71,12 +72,18 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
   _ismounted = false;
   mapView = React.createRef<React.Component<any>>();
 
-  async test() {
+  async getSearchCompletions(queryFragment: string) {
     const nodeHandle = findNodeHandle(this.mapView.current);
-    const val = await NativeExpoAppleMapsModule.getSearchCompletions(
-      nodeHandle
-    );
-    console.log({ val });
+    await NativeExpoAppleMapsModule.getSearchCompletions(
+      nodeHandle,
+      queryFragment
+    )
+      .then((response: [String]) => {
+        console.log(response);
+      })
+      .catch((error: Error) => {
+        console.log('Error with message: ' + error.message);
+      });
   }
 
   componentDidMount() {
@@ -245,6 +252,16 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
       if (parseInt(Platform.Version) < 13 && this.state.geojsons.length > 0) {
         console.warn(
           "Versions of iOS < 13 doesn't support GeoJSON features for Apple Maps. Adding of GeoJSON for these versions will be omitted."
+        );
+      }
+      if (parseInt(Platform.Version) < 13) {
+        console.warn(
+          "Versions of iOS < 13 doesn't support Points Of Interest Filters for Apple Maps. Adding POI filters for these versions will be omitted."
+        );
+      }
+      if (parseInt(Platform.Version) < 14) {
+        console.warn(
+          "Versions of iOS < 14 doesn't support Local Points Of Interest fetching for Apple Maps. Using POI Display with these versions will be omitted."
         );
       }
       return (
