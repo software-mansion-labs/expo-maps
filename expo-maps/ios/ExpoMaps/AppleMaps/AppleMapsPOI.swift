@@ -25,8 +25,7 @@ class AppleMapsPOI: NSObject, PointsOfInterests {
   }
   
   func createSearchRequest(place: String) {
-    guard !place.isEmpty, let placeTitle = getPlaceTitleFromCompletion(place: place) else{
-      markers.detachAndDeleteMarkers()
+    guard !place.isEmpty, let placeTitle = getPlaceTitleFromCompletion(place: place) else {
       return
     }
     pointsOfInterestSearchService.createSearchRequest(for: placeTitle)
@@ -52,7 +51,7 @@ class AppleMapsPOI: NSObject, PointsOfInterests {
     if (enabled) {
       pointsOfInterestSearchService.createSearchRequest()
     } else {
-      markers.setMarkers(markerObjects: [])
+      markers.setPOIMarkers(markerObjects: [])
     }
   }
 

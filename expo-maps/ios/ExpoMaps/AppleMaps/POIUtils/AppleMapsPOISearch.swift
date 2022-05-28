@@ -110,7 +110,7 @@ extension AppleMapsPOISearch {
     let pointsOfInterestToDisplay = getMarkersToDisplay()
     setMarkersDisplayRegion()
     setMapViewFilter()
-    markers.setMarkers(markerObjects: pointsOfInterestToDisplay)
+    markers.setPOIMarkers(markerObjects: pointsOfInterestToDisplay)
   }
   
   private func getMarkersToDisplay() -> [MarkerObject] {
