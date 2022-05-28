@@ -1,8 +1,8 @@
 import GooglePlaces
 import GoogleMaps
+import ExpoModulesCore
 
-class GoogleMapsPlacesSearchCompleter: SearchCompleter {
-  typealias T = GMSAutocompletePrediction
+class GoogleMapsPlacesSearchCompleter {
   
   private var placesClient: GMSPlacesClient
   private var tokenUtils: GoogleMapsPlacesTokenUtils
@@ -73,4 +73,8 @@ class GoogleMapsPlacesSearchCompleter: SearchCompleter {
     searchCompletionsPromise.resolve(results)
   }
   
+}
+
+enum SearchCompleterError: Error {
+  case fetchingCompletionsError
 }

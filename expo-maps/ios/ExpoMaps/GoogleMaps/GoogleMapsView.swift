@@ -1,5 +1,6 @@
 import GoogleMaps
 import GooglePlaces
+import ExpoModulesCore
 
 public final class GoogleMapsView: UIView, ExpoMapView {
 
@@ -22,8 +23,18 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   init() {
     // just for now we do authentication here
     // should be moved to module's function
-    GMSServices.provideAPIKey("AIzaSyDbgaRNTr3PhYdj_PL7jY_o9u3R08Gf8Ao")
-    GMSPlacesClient.provideAPIKey("APIKEY")
+    guard let path = Bundle.main.path(forResource: "Info", ofType: "plist") else {
+      fatalError("Couldn't find file 'Info.plist'.")
+    }
+    let content = NSDictionary(contentsOfFile: path)
+    guard let googlePlacesApiKey = content?.object(forKey: "GooglePlacesApiKey") as? String else {
+      fatalError("Couldn't find key 'GooglePlacesApiKey' in 'Info.plist'.")
+    }
+    guard let googleMapsApiKey = content?.object(forKey: "GoogleMapsApiKey") as? String else {
+      fatalError("Couldn't find key 'GoogleMapsApiKey' in 'Info.plist'.")
+    }
+    GMSServices.provideAPIKey(googleMapsApiKey)
+    GMSPlacesClient.provideAPIKey(googlePlacesApiKey)
 
     // random initial camera position
     // TODO: use prop as a source for initial camera position

@@ -1,7 +1,8 @@
 import GooglePlaces
 import GoogleMaps
+import ExpoModulesCore
 
-class GoogleMapsPlaces: PointsOfInterests {
+class GoogleMapsPlaces {
   
   private let mapView: GMSMapView
   private var markers: GoogleMapsMarkers
