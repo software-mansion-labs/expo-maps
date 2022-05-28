@@ -38,6 +38,17 @@ class AppleMapsMarkers: NSObject, Markers {
       kmlMarkers.append(marker)
     }
   }
+
+  func setPOIMarkers(markerObjects: [MarkerObject]) {
+    detachAndDeletePOIMarkers()
+    
+    for markerObject in markerObjects {
+      let marker = createAppleMarker(markerObject: markerObject)
+      
+      mapView.addAnnotation(marker)
+      poiMarkers.append(marker)
+    }
+  }
   
   func setPOIMarkers(markerObjects: [MarkerObject]) {
     detachAndDeletePOIMarkers()
