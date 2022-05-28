@@ -1,4 +1,5 @@
 import GoogleMaps
+import GooglePlaces
 
 public final class GoogleMapsView: UIView, ExpoMapView {
 
@@ -13,6 +14,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let circles: GoogleMapsCircles
   private let kmls: GoogleMapsKMLs
   private let geojsons: GoogleMapsGeoJsons
+  private let places: GoogleMapsPlaces
   private var wasInitialCameraPositionSet = false
   private let heatmaps: GoogleMapsHeatmaps
   public var clickablePOIs = true
@@ -21,6 +23,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     // just for now we do authentication here
     // should be moved to module's function
     GMSServices.provideAPIKey("AIzaSyDbgaRNTr3PhYdj_PL7jY_o9u3R08Gf8Ao")
+    GMSPlacesClient.provideAPIKey("APIKEY")
 
     // random initial camera position
     // TODO: use prop as a source for initial camera position
@@ -39,6 +42,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     kmls = GoogleMapsKMLs(mapView: mapView)
     geojsons = GoogleMapsGeoJsons(mapView: mapView)
     heatmaps = GoogleMapsHeatmaps(mapView: mapView)
+    places = GoogleMapsPlaces(mapView: mapView, markers: markers)
 
     super.init(frame: CGRect.zero)
     delegate.expoMapView = self
@@ -47,6 +51,14 @@ public final class GoogleMapsView: UIView, ExpoMapView {
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  func fetchPlacesSearchCompletions(searchQueryFragment: String, promise: Promise) {
+    places.fetchSearchCompletions(searchQueryFragment: searchQueryFragment, promise: promise)
+  }
+  
+  func createPOISearchRequest(place: String) {
+    places.createSearchRequest(place: place)
   }
 
   func setShowCompass(enable: Bool) {
