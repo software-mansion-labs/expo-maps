@@ -31,6 +31,7 @@ const defaultNativeExpoMapViewProps = {
     enablePOISearching: false,
     enablePOIDisplay: false,
     enablePOIFilter: [],
+    createPOISearchRequest: '',
 };
 /**
  * Main map component of Expo Maps library.

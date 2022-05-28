@@ -55,6 +55,7 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   enablePOISearching: false,
   enablePOIDisplay: false,
   enablePOIFilter: [],
+  createPOISearchRequest: '',
 };
 
 /**

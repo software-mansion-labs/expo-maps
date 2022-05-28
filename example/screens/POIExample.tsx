@@ -16,6 +16,12 @@ export default function POIExample() {
   const [enableQueryCompletions, setEnableQueryCompletions] =
     useState<boolean>(false);
   const [text, onChangeText] = useState<string>('');
+  const [placeToSearch, setPlaceToSearch] = useState<string>('');
+  const [enablePlaceSearch, setEnablePlaceSearch] = useState<boolean>(false);
+
+  const appleMapsSearchRequest = 'Centrum Pompidou; Roue 1234';
+  const googleMapsSearchRequest =
+    'Centrum Pompidou; placeId:ChIJoyC4CRxu5kcRRTPcWX5srLc';
 
   return (
     <View style={styles.mapContainer}>
@@ -25,7 +31,14 @@ export default function POIExample() {
         enablePOISearching={enablePOISearching}
         enablePOIDisplay={enablePOIDisplay}
         enablePOIFilter={poiType}
+        createPOISearchRequest={placeToSearch}
         ref={ref}
+        initialCameraPosition={{
+          latitude: 48.85,
+          longitude: 2.34,
+          zoom: 13,
+          animate: true,
+        }}
       />
       <View style={styles.switchContainer}>
         {provider == 'apple' && (
@@ -67,6 +80,22 @@ export default function POIExample() {
           }}
           placeholder={'Search query'}
           value={text}
+        />
+        <SwitchContainer
+          title="Search Centrum Pompidou"
+          value={enablePlaceSearch}
+          onValueChange={() => {
+            setEnablePlaceSearch(!enablePlaceSearch);
+            if (!enablePlaceSearch) {
+              if (provider == 'apple') {
+                setPlaceToSearch(appleMapsSearchRequest);
+              } else {
+                setPlaceToSearch(googleMapsSearchRequest);
+              }
+            } else {
+              setPlaceToSearch('');
+            }
+          }}
         />
       </View>
     </View>

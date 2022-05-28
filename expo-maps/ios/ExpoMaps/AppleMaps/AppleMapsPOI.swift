@@ -1,7 +1,7 @@
 import MapKit
 import ExpoModulesCore
 
-class AppleMapsPOI: NSObject {
+class AppleMapsPOI: NSObject, PointsOfInterests {
     
   private var pointsOfInterestSearchCompleter: AppleMapsPOISearchCompleter
   private var pointsOfInterestSearchService: AppleMapsPOISearch
@@ -24,8 +24,17 @@ class AppleMapsPOI: NSObject {
     pointsOfInterestSearchCompleter.autoComplete(searchQueryFragment: searchQueryFragment, promise: promise)
   }
   
-  func createSearchRequest(searchQuery: String) {
-    pointsOfInterestSearchService.createSearchRequest(for: searchQuery)
+  func createSearchRequest(place: String) {
+    guard !place.isEmpty, let placeTitle = getPlaceTitleFromCompletion(place: place) else{
+      markers.detachAndDeleteMarkers()
+      return
+    }
+    pointsOfInterestSearchService.createSearchRequest(for: placeTitle)
+  }
+  
+  private func getPlaceTitleFromCompletion(place: String) -> String? {
+    let tmpStr = place.components(separatedBy: ";")
+    return tmpStr[0]
   }
   
   func setEnabledPOISearching(enabled: Bool) {
@@ -39,7 +48,7 @@ class AppleMapsPOI: NSObject {
   
   //dispaying poi on map
   @available(iOS 14.0, *)
-  func setEnabledShowPOI(enabled: Bool) {
+  func setEnabledDisplayPOI(enabled: Bool) {
     if (enabled) {
       pointsOfInterestSearchService.createSearchRequest()
     } else {
