@@ -188,6 +188,8 @@ export declare type POI = {
     /**
      * If 'true' search bar for searching pois is enabled.
      *
+     * This prop works only when provider == `apple`.
+     *
      * @default false
      */
     enablePOISearching: boolean;
@@ -200,9 +202,18 @@ export declare type POI = {
     /**
      * If not empty POIs use will be filterd to specified types.
      *
+     * This prop works only when provider == `apple`.
+     *
      * @default []
      */
     enablePOIFilter: [POICategoryType] | [];
+    /**
+     * Creates a search request for given place.
+     *
+     * Passed value shoulld be a result of auto complete.
+     *
+     */
+    createPOISearchRequest: string;
 };
 export declare type AppleMapsPOI = POI;
 export declare type GoogleMapsPOI = Omit<POI, 'enablePOISearching' | 'enablePOIFilter'>;

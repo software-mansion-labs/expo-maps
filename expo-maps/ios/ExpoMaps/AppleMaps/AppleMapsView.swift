@@ -91,9 +91,9 @@ public final class AppleMapsView: UIView, ExpoMapView {
     }
   }
   
-  func setEnabledShowPOI(enabled: Bool) {
+  func setEnabledDisplayPOI(enabled: Bool) {
     if #available(iOS 14.0, *) {
-      pointsOfInterest.setEnabledShowPOI(enabled: enabled)
+      pointsOfInterest.setEnabledDisplayPOI(enabled: enabled)
     }
   }
   
@@ -101,8 +101,8 @@ public final class AppleMapsView: UIView, ExpoMapView {
     pointsOfInterest.fetchSearchCompletions(searchQueryFragment: searchQueryFragment, promise: promise)
   }
   
-  func createPOISearchRequest(searchQuery: String) {
-    pointsOfInterest.createSearchRequest(searchQuery: searchQuery)
+  func createPOISearchRequest(place: String) {
+    pointsOfInterest.createSearchRequest(place: place)
   }
 
   func setMarkers(markerObjects: [MarkerObject]) {

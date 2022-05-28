@@ -9,7 +9,7 @@ class AppleMapsPOISearch {
   private var searchResultRegion: MKCoordinateRegion?
   private var places: [MKMapItem]? {
     didSet {
-      displayMarkerks()
+      displayMarkers()
     }
   }
   private var localSearch: MKLocalSearch? {
@@ -106,7 +106,7 @@ extension AppleMapsPOISearch {
 //displaying search results
 extension AppleMapsPOISearch {
   
-  private func displayMarkerks() {
+  private func displayMarkers() {
     let pointsOfInterestToDisplay = getMarkersToDisplay()
     setMarkersDisplayRegion()
     setMapViewFilter()

@@ -95,7 +95,11 @@ public class ExpoAppleMapsModule: Module {
       }
       
       Prop("enablePOIDisplay") { (view: AppleMapsView, enabled: Bool) in
-        view.setEnabledShowPOI(enabled: enabled)
+        view.setEnabledDisplayPOI(enabled: enabled)
+      }
+      
+      Prop("createPOISearchRequest") { (view: AppleMapsView, place: String) in
+        view.createPOISearchRequest(place: place)
       }
       
     }
