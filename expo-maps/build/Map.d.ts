@@ -8,6 +8,7 @@ export { Cluster } from './Cluster';
 export { KML } from './KML';
 export { GeoJson } from './GeoJson';
 export { ExpoMapRef } from './Map.types';
+export { POICategoryType } from './Map.types';
 /**
  * Main map component of Expo Maps library.
  *
@@ -16,7 +17,7 @@ export { ExpoMapRef } from './Map.types';
 export declare class ExpoMap extends React.Component<ExpoMapViewProps> {
     state: ExpoMapState;
     _ismounted: boolean;
-    mapView: React.RefObject<React.Component<any, {}, any>>;
+    mapView: React.RefObject<ExpoMap>;
     getSearchCompletions(queryFragment: string): Promise<void>;
     componentDidMount(): void;
     componentWillUnmount(): void;

@@ -8,6 +8,7 @@ import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
 import { KMLObject } from './KML';
 import { GeoJsonObject } from './GeoJson';
+import { ExpoMap } from './Map';
 
 export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 
@@ -300,7 +301,7 @@ export type AppleMapsControls = Omit<
  * Props for Google Maps implementation.
  */
 export type NativeExpoGoogleMapsViewProps = ViewProps &
-  React.RefAttributes<React.Component<any>> &
+  React.RefAttributes<ExpoMap> &
   PropsWithChildren<
     MapType &
       GoogleMapsStyling &
@@ -322,7 +323,7 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
  * Props for Apple Maps implementation.
  */
 export type NativeExpoAppleMapsViewProps = ViewProps &
-  React.RefAttributes<React.Component<any>> &
+  React.RefAttributes<ExpoMap> &
   PropsWithChildren<
     MapType &
       Gestures &
