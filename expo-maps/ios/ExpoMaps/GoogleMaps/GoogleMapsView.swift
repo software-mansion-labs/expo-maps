@@ -16,12 +16,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private var wasInitialCameraPositionSet = false
 
   init() {
-    // just for now we do authentication here
-    // should be moved to module's function
-    GMSServices.provideAPIKey("AIzaSyDbgaRNTr3PhYdj_PL7jY_o9u3R08Gf8Ao")
-
-    // random initial camera position
-    // TODO: use prop as a source for initial camera position
+    GoogleMapsView.initializeGMSServices()
     let camera = GMSCameraPosition.camera(withLatitude: 51.5, longitude: 0, zoom: 4.0)
     mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
     delegate = GoogleMapsViewDelegate()
@@ -40,6 +35,30 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     super.init(frame: CGRect.zero)
     delegate.expoMapView = self
     addSubview(mapView)
+  }
+  
+  private static func initializeGMSServices() {
+    guard let expoMapsBundleURL = Bundle.main.url(forResource: "ExpoMaps", withExtension: "bundle")
+    else {
+      fatalError("ExpoMaps.bundle not found!")
+    }
+    guard let expoMapsBundle = Bundle(url: expoMapsBundleURL)
+    else {
+      fatalError("Cannot access ExpoMaps.bundle!")
+    }
+    guard let filePath = expoMapsBundle.path(forResource: "GMSConfig", ofType: "plist")
+    else {
+      fatalError("GMSConfig.plist not found!")
+    }
+    guard let gmsConfig = NSDictionary(contentsOfFile: filePath)
+    else {
+      fatalError("Cannot access GMSConfig.plist!")
+    }
+    guard let apiKey = gmsConfig.object(forKey: "apiKey") as? String
+    else {
+      fatalError("Api key not found in GMSConfig.plist!")
+    }
+    GMSServices.provideAPIKey(apiKey)
   }
 
   required init?(coder: NSCoder) {

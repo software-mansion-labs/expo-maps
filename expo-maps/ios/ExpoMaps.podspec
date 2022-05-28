@@ -20,4 +20,8 @@ Pod::Spec.new do |s|
   s.dependency 'ExpoModulesCore'
   s.dependency 'GoogleMaps', '6.0.0'
   s.dependency 'Google-Maps-iOS-Utils', '~> 4.1.0'
+
+  s.resource_bundles = {
+    'ExpoMaps' => ['**/*.{plist}']
+  }
 end
