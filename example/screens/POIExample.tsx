@@ -4,7 +4,6 @@ import { StyleSheet, View, TextInput } from 'react-native';
 import * as Maps from 'expo-maps';
 import SwitchContainer from '../components/SwitchContainer';
 import ProviderContext from '../context/ProviderContext';
-import { POICategoryType } from 'expo-maps/build/Map.types';
 
 export default function POIExample() {
   const provider = useContext(ProviderContext);
@@ -12,7 +11,7 @@ export default function POIExample() {
   const [enablePOISearching, setEnablePOISearching] = useState<boolean>(false);
   const [enablePOIDisplay, setEnablePOIDisplay] = useState<boolean>(false);
   const [enablePOIFilter, setEnablePOIFilter] = useState<boolean>(false);
-  const [poiType, setPoiType] = useState<[] | [POICategoryType]>([]);
+  const [poiType, setPoiType] = useState<[] | [Maps.POICategoryType]>([]);
   const [enableQueryCompletions, setEnableQueryCompletions] =
     useState<boolean>(false);
   const [text, onChangeText] = useState<string>('');

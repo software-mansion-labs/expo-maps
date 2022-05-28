@@ -8,6 +8,7 @@ import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
 import { KMLObject } from './KML';
 import { GeoJsonObject } from './GeoJson';
+import { ExpoMap } from './Map';
 export declare type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 /**
  * Prop for managing map type.
@@ -249,11 +250,11 @@ export declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZ
 /**
  * Props for Google Maps implementation.
  */
-export declare type NativeExpoGoogleMapsViewProps = ViewProps & React.RefAttributes<React.Component<any>> & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & GoogleMapsPOI>;
+export declare type NativeExpoGoogleMapsViewProps = ViewProps & React.RefAttributes<ExpoMap> & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & GoogleMapsPOI>;
 /**
  * Props for Apple Maps implementation.
  */
-export declare type NativeExpoAppleMapsViewProps = ViewProps & React.RefAttributes<React.Component<any>> & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & AppleMapsPOI>;
+export declare type NativeExpoAppleMapsViewProps = ViewProps & React.RefAttributes<ExpoMap> & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & AppleMapsPOI>;
 export declare type ExpoMapRef = {
     getSearchCompletions: () => Promise<void>;
 };

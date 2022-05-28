@@ -4,5 +4,3 @@ export declare const NativeExpoGoogleMapsView: React.ComponentType<NativeExpoGoo
 export declare const NativeExpoAppleMapsView: React.ComponentType<NativeExpoAppleMapsViewProps>;
 export declare const NativeExpoAppleMapsModule: import("expo-modules-core").ProxyNativeModule;
 export declare const NativeExpoGoogleMapsModule: import("expo-modules-core").ProxyNativeModule;
-export declare type NativeExpoAppleMapsViewType = typeof NativeExpoAppleMapsView;
-export declare type NativeExpoGoogleMapsViewType = typeof NativeExpoGoogleMapsView;

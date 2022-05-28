@@ -3,12 +3,9 @@ import ExpoModulesCore
 
 class AppleMapsPOISearchCompleter: NSObject, SearchCompleter {
   
-  typealias T = MKLocalSearchCompletion
-  
   private var searchCompleter = MKLocalSearchCompleter()
   private var searchCompleterResults: [MKLocalSearchCompletion]?
   private var searchCompletionsPromise: Promise?
-  
   
   init(delegate: MKLocalSearchCompleterDelegate?) {
     super.init()

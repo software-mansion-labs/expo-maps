@@ -1,6 +1,5 @@
 import { requireNativeViewManager } from 'expo-modules-core';
 import { NativeModulesProxy } from 'expo-modules-core';
-import { findNodeHandle } from 'react-native';
 import * as React from 'react';
 
 import {
@@ -18,6 +17,3 @@ export const NativeExpoAppleMapsView = requireNativeViewManager(
 
 export const NativeExpoAppleMapsModule = NativeModulesProxy.ExpoAppleMaps;
 export const NativeExpoGoogleMapsModule = NativeModulesProxy.ExpoGoogleMaps;
-
-export type NativeExpoAppleMapsViewType = typeof NativeExpoAppleMapsView;
-export type NativeExpoGoogleMapsViewType = typeof NativeExpoGoogleMapsView;

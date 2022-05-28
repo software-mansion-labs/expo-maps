@@ -2,10 +2,8 @@ import React from 'react';
 import {
   NativeExpoAppleMapsView,
   NativeExpoAppleMapsModule,
-  NativeExpoAppleMapsViewType,
   NativeExpoGoogleMapsView,
   NativeExpoGoogleMapsModule,
-  NativeExpoGoogleMapsViewType,
 } from './NativeExpoMapView';
 import {
   DefaultNativeExpoMapViewProps,
@@ -33,6 +31,7 @@ export { Cluster } from './Cluster';
 export { KML } from './KML';
 export { GeoJson } from './GeoJson';
 export { ExpoMapRef } from './Map.types';
+export { POICategoryType } from './Map.types';
 
 const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   mapType: 'normal',
@@ -74,7 +73,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
     geojsons: [],
   };
   _ismounted = false;
-  mapView = React.createRef<React.Component<any>>();
+  mapView = React.createRef<ExpoMap>();
 
   async getSearchCompletions(queryFragment: string) {
     const nodeHandle = findNodeHandle(this.mapView.current);
