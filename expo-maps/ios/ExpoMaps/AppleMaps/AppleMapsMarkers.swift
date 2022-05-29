@@ -5,7 +5,7 @@ class AppleMapsMarkers: NSObject, Markers {
   private let mapView: MKMapView
   private var markers: [ExpoMKAnnotation] = []
   private var kmlMarkers: [ExpoMKAnnotation] = []
-  private var poiMArkers: [ExpoMKAnnotation] = []
+  private var poiMarkers: [ExpoMKAnnotation] = []
   
   /*
    Two marker classes, which are used to display markers on a map, are here registered in order to reuse their instances
@@ -46,7 +46,7 @@ class AppleMapsMarkers: NSObject, Markers {
       let marker = createAppleMarker(markerObject: markerObject)
       
       mapView.addAnnotation(marker)
-      poiMArkers.append(marker)
+      poiMarkers.append(marker)
     }
   }
   
@@ -61,7 +61,7 @@ class AppleMapsMarkers: NSObject, Markers {
   }
   
   private func detachAndDeletePOIMarkers() {
-    mapView.removeAnnotations(poiMArkers)
-    poiMArkers = []
+    mapView.removeAnnotations(poiMarkers)
+    poiMarkers = []
   }
 }
