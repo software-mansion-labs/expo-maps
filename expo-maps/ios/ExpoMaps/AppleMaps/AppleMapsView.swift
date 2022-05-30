@@ -85,16 +85,21 @@ public final class AppleMapsView: UIView, ExpoMapView {
     pointsOfInterest.setEnabledPOISearching(enabled: enabled)
   }
   
+ 
   func setEnabledPOIFilter(categories: [POICategoryType]) {
-    if #available(iOS 13.0, *) {
-      pointsOfInterest.setEnabledPOIFilter(categories: categories)
+    guard #available(iOS 13.0, *) else {
+      print("Enabling filter for points of interests is not avaliable for < iOS 13.0")
+      return
     }
+    pointsOfInterest.setEnabledPOIFilter(categories: categories)
   }
   
-  func setEnabledDisplayPOI(enabled: Bool) {
-    if #available(iOS 14.0, *) {
-      pointsOfInterest.setEnabledDisplayPOI(enabled: enabled)
+  func setEnabledPOIs(enabled: Bool) {
+    guard #available(iOS 13.0, *) else {
+      print("Manipulating points of interests visibility is not avaliable for < iOS 13.0")
+      return
     }
+    pointsOfInterest.setEnabledPOIs(enabled: enabled)
   }
   
   func fetchPOISearchCompletions(searchQueryFragment: String, promise: Promise) {

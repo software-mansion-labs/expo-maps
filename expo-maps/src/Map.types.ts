@@ -210,11 +210,11 @@ export type POI = {
    */
   enablePOISearching: boolean;
   /**
-   * If 'true' POI in range of current view are being displayed.
+   * If 'true' points of interest are being displayed.
    *
    * @default false
    */
-  enablePOIDisplay: boolean;
+  enablePOIs: boolean;
   /**
    * If not empty POIs use will be filterd to specified types.
    *

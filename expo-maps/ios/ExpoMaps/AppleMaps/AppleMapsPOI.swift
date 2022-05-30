@@ -6,6 +6,8 @@ class AppleMapsPOI: NSObject, PointsOfInterests {
   private var pointsOfInterestSearchCompleter: AppleMapsPOISearchCompleter
   private var pointsOfInterestSearchService: AppleMapsPOISearch
   private var pointsOfInterestSearchController: AppleMapsPOISearchController
+  private var poiFilterCategories: [MKPointOfInterestCategory]?
+  private var enabledPOIDisplay: Bool?
   
   private var mapView: MKMapView
   private var markers: AppleMapsMarkers
@@ -44,14 +46,14 @@ class AppleMapsPOI: NSObject, PointsOfInterests {
     }
   }
   
-  
   //dispaying poi on map
-  @available(iOS 14.0, *)
-  func setEnabledDisplayPOI(enabled: Bool) {
+  @available(iOS 13.0, *)
+  func setEnabledPOIs(enabled: Bool) {
+    enabledPOIDisplay = enabled
     if (enabled) {
-      pointsOfInterestSearchService.createSearchRequest()
+      mapView.pointOfInterestFilter = getMKPOIFilter()
     } else {
-      markers.setPOIMarkers(markerObjects: [])
+      mapView.pointOfInterestFilter = MKPointOfInterestFilter.excludingAll
     }
   }
 
@@ -62,10 +64,28 @@ class AppleMapsPOI: NSObject, PointsOfInterests {
 extension AppleMapsPOI {
   
   func setEnabledPOIFilter(categories: [POICategoryType]) {
-    let categories = categories.compactMap(mapToMKPOICategories)
-    pointsOfInterestSearchService.setPointsOfInterestCategories(categories: categories)
-    let filter = categories.isEmpty ? nil : MKPointOfInterestFilter.init(including: categories)
+    if (categories.isEmpty) {
+      poiFilterCategories = nil
+    } else {
+      poiFilterCategories = categories.compactMap(mapToMKPOICategories)
+    }
+    let filter = getMKPOIFilter()
+    
+    pointsOfInterestSearchService.setPointsOfInterestCategories(categories: poiFilterCategories)
     pointsOfInterestSearchCompleter.setSearchCompleterFilters(filter: filter)
+    if (enabledPOIDisplay ?? false) {
+      mapView.pointOfInterestFilter = filter
+    }
+  }
+  
+  private func getMKPOIFilter() -> MKPointOfInterestFilter {
+    var filter: MKPointOfInterestFilter
+    if let categories = poiFilterCategories {
+      filter = MKPointOfInterestFilter.init(including: categories)
+    } else {
+      filter = MKPointOfInterestFilter.includingAll
+    }
+    return filter
   }
 
   private func mapToMKPOICategories(category: POICategoryType) -> MKPointOfInterestCategory {

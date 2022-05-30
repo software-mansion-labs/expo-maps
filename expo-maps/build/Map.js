@@ -29,7 +29,7 @@ const defaultNativeExpoMapViewProps = {
     },
     enableTraffic: false,
     enablePOISearching: false,
-    enablePOIDisplay: false,
+    enablePOIs: false,
     enablePOIFilter: [],
     createPOISearchRequest: '',
 };

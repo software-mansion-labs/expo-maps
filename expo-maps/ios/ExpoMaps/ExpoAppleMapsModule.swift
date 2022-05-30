@@ -94,8 +94,8 @@ public class ExpoAppleMapsModule: Module {
         view.setEnabledPOIFilter(categories: categories)
       }
       
-      Prop("enablePOIDisplay") { (view: AppleMapsView, enabled: Bool) in
-        view.setEnabledDisplayPOI(enabled: enabled)
+      Prop("enablePOIs") { (view: AppleMapsView, enabled: Bool) in
+        view.setEnabledPOIs(enabled: enabled)
       }
       
       Prop("createPOISearchRequest") { (view: AppleMapsView, place: String) in
