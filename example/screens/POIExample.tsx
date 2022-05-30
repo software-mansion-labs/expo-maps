@@ -9,7 +9,7 @@ export default function POIExample() {
   const provider = useContext(ProviderContext);
   const ref = useRef<Maps.ExpoMap>(null);
   const [enablePOISearching, setEnablePOISearching] = useState<boolean>(false);
-  const [enablePOIDisplay, setEnablePOIDisplay] = useState<boolean>(false);
+  const [enablePOIs, setEnablePOIs] = useState<boolean>(false);
   const [enablePOIFilter, setEnablePOIFilter] = useState<boolean>(false);
   const [poiType, setPoiType] = useState<[] | [Maps.POICategoryType]>([]);
   const [enableQueryCompletions, setEnableQueryCompletions] =
@@ -28,7 +28,7 @@ export default function POIExample() {
         style={{ flex: 1, width: '100%' }}
         provider={provider}
         enablePOISearching={enablePOISearching}
-        enablePOIDisplay={enablePOIDisplay}
+        enablePOIs={enablePOIs}
         enablePOIFilter={poiType}
         createPOISearchRequest={placeToSearch}
         ref={ref}
@@ -48,9 +48,9 @@ export default function POIExample() {
           />
         )}
         <SwitchContainer
-          title="Display POI"
-          value={enablePOIDisplay}
-          onValueChange={() => setEnablePOIDisplay(!enablePOIDisplay)}
+          title="Enable POIs"
+          value={enablePOIs}
+          onValueChange={() => setEnablePOIs(!enablePOIs)}
         />
         {provider == 'apple' && (
           <SwitchContainer

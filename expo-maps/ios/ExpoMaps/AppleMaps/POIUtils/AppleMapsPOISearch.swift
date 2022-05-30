@@ -24,7 +24,7 @@ class AppleMapsPOISearch {
     self.markers = markers
   }
   
-  func setPointsOfInterestCategories(categories: [MKPointOfInterestCategory]) {
+  func setPointsOfInterestCategories(categories: [MKPointOfInterestCategory]?) {
     pointOfInterestCategories = categories
   }
   
@@ -38,31 +38,6 @@ class AppleMapsPOISearch {
       places = response?.mapItems
     }
   }
-}
-
-//MKLocalPointsOfInterestRequest
-@available(iOS 14.0, *)
-extension AppleMapsPOISearch {
-  
-  func createSearchRequest() {
-    let searchRequest = MKLocalPointsOfInterestRequest(coordinateRegion: mapView.region)
-    setSearchRequestFilter(request: searchRequest)
-    search(using: searchRequest)
-  }
-  
-  private func setSearchRequestFilter(request: MKLocalPointsOfInterestRequest) {
-    guard let categories = pointOfInterestCategories else {
-      return
-    }
-    let filter = categories.isEmpty ? nil : MKPointOfInterestFilter.init(including: categories)
-    request.pointOfInterestFilter = filter
-  }
-  
-  private func search(using searchRequest: MKLocalPointsOfInterestRequest) {
-    localSearch = MKLocalSearch(request: searchRequest)
-    search()
-  }
-  
 }
 
 //MKLocalSearch.Request
@@ -84,10 +59,15 @@ extension AppleMapsPOISearch {
   }
   
   private func setSearchFilter(request: MKLocalSearch.Request) {
-    guard #available(iOS 13.0, *), let categories = pointOfInterestCategories else {
+    guard #available(iOS 13.0, *) else {
       return
     }
-    let filter = categories.isEmpty ? nil : MKPointOfInterestFilter.init(including: categories)
+    var filter: MKPointOfInterestFilter
+    if let categories = pointOfInterestCategories, !categories.isEmpty {
+      filter = MKPointOfInterestFilter.init(including: categories)
+    } else {
+      filter = MKPointOfInterestFilter.includingAll
+    }
     request.pointOfInterestFilter = filter
 
   }
@@ -109,7 +89,6 @@ extension AppleMapsPOISearch {
   private func displayMarkers() {
     let pointsOfInterestToDisplay = getMarkersToDisplay()
     setMarkersDisplayRegion()
-    setMapViewFilter()
     markers.setPOIMarkers(markerObjects: pointsOfInterestToDisplay)
   }
   
@@ -133,14 +112,6 @@ extension AppleMapsPOISearch {
       return
     }
     mapView.region = region
-  }
-  
-  private func setMapViewFilter() {
-    guard #available(iOS 13.0, *), let categories = pointOfInterestCategories else {
-      return
-    }
-    let filter = categories.isEmpty ? nil : MKPointOfInterestFilter.init(including: categories)
-    mapView.pointOfInterestFilter = filter
   }
   
 }
