@@ -264,12 +264,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
       }
       if (parseInt(Platform.Version) < 13) {
         console.warn(
-          "Versions of iOS < 13 doesn't support Points Of Interest Filters for Apple Maps. Adding POI filters for these versions will be omitted."
-        );
-      }
-      if (parseInt(Platform.Version) < 14) {
-        console.warn(
-          "Versions of iOS < 14 doesn't support Local Points Of Interest fetching for Apple Maps. Using POI Display with these versions will be omitted."
+          "Versions of iOS < 13 doesn't support Points Of Interest Filters and their display modifications for Apple Maps. Adding POI filters for these versions will be omitted."
         );
       }
       return (
