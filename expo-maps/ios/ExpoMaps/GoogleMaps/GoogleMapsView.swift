@@ -23,18 +23,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   init() {
     // just for now we do authentication here
     // should be moved to module's function
-    guard let path = Bundle.main.path(forResource: "Info", ofType: "plist") else {
-      fatalError("Couldn't find file 'Info.plist'.")
-    }
-    let content = NSDictionary(contentsOfFile: path)
-    guard let googlePlacesApiKey = content?.object(forKey: "GooglePlacesApiKey") as? String else {
-      fatalError("Couldn't find key 'GooglePlacesApiKey' in 'Info.plist'.")
-    }
-    guard let googleMapsApiKey = content?.object(forKey: "GoogleMapsApiKey") as? String else {
-      fatalError("Couldn't find key 'GoogleMapsApiKey' in 'Info.plist'.")
-    }
-    GMSServices.provideAPIKey(googleMapsApiKey)
-    GMSPlacesClient.provideAPIKey(googlePlacesApiKey)
+    GoogleMapsView.initializeGoogleMapsServices()
 
     // random initial camera position
     // TODO: use prop as a source for initial camera position
@@ -62,6 +51,21 @@ public final class GoogleMapsView: UIView, ExpoMapView {
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  private static func initializeGoogleMapsServices() {
+    guard let path = Bundle.main.path(forResource: "Info", ofType: "plist") else {
+      fatalError("Couldn't find file 'Info.plist'.")
+    }
+    let content = NSDictionary(contentsOfFile: path)
+    guard let googlePlacesApiKey = content?.object(forKey: "GooglePlacesApiKey") as? String else {
+      fatalError("Couldn't find key 'GooglePlacesApiKey' in 'Info.plist'.")
+    }
+    guard let googleMapsApiKey = content?.object(forKey: "GoogleMapsApiKey") as? String else {
+      fatalError("Couldn't find key 'GoogleMapsApiKey' in 'Info.plist'.")
+    }
+    GMSServices.provideAPIKey(googleMapsApiKey)
+    GMSPlacesClient.provideAPIKey(googlePlacesApiKey)
   }
   
   func fetchPlacesSearchCompletions(searchQueryFragment: String, promise: Promise) {
