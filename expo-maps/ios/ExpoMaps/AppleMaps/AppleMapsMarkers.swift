@@ -60,7 +60,7 @@ class AppleMapsMarkers: NSObject, Markers {
     kmlMarkers = []
   }
   
-  private func detachAndDeletePOIMarkers() {
+  func detachAndDeletePOIMarkers() {
     mapView.removeAnnotations(poiMarkers)
     poiMarkers = []
   }
