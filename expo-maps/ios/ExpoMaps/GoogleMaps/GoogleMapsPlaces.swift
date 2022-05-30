@@ -29,7 +29,7 @@ class GoogleMapsPlaces {
   func createSearchRequest(place: String) {
     
     guard !place.isEmpty, let placeId = getPlaceIdFromCompletion(place: place) else {
-      markers.detachAndDeleteMarkers()
+      markers.detachAndDeletePOIMarkers()()
       return
     }
     

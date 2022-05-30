@@ -48,7 +48,7 @@ extension GooglePlacesFetchPlace {
   
   private func displayMarker() {
     if let marker = getMarkerToDisplay() {
-      markers.setMarkers(markerObjects: [marker])
+      markers.setPOIMarkers(markerObjects: [marker])
       var bounds = GMSCoordinateBounds()
       let coordinate = CLLocationCoordinate2D(latitude: marker.latitude, longitude: marker.longitude)
       bounds = bounds.includingCoordinate(coordinate)
