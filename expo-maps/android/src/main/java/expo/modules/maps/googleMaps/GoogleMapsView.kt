@@ -2,6 +2,7 @@ package expo.modules.maps.googleMaps
 
 import android.content.Context
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -9,6 +10,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.collections.MarkerManager
+import com.google.android.gms.maps.model.PointOfInterest
+import expo.modules.kotlin.Promise
 import expo.modules.maps.*
 import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import expo.modules.maps.interfaces.ExpoMapView
@@ -16,7 +19,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 
-class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallback, ExpoMapView {
+class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallback, ExpoMapView, GoogleMap.OnPoiClickListener {
 
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
@@ -32,6 +35,8 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var markerManager: MarkerManager
   private lateinit var overlays: GoogleMapsOverlays
   private lateinit var heatmaps: GoogleMapsHeatmaps
+  private lateinit var places: GoogleMapsPlaces
+  private var clickablePOIs: Boolean = true
   private val mapReady = MutableStateFlow(false)
   private var wasInitialCameraPositionSet = false
 
@@ -59,6 +64,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     geojsons = GoogleMapsGeoJsons(googleMap)
     overlays = GoogleMapsOverlays(googleMap)
     heatmaps = GoogleMapsHeatmaps(googleMap)
+    places = GoogleMapsPlaces(context, googleMap, markers)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
@@ -122,6 +128,18 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     updateMap {
       gestures.setEnabledAllGestures(enabled)
     }
+  }
+
+  fun fetchPlacesSearchCompletions(searchQueryFragment: String, promise: Promise) {
+    places.fetchSearchCompletions(searchQueryFragment, promise)
+  }
+
+  fun setClickablePOIs(clickablePOIs: Boolean) {
+    this.clickablePOIs = clickablePOIs
+  }
+
+  fun createPlaceSearchRequest(place: String) {
+    places.createSearchRequest(place)
   }
 
   override fun setMapType(mapType: MapType) {
@@ -254,6 +272,16 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
           cancel()
         }
       }
+    }
+  }
+
+  override fun onPoiClick(poi: PointOfInterest) {
+    if (clickablePOIs) {
+      Toast.makeText(this.context, """Clicked: ${poi.name}
+            Place ID:${poi.placeId}
+            Latitude:${poi.latLng.latitude} Longitude:${poi.latLng.longitude}""",
+              Toast.LENGTH_SHORT
+      ).show()
     }
   }
 }
