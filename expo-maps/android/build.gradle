@@ -92,6 +92,9 @@ dependencies {
   implementation "com.google.maps.android:android-maps-utils:2.2.3"
   implementation "com.google.maps.android:maps-utils-ktx:3.3.0"
   implementation "androidx.core:core-ktx:1.7.0"
+  implementation "com.google.android.libraries.places:places:2.6.0"
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${getKotlinVersion()}"
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
+  //noinspection GradleDynamicVersion
+  implementation 'com.facebook.react:react-native:+'
 }
