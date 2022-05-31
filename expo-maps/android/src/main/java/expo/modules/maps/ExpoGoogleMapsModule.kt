@@ -1,6 +1,9 @@
 package expo.modules.maps
 
+import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.uimanager.UIManagerModule
 import expo.modules.core.interfaces.services.UIManager
+import expo.modules.kotlin.Promise
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import expo.modules.maps.googleMaps.GoogleMapsView
@@ -15,6 +18,15 @@ class ExpoGoogleMapsModule : Module() {
     Events(events = MapEventsNames.values().map { it.eventName }.toTypedArray())
 
     val googleMapsEventEmitterManager = GoogleMapsEventEmitterManager(::sendEvent)
+    
+    AsyncFunction("getSearchCompletions") { viewHandle: Int, searchQueryFragment: String, promise: Promise ->
+//      val rnContext = appContext.reactContext as? ReactApplicationContext ?: return@function
+//      val uiManager = rnContext.getNativeModule(UIManagerModule::class.java) ?: return@function
+//      appContext.activityProvider?.currentActivity?.runOnUiThread {
+//        val view = uiManager.resolveView(viewHandle) as? GoogleMapsView
+//        view?.fetchPlacesSearchCompletions(searchQueryFragment, promise)
+//      }
+    }
 
     ViewManager {
       View {
@@ -111,6 +123,10 @@ class ExpoGoogleMapsModule : Module() {
       
       Prop("heatmaps") { view: GoogleMapsView, heatmapObjects: Array<HeatmapObject> ->
         view.setHeatmaps(heatmapObjects)
+      }
+      
+      Prop("createPOISearchRequest") { view: GoogleMapsView, place: String ->
+        view.createPlaceSearchRequest(place)
       }
     }
   }
