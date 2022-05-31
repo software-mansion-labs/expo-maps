@@ -2,7 +2,7 @@ import GooglePlaces
 import GoogleMaps
 import ExpoModulesCore
 
-class GoogleMapsPlaces {
+class GoogleMapsPlaces: PointsOfInterests {
   
   private let mapView: GMSMapView
   private var markers: GoogleMapsMarkers
@@ -27,12 +27,10 @@ class GoogleMapsPlaces {
   }
   
   func createSearchRequest(place: String) {
-    
     guard !place.isEmpty, let placeId = getPlaceIdFromCompletion(place: place) else {
-      markers.detachAndDeletePOIMarkers()()
+      markers.detachAndDeletePOIMarkers()
       return
     }
-    
     placesFetcher.search(placeId: placeId)
   }
   

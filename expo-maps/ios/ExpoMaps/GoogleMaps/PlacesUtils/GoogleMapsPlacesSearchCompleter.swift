@@ -2,7 +2,7 @@ import GooglePlaces
 import GoogleMaps
 import ExpoModulesCore
 
-class GoogleMapsPlacesSearchCompleter {
+class GoogleMapsPlacesSearchCompleter: SearchCompleter {
   
   private var placesClient: GMSPlacesClient
   private var tokenUtils: GoogleMapsPlacesTokenUtils
@@ -73,8 +73,4 @@ class GoogleMapsPlacesSearchCompleter {
     searchCompletionsPromise.resolve(results)
   }
   
-}
-
-enum SearchCompleterError: Error {
-  case fetchingCompletionsError
 }

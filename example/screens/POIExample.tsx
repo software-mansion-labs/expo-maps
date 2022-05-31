@@ -19,9 +19,9 @@ export default function POIExample() {
   const [enablePlaceSearch, setEnablePlaceSearch] = useState<boolean>(false);
   const [clickablePOIs, setClickablePOIs] = useState<boolean>(false);
 
-  const appleMapsSearchRequest = 'Centrum Pompidou; Roue 1234';
+  const appleMapsSearchRequest = 'Centrum Pompidou;Roue 1234';
   const googleMapsSearchRequest =
-    'Centrum Pompidou; placeId:ChIJoyC4CRxu5kcRRTPcWX5srLc';
+    'Centrum Pompidou;ChIJoyC4CRxu5kcRRTPcWX5srLc';
 
   return (
     <View style={styles.mapContainer}>

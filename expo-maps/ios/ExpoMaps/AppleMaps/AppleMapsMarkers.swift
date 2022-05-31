@@ -50,17 +50,6 @@ class AppleMapsMarkers: NSObject, Markers {
     }
   }
   
-  func setPOIMarkers(markerObjects: [MarkerObject]) {
-    detachAndDeletePOIMarkers()
-    
-    for markerObject in markerObjects {
-      let marker = createAppleMarker(markerObject: markerObject)
-      
-      mapView.addAnnotation(marker)
-      poiMarkers.append(marker)
-    }
-  }
-  
   internal func detachAndDeleteMarkers() {
     mapView.removeAnnotations(markers)
     markers = []
