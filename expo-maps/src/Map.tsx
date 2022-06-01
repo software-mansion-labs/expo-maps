@@ -57,6 +57,7 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   enablePOIs: false,
   enablePOIFilter: [],
   createPOISearchRequest: '',
+  clickablePOIs: true,
 };
 
 /**
@@ -295,15 +296,29 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
       );
     }
 
+    let googleMapsJsonStyleString = this.props.googleMapsJsonStyleString
+      ? this.props.googleMapsJsonStyleString
+      : '';
+    if (this.props.enablePOIs === false) {
+      if (this.props.googleMapsJsonStyleString) {
+        console.warn(
+          "Expo Maps enablePOIs prop isn't effective when custom Google Maps map style is active. Please adjust your style manually to disable the POIs. https://developers.google.com/maps/documentation/ios-sdk/poi"
+        );
+      } else {
+        googleMapsJsonStyleString = JSON.stringify([
+          {
+            featureType: 'poi',
+            stylers: [{ visibility: 'off' }],
+          },
+        ]);
+      }
+    }
+
     return (
       <NativeExpoGoogleMapsView
         {...defaultNativeExpoMapViewProps}
         {...this.props}
-        googleMapsJsonStyleString={
-          this.props.googleMapsJsonStyleString
-            ? this.props.googleMapsJsonStyleString
-            : ''
-        }
+        googleMapsJsonStyleString={googleMapsJsonStyleString}
         markers={this.state.markers}
         polygons={this.state.polygons}
         polylines={this.state.polylines}

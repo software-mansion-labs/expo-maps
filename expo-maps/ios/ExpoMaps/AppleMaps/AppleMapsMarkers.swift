@@ -38,7 +38,7 @@ class AppleMapsMarkers: NSObject, Markers {
       kmlMarkers.append(marker)
     }
   }
-  
+
   func setPOIMarkers(markerObjects: [MarkerObject]) {
     detachAndDeletePOIMarkers()
     

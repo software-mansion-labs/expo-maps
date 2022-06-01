@@ -4,6 +4,13 @@ public class ExpoGoogleMapsModule: Module {
 
   public func definition() -> ModuleDefinition {
     Name("ExpoGoogleMaps")
+    
+    AsyncFunction("getSearchCompletions") { (viewHandle: Int, searchQueryFragment: String, promise: Promise) in
+      DispatchQueue.main.async {
+        let view = self.appContext?.reactBridge?.uiManager?.view(forReactTag: NSNumber(value: viewHandle)) as? GoogleMapsView
+        view?.fetchPlacesSearchCompletions(searchQueryFragment: searchQueryFragment, promise: promise)
+      }
+     }
 
     ViewManager {
       View {
@@ -84,6 +91,14 @@ public class ExpoGoogleMapsModule: Module {
       
       Prop("heatmaps") { (view: GoogleMapsView, heatmapObjects: [HeatmapObject]) in
         view.setHeatmaps(heatmapObjects: heatmapObjects)
+      }
+      
+      Prop("clickablePOIs") { (view: GoogleMapsView, clickablePOIs: Bool) in
+        view.setClickablePOIs(clickablePOIs: clickablePOIs)
+      }
+      
+      Prop("createPOISearchRequest") { (view: GoogleMapsView, place: String) in
+        view.createPOISearchRequest(place: place)
       }
     }
   }

@@ -1,4 +1,6 @@
 import GoogleMaps
+import GooglePlaces
+import ExpoModulesCore
 
 public final class GoogleMapsView: UIView, ExpoMapView {
 
@@ -13,13 +15,15 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let circles: GoogleMapsCircles
   private let kmls: GoogleMapsKMLs
   private let geojsons: GoogleMapsGeoJsons
+  private let places: GoogleMapsPlaces
   private var wasInitialCameraPositionSet = false
   private let heatmaps: GoogleMapsHeatmaps
+  public var clickablePOIs = true
 
   init() {
     // just for now we do authentication here
     // should be moved to module's function
-    GMSServices.provideAPIKey("AIzaSyDbgaRNTr3PhYdj_PL7jY_o9u3R08Gf8Ao")
+    GoogleMapsView.initializeGoogleMapsServices()
 
     // random initial camera position
     // TODO: use prop as a source for initial camera position
@@ -38,6 +42,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     kmls = GoogleMapsKMLs(mapView: mapView)
     geojsons = GoogleMapsGeoJsons(mapView: mapView)
     heatmaps = GoogleMapsHeatmaps(mapView: mapView)
+    places = GoogleMapsPlaces(mapView: mapView, markers: markers)
 
     super.init(frame: CGRect.zero)
     delegate.expoMapView = self
@@ -46,6 +51,29 @@ public final class GoogleMapsView: UIView, ExpoMapView {
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  private static func initializeGoogleMapsServices() {
+    guard let path = Bundle.main.path(forResource: "ApiKeys", ofType: "plist") else {
+      fatalError("Couldn't find file 'Info.plist'.")
+    }
+    let content = NSDictionary(contentsOfFile: path)
+    guard let googlePlacesApiKey = content?.object(forKey: "GooglePlacesApiKey") as? String else {
+      fatalError("Couldn't find key 'GooglePlacesApiKey' in 'Info.plist'.")
+    }
+    guard let googleMapsApiKey = content?.object(forKey: "GoogleMapsApiKey") as? String else {
+      fatalError("Couldn't find key 'GoogleMapsApiKey' in 'Info.plist'.")
+    }
+    GMSServices.provideAPIKey(googleMapsApiKey)
+    GMSPlacesClient.provideAPIKey(googlePlacesApiKey)
+  }
+  
+  func fetchPlacesSearchCompletions(searchQueryFragment: String, promise: Promise) {
+    places.fetchSearchCompletions(searchQueryFragment: searchQueryFragment, promise: promise)
+  }
+  
+  func createPOISearchRequest(place: String) {
+    places.createSearchRequest(place: place)
   }
 
   func setShowCompass(enable: Bool) {
@@ -157,5 +185,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   
   func setHeatmaps(heatmapObjects: [HeatmapObject]) {
     heatmaps.setHeatmaps(heatmapObjects: heatmapObjects)
+  }
+  
+  func setClickablePOIs(clickablePOIs: Bool) {
+    self.clickablePOIs = clickablePOIs
   }
 }
