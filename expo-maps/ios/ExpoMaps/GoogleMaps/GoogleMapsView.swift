@@ -54,7 +54,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   }
   
   private static func initializeGoogleMapsServices() {
-    guard let path = Bundle.main.path(forResource: "Info", ofType: "plist") else {
+    guard let path = Bundle.main.path(forResource: "ApiKeys", ofType: "plist") else {
       fatalError("Couldn't find file 'Info.plist'.")
     }
     let content = NSDictionary(contentsOfFile: path)
