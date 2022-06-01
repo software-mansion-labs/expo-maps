@@ -14,6 +14,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let kmls: GoogleMapsKMLs
   private let geojsons: GoogleMapsGeoJsons
   private var wasInitialCameraPositionSet = false
+  private let heatmaps: GoogleMapsHeatmaps
 
   init() {
     // just for now we do authentication here
@@ -36,6 +37,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     circles = GoogleMapsCircles(mapView: mapView)
     kmls = GoogleMapsKMLs(mapView: mapView)
     geojsons = GoogleMapsGeoJsons(mapView: mapView)
+    heatmaps = GoogleMapsHeatmaps(mapView: mapView)
 
     super.init(frame: CGRect.zero)
     delegate.expoMapView = self
@@ -151,5 +153,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   
   func setGeoJsons(geoJsonObjects: [GeoJsonObject]) {
     geojsons.setGeoJsons(geoJsonObjects: geoJsonObjects)
+  }
+  
+  func setHeatmaps(heatmapObjects: [HeatmapObject]) {
+    heatmaps.setHeatmaps(heatmapObjects: heatmapObjects)
   }
 }

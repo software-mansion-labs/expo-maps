@@ -21,7 +21,7 @@ fun provideDescriptor(localUri: String?, color: String?): BitmapDescriptor {
   }
 }
 
-private fun colorHexStringToInt(hexColorString: String): Int {
+fun colorHexStringToInt(hexColorString: String): Int {
   return when (hexColorString.length) {
     4 -> Color.argb(
       0xFF,

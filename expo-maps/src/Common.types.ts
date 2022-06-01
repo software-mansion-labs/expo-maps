@@ -15,6 +15,17 @@ export type Point = {
 };
 
 /**
+ * Generic object that associates numerical data with a georgaphic coordinate.
+ */
+export type PointWithData = Point & {
+  /**
+   * Numerical data associated with the point. (optional)
+   * @default 1
+   */
+  data?: number;
+};
+
+/**
  * PatternItem is used to define a repeating pattern for polyline and polygon line.
  * PatternItem with type `stroke` and length 0 will represent a dot.
  * Use an array of PatternItem to define a pattern.

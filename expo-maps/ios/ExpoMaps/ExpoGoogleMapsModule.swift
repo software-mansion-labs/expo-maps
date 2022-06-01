@@ -81,6 +81,10 @@ public class ExpoGoogleMapsModule: Module {
       Prop("geojsons") { (view: GoogleMapsView, geoJsonObjects: [GeoJsonObject]) in
         view.setGeoJsons(geoJsonObjects: geoJsonObjects)
       }
+      
+      Prop("heatmaps") { (view: GoogleMapsView, heatmapObjects: [HeatmapObject]) in
+        view.setHeatmaps(heatmapObjects: heatmapObjects)
+      }
     }
   }
 }

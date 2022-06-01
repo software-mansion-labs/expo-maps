@@ -82,6 +82,17 @@ export function isGeoJson(child) {
     }
     return false;
 }
+export function isHeatmap(child) {
+    if ('type' in child &&
+        String(child.type).includes('Heatmap') &&
+        'props' in child) {
+        let props = Object.keys(child.props);
+        if (props.includes('points')) {
+            return true;
+        }
+    }
+    return false;
+}
 export function isHexColor(color) {
     return color.length > 0 && color[0] == '#';
 }

@@ -26,6 +26,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var circles: GoogleMapsCircles
   private lateinit var kmls: GoogleMapsKMLs
   private lateinit var geojsons: GoogleMapsGeoJsons
+  private lateinit var heatmaps: GoogleMapsHeatmaps
   private val mapReady = MutableStateFlow(false)
   private var wasInitialCameraPositionSet = false
 
@@ -50,6 +51,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     circles = GoogleMapsCircles(googleMap)
     kmls = GoogleMapsKMLs(context, googleMap)
     geojsons = GoogleMapsGeoJsons(googleMap)
+    heatmaps = GoogleMapsHeatmaps(googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
@@ -203,6 +205,12 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   override fun setGeoJsons(geoJsonObjects: Array<GeoJsonObject>) {
     updateMap {
       geojsons.setGeoJsons(geoJsonObjects)
+    }
+  }
+  
+  override fun setHeatmaps(heatmapObjects: Array<HeatmapObject>) {
+    updateMap {
+      heatmaps.setHeatmaps(heatmapObjects)
     }
   }
 

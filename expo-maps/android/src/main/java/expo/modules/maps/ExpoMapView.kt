@@ -11,4 +11,5 @@ interface ExpoMapView {
   fun setKMLs(kmlObjects: Array<KMLObject>)
   fun setGeoJsons(geoJsonObjects: Array<GeoJsonObject>)
   fun setInitialCameraPosition(initialCameraPosition: CameraPosition)
+  fun setHeatmaps(heatmapObjects: Array<HeatmapObject>)
 }

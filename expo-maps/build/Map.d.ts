@@ -9,6 +9,7 @@ export { KML } from './KML';
 export { GeoJson } from './GeoJson';
 export { ExpoMapRef } from './Map.types';
 export { POICategoryType } from './Map.types';
+export { Heatmap } from './Heatmap';
 /**
  * Main map component of Expo Maps library.
  *

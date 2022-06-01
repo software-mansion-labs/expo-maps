@@ -22,6 +22,7 @@ import { KMLObject } from './KML';
 import { GeoJson, GeoJsonObject } from './GeoJson';
 import { Color } from './Common.types';
 import { ProxyNativeModule } from 'expo-modules-core';
+import { HeatmapObject } from './Heatmap';
 
 export { Marker } from './Marker';
 export { Polygon } from './Polygon';
@@ -32,6 +33,7 @@ export { KML } from './KML';
 export { GeoJson } from './GeoJson';
 export { ExpoMapRef } from './Map.types';
 export { POICategoryType } from './Map.types';
+export { Heatmap } from './Heatmap';
 
 const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   mapType: 'normal',
@@ -71,6 +73,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
     clusters: [],
     kmls: [],
     geojsons: [],
+    heatmaps: [],
   };
   _ismounted = false;
   mapView = React.createRef<ExpoMap>();
@@ -173,6 +176,14 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             } as KMLObject;
           } else if (Utils.isGeoJson(child)) {
             return buildGeoJsonObject(child);
+          } else if(Utils.isHeatmap(child)) {
+            return {
+              type: 'heatmap',
+              points: child.props.points,
+              radius: child.props.radius,
+              gradient: child.props.gradient,
+              opacity: child.props.opacity,
+            } as HeatmapObject;
           } else if (Utils.isCluster(child)) {
             const clusterChildrenArray = React.Children.map(
               child.props.children,
@@ -223,7 +234,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
                 clusterObject.color != undefined &&
                 !Utils.isHexColor(clusterObject.color)
               ) {
-                clusterObject.color = Utils.mapColorToHexColor(
+                  clusterObject.color = Utils.mapColorToHexColor(
                   clusterObject.color as Color,
                   '#ff0000'
                 );
@@ -250,6 +261,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
           clusters: propObjects.filter((elem) => elem?.type === 'cluster'),
           kmls: propObjects.filter((elem) => elem?.type === 'kml'),
           geojsons: propObjects.filter((elem) => elem?.type === 'geojson'),
+          heatmaps: propObjects.filter((elem) => elem?.type === 'heatmap'),
         });
       }
     }
@@ -300,6 +312,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
         kmls={this.state.kmls}
         geojsons={this.state.geojsons}
         ref={this.mapView}
+        heatmaps={this.state.heatmaps}
       />
     );
   }
@@ -374,7 +387,7 @@ async function buildMarkerObject(child: Marker): Promise<MarkerObject> {
     markerObject.color != undefined &&
     !Utils.isHexColor(markerObject.color)
   ) {
-    markerObject.color = Utils.mapColorToHexColor(
+      markerObject.color = Utils.mapColorToHexColor(
       markerObject.color as Color,
       '#ff0000'
     );
