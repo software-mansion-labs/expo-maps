@@ -118,7 +118,6 @@ data class ClusterObject(
 
 data class KMLObject(@Field val filePath: String) : Record
 
-<<<<<<< HEAD
 data class GeoJsonObject(
   @Field val geoJsonString: String,
   @Field val defaultStyle: GeoJsonObjectDefaultStyle?
@@ -149,7 +148,6 @@ data class GeoJsonObjectDefaultStyleMarker(
   @Field val snippet: String?
 ) : Record
 
-=======
 data class Gradient(
   @Field val colors: List<String> = emptyList(),
   @Field val locations: FloatArray = floatArrayOf(),
@@ -178,13 +176,4 @@ data class HeatmapObject(
   @Field val radius: Int?,
   @Field val gradient: Gradient? = null,
   @Field val opacity: Double?,
-<<<<<<< HEAD
-<<<<<<< HEAD
-)
->>>>>>> 7d3c60e (Add implementation for heatmaps)
-=======
 ) : Record
->>>>>>> a427a98 (Fix type problems)
-=======
-) : Record
->>>>>>> 3fa1867 (Update expo-maps/android/src/main/java/expo/modules/maps/PropsData.kt)

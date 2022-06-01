@@ -398,8 +398,5 @@ export type ExpoMapState = Markers &
   Circles &
   Clusters &
   KMLs &
-<<<<<<< HEAD
   GeoJsons &
-=======
->>>>>>> 7d3c60e (Add implementation for heatmaps)
   Heatmaps;

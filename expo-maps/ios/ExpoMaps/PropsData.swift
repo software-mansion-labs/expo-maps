@@ -116,8 +116,6 @@ struct KMLObject: Record {
   @Field var filePath: String
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 struct GeoJsonObject: Record {
   @Field var geoJsonString: String
   @Field var defaultStyle: GeoJsonObjectDefaultStyle?
@@ -148,15 +146,7 @@ struct GeoJsonObjectDefaultStyleMarker: Record {
   @Field var title: String?
   @Field var snippet: String?
 }
-=======
-struct HeatmapObject: Record {
-  @Field var points: [Point] = []
-  @Field var gradient: [Double] = []
-  @Field var radius: Double = 0
-  @Field var opacity: Double = 0
-}
->>>>>>> 7d3c60e (Add implementation for heatmaps)
-=======
+
 struct Gradient: Record {
   @Field var colors: [UIColor] = []
   @Field var locations: [Double] = []
@@ -168,4 +158,3 @@ struct HeatmapObject: Record {
   @Field var radius: UInt? = nil
   @Field var opacity: Float? = nil
 }
->>>>>>> 0728098 (Add support for iOS GoogleMaps)

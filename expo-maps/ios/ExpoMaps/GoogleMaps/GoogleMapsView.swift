@@ -12,12 +12,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let polylines: GoogleMapsPolylines
   private let circles: GoogleMapsCircles
   private let kmls: GoogleMapsKMLs
-<<<<<<< HEAD
   private let geojsons: GoogleMapsGeoJsons
   private var wasInitialCameraPositionSet = false
-=======
   private let heatmaps: GoogleMapsHeatmaps
->>>>>>> 0728098 (Add support for iOS GoogleMaps)
 
   init() {
     // just for now we do authentication here
@@ -39,11 +36,8 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     polylines = GoogleMapsPolylines(mapView: mapView)
     circles = GoogleMapsCircles(mapView: mapView)
     kmls = GoogleMapsKMLs(mapView: mapView)
-<<<<<<< HEAD
     geojsons = GoogleMapsGeoJsons(mapView: mapView)
-=======
     heatmaps = GoogleMapsHeatmaps(mapView: mapView)
->>>>>>> 0728098 (Add support for iOS GoogleMaps)
 
     super.init(frame: CGRect.zero)
     delegate.expoMapView = self
@@ -156,21 +150,12 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   func setKMLs(kmlObjects: [KMLObject]) {
     kmls.setKMLs(kmlObjects: kmlObjects)
   }
-<<<<<<< HEAD
   
   func setGeoJsons(geoJsonObjects: [GeoJsonObject]) {
     geojsons.setGeoJsons(geoJsonObjects: geoJsonObjects)
-=======
-
+  }
+  
   func setHeatmaps(heatmapObjects: [HeatmapObject]) {
-<<<<<<< HEAD
-    if !heatmapObjects.isEmpty {
-      let first = heatmapObjects[0]
-      debugPrint("Heatmaps: ", first.points[0], first.radius, first.gradient)
-    }
->>>>>>> 7d3c60e (Add implementation for heatmaps)
-=======
     heatmaps.setHeatmaps(heatmapObjects: heatmapObjects)
->>>>>>> 0728098 (Add support for iOS GoogleMaps)
   }
 }

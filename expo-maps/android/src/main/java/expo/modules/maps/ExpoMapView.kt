@@ -9,10 +9,7 @@ interface ExpoMapView {
   fun setClusters(clusterObjects: Array<ClusterObject>)
   fun setEnabledTraffic(enableTraffic: Boolean)
   fun setKMLs(kmlObjects: Array<KMLObject>)
-<<<<<<< HEAD
   fun setGeoJsons(geoJsonObjects: Array<GeoJsonObject>)
   fun setInitialCameraPosition(initialCameraPosition: CameraPosition)
-=======
   fun setHeatmaps(heatmapObjects: Array<HeatmapObject>)
->>>>>>> 7d3c60e (Add implementation for heatmaps)
 }
