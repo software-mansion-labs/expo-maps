@@ -10,6 +10,7 @@ import TrafficExample from '../screens/TrafficExample';
 import KMLExample from '../screens/KMLExample';
 import GeoJsonExample from '../screens/GeoJsonExample';
 import POIExample from '../screens/POIExample';
+import OverlaysExample from '../screens/OverlaysExample';
 
 // TODO: Type this better
 interface ConcreteExampleScreen {
@@ -25,7 +26,8 @@ interface ConcreteExampleScreen {
     | 'Traffic'
     | 'KML'
     | 'GeoJson'
-    | 'POI';
+    | 'POI'
+    | 'Overlays';
   screen: (props: any) => JSX.Element;
 }
 
@@ -77,5 +79,9 @@ export const CONCRETE_EXAMPLE_SCREENS: Array<ConcreteExampleScreen> = [
   {
     name: 'POI',
     screen: POIExample,
+  },
+  {
+    name: 'Overlays',
+    screen: OverlaysExample,
   },
 ];

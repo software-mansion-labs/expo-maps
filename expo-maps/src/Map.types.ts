@@ -9,6 +9,7 @@ import { ClusterObject } from './Cluster';
 import { KMLObject } from './KML';
 import { GeoJsonObject } from './GeoJson';
 import { ExpoMap } from './Map';
+import { OverlayObject } from './Overlay';
 
 export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 
@@ -52,6 +53,16 @@ export type Polylines = {
    * Array of {@link PolylineObject}.
    */
   polylines: PolylineObject[];
+};
+
+/**
+ * Internal prop for managing overlays displayed on the map.
+ */
+export type Overlays = {
+  /**
+   * Array of {@link OverlayObject}.
+   */
+  overlays: OverlayObject[];
 };
 
 /**
@@ -195,7 +206,17 @@ export type Traffic = {
   enableTraffic: boolean;
 };
 
-export type POICategoryType = 'airport' | 'atm' | 'bank' | 'beach' | 'cafe' | 'hospital' | 'hotel' | 'museum' | 'pharmacy' | 'store';
+export type POICategoryType =
+  | 'airport'
+  | 'atm'
+  | 'bank'
+  | 'beach'
+  | 'cafe'
+  | 'hospital'
+  | 'hotel'
+  | 'museum'
+  | 'pharmacy'
+  | 'store';
 
 /**
  * Props for POI handling.
@@ -203,7 +224,7 @@ export type POICategoryType = 'airport' | 'atm' | 'bank' | 'beach' | 'cafe' | 'h
 export type POI = {
   /**
    * If 'true' search bar for searching pois is enabled.
-   * 
+   *
    * This prop works only when provider == `apple`.
    *
    * @default false
@@ -219,25 +240,22 @@ export type POI = {
    * If not empty POIs use will be filterd to specified types.
    *
    * This prop works only when provider == `apple`.
-   * 
+   *
    * @default []
    */
-  enablePOIFilter: [POICategoryType] | []
+  enablePOIFilter: [POICategoryType] | [];
 
   /**
    * Creates a search request for given place.
-   * 
+   *
    * Passed value shoulld be a result of auto complete.
-   * 
+   *
    */
   createPOISearchRequest: string;
 };
 
 export type AppleMapsPOI = POI;
-export type GoogleMapsPOI = Omit<
-  POI,
-  'enablePOISearching' | 'enablePOIFilter'
->;
+export type GoogleMapsPOI = Omit<POI, 'enablePOISearching' | 'enablePOIFilter'>;
 
 export type GoogleMapsControls = Controls;
 
@@ -316,7 +334,8 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       Traffic &
       KMLs &
       GeoJsons &
-      GoogleMapsPOI
+      GoogleMapsPOI &
+      Overlays
   >;
 
 /**
@@ -388,4 +407,5 @@ export type ExpoMapState = Markers &
   Circles &
   Clusters &
   KMLs &
-  GeoJsons;
+  GeoJsons &
+  Overlays;

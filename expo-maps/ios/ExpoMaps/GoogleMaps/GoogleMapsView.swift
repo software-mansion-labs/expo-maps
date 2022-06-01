@@ -13,6 +13,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let circles: GoogleMapsCircles
   private let kmls: GoogleMapsKMLs
   private let geojsons: GoogleMapsGeoJsons
+  private let overlays: GoogleMapsOverlays
   private var wasInitialCameraPositionSet = false
 
   init() {
@@ -36,6 +37,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     circles = GoogleMapsCircles(mapView: mapView)
     kmls = GoogleMapsKMLs(mapView: mapView)
     geojsons = GoogleMapsGeoJsons(mapView: mapView)
+    overlays = GoogleMapsOverlays(mapView: mapView)
 
     super.init(frame: CGRect.zero)
     delegate.expoMapView = self
@@ -151,5 +153,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   
   func setGeoJsons(geoJsonObjects: [GeoJsonObject]) {
     geojsons.setGeoJsons(geoJsonObjects: geoJsonObjects)
+  }
+  
+  func setOverlays(overlayObjects: [OverlayObject]) {
+    overlays.setOverlays(overlayObjects: overlayObjects)
   }
 }

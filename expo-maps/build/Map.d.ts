@@ -7,6 +7,7 @@ export { Circle } from './Circle';
 export { Cluster } from './Cluster';
 export { KML } from './KML';
 export { GeoJson } from './GeoJson';
+export { Overlay } from './Overlay';
 export { ExpoMapRef } from './Map.types';
 export { POICategoryType } from './Map.types';
 /**
@@ -18,7 +19,7 @@ export declare class ExpoMap extends React.Component<ExpoMapViewProps> {
     state: ExpoMapState;
     _ismounted: boolean;
     mapView: React.RefObject<ExpoMap>;
-    getSearchCompletions(queryFragment: string): Promise<void>;
+    getSearchCompletions(queryFragment: string): void;
     componentDidMount(): void;
     componentWillUnmount(): void;
     componentDidUpdate(_: any, prevState: ExpoMapState): void;

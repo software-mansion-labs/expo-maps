@@ -1,3 +1,5 @@
+import { Asset } from 'expo-asset';
+import React from 'react';
 export function isSimpleType(child) {
     return (typeof child == 'string' ||
         typeof child == 'boolean' ||
@@ -22,6 +24,17 @@ export function isPolyline(child) {
         'props' in child) {
         let props = Object.keys(child.props);
         if (props.includes('points')) {
+            return true;
+        }
+    }
+    return false;
+}
+export function isOverlay(child) {
+    if ('type' in child &&
+        String(child.type).includes('Overlay') &&
+        'props' in child) {
+        let props = Object.keys(child.props);
+        if (props.includes('bounds') && props.includes('icon')) {
             return true;
         }
     }
@@ -124,5 +137,150 @@ export function warnIfChildIsIncompatible(child) {
         console.log(child.type);
         console.warn(`Warning! Child of type ${child.type} isn't valid ExpoMap child!`);
     }
+}
+export function buildGeoJsonObject(child) {
+    if (child.props.defaultStyle?.marker?.color != undefined &&
+        !isHexColor(child.props.defaultStyle.marker.color)) {
+        child.props.defaultStyle.marker.color = mapColorToHexColor(child.props.defaultStyle?.marker.color, '#ff0000');
+    }
+    if (child.props.defaultStyle?.polygon?.fillColor != undefined &&
+        !isHexColor(child.props.defaultStyle.polygon.fillColor)) {
+        child.props.defaultStyle.polygon.fillColor = mapColorToHexColor(child.props.defaultStyle.polygon.fillColor);
+    }
+    if (child.props.defaultStyle?.polygon?.strokeColor != undefined &&
+        !isHexColor(child.props.defaultStyle.polygon.strokeColor)) {
+        child.props.defaultStyle.polygon.strokeColor = mapColorToHexColor(child.props.defaultStyle.polygon.strokeColor);
+    }
+    if (child.props.defaultStyle?.polyline?.color != undefined &&
+        !isHexColor(child.props.defaultStyle.polyline.color)) {
+        child.props.defaultStyle.polyline.color = mapColorToHexColor(child.props.defaultStyle.polyline.color);
+    }
+    return {
+        type: 'geojson',
+        geoJsonString: child.props.geoJsonString,
+        defaultStyle: child.props.defaultStyle,
+    };
+}
+export async function buildMarkerObject(child) {
+    let iconPath = undefined;
+    if (child.props.icon !== undefined) {
+        iconPath = await Asset.fromModule(child.props.icon).downloadAsync();
+    }
+    let markerObject = {
+        type: 'marker',
+        latitude: child.props.latitude,
+        longitude: child.props.longitude,
+        markerTitle: child.props.markerTitle,
+        markerSnippet: child.props.markerSnippet,
+        icon: iconPath?.localUri,
+        color: child.props.color,
+        draggable: child.props.draggable ? child.props.draggable : false,
+        anchorU: child.props.anchorU,
+        anchorV: child.props.anchorV,
+        opacity: child.props.opacity ? child.props.opacity : 1,
+    };
+    if (markerObject.color != undefined && !isHexColor(markerObject.color)) {
+        markerObject.color = mapColorToHexColor(markerObject.color, '#ff0000');
+    }
+    return markerObject;
+}
+export async function buildOverlayObject(child) {
+    let iconPath = await Asset.fromModule(child.props.icon).downloadAsync();
+    let overlayObject = {
+        type: 'overlay',
+        bounds: child.props.bounds,
+        icon: iconPath.localUri,
+    };
+    return overlayObject;
+}
+export function buildPolygonObject(child) {
+    const polygonObject = {
+        type: 'polygon',
+        points: child.props.points,
+        fillColor: child.props.fillColor,
+        strokeColor: child.props.strokeColor,
+        strokeWidth: child.props.strokeWidth,
+        strokePattern: child.props.strokePattern,
+        jointType: child.props.jointType,
+    };
+    if (polygonObject.fillColor != undefined &&
+        !isHexColor(polygonObject.fillColor)) {
+        polygonObject.fillColor = mapColorToHexColor(polygonObject.fillColor);
+    }
+    return polygonObject;
+}
+export function buildPolylineObject(child) {
+    const polylineObject = {
+        type: 'polyline',
+        points: child.props.points,
+        color: child.props.color,
+        width: child.props.width,
+        pattern: child.props.pattern,
+        jointType: child.props.jointType,
+        capType: child.props.capType,
+    };
+    if (polylineObject.color != undefined && !isHexColor(polylineObject.color)) {
+        polylineObject.color = mapColorToHexColor(polylineObject.color);
+    }
+    return polylineObject;
+}
+export function buildCircleObject(child) {
+    return {
+        type: 'circle',
+        center: child.props.center,
+        radius: child.props.radius,
+        fillColor: child.props.fillColor,
+        strokeColor: child.props.strokeColor,
+        strokeWidth: child.props.strokeWidth,
+    };
+}
+export async function buildKMLObject(child) {
+    let filePath = await Asset.fromModule(child.props.filePath).downloadAsync();
+    return {
+        type: 'kml',
+        filePath: filePath.localUri,
+    };
+}
+export async function buildClusterObject(child) {
+    const clusterChildrenArray = React.Children.map(child.props.children, async (clusterChild) => {
+        if (!isSimpleType(clusterChild)) {
+            if (isMarker(clusterChild)) {
+                return buildMarkerObject(clusterChild);
+            }
+        }
+        warnIfChildIsIncompatible(clusterChild);
+        return null;
+    });
+    if (clusterChildrenArray != undefined) {
+        let iconPath = undefined;
+        if (child.props.icon !== undefined) {
+            iconPath = await Asset.fromModule(child.props.icon).downloadAsync();
+        }
+        let clusterPropObjects = await Promise.all(clusterChildrenArray);
+        var minimumClusterSize;
+        if (child.props.minimumClusterSize !== undefined &&
+            child.props.minimumClusterSize > 0) {
+            minimumClusterSize = child.props.minimumClusterSize;
+        }
+        else {
+            minimumClusterSize = 4;
+        }
+        let clusterObject = {
+            type: 'cluster',
+            markers: clusterPropObjects,
+            name: child.props.name,
+            minimumClusterSize: minimumClusterSize,
+            markerTitle: child.props.markerTitle,
+            markerSnippet: child.props.markerSnippet,
+            icon: iconPath?.localUri,
+            color: child.props.color,
+            opacity: child.props.opacity ? child.props.opacity : 1,
+        };
+        if (clusterObject.color != undefined && !isHexColor(clusterObject.color)) {
+            clusterObject.color = mapColorToHexColor(clusterObject.color, '#ff0000');
+        }
+        return clusterObject;
+    }
+    return null;
 }
 //# sourceMappingURL=Utils.js.map
