@@ -6,10 +6,11 @@ import { PolylineObject } from './Polyline';
 import { Point } from './Common.types';
 import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
-import { KMLObject } from './KML';
 import { GeoJsonObject } from './GeoJson';
 import { ExpoMap } from './Map';
 import { OverlayObject } from './Overlay';
+import { KMLObject } from './KML';
+import { HeatmapObject } from './Heatmap';
 
 export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 
@@ -252,10 +253,26 @@ export type POI = {
    *
    */
   createPOISearchRequest: string;
+  /**
+   * If `true` POIs are clickable and after the click name of POI is displayed above the POI's location.
+   * Please note, this field is only effective when `enablePOI` option is equal to `true`.
+   *
+   * @default false
+   */
+   clickablePOIs: boolean;
 };
 
 export type AppleMapsPOI = POI;
-export type GoogleMapsPOI = Omit<POI, 'enablePOISearching' | 'enablePOIFilter'>;
+export type GoogleMapsPOI = Omit<
+  POI,
+  'enablePOISearching' | 'enablePOIFilter'
+>;
+export type Heatmaps = {
+  /**
+   * Array of {@link HeatmapObject}.
+   */
+  heatmaps: HeatmapObject[];
+};
 
 export type GoogleMapsControls = Controls;
 
@@ -335,7 +352,8 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       KMLs &
       GeoJsons &
       GoogleMapsPOI &
-      Overlays
+      Overlays &
+      Heatmaps
   >;
 
 /**
@@ -390,7 +408,9 @@ export type ExpoMapViewProps = ViewProps &
         Gestures &
         CameraPosition &
         Traffic &
-        POI
+        POI &
+        KMLs &
+        Heatmaps
     >
   >;
 
@@ -408,4 +428,5 @@ export type ExpoMapState = Markers &
   Clusters &
   KMLs &
   GeoJsons &
-  Overlays;
+  Overlays &
+  Heatmaps;

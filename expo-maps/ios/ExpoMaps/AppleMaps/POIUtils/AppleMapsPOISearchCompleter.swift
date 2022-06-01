@@ -52,7 +52,8 @@ class AppleMapsPOISearchCompleter: NSObject, SearchCompleter {
       let searchCompletions = mapSearchCompletions(completions: results)
       searchCompletionsPromise?.resolve(searchCompletions)
     } else {
-      searchCompletionsPromise?.reject(SearchCompleterError.fetchingCompletionsError)
+      let errorMessage = "Error while fetching search completions."
+      searchCompletionsPromise?.reject("", errorMessage)
     }
     searchCompletionsPromise = nil
   }

@@ -1,5 +1,6 @@
 package expo.modules.maps
 
+import android.graphics.LinearGradient
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
 import expo.modules.kotlin.records.Field
@@ -38,7 +39,16 @@ data class MarkerObject(
   }
 }
 
-data class Point(@Field val latitude: Double = 0.0, @Field val longitude: Double = 0.0) : Record
+data class Point(
+  @Field val latitude: Double = 0.0,
+  @Field val longitude: Double = 0.0
+) : Record
+
+data class PointWithData(
+  @Field val latitude: Double = 0.0,
+  @Field val longitude: Double = 0.0,
+  @Field val data: Double? = null
+) : Record
 
 data class PolygonObject(
   @Field val points: List<Point> = emptyList(),
@@ -147,3 +157,33 @@ data class Bounds(
   @Field val southWest: Point = Point(),
   @Field val northEast: Point = Point()
 ): Record
+
+data class Gradient(
+  @Field val colors: List<String> = emptyList(),
+  @Field val locations: FloatArray = floatArrayOf(),
+) : Record {
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as Gradient
+
+    if (colors != other.colors) return false
+    if (!locations.contentEquals(other.locations)) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result = colors.hashCode()
+    result = 31 * result + locations.contentHashCode()
+    return result
+  }
+}
+
+data class HeatmapObject(
+  @Field val points: List<PointWithData> = emptyList(),
+  @Field val radius: Int?,
+  @Field val gradient: Gradient? = null,
+  @Field val opacity: Double?,
+) : Record

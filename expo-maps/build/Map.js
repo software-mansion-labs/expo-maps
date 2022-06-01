@@ -10,6 +10,7 @@ export { Cluster } from './Cluster';
 export { KML } from './KML';
 export { GeoJson } from './GeoJson';
 export { Overlay } from './Overlay';
+export { Heatmap } from './Heatmap';
 const defaultNativeExpoMapViewProps = {
     mapType: 'normal',
     showZoomControls: true,
@@ -32,6 +33,7 @@ const defaultNativeExpoMapViewProps = {
     enablePOIs: false,
     enablePOIFilter: [],
     createPOISearchRequest: '',
+    clickablePOIs: true,
 };
 /**
  * Main map component of Expo Maps library.
@@ -48,6 +50,7 @@ export class ExpoMap extends React.Component {
         kmls: [],
         geojsons: [],
         overlays: [],
+        heatmaps: [],
     };
     _ismounted = false;
     mapView = React.createRef();
@@ -108,6 +111,9 @@ export class ExpoMap extends React.Component {
                 else if (Utils.isOverlay(child)) {
                     return Utils.buildOverlayObject(child);
                 }
+                else if (Utils.isHeatmap(child)) {
+                    return Utils.buildHeatmapObject(child);
+                }
                 Utils.warnIfChildIsIncompatible(child);
                 return null;
             }
@@ -126,6 +132,7 @@ export class ExpoMap extends React.Component {
                     kmls: propObjects.filter((elem) => elem?.type === 'kml'),
                     geojsons: propObjects.filter((elem) => elem?.type === 'geojson'),
                     overlays: propObjects.filter((elem) => elem?.type === 'overlay'),
+                    heatmaps: propObjects.filter((elem) => elem?.type === 'heatmap'),
                 });
             }
         }
@@ -140,9 +147,23 @@ export class ExpoMap extends React.Component {
             }
             return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons, ref: this.mapView }));
         }
-        return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString
-                ? this.props.googleMapsJsonStyleString
-                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons, ref: this.mapView, overlays: this.state.overlays }));
+        let googleMapsJsonStyleString = this.props.googleMapsJsonStyleString
+            ? this.props.googleMapsJsonStyleString
+            : '';
+        if (this.props.enablePOIs === false) {
+            if (this.props.googleMapsJsonStyleString) {
+                console.warn("Expo Maps enablePOIs prop isn't effective when custom Google Maps map style is active. Please adjust your style manually to disable the POIs. https://developers.google.com/maps/documentation/ios-sdk/poi");
+            }
+            else {
+                googleMapsJsonStyleString = JSON.stringify([
+                    {
+                        featureType: 'poi',
+                        stylers: [{ visibility: 'off' }],
+                    },
+                ]);
+            }
+        }
+        return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: googleMapsJsonStyleString, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons, ref: this.mapView, overlays: this.state.overlays, heatmaps: this.state.heatmaps }));
     }
 }
 //# sourceMappingURL=Map.js.map

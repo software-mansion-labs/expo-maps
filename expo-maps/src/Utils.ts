@@ -1,3 +1,4 @@
+import React from 'react';
 import { Cluster, ClusterObject } from './Cluster';
 import { Color } from './Common.types';
 import { Marker, MarkerObject } from './Marker';
@@ -8,7 +9,7 @@ import { KML, KMLObject } from './KML';
 import { GeoJson, GeoJsonObject } from './GeoJson';
 import { Overlay, OverlayObject } from './Overlay';
 import { Asset } from 'expo-asset';
-import React from 'react';
+import { Heatmap, HeatmapObject } from './Heatmap';
 
 export function isSimpleType(child: any) {
   return (
@@ -126,6 +127,20 @@ export function isGeoJson(child: any): child is GeoJson {
   ) {
     let props = Object.keys(child.props);
     if (props.includes('geoJsonString')) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function isHeatmap(child: any): child is Heatmap {
+  if (
+    'type' in child &&
+    String(child.type).includes('Heatmap') &&
+    'props' in child
+  ) {
+    let props = Object.keys(child.props);
+    if (props.includes('points')) {
       return true;
     }
   }
@@ -388,4 +403,14 @@ export async function buildClusterObject(
     return clusterObject;
   }
   return null;
+}
+
+export function buildHeatmapObject(child: Heatmap): HeatmapObject {
+  return {
+    type: 'heatmap',
+    points: child.props.points,
+    radius: child.props.radius,
+    gradient: child.props.gradient,
+    opacity: child.props.opacity,
+  } as HeatmapObject;
 }

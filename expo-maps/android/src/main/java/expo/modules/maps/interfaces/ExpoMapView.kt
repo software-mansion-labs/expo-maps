@@ -14,4 +14,5 @@ interface ExpoMapView {
   fun setGeoJsons(geoJsonObjects: Array<GeoJsonObject>)
   fun setInitialCameraPosition(initialCameraPosition: CameraPosition)
   fun setOverlays(overlayObjects: Array<OverlayObject>)
+  fun setHeatmaps(heatmapObjects: Array<HeatmapObject>)
 }

@@ -22,6 +22,7 @@ PODS:
     - ExpoModulesCore
     - Google-Maps-iOS-Utils (~> 4.1.0)
     - GoogleMaps (= 6.0.0)
+    - GooglePlaces (= 6.2.1)
   - ExpoModulesCore (0.9.2):
     - React-Core
     - ReactCommon/turbomodule/core
@@ -62,6 +63,7 @@ PODS:
   - GoogleMaps/Base (6.0.0)
   - GoogleMaps/Maps (6.0.0):
     - GoogleMaps/Base
+  - GooglePlaces (6.2.1)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
     - DoubleConversion
@@ -432,6 +434,7 @@ SPEC REPOS:
     - fmt
     - Google-Maps-iOS-Utils
     - GoogleMaps
+    - GooglePlaces
 
 EXTERNAL SOURCES:
   boost:
@@ -540,7 +543,7 @@ SPEC CHECKSUMS:
   EXLocation: 013b5d07cca26c2d15d998766322e70b7a228b57
   Expo: 64d52669fa3b9342919b5b44b2b4f15f19b0cf76
   ExpoKeepAwake: c0c494b442ecd8122974c13b93ccfb57bd408e88
-  ExpoMaps: 6c077aef162e5a5e6e4cd67fc2a0726db88f3b53
+  ExpoMaps: 278607e0d11f672fb5be2a4a30402a7611599390
   ExpoModulesCore: e4278a668e8c13c0269ed8b8a4200989deea2973
   EXSplashScreen: 34f460788db8d682883871708dddbfac72095bb7
   FBLazyVector: a7a655862f6b09625d11c772296b01cd5164b648
@@ -549,6 +552,7 @@ SPEC CHECKSUMS:
   glog: 476ee3e89abb49e07f822b48323c51c57124b572
   Google-Maps-iOS-Utils: 3343332b18dfd5be8f1f44edd7d481ace3da4d9a
   GoogleMaps: 750f237920fa44dd32de0c0d2004d35cb2c688f3
+  GooglePlaces: 94974aa119573d5acc2a35a699948dac838abd73
   RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: 3e917ea5377751094f38145fdece525aa90545a0
   RCTTypeSafety: c43c072a4bd60feb49a9570b0517892b4305c45e

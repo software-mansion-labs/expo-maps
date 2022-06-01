@@ -23,6 +23,7 @@ export { GeoJson } from './GeoJson';
 export { Overlay } from './Overlay';
 export { ExpoMapRef } from './Map.types';
 export { POICategoryType } from './Map.types';
+export { Heatmap } from './Heatmap';
 
 const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   mapType: 'normal',
@@ -46,6 +47,7 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   enablePOIs: false,
   enablePOIFilter: [],
   createPOISearchRequest: '',
+  clickablePOIs: true,
 };
 
 /**
@@ -63,6 +65,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
     kmls: [],
     geojsons: [],
     overlays: [],
+    heatmaps: [],
   };
   _ismounted = false;
   mapView = React.createRef<ExpoMap>();
@@ -122,6 +125,8 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             return Utils.buildClusterObject(child);
           } else if (Utils.isOverlay(child)) {
             return Utils.buildOverlayObject(child);
+          } else if(Utils.isHeatmap(child)) {
+            return Utils.buildHeatmapObject(child);
           }
           Utils.warnIfChildIsIncompatible(child);
           return null;
@@ -143,6 +148,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
           kmls: propObjects.filter((elem) => elem?.type === 'kml'),
           geojsons: propObjects.filter((elem) => elem?.type === 'geojson'),
           overlays: propObjects.filter((elem) => elem?.type === 'overlay'),
+          heatmaps: propObjects.filter((elem) => elem?.type === 'heatmap'),
         });
       }
     }
@@ -176,15 +182,29 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
       );
     }
 
+    let googleMapsJsonStyleString = this.props.googleMapsJsonStyleString
+      ? this.props.googleMapsJsonStyleString
+      : '';
+    if (this.props.enablePOIs === false) {
+      if (this.props.googleMapsJsonStyleString) {
+        console.warn(
+          "Expo Maps enablePOIs prop isn't effective when custom Google Maps map style is active. Please adjust your style manually to disable the POIs. https://developers.google.com/maps/documentation/ios-sdk/poi"
+        );
+      } else {
+        googleMapsJsonStyleString = JSON.stringify([
+          {
+            featureType: 'poi',
+            stylers: [{ visibility: 'off' }],
+          },
+        ]);
+      }
+    }
+
     return (
       <NativeExpoGoogleMapsView
         {...defaultNativeExpoMapViewProps}
         {...this.props}
-        googleMapsJsonStyleString={
-          this.props.googleMapsJsonStyleString
-            ? this.props.googleMapsJsonStyleString
-            : ''
-        }
+        googleMapsJsonStyleString={googleMapsJsonStyleString}
         markers={this.state.markers}
         polygons={this.state.polygons}
         polylines={this.state.polylines}
@@ -194,6 +214,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
         geojsons={this.state.geojsons}
         ref={this.mapView}
         overlays={this.state.overlays}
+        heatmaps={this.state.heatmaps}
       />
     );
   }

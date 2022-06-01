@@ -1,5 +1,5 @@
-import { Asset } from 'expo-asset';
 import React from 'react';
+import { Asset } from 'expo-asset';
 export function isSimpleType(child) {
     return (typeof child == 'string' ||
         typeof child == 'boolean' ||
@@ -90,6 +90,17 @@ export function isGeoJson(child) {
         'props' in child) {
         let props = Object.keys(child.props);
         if (props.includes('geoJsonString')) {
+            return true;
+        }
+    }
+    return false;
+}
+export function isHeatmap(child) {
+    if ('type' in child &&
+        String(child.type).includes('Heatmap') &&
+        'props' in child) {
+        let props = Object.keys(child.props);
+        if (props.includes('points')) {
             return true;
         }
     }
@@ -282,5 +293,14 @@ export async function buildClusterObject(child) {
         return clusterObject;
     }
     return null;
+}
+export function buildHeatmapObject(child) {
+    return {
+        type: 'heatmap',
+        points: child.props.points,
+        radius: child.props.radius,
+        gradient: child.props.gradient,
+        opacity: child.props.opacity,
+    };
 }
 //# sourceMappingURL=Utils.js.map

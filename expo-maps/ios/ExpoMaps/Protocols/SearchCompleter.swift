@@ -4,7 +4,3 @@ protocol SearchCompleter {
   func getSearchCompletions() -> [String]
   func mapSearchCompletions(completions: [T]) -> [String]
 }
-
-enum SearchCompleterError: Error {
-  case fetchingCompletionsError
-}
