@@ -20,12 +20,12 @@ class ExpoGoogleMapsModule : Module() {
     val googleMapsEventEmitterManager = GoogleMapsEventEmitterManager(::sendEvent)
     
     AsyncFunction("getSearchCompletions") { viewHandle: Int, searchQueryFragment: String, promise: Promise ->
-//      val rnContext = appContext.reactContext as? ReactApplicationContext ?: return@function
-//      val uiManager = rnContext.getNativeModule(UIManagerModule::class.java) ?: return@function
-//      appContext.activityProvider?.currentActivity?.runOnUiThread {
-//        val view = uiManager.resolveView(viewHandle) as? GoogleMapsView
-//        view?.fetchPlacesSearchCompletions(searchQueryFragment, promise)
-//      }
+      val rnContext = appContext.reactContext as? ReactApplicationContext ?: return@AsyncFunction
+      val uiManager = rnContext.getNativeModule(UIManagerModule::class.java) ?: return@AsyncFunction
+      appContext.activityProvider?.currentActivity?.runOnUiThread {
+        val view = uiManager.resolveView(viewHandle) as GoogleMapsView
+        view.fetchPlacesSearchCompletions(searchQueryFragment, promise)
+      }
     }
 
     ViewManager {
