@@ -50,11 +50,7 @@ class GoogleMapsPlacesSearchCompleter: SearchCompleter {
   }
   
   func mapSearchCompletions(completions: [GMSAutocompletePrediction]) -> [String] {
-    var stringCompletions: [String] = []
-    for completion in completions {
-      stringCompletions.append(completion.attributedFullText.string + ";" + completion.placeID)
-    }
-    return stringCompletions
+    return completions.map { $0.attributedFullText.string + ";" + $0.placeID }
   }
   
   func setSearchCompleterFilters(filter: GMSAutocompleteFilter) {
