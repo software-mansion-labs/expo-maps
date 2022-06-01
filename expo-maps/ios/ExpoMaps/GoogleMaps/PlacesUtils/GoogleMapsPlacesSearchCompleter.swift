@@ -20,15 +20,15 @@ class GoogleMapsPlacesSearchCompleter: SearchCompleter {
   
   func autoComplete(searchQueryFragment: String, promise: Promise?) {
     guard let token = tokenUtils.getToken() else {
-      print("No token provided for auto complete request!")
-      promise?.reject(SearchCompleterError.fetchingCompletionsError)
+      let errorMessage = "No token provided for auto complete request!"
+      promise?.reject("", errorMessage)
       return
     }
 
     placesClient.findAutocompletePredictions(fromQuery: searchQueryFragment, filter: filter, sessionToken: token, callback: {(results, error) in
         if let error = error {
-          print("Autocomplete error: \(error)")
-          promise?.reject(SearchCompleterError.fetchingCompletionsError)
+          let errorMessage = "Autocomplete error: \(error)"
+          promise?.reject("", errorMessage)
           return
         }
         if let results = results {
