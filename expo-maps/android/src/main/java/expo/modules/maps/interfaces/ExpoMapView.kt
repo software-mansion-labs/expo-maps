@@ -1,4 +1,6 @@
-package expo.modules.maps
+package expo.modules.maps.interfaces
+
+import expo.modules.maps.*
 
 interface ExpoMapView {
   fun setMapType(mapType: MapType)
@@ -11,4 +13,5 @@ interface ExpoMapView {
   fun setKMLs(kmlObjects: Array<KMLObject>)
   fun setGeoJsons(geoJsonObjects: Array<GeoJsonObject>)
   fun setInitialCameraPosition(initialCameraPosition: CameraPosition)
+  fun setOverlays(overlayObjects: Array<OverlayObject>)
 }

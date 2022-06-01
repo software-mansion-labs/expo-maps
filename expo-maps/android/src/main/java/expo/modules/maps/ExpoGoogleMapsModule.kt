@@ -97,6 +97,10 @@ class ExpoGoogleMapsModule : Module() {
       Prop("geojsons") { view: GoogleMapsView, geoJsonObjects: Array<GeoJsonObject> ->
         view.setGeoJsons(geoJsonObjects)
       }
+
+      Prop("overlays") { view: GoogleMapsView, overlayObjects: Array<OverlayObject> ->
+        view.setOverlays(overlayObjects)
+      }
     }
   }
 }

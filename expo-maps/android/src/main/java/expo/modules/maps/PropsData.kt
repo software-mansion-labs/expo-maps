@@ -138,3 +138,12 @@ data class GeoJsonObjectDefaultStyleMarker(
   @Field val snippet: String?
 ) : Record
 
+data class OverlayObject(
+  @Field val bounds: Bounds = Bounds(),
+  @Field val icon: String = ""
+): Record
+
+data class Bounds(
+  @Field val southWest: Point = Point(),
+  @Field val northEast: Point = Point()
+): Record
