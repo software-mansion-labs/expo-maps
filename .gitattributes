@@ -1,1 +1,1 @@
-/example/ios/example/Info.plist filter=git-crypt diff=git-crypt
+/example/ios/example/ApiKeys.plist filter=git-crypt diff=git-crypt
