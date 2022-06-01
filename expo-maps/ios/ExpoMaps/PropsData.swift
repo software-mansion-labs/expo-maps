@@ -147,6 +147,17 @@ struct GeoJsonObjectDefaultStyleMarker: Record {
   @Field var snippet: String?
 }
 
+struct OverlayObject: Record {
+  @Field var bounds: Bounds = Bounds()
+  @Field var icon: String = ""
+}
+
+
+struct Bounds: Record {
+  @Field var southWest: Point = Point()
+  @Field var northEast: Point = Point()
+}
+
 struct Gradient: Record {
   @Field var colors: [UIColor] = []
   @Field var locations: [Double] = []

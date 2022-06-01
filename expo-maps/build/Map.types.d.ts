@@ -8,6 +8,7 @@ import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
 import { GeoJsonObject } from './GeoJson';
 import { ExpoMap } from './Map';
+import { OverlayObject } from './Overlay';
 import { KMLObject } from './KML';
 import { HeatmapObject } from './Heatmap';
 export declare type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
@@ -48,6 +49,15 @@ export declare type Polylines = {
      * Array of {@link PolylineObject}.
      */
     polylines: PolylineObject[];
+};
+/**
+ * Internal prop for managing overlays displayed on the map.
+ */
+export declare type Overlays = {
+    /**
+     * Array of {@link OverlayObject}.
+     */
+    overlays: OverlayObject[];
 };
 /**
  * Internal prop for managing circles displayed on the map.
@@ -264,7 +274,7 @@ export declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZ
 /**
  * Props for Google Maps implementation.
  */
-export declare type NativeExpoGoogleMapsViewProps = ViewProps & React.RefAttributes<ExpoMap> & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & GoogleMapsPOI & Heatmaps>;
+export declare type NativeExpoGoogleMapsViewProps = ViewProps & React.RefAttributes<ExpoMap> & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & GoogleMapsPOI & Overlays & Heatmaps>;
 /**
  * Props for Apple Maps implementation.
  */
@@ -291,4 +301,4 @@ export declare type Provider = {
  */
 export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic & POI & KMLs & Heatmaps>>;
 export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition & Traffic & POI;
-export declare type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters & KMLs & GeoJsons & Heatmaps;
+export declare type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters & KMLs & GeoJsons & Overlays & Heatmaps;

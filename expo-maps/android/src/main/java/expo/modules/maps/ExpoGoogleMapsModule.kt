@@ -98,6 +98,10 @@ class ExpoGoogleMapsModule : Module() {
         view.setGeoJsons(geoJsonObjects)
       }
 
+      Prop("overlays") { view: GoogleMapsView, overlayObjects: Array<OverlayObject> ->
+        view.setOverlays(overlayObjects)
+      }
+      
       Prop("heatmaps") { view: GoogleMapsView, heatmapObjects: Array<HeatmapObject> ->
         view.setHeatmaps(heatmapObjects)
       }

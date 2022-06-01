@@ -15,6 +15,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let circles: GoogleMapsCircles
   private let kmls: GoogleMapsKMLs
   private let geojsons: GoogleMapsGeoJsons
+  private let overlays: GoogleMapsOverlays
   private let places: GoogleMapsPlaces
   private var wasInitialCameraPositionSet = false
   private let heatmaps: GoogleMapsHeatmaps
@@ -41,6 +42,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     circles = GoogleMapsCircles(mapView: mapView)
     kmls = GoogleMapsKMLs(mapView: mapView)
     geojsons = GoogleMapsGeoJsons(mapView: mapView)
+    overlays = GoogleMapsOverlays(mapView: mapView)
     heatmaps = GoogleMapsHeatmaps(mapView: mapView)
     places = GoogleMapsPlaces(mapView: mapView, markers: markers)
 
@@ -183,10 +185,14 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     geojsons.setGeoJsons(geoJsonObjects: geoJsonObjects)
   }
   
+  func setOverlays(overlayObjects: [OverlayObject]) {
+    overlays.setOverlays(overlayObjects: overlayObjects)
+  }
+
   func setHeatmaps(heatmapObjects: [HeatmapObject]) {
     heatmaps.setHeatmaps(heatmapObjects: heatmapObjects)
   }
-  
+
   func setClickablePOIs(clickablePOIs: Bool) {
     self.clickablePOIs = clickablePOIs
   }

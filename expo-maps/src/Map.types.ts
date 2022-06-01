@@ -8,6 +8,7 @@ import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
 import { GeoJsonObject } from './GeoJson';
 import { ExpoMap } from './Map';
+import { OverlayObject } from './Overlay';
 import { KMLObject } from './KML';
 import { HeatmapObject } from './Heatmap';
 
@@ -53,6 +54,16 @@ export type Polylines = {
    * Array of {@link PolylineObject}.
    */
   polylines: PolylineObject[];
+};
+
+/**
+ * Internal prop for managing overlays displayed on the map.
+ */
+export type Overlays = {
+  /**
+   * Array of {@link OverlayObject}.
+   */
+  overlays: OverlayObject[];
 };
 
 /**
@@ -196,7 +207,17 @@ export type Traffic = {
   enableTraffic: boolean;
 };
 
-export type POICategoryType = 'airport' | 'atm' | 'bank' | 'beach' | 'cafe' | 'hospital' | 'hotel' | 'museum' | 'pharmacy' | 'store';
+export type POICategoryType =
+  | 'airport'
+  | 'atm'
+  | 'bank'
+  | 'beach'
+  | 'cafe'
+  | 'hospital'
+  | 'hotel'
+  | 'museum'
+  | 'pharmacy'
+  | 'store';
 
 /**
  * Props for POI handling.
@@ -204,7 +225,7 @@ export type POICategoryType = 'airport' | 'atm' | 'bank' | 'beach' | 'cafe' | 'h
 export type POI = {
   /**
    * If 'true' search bar for searching pois is enabled.
-   * 
+   *
    * This prop works only when provider == `apple`.
    *
    * @default false
@@ -220,16 +241,16 @@ export type POI = {
    * If not empty POIs use will be filterd to specified types.
    *
    * This prop works only when provider == `apple`.
-   * 
+   *
    * @default []
    */
-  enablePOIFilter: [POICategoryType] | []
+  enablePOIFilter: [POICategoryType] | [];
 
   /**
    * Creates a search request for given place.
-   * 
+   *
    * Passed value shoulld be a result of auto complete.
-   * 
+   *
    */
   createPOISearchRequest: string;
   /**
@@ -331,6 +352,7 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       KMLs &
       GeoJsons &
       GoogleMapsPOI &
+      Overlays &
       Heatmaps
   >;
 
@@ -406,4 +428,5 @@ export type ExpoMapState = Markers &
   Clusters &
   KMLs &
   GeoJsons &
+  Overlays &
   Heatmaps;

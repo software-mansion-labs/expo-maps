@@ -9,6 +9,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import expo.modules.maps.*
+import expo.modules.maps.interfaces.ExpoMapView
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -26,6 +27,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var circles: GoogleMapsCircles
   private lateinit var kmls: GoogleMapsKMLs
   private lateinit var geojsons: GoogleMapsGeoJsons
+  private lateinit var overlays: GoogleMapsOverlays
   private lateinit var heatmaps: GoogleMapsHeatmaps
   private val mapReady = MutableStateFlow(false)
   private var wasInitialCameraPositionSet = false
@@ -51,6 +53,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     circles = GoogleMapsCircles(googleMap)
     kmls = GoogleMapsKMLs(context, googleMap)
     geojsons = GoogleMapsGeoJsons(googleMap)
+    overlays = GoogleMapsOverlays(googleMap)
     heatmaps = GoogleMapsHeatmaps(googleMap)
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
@@ -211,6 +214,12 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   override fun setHeatmaps(heatmapObjects: Array<HeatmapObject>) {
     updateMap {
       heatmaps.setHeatmaps(heatmapObjects)
+    }
+  }
+
+  override fun setOverlays(overlayObjects: Array<OverlayObject>) {
+    updateMap {
+      overlays.setOverlays(overlayObjects)
     }
   }
 
