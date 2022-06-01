@@ -19,7 +19,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 
-class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallback, ExpoMapView, GoogleMap.OnPoiClickListener {
+class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallback, ExpoMapView {
 
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
@@ -36,7 +36,6 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var overlays: GoogleMapsOverlays
   private lateinit var heatmaps: GoogleMapsHeatmaps
   private lateinit var places: GoogleMapsPlaces
-  private var clickablePOIs: Boolean = true
   private val mapReady = MutableStateFlow(false)
   private var wasInitialCameraPositionSet = false
 
@@ -135,7 +134,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   }
 
   fun setClickablePOIs(clickablePOIs: Boolean) {
-    this.clickablePOIs = clickablePOIs
+    places.setClickablePOIs(clickablePOIs)
   }
 
   fun createPlaceSearchRequest(place: String) {
@@ -272,16 +271,6 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
           cancel()
         }
       }
-    }
-  }
-
-  override fun onPoiClick(poi: PointOfInterest) {
-    if (clickablePOIs) {
-      Toast.makeText(this.context, """Clicked: ${poi.name}
-            Place ID:${poi.placeId}
-            Latitude:${poi.latLng.latitude} Longitude:${poi.latLng.longitude}""",
-              Toast.LENGTH_SHORT
-      ).show()
     }
   }
 }
