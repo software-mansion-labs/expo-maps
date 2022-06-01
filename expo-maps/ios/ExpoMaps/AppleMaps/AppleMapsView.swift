@@ -1,4 +1,5 @@
 import MapKit
+import ExpoModulesCore
 
 public final class AppleMapsView: UIView, ExpoMapView {
   private let mapView: MKMapView
@@ -12,6 +13,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let circles: AppleMapsCircles
   private let geoJsons: AppleMapsGeoJsons
   private let kmls: AppleMapsKMLs
+  private let pointsOfInterest: AppleMapsPOI
   private var wasInitialCameraPositionSet = false
 
   init() {
@@ -28,6 +30,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
     circles = AppleMapsCircles(mapView: mapView)
     geoJsons = AppleMapsGeoJsons(mapView: mapView)
     kmls = AppleMapsKMLs(mapView: mapView, markers: markers, polylines: polylines, polygons: polygons)
+    pointsOfInterest = AppleMapsPOI(mapView: mapView, markers: markers)
 
     super.init(frame: CGRect.zero)
     addSubview(mapView)
@@ -76,6 +79,35 @@ public final class AppleMapsView: UIView, ExpoMapView {
       mapViewType = .standard
     }
     mapView.mapType = mapViewType
+  }
+  
+  func setEnabledPOISearching(enabled: Bool) {
+    pointsOfInterest.setEnabledPOISearching(enabled: enabled)
+  }
+  
+ 
+  func setEnabledPOIFilter(categories: [POICategoryType]) {
+    guard #available(iOS 13.0, *) else {
+      print("Enabling filter for points of interests is not avaliable for < iOS 13.0")
+      return
+    }
+    pointsOfInterest.setEnabledPOIFilter(categories: categories)
+  }
+  
+  func setEnabledPOIs(enabled: Bool) {
+    guard #available(iOS 13.0, *) else {
+      print("Manipulating points of interests visibility is not avaliable for < iOS 13.0")
+      return
+    }
+    pointsOfInterest.setEnabledPOIs(enabled: enabled)
+  }
+  
+  func fetchPOISearchCompletions(searchQueryFragment: String, promise: Promise) {
+    pointsOfInterest.fetchSearchCompletions(searchQueryFragment: searchQueryFragment, promise: promise)
+  }
+  
+  func createPOISearchRequest(place: String) {
+    pointsOfInterest.createSearchRequest(place: place)
   }
 
   func setMarkers(markerObjects: [MarkerObject]) {

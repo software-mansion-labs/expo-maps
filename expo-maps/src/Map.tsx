@@ -1,7 +1,9 @@
 import React from 'react';
 import {
   NativeExpoAppleMapsView,
+  NativeExpoAppleMapsModule,
   NativeExpoGoogleMapsView,
+  NativeExpoGoogleMapsModule,
 } from './NativeExpoMapView';
 import {
   DefaultNativeExpoMapViewProps,
@@ -9,7 +11,7 @@ import {
   ExpoMapViewProps,
 } from './Map.types';
 import { Asset } from 'expo-asset';
-import { Platform } from 'react-native';
+import { Platform, findNodeHandle } from 'react-native';
 import * as Utils from './Utils';
 import { Marker, MarkerObject } from './Marker';
 import { PolygonObject } from './Polygon';
@@ -19,6 +21,7 @@ import { ClusterObject } from './Cluster';
 import { KMLObject } from './KML';
 import { GeoJson, GeoJsonObject } from './GeoJson';
 import { Color } from './Common.types';
+import { ProxyNativeModule } from 'expo-modules-core';
 
 export { Marker } from './Marker';
 export { Polygon } from './Polygon';
@@ -27,6 +30,8 @@ export { Circle } from './Circle';
 export { Cluster } from './Cluster';
 export { KML } from './KML';
 export { GeoJson } from './GeoJson';
+export { ExpoMapRef } from './Map.types';
+export { POICategoryType } from './Map.types';
 
 const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   mapType: 'normal',
@@ -46,6 +51,10 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
     animate: true,
   },
   enableTraffic: false,
+  enablePOISearching: false,
+  enablePOIs: false,
+  enablePOIFilter: [],
+  createPOISearchRequest: '',
 };
 
 /**
@@ -64,6 +73,26 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
     geojsons: [],
   };
   _ismounted = false;
+  mapView = React.createRef<ExpoMap>();
+
+  async getSearchCompletions(queryFragment: string) {
+    const nodeHandle = findNodeHandle(this.mapView.current);
+    var module: ProxyNativeModule;
+    if (Platform.OS == 'ios' && this.props.provider == 'apple') {
+      module = NativeExpoAppleMapsModule;
+    } else {
+      module = NativeExpoGoogleMapsModule;
+    }
+
+    await module
+      .getSearchCompletions(nodeHandle, queryFragment)
+      .then((response: [String]) => {
+        console.log(response);
+      })
+      .catch((error: Error) => {
+        console.log('Error with message: ' + error.message);
+      });
+  }
 
   componentDidMount() {
     this.mapChildren();
@@ -233,6 +262,11 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
           "Versions of iOS < 13 doesn't support GeoJSON features for Apple Maps. Adding of GeoJSON for these versions will be omitted."
         );
       }
+      if (parseInt(Platform.Version) < 13) {
+        console.warn(
+          "Versions of iOS < 13 doesn't support Points Of Interest Filters and their display modifications for Apple Maps. Adding POI filters for these versions will be omitted."
+        );
+      }
       return (
         <NativeExpoAppleMapsView
           {...defaultNativeExpoMapViewProps}
@@ -244,6 +278,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
           clusters={this.state.clusters}
           kmls={this.state.kmls}
           geojsons={this.state.geojsons}
+          ref={this.mapView}
         />
       );
     }
@@ -264,6 +299,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
         clusters={this.state.clusters}
         kmls={this.state.kmls}
         geojsons={this.state.geojsons}
+        ref={this.mapView}
       />
     );
   }

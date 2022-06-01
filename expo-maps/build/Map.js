@@ -1,7 +1,7 @@
 import React from 'react';
-import { NativeExpoAppleMapsView, NativeExpoGoogleMapsView, } from './NativeExpoMapView';
+import { NativeExpoAppleMapsView, NativeExpoAppleMapsModule, NativeExpoGoogleMapsView, NativeExpoGoogleMapsModule, } from './NativeExpoMapView';
 import { Asset } from 'expo-asset';
-import { Platform } from 'react-native';
+import { Platform, findNodeHandle } from 'react-native';
 import * as Utils from './Utils';
 export { Marker } from './Marker';
 export { Polygon } from './Polygon';
@@ -28,6 +28,10 @@ const defaultNativeExpoMapViewProps = {
         animate: true,
     },
     enableTraffic: false,
+    enablePOISearching: false,
+    enablePOIs: false,
+    enablePOIFilter: [],
+    createPOISearchRequest: '',
 };
 /**
  * Main map component of Expo Maps library.
@@ -45,6 +49,25 @@ export class ExpoMap extends React.Component {
         geojsons: [],
     };
     _ismounted = false;
+    mapView = React.createRef();
+    async getSearchCompletions(queryFragment) {
+        const nodeHandle = findNodeHandle(this.mapView.current);
+        var module;
+        if (Platform.OS == 'ios' && this.props.provider == 'apple') {
+            module = NativeExpoAppleMapsModule;
+        }
+        else {
+            module = NativeExpoGoogleMapsModule;
+        }
+        await module
+            .getSearchCompletions(nodeHandle, queryFragment)
+            .then((response) => {
+            console.log(response);
+        })
+            .catch((error) => {
+            console.log('Error with message: ' + error.message);
+        });
+    }
     componentDidMount() {
         this.mapChildren();
         this._ismounted = true;
@@ -183,11 +206,14 @@ export class ExpoMap extends React.Component {
             if (parseInt(Platform.Version) < 13 && this.state.geojsons.length > 0) {
                 console.warn("Versions of iOS < 13 doesn't support GeoJSON features for Apple Maps. Adding of GeoJSON for these versions will be omitted.");
             }
-            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons }));
+            if (parseInt(Platform.Version) < 13) {
+                console.warn("Versions of iOS < 13 doesn't support Points Of Interest Filters and their display modifications for Apple Maps. Adding POI filters for these versions will be omitted.");
+            }
+            return (React.createElement(NativeExpoAppleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons, ref: this.mapView }));
         }
         return (React.createElement(NativeExpoGoogleMapsView, { ...defaultNativeExpoMapViewProps, ...this.props, googleMapsJsonStyleString: this.props.googleMapsJsonStyleString
                 ? this.props.googleMapsJsonStyleString
-                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons }));
+                : '', markers: this.state.markers, polygons: this.state.polygons, polylines: this.state.polylines, circles: this.state.circles, clusters: this.state.clusters, kmls: this.state.kmls, geojsons: this.state.geojsons, ref: this.mapView }));
     }
 }
 function buildGeoJsonObject(child) {

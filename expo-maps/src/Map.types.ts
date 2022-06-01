@@ -8,6 +8,7 @@ import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
 import { KMLObject } from './KML';
 import { GeoJsonObject } from './GeoJson';
+import { ExpoMap } from './Map';
 
 export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 
@@ -194,6 +195,50 @@ export type Traffic = {
   enableTraffic: boolean;
 };
 
+export type POICategoryType = 'airport' | 'atm' | 'bank' | 'beach' | 'cafe' | 'hospital' | 'hotel' | 'museum' | 'pharmacy' | 'store';
+
+/**
+ * Props for POI handling.
+ */
+export type POI = {
+  /**
+   * If 'true' search bar for searching pois is enabled.
+   * 
+   * This prop works only when provider == `apple`.
+   *
+   * @default false
+   */
+  enablePOISearching: boolean;
+  /**
+   * If 'true' points of interest are being displayed.
+   *
+   * @default false
+   */
+  enablePOIs: boolean;
+  /**
+   * If not empty POIs use will be filterd to specified types.
+   *
+   * This prop works only when provider == `apple`.
+   * 
+   * @default []
+   */
+  enablePOIFilter: [POICategoryType] | []
+
+  /**
+   * Creates a search request for given place.
+   * 
+   * Passed value shoulld be a result of auto complete.
+   * 
+   */
+  createPOISearchRequest: string;
+};
+
+export type AppleMapsPOI = POI;
+export type GoogleMapsPOI = Omit<
+  POI,
+  'enablePOISearching' | 'enablePOIFilter'
+>;
+
 export type GoogleMapsControls = Controls;
 
 export type ZoomLevels =
@@ -256,6 +301,7 @@ export type AppleMapsControls = Omit<
  * Props for Google Maps implementation.
  */
 export type NativeExpoGoogleMapsViewProps = ViewProps &
+  React.RefAttributes<ExpoMap> &
   PropsWithChildren<
     MapType &
       GoogleMapsStyling &
@@ -269,13 +315,15 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       Clusters &
       Traffic &
       KMLs &
-      GeoJsons
+      GeoJsons &
+      GoogleMapsPOI
   >;
 
 /**
  * Props for Apple Maps implementation.
  */
 export type NativeExpoAppleMapsViewProps = ViewProps &
+  React.RefAttributes<ExpoMap> &
   PropsWithChildren<
     MapType &
       Gestures &
@@ -288,8 +336,11 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
       Clusters &
       Traffic &
       KMLs &
-      GeoJsons
+      GeoJsons &
+      AppleMapsPOI
   >;
+
+export type ExpoMapRef = { getSearchCompletions: () => Promise<void> };
 
 export type Providers = 'google' | 'apple';
 
@@ -319,7 +370,8 @@ export type ExpoMapViewProps = ViewProps &
         GoogleMapsStyling &
         Gestures &
         CameraPosition &
-        Traffic
+        Traffic &
+        POI
     >
   >;
 
@@ -327,7 +379,8 @@ export type DefaultNativeExpoMapViewProps = MapType &
   Controls &
   Gestures &
   CameraPosition &
-  Traffic;
+  Traffic &
+  POI;
 
 export type ExpoMapState = Markers &
   Polygons &

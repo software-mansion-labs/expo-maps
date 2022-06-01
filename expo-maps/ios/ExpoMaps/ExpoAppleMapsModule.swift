@@ -1,9 +1,17 @@
 import ExpoModulesCore
+import simd
 
 public class ExpoAppleMapsModule: Module {
 
   public func definition() -> ModuleDefinition {
     Name("ExpoAppleMaps")
+    
+    AsyncFunction("getSearchCompletions") { (viewHandle: Int, searchQueryFragment: String, promise: Promise) in
+      DispatchQueue.main.async {
+        let view = self.appContext?.reactBridge?.uiManager?.view(forReactTag: NSNumber(value: viewHandle)) as? AppleMapsView
+        view?.fetchPOISearchCompletions(searchQueryFragment: searchQueryFragment, promise: promise)
+      }
+     }
 
     ViewManager {
       View {
@@ -77,6 +85,23 @@ public class ExpoAppleMapsModule: Module {
       Prop("geojsons") { (view: AppleMapsView, geoJsonObjects: [GeoJsonObject]) in
         view.setGeoJsons(geoJsonObjects: geoJsonObjects)
       }
+      
+      Prop("enablePOISearching") { (view: AppleMapsView, enable: Bool) in
+        view.setEnabledPOISearching(enabled: enable)
+      }
+      
+      Prop("enablePOIFilter") { (view: AppleMapsView, categories: [POICategoryType]) in
+        view.setEnabledPOIFilter(categories: categories)
+      }
+      
+      Prop("enablePOIs") { (view: AppleMapsView, enabled: Bool) in
+        view.setEnabledPOIs(enabled: enabled)
+      }
+      
+      Prop("createPOISearchRequest") { (view: AppleMapsView, place: String) in
+        view.createPOISearchRequest(place: place)
+      }
+      
     }
   }
 }
