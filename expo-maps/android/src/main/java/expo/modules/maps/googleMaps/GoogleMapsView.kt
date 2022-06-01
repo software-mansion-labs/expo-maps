@@ -19,7 +19,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 
-class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallback, ExpoMapView {
+class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallback, ExpoMapView, GoogleMap.OnPoiClickListener {
 
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
@@ -36,6 +36,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var overlays: GoogleMapsOverlays
   private lateinit var heatmaps: GoogleMapsHeatmaps
   private lateinit var places: GoogleMapsPlaces
+  private var clickablePOIs: Boolean = false
   private val mapReady = MutableStateFlow(false)
   private var wasInitialCameraPositionSet = false
 
@@ -130,15 +131,31 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   }
 
   fun fetchPlacesSearchCompletions(searchQueryFragment: String, promise: Promise) {
-    places.fetchSearchCompletions(searchQueryFragment, promise)
+    updateMap {
+      places.fetchSearchCompletions(searchQueryFragment, promise)
+    }
   }
 
   fun setClickablePOIs(clickablePOIs: Boolean) {
-    places.setClickablePOIs(clickablePOIs)
+    this.clickablePOIs = clickablePOIs
   }
 
   fun createPlaceSearchRequest(place: String) {
-    places.createSearchRequest(place)
+    updateMap {
+      places.createSearchRequest(place)
+    }
+  }
+
+  override fun onPoiClick(poi: PointOfInterest) {
+    if (clickablePOIs) {
+      updateMap {
+        Toast.makeText(this.context, """Clicked: ${poi.name}
+            Place ID:${poi.placeId}
+            Latitude:${poi.latLng.latitude} Longitude:${poi.latLng.longitude}""",
+                Toast.LENGTH_SHORT
+        ).show()
+      }
+    }
   }
 
   override fun setMapType(mapType: MapType) {

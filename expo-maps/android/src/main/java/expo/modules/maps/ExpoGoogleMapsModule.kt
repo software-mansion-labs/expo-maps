@@ -128,6 +128,10 @@ class ExpoGoogleMapsModule : Module() {
       Prop("createPOISearchRequest") { view: GoogleMapsView, place: String ->
         view.createPlaceSearchRequest(place)
       }
+
+      Prop("clickablePOIs") { view: GoogleMapsView, clickablePOIs: Boolean ->
+        view.setClickablePOIs(clickablePOIs)
+      }
     }
   }
 }

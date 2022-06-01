@@ -23,12 +23,14 @@ class GoogleMapsPlacesSearchCompleter(private val placesClient: PlacesClient,
                         searchCompleterResults = response.autocompletePredictions
                         resolveSearchCompletionsPromise(searchCompletionsPromise)
                     }.addOnFailureListener { exception: Exception? ->
-                        val errorMessage = "Fetching autocompletePredictions error"
-                        println(String.format("{} with message: {}", errorMessage, exception?.message))
+                        val errorMessage = String.format("Fetching AutocompletePredictions error, %s",
+                                exception?.message)
                         searchCompletionsPromise.reject(SearchCompleterException(errorMessage))
                     }
         } catch (exception: SearchCompleterException) {
             searchCompletionsPromise.reject(exception)
+        } catch (exception: Exception) {
+            searchCompletionsPromise.reject(CodedException(exception.message, exception.cause))
         }
     }
 
@@ -41,8 +43,8 @@ class GoogleMapsPlacesSearchCompleter(private val placesClient: PlacesClient,
                     .setQuery(query)
                     .build()
         } catch (exception: SearchCompleterException) {
-            val errorMessage = "Error while building AutocompletePredictionsRequest"
-            println(String.format("{} with message {}", errorMessage, exception.message ?: ""))
+            val errorMessage = String.format("Error while building AutocompletePredictionsRequest, %s",
+                    exception.message)
             throw SearchCompleterException(errorMessage)
         }
     }
@@ -53,8 +55,7 @@ class GoogleMapsPlacesSearchCompleter(private val placesClient: PlacesClient,
     }
 
     private fun getToken(): AutocompleteSessionToken {
-        val token = tokenUtils.getToken()
-        return token ?: throw SearchCompleterException("Missing AutocompleteSessionToken")
+        return tokenUtils.getToken() ?: throw SearchCompleterException("Missing AutocompleteSessionToken.")
     }
 
     private fun resolveSearchCompletionsPromise(searchCompletionsPromise: Promise) {
@@ -63,20 +64,13 @@ class GoogleMapsPlacesSearchCompleter(private val placesClient: PlacesClient,
     }
 
     private fun getSearchCompletions(): List<String> {
-        if (searchCompleterResults.isNotEmpty()) {
-            return mapSearchCompletions(searchCompleterResults)
-        }
-        return emptyList()
+        return if(searchCompleterResults.isNotEmpty()) mapSearchCompletions(searchCompleterResults) else emptyList()
     }
 
     private fun mapSearchCompletions(completions: List<AutocompletePrediction>): List<String> {
-        val stringCompletions = mutableListOf<String>()
-        completions.forEach {
-            stringCompletions.add(it.getFullText(null).toString() + ";" + it.placeId)
-        }
-        return stringCompletions
+       return completions.map { it.getFullText(null).toString() + ";" + it.placeId }
     }
 }
 
-class SearchCompleterException(message: String): CodedException(message)
+class SearchCompleterException(detailMessage: String): CodedException(detailMessage)
 

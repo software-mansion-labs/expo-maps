@@ -21,27 +21,17 @@ class GooglePlacesFetchPlace(private val placesClient: PlacesClient, private val
         }
 
     fun search(placeId: String) {
-        try {
-            val placeFields = listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS)
-            val request = FetchPlaceRequest.newInstance(placeId, placeFields)
+        val placeFields = listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS)
+        val request = FetchPlaceRequest.newInstance(placeId, placeFields)
 
-            placesClient.fetchPlace(request)
-                .addOnSuccessListener { response: FetchPlaceResponse ->
-                    fetchedPlace = response.place
-                }.addOnFailureListener { exception: Exception ->
-                    val errorMessage = "Fetching Place error"
-                    println(String.format("{} with message: {}", errorMessage, exception.message))
-                }
-        } catch (exception: PlaceFetcherException) {
-            println(exception.message)
-        } finally {
-            tokenUtils.setNewSessionToken()
-        }
-    }
+        placesClient.fetchPlace(request)
+            .addOnSuccessListener { response: FetchPlaceResponse ->
+                fetchedPlace = response.place
+            }.addOnFailureListener { exception: Exception ->
+                println(String.format("FetchPlace error, %s", exception.message))
+            }
 
-    private fun getToken(): AutocompleteSessionToken {
-        val token = tokenUtils.getToken()
-        return token ?: throw PlaceFetcherException("Missing AutocompleteSessionToken")
+        tokenUtils.setNewSessionToken()
     }
 
     private fun displayMarker() {
@@ -66,7 +56,7 @@ class GooglePlacesFetchPlace(private val placesClient: PlacesClient, private val
                 null,
                 1.0)
         } catch (exception: PlaceRequiredFieldsException) {
-            println(String.format("Mapping to MarkerObject error with message: {}", exception.message))
+            println(String.format("Mapping to MarkerObject error, %s", exception.message))
             null
         }
 
@@ -82,4 +72,3 @@ class GooglePlacesFetchPlace(private val placesClient: PlacesClient, private val
 }
 
 class PlaceRequiredFieldsException(message: String): Exception(message)
-class PlaceFetcherException(message: String): Exception(message)
