@@ -21,7 +21,7 @@ class GoogleMapsHeatmaps(private val map: GoogleMap) : Heatmaps {
     heatmapOverlays.forEach { it.remove() }
     heatmapOverlays.clear()
 
-    for(heatmapObject in heatmapObjects) {
+    for (heatmapObject in heatmapObjects) {
       var builder = HeatmapTileProvider.Builder()
         .weightedData(heatmapObject.points.map {
           WeightedLatLng(LatLng(it.latitude, it.longitude), it.data ?: 1.0)
@@ -29,7 +29,7 @@ class GoogleMapsHeatmaps(private val map: GoogleMap) : Heatmaps {
       heatmapObject.gradient?.let {
         builder = builder.gradient(
           Gradient(
-            it.colors.map { colorStringtoInt(it) }.toIntArray(),
+            it.colors.map { colorHexStringToInt(it) }.toIntArray(),
             it.locations))
       }
       heatmapObject.radius.let {
@@ -41,36 +41,6 @@ class GoogleMapsHeatmaps(private val map: GoogleMap) : Heatmaps {
       var provider = builder.build()
       val tileOverlay = map.addTileOverlay(TileOverlayOptions().tileProvider(provider))
       tileOverlay?.let { heatmapOverlays.add(it) }
-    }
-  }
-
-  private fun colorStringtoInt(colorString: String): Int {
-    return when (colorString.length) {
-      4 -> Color.argb(
-        0xFF,
-        Integer.decode("0x" + colorString[1] + colorString[1]),
-        Integer.decode("0x" + colorString[2] + colorString[2]),
-        Integer.decode("0x" + colorString[3] + colorString[3]),
-      )
-      5 -> Color.argb(
-        Integer.decode("0x" + colorString[4] + colorString[4]),
-        Integer.decode("0x" + colorString[1] + colorString[1]),
-        Integer.decode("0x" + colorString[2] + colorString[2]),
-        Integer.decode("0x" + colorString[3] + colorString[3]),
-      )
-      7 -> Color.argb(
-        0xFF,
-        Integer.decode("0x" + colorString.substring(1..2)),
-        Integer.decode("0x" + colorString.substring(3..4)),
-        Integer.decode("0x" + colorString.substring(5..6)),
-      )
-      9 -> Color.argb(
-        Integer.decode("0x" + colorString.substring(7..8)),
-        Integer.decode("0x" + colorString.substring(1..2)),
-        Integer.decode("0x" + colorString.substring(3..4)),
-        Integer.decode("0x" + colorString.substring(5..6)),
-      )
-      else -> throw IllegalArgumentException("String $colorString is not a valid color representation")
     }
   }
 }
