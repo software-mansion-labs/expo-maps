@@ -5,12 +5,14 @@ class GoogleMapsViewDelegate: NSObject, GMSMapViewDelegate {
   
   public var expoMapView: GoogleMapsView?
   private var zoom: Float = 0.0
+  public let infoMarker = GMSMarker()
   private let sendEvent: (String, [String: Any?]) -> Void
   private let googleMapsMarkersManager: GoogleMapsMarkersManager
   
   init(sendEvent: @escaping (String, [String: Any?]) -> Void, googleMapsMarkersManager: GoogleMapsMarkersManager) {
     self.sendEvent = sendEvent
     self.googleMapsMarkersManager = googleMapsMarkersManager
+    infoMarker.opacity = 0
     super.init()
   }
 
@@ -49,6 +51,20 @@ class GoogleMapsViewDelegate: NSObject, GMSMapViewDelegate {
   func mapView(_ mapView: GMSMapView, didEndDragging marker: GMSMarker) {
     if let id = googleMapsMarkersManager.getMarkerId(marker: marker) {
       sendEvent(MapEventsNames.ON_MARKER_DRAG_ENDED_EVENT.rawValue, createMarkerDragEndedEventContent(id: id, latitude: marker.position.latitude, longitude: marker.position.longitude))
+    }
+  }
+
+  func mapView(
+    _ mapView: GMSMapView,
+    didTapPOIWithPlaceID placeID: String,
+    name: String,
+    location: CLLocationCoordinate2D
+  ) {
+    if (expoMapView!.clickablePOIs) {
+      infoMarker.position = location
+      infoMarker.title = name
+      infoMarker.map = mapView
+      mapView.selectedMarker = infoMarker
     }
   }
 }

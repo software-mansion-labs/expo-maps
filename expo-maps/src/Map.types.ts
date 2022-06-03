@@ -6,8 +6,11 @@ import { PolylineObject } from './Polyline';
 import { Point } from './Common.types';
 import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
-import { KMLObject } from './KML';
 import { GeoJsonObject } from './GeoJson';
+import { ExpoMap } from './Map';
+import { OverlayObject } from './Overlay';
+import { KMLObject } from './KML';
+import { HeatmapObject } from './Heatmap';
 
 export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 
@@ -51,6 +54,16 @@ export type Polylines = {
    * Array of {@link PolylineObject}.
    */
   polylines: PolylineObject[];
+};
+
+/**
+ * Internal prop for managing overlays displayed on the map.
+ */
+export type Overlays = {
+  /**
+   * Array of {@link OverlayObject}.
+   */
+  overlays: OverlayObject[];
 };
 
 /**
@@ -194,6 +207,73 @@ export type Traffic = {
   enableTraffic: boolean;
 };
 
+export type POICategoryType =
+  | 'airport'
+  | 'atm'
+  | 'bank'
+  | 'beach'
+  | 'cafe'
+  | 'hospital'
+  | 'hotel'
+  | 'museum'
+  | 'pharmacy'
+  | 'store';
+
+/**
+ * Props for POI handling.
+ */
+export type POI = {
+  /**
+   * If 'true' search bar for searching pois is enabled.
+   *
+   * This prop works only when provider == `apple`.
+   *
+   * @default false
+   */
+  enablePOISearching: boolean;
+  /**
+   * If 'true' points of interest are being displayed.
+   *
+   * @default false
+   */
+  enablePOIs: boolean;
+  /**
+   * If not empty POIs use will be filterd to specified types.
+   *
+   * This prop works only when provider == `apple`.
+   *
+   * @default []
+   */
+  enablePOIFilter: [POICategoryType] | [];
+
+  /**
+   * Creates a search request for given place.
+   *
+   * Passed value shoulld be a result of auto complete.
+   *
+   */
+  createPOISearchRequest: string;
+  /**
+   * If `true` POIs are clickable and after the click name of POI is displayed above the POI's location.
+   * Please note, this field is only effective when `enablePOI` option is equal to `true`.
+   *
+   * @default false
+   */
+   clickablePOIs: boolean;
+};
+
+export type AppleMapsPOI = POI;
+export type GoogleMapsPOI = Omit<
+  POI,
+  'enablePOISearching' | 'enablePOIFilter'
+>;
+export type Heatmaps = {
+  /**
+   * Array of {@link HeatmapObject}.
+   */
+  heatmaps: HeatmapObject[];
+};
+
 export type GoogleMapsControls = Controls;
 
 export type ZoomLevels =
@@ -256,6 +336,7 @@ export type AppleMapsControls = Omit<
  * Props for Google Maps implementation.
  */
 export type NativeExpoGoogleMapsViewProps = ViewProps &
+  React.RefAttributes<ExpoMap> &
   PropsWithChildren<
     MapType &
       GoogleMapsStyling &
@@ -269,13 +350,17 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       Clusters &
       Traffic &
       KMLs &
-      GeoJsons
+      GeoJsons &
+      GoogleMapsPOI &
+      Overlays &
+      Heatmaps
   >;
 
 /**
  * Props for Apple Maps implementation.
  */
 export type NativeExpoAppleMapsViewProps = ViewProps &
+  React.RefAttributes<ExpoMap> &
   PropsWithChildren<
     MapType &
       Gestures &
@@ -288,8 +373,11 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
       Clusters &
       Traffic &
       KMLs &
-      GeoJsons
+      GeoJsons &
+      AppleMapsPOI
   >;
+
+export type ExpoMapRef = { getSearchCompletions: () => Promise<void> };
 
 export type Providers = 'google' | 'apple';
 
@@ -319,7 +407,10 @@ export type ExpoMapViewProps = ViewProps &
         GoogleMapsStyling &
         Gestures &
         CameraPosition &
-        Traffic
+        Traffic &
+        POI &
+        KMLs &
+        Heatmaps
     >
   >;
 
@@ -327,7 +418,8 @@ export type DefaultNativeExpoMapViewProps = MapType &
   Controls &
   Gestures &
   CameraPosition &
-  Traffic;
+  Traffic &
+  POI;
 
 export type ExpoMapState = Markers &
   Polygons &
@@ -335,4 +427,6 @@ export type ExpoMapState = Markers &
   Circles &
   Clusters &
   KMLs &
-  GeoJsons;
+  GeoJsons &
+  Overlays &
+  Heatmaps;

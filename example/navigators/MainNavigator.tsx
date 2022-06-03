@@ -24,6 +24,8 @@ export type ExamplesStackNavigatorProps = {
   KML: undefined;
   GeoJson: undefined;
   Callbacks: undefined;
+  POI: undefined;
+  Overlays: undefined;
 };
 
 const ExamplesStackNavigator =

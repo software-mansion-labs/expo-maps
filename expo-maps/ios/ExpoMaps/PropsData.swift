@@ -7,6 +7,21 @@ enum MapType: String, EnumArgument {
   case terrain
 }
 
+//TODO: unify with google maps
+enum POICategoryType: String, EnumArgument {
+  case airport
+  case atm
+  case bank
+  case beach
+  case cafe
+  case hospital
+  case hotel
+  case museum
+  case pharmacy
+  case store
+  case zoo
+}
+
 struct MarkerObject: Record {
   @Field var id: String? = nil
   @Field var latitude: Double = 0
@@ -24,6 +39,12 @@ struct MarkerObject: Record {
 struct Point: Record {
   @Field var latitude: Double = 0
   @Field var longitude: Double = 0
+}
+
+struct PointWithData: Record {
+  @Field var latitude: Double = 0
+  @Field var longitude: Double = 0
+  @Field var data: Float? = nil
 }
 
 struct PolygonObject: Record {
@@ -126,4 +147,27 @@ struct GeoJsonObjectDefaultStyleMarker: Record {
   @Field var color: UIColor?
   @Field var title: String?
   @Field var snippet: String?
+}
+
+struct OverlayObject: Record {
+  @Field var bounds: Bounds = Bounds()
+  @Field var icon: String = ""
+}
+
+
+struct Bounds: Record {
+  @Field var southWest: Point = Point()
+  @Field var northEast: Point = Point()
+}
+
+struct Gradient: Record {
+  @Field var colors: [UIColor] = []
+  @Field var locations: [Double] = []
+}
+
+struct HeatmapObject: Record {
+  @Field var points: [PointWithData] = []
+  @Field var gradient: Gradient? = nil
+  @Field var radius: UInt? = nil
+  @Field var opacity: Float? = nil
 }

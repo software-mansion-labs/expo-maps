@@ -1,4 +1,5 @@
 import { requireNativeViewManager } from 'expo-modules-core';
+import { NativeModulesProxy } from 'expo-modules-core';
 import * as React from 'react';
 
 import {
@@ -8,8 +9,11 @@ import {
 
 export const NativeExpoGoogleMapsView = requireNativeViewManager(
   'ExpoGoogleMaps'
-) as React.FC<NativeExpoGoogleMapsViewProps>;
+) as React.ComponentType<NativeExpoGoogleMapsViewProps>;
 
 export const NativeExpoAppleMapsView = requireNativeViewManager(
   'ExpoAppleMaps'
-) as React.FC<NativeExpoAppleMapsViewProps>;
+) as React.ComponentType<NativeExpoAppleMapsViewProps>;
+
+export const NativeExpoAppleMapsModule = NativeModulesProxy.ExpoAppleMaps;
+export const NativeExpoGoogleMapsModule = NativeModulesProxy.ExpoGoogleMaps;

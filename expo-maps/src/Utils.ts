@@ -1,11 +1,15 @@
-import { Cluster } from './Cluster';
+import React from 'react';
+import { Cluster, ClusterObject } from './Cluster';
 import { Color } from './Common.types';
-import { Marker } from './Marker';
-import { Polygon } from './Polygon';
-import { Polyline } from './Polyline';
-import { Circle } from './Circle';
-import { KML } from './KML';
-import { GeoJson } from './GeoJson';
+import { Marker, MarkerObject } from './Marker';
+import { Polygon, PolygonObject } from './Polygon';
+import { Polyline, PolylineObject } from './Polyline';
+import { Circle, CircleObject } from './Circle';
+import { KML, KMLObject } from './KML';
+import { GeoJson, GeoJsonObject } from './GeoJson';
+import { Overlay, OverlayObject } from './Overlay';
+import { Asset } from 'expo-asset';
+import { Heatmap, HeatmapObject } from './Heatmap';
 
 export function isSimpleType(child: any) {
   return (
@@ -39,6 +43,20 @@ export function isPolyline(child: any): child is Polyline {
   ) {
     let props = Object.keys(child.props);
     if (props.includes('points')) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function isOverlay(child: any): child is Overlay {
+  if (
+    'type' in child &&
+    String(child.type).includes('Overlay') &&
+    'props' in child
+  ) {
+    let props = Object.keys(child.props);
+    if (props.includes('bounds') && props.includes('icon')) {
       return true;
     }
   }
@@ -115,6 +133,20 @@ export function isGeoJson(child: any): child is GeoJson {
   return false;
 }
 
+export function isHeatmap(child: any): child is Heatmap {
+  if (
+    'type' in child &&
+    String(child.type).includes('Heatmap') &&
+    'props' in child
+  ) {
+    let props = Object.keys(child.props);
+    if (props.includes('points')) {
+      return true;
+    }
+  }
+  return false;
+}
+
 export function isHexColor(color: any): color is Color {
   return color.length > 0 && color[0] == '#';
 }
@@ -170,4 +202,217 @@ export function warnIfChildIsIncompatible(child: any) {
       } isn't valid ExpoMap child!`
     );
   }
+}
+
+export function buildGeoJsonObject(child: GeoJson): GeoJsonObject {
+  if (
+    child.props.defaultStyle?.marker?.color != undefined &&
+    !isHexColor(child.props.defaultStyle.marker.color)
+  ) {
+    child.props.defaultStyle.marker.color = mapColorToHexColor(
+      child.props.defaultStyle?.marker.color as Color,
+      '#ff0000'
+    );
+  }
+
+  if (
+    child.props.defaultStyle?.polygon?.fillColor != undefined &&
+    !isHexColor(child.props.defaultStyle.polygon.fillColor)
+  ) {
+    child.props.defaultStyle.polygon.fillColor = mapColorToHexColor(
+      child.props.defaultStyle.polygon.fillColor as Color
+    );
+  }
+
+  if (
+    child.props.defaultStyle?.polygon?.strokeColor != undefined &&
+    !isHexColor(child.props.defaultStyle.polygon.strokeColor)
+  ) {
+    child.props.defaultStyle.polygon.strokeColor = mapColorToHexColor(
+      child.props.defaultStyle.polygon.strokeColor as Color
+    );
+  }
+
+  if (
+    child.props.defaultStyle?.polyline?.color != undefined &&
+    !isHexColor(child.props.defaultStyle.polyline.color)
+  ) {
+    child.props.defaultStyle.polyline.color = mapColorToHexColor(
+      child.props.defaultStyle.polyline.color as Color
+    );
+  }
+
+  return {
+    type: 'geojson',
+    geoJsonString: child.props.geoJsonString,
+    defaultStyle: child.props.defaultStyle,
+  } as GeoJsonObject;
+}
+
+export async function buildMarkerObject(child: Marker): Promise<MarkerObject> {
+  let iconPath: Asset | undefined = undefined;
+  if (child.props.icon !== undefined) {
+    iconPath = await Asset.fromModule(child.props.icon).downloadAsync();
+  }
+
+  let markerObject = {
+    type: 'marker',
+    id: child.props.id,
+    latitude: child.props.latitude,
+    longitude: child.props.longitude,
+    markerTitle: child.props.markerTitle,
+    markerSnippet: child.props.markerSnippet,
+    icon: iconPath?.localUri,
+    color: child.props.color,
+    draggable: child.props.draggable ? child.props.draggable : false,
+    anchorU: child.props.anchorU,
+    anchorV: child.props.anchorV,
+    opacity: child.props.opacity ? child.props.opacity : 1,
+  } as MarkerObject;
+
+  if (markerObject.color != undefined && !isHexColor(markerObject.color)) {
+    markerObject.color = mapColorToHexColor(
+      markerObject.color as Color,
+      '#ff0000'
+    );
+  }
+  return markerObject;
+}
+
+export async function buildOverlayObject(
+  child: Overlay
+): Promise<OverlayObject> {
+  let iconPath = await Asset.fromModule(child.props.icon).downloadAsync();
+
+  let overlayObject = {
+    type: 'overlay',
+    bounds: child.props.bounds,
+    icon: iconPath.localUri,
+  } as OverlayObject;
+
+  return overlayObject;
+}
+
+export function buildPolygonObject(child: Polygon): PolygonObject {
+  const polygonObject = {
+    type: 'polygon',
+    points: child.props.points,
+    fillColor: child.props.fillColor,
+    strokeColor: child.props.strokeColor,
+    strokeWidth: child.props.strokeWidth,
+    strokePattern: child.props.strokePattern,
+    jointType: child.props.jointType,
+  } as PolygonObject;
+  if (
+    polygonObject.fillColor != undefined &&
+    !isHexColor(polygonObject.fillColor)
+  ) {
+    polygonObject.fillColor = mapColorToHexColor(
+      polygonObject.fillColor as Color
+    );
+  }
+  return polygonObject;
+}
+
+export function buildPolylineObject(child: Polyline): PolylineObject {
+  const polylineObject = {
+    type: 'polyline',
+    points: child.props.points,
+    color: child.props.color,
+    width: child.props.width,
+    pattern: child.props.pattern,
+    jointType: child.props.jointType,
+    capType: child.props.capType,
+  } as PolylineObject;
+  if (polylineObject.color != undefined && !isHexColor(polylineObject.color)) {
+    polylineObject.color = mapColorToHexColor(polylineObject.color as Color);
+  }
+  return polylineObject;
+}
+
+export function buildCircleObject(child: Circle): CircleObject {
+  return {
+    type: 'circle',
+    center: child.props.center,
+    radius: child.props.radius,
+    fillColor: child.props.fillColor,
+    strokeColor: child.props.strokeColor,
+    strokeWidth: child.props.strokeWidth,
+  } as CircleObject;
+}
+
+export async function buildKMLObject(child: KML): Promise<KMLObject> {
+  let filePath = await Asset.fromModule(child.props.filePath).downloadAsync();
+  return {
+    type: 'kml',
+    filePath: filePath.localUri,
+  } as KMLObject;
+}
+
+export async function buildClusterObject(
+  child: Cluster
+): Promise<ClusterObject | null> {
+  const clusterChildrenArray = React.Children.map(
+    child.props.children,
+    async (clusterChild) => {
+      if (!isSimpleType(clusterChild)) {
+        if (isMarker(clusterChild)) {
+          return buildMarkerObject(clusterChild);
+        }
+      }
+      warnIfChildIsIncompatible(clusterChild);
+      return null;
+    }
+  );
+
+  if (clusterChildrenArray != undefined) {
+    let iconPath: Asset | undefined = undefined;
+    if (child.props.icon !== undefined) {
+      iconPath = await Asset.fromModule(child.props.icon).downloadAsync();
+    }
+
+    let clusterPropObjects = await Promise.all(clusterChildrenArray);
+    var minimumClusterSize: number;
+
+    if (
+      child.props.minimumClusterSize !== undefined &&
+      child.props.minimumClusterSize > 0
+    ) {
+      minimumClusterSize = child.props.minimumClusterSize;
+    } else {
+      minimumClusterSize = 4;
+    }
+
+    let clusterObject = {
+      type: 'cluster',
+      id: child.props.id,
+      markers: clusterPropObjects,
+      name: child.props.name,
+      minimumClusterSize: minimumClusterSize,
+      markerTitle: child.props.markerTitle,
+      markerSnippet: child.props.markerSnippet,
+      icon: iconPath?.localUri,
+      color: child.props.color,
+      opacity: child.props.opacity ? child.props.opacity : 1,
+    } as ClusterObject;
+
+    if (clusterObject.color != undefined && !isHexColor(clusterObject.color)) {
+      clusterObject.color = mapColorToHexColor(
+        clusterObject.color as Color,
+        '#ff0000'
+      );
+    }
+    return clusterObject;
+  }
+  return null;
+}
+
+export function buildHeatmapObject(child: Heatmap): HeatmapObject {
+  return {
+    type: 'heatmap',
+    points: child.props.points,
+    radius: child.props.radius,
+    gradient: child.props.gradient,
+    opacity: child.props.opacity,
+  } as HeatmapObject;
 }

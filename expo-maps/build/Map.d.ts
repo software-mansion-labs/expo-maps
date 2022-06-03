@@ -8,6 +8,8 @@ import { ExpoMapState, ExpoMapViewProps } from './Map.types';
 export declare class ExpoMap extends React.Component<ExpoMapViewProps> {
     state: ExpoMapState;
     _ismounted: boolean;
+    mapView: React.RefObject<ExpoMap>;
+    getSearchCompletions(queryFragment: string): void;
     componentDidMount(): void;
     componentWillUnmount(): void;
     componentDidUpdate(_: any, prevState: ExpoMapState): void;

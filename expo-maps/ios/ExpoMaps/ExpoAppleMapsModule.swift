@@ -1,4 +1,5 @@
 import ExpoModulesCore
+import simd
 
 public class ExpoAppleMapsModule: Module {
 
@@ -6,6 +7,13 @@ public class ExpoAppleMapsModule: Module {
     Name("ExpoAppleMaps")
     
     Events(MapEventsNames.ON_CAMERA_MOVE_STARTED_EVENT.rawValue, MapEventsNames.ON_CAMERA_MOVE_ENDED_EVENT.rawValue, MapEventsNames.ON_MARKER_CLICK_EVENT.rawValue, MapEventsNames.ON_MARKER_DRAG_STARTED_EVENT.rawValue, MapEventsNames.ON_MARKER_DRAG_ENDED_EVENT.rawValue)
+
+    AsyncFunction("getSearchCompletions") { (viewHandle: Int, searchQueryFragment: String, promise: Promise) in
+      DispatchQueue.main.async {
+        let view = self.appContext?.reactBridge?.uiManager?.view(forReactTag: NSNumber(value: viewHandle)) as? AppleMapsView
+        view?.fetchPOISearchCompletions(searchQueryFragment: searchQueryFragment, promise: promise)
+      }
+     }
 
     ViewManager {
       View {
@@ -79,6 +87,23 @@ public class ExpoAppleMapsModule: Module {
       Prop("geojsons") { (view: AppleMapsView, geoJsonObjects: [GeoJsonObject]) in
         view.setGeoJsons(geoJsonObjects: geoJsonObjects)
       }
+      
+      Prop("enablePOISearching") { (view: AppleMapsView, enable: Bool) in
+        view.setEnabledPOISearching(enabled: enable)
+      }
+      
+      Prop("enablePOIFilter") { (view: AppleMapsView, categories: [POICategoryType]) in
+        view.setEnabledPOIFilter(categories: categories)
+      }
+      
+      Prop("enablePOIs") { (view: AppleMapsView, enabled: Bool) in
+        view.setEnabledPOIs(enabled: enabled)
+      }
+      
+      Prop("createPOISearchRequest") { (view: AppleMapsView, place: String) in
+        view.createPOISearchRequest(place: place)
+      }
+      
     }
   }
 }

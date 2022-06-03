@@ -6,8 +6,11 @@ import { PolylineObject } from './Polyline';
 import { Point } from './Common.types';
 import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
-import { KMLObject } from './KML';
 import { GeoJsonObject } from './GeoJson';
+import { ExpoMap } from './Map';
+import { OverlayObject } from './Overlay';
+import { KMLObject } from './KML';
+import { HeatmapObject } from './Heatmap';
 export declare type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 /**
  * Prop for managing map type.
@@ -46,6 +49,15 @@ export declare type Polylines = {
      * Array of {@link PolylineObject}.
      */
     polylines: PolylineObject[];
+};
+/**
+ * Internal prop for managing overlays displayed on the map.
+ */
+export declare type Overlays = {
+    /**
+     * Array of {@link OverlayObject}.
+     */
+    overlays: OverlayObject[];
 };
 /**
  * Internal prop for managing circles displayed on the map.
@@ -180,6 +192,56 @@ export declare type Traffic = {
      */
     enableTraffic: boolean;
 };
+export declare type POICategoryType = 'airport' | 'atm' | 'bank' | 'beach' | 'cafe' | 'hospital' | 'hotel' | 'museum' | 'pharmacy' | 'store';
+/**
+ * Props for POI handling.
+ */
+export declare type POI = {
+    /**
+     * If 'true' search bar for searching pois is enabled.
+     *
+     * This prop works only when provider == `apple`.
+     *
+     * @default false
+     */
+    enablePOISearching: boolean;
+    /**
+     * If 'true' points of interest are being displayed.
+     *
+     * @default false
+     */
+    enablePOIs: boolean;
+    /**
+     * If not empty POIs use will be filterd to specified types.
+     *
+     * This prop works only when provider == `apple`.
+     *
+     * @default []
+     */
+    enablePOIFilter: [POICategoryType] | [];
+    /**
+     * Creates a search request for given place.
+     *
+     * Passed value shoulld be a result of auto complete.
+     *
+     */
+    createPOISearchRequest: string;
+    /**
+     * If `true` POIs are clickable and after the click name of POI is displayed above the POI's location.
+     * Please note, this field is only effective when `enablePOI` option is equal to `true`.
+     *
+     * @default false
+     */
+    clickablePOIs: boolean;
+};
+export declare type AppleMapsPOI = POI;
+export declare type GoogleMapsPOI = Omit<POI, 'enablePOISearching' | 'enablePOIFilter'>;
+export declare type Heatmaps = {
+    /**
+     * Array of {@link HeatmapObject}.
+     */
+    heatmaps: HeatmapObject[];
+};
 export declare type GoogleMapsControls = Controls;
 export declare type ZoomLevels = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22;
 /**
@@ -212,11 +274,14 @@ export declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZ
 /**
  * Props for Google Maps implementation.
  */
-export declare type NativeExpoGoogleMapsViewProps = ViewProps & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons>;
+export declare type NativeExpoGoogleMapsViewProps = ViewProps & React.RefAttributes<ExpoMap> & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & GoogleMapsPOI & Overlays & Heatmaps>;
 /**
  * Props for Apple Maps implementation.
  */
-export declare type NativeExpoAppleMapsViewProps = ViewProps & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons>;
+export declare type NativeExpoAppleMapsViewProps = ViewProps & React.RefAttributes<ExpoMap> & PropsWithChildren<MapType & Gestures & Markers & Polygons & Polylines & AppleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & AppleMapsPOI>;
+export declare type ExpoMapRef = {
+    getSearchCompletions: () => Promise<void>;
+};
 export declare type Providers = 'google' | 'apple';
 /**
  * Prop for managing map provider.
@@ -234,6 +299,6 @@ export declare type Provider = {
  *
  * All of the ExpoMap props are optional.
  */
-export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic>>;
-export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition & Traffic;
-export declare type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters & KMLs & GeoJsons;
+export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic & POI & KMLs & Heatmaps>>;
+export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition & Traffic & POI;
+export declare type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters & KMLs & GeoJsons & Overlays & Heatmaps;
