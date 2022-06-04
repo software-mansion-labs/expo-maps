@@ -161,25 +161,7 @@ data class Bounds(
 data class Gradient(
   @Field val colors: List<String> = emptyList(),
   @Field val locations: FloatArray = floatArrayOf(),
-) : Record {
-  override fun equals(other: Any?): Boolean {
-    if (this === other) return true
-    if (javaClass != other?.javaClass) return false
-
-    other as Gradient
-
-    if (colors != other.colors) return false
-    if (!locations.contentEquals(other.locations)) return false
-
-    return true
-  }
-
-  override fun hashCode(): Int {
-    var result = colors.hashCode()
-    result = 31 * result + locations.contentHashCode()
-    return result
-  }
-}
+) : Record
 
 data class HeatmapObject(
   @Field val points: List<PointWithData> = emptyList(),
