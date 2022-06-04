@@ -29,7 +29,6 @@ export function removeAllOnCameraMoveEndedListeners() {
     emitter.removeAllListeners(MapsEventsNames.ON_CAMERA_MOVE_ENDED_EVENT);
 }
 export function addOnMarkerClickListener(listener) {
-    console.log(emitter._listenerCount);
     return emitter.addListener(MapsEventsNames.ON_MARKER_CLICK_EVENT, listener);
 }
 export function removeAllOnMarkerClickListeners() {
@@ -55,4 +54,4 @@ export function removeAllListeners() {
         emitter.removeAllListeners(MapsEventsNames[event]);
     }
 }
-//# sourceMappingURL=ExpoMapEvents.js.map
+//# sourceMappingURL=Events.js.map

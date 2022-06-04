@@ -7,8 +7,35 @@ import ProviderContext from '../context/ProviderContext';
 import SwitchContainer from '../components/SwitchContainer';
 import { useState } from 'react';
 import { Subscription } from 'expo-modules-core';
+import { useEffect } from 'react';
 
 export default function CallbacksExample() {
+  useEffect(() => {
+    if (clickSub != undefined) {
+      Maps.addOnMarkerClickListener(onMarkerClickListener);
+    }
+
+    if (dragStartSub != undefined) {
+      Maps.addOnMarkerDragStartedListener(onMarkerDragStartedListener);
+    }
+
+    if (dragEndSub != undefined) {
+      Maps.addOnMarkerDragEndedListener(onMarkerDragEndedListener);
+    }
+
+    if (cameraMoveStartSub != undefined) {
+      Maps.addOnCameraMoveStartedListener(onCameraMoveStartedListener);
+    }
+
+    if (cameraMoveEndSub != undefined) {
+      Maps.addOnCameraMoveEndedListener(onCameraMoveEndedListener);
+    }
+
+    return () => {
+      Maps.removeAllListeners();
+    };
+  });
+
   const provider = useContext(ProviderContext);
 
   const [snackbarText, setSnackbarText] = useState<String | undefined>(
@@ -19,10 +46,10 @@ export default function CallbacksExample() {
   const [longitude, setLongitude] = useState<number>(-3.7);
 
   const [clickSub, setClickSub] = useState<Subscription | undefined>(undefined);
-  const [dragEndSub, setDragEndSub] = useState<Subscription | undefined>(
+  const [dragStartSub, setDragStartSub] = useState<Subscription | undefined>(
     undefined
   );
-  const [dragStartSub, setDragStartSub] = useState<Subscription | undefined>(
+  const [dragEndSub, setDragEndSub] = useState<Subscription | undefined>(
     undefined
   );
   const [cameraMoveStartSub, setCameraMoveStartSub] = useState<
@@ -31,6 +58,49 @@ export default function CallbacksExample() {
   const [cameraMoveEndSub, setCameraMoveEndSub] = useState<
     Subscription | undefined
   >(undefined);
+
+  function onMarkerClickListener({ id }: Maps.MarkerClickEvent) {
+    setSnackbarText('marker clicked, id: ' + id);
+  }
+
+  function onMarkerDragStartedListener({ id }: Maps.MarkerDragStartedEvent) {
+    setSnackbarText('marker drag started, marker id: ' + id);
+  }
+
+  function onMarkerDragEndedListener({
+    id,
+    latitude,
+    longitude,
+  }: Maps.MarkerDragEndedEvent) {
+    setSnackbarText(
+      'marker moved, id: ' +
+        id +
+        ', latitude: ' +
+        latitude +
+        ', longitude: ' +
+        longitude
+    );
+    if (id == '101') {
+      setLatitude(latitude);
+      setLongitude(longitude);
+    }
+  }
+
+  function onCameraMoveStartedListener({
+    latitude,
+    longitude,
+  }: Maps.CameraEvent) {
+    setSnackbarText(
+      'camera started moving from: ' + latitude + ' ' + longitude
+    );
+  }
+
+  function onCameraMoveEndedListener({
+    latitude,
+    longitude,
+  }: Maps.CameraEvent) {
+    setSnackbarText('camera moved to: ' + latitude + ' ' + longitude);
+  }
 
   return (
     <View style={styles.container}>
@@ -90,11 +160,7 @@ export default function CallbacksExample() {
         value={clickSub != undefined}
         onValueChange={() => {
           if (clickSub == undefined) {
-            setClickSub(
-              Maps.addOnMarkerClickListener(({ id }: Maps.MarkerClickEvent) => {
-                setSnackbarText('marker clicked, id: ' + id);
-              })
-            );
+            setClickSub(Maps.addOnMarkerClickListener(onMarkerClickListener));
           } else {
             Maps.removeAllOnMarkerClickListeners();
             setClickSub(undefined);
@@ -107,11 +173,7 @@ export default function CallbacksExample() {
         onValueChange={() => {
           if (dragStartSub == undefined) {
             setDragStartSub(
-              Maps.addOnMarkerDragStartedListener(
-                ({ id }: Maps.MarkerDragStartedEvent) => {
-                  setSnackbarText('marker drag started, marker id: ' + id);
-                }
-              )
+              Maps.addOnMarkerDragStartedListener(onMarkerDragStartedListener)
             );
           } else {
             Maps.removeAllOnMarkerDragStartedListeners();
@@ -125,22 +187,7 @@ export default function CallbacksExample() {
         onValueChange={() => {
           if (dragEndSub == undefined) {
             setDragEndSub(
-              Maps.addOnMarkerDragEndedListener(
-                ({ id, latitude, longitude }: Maps.MarkerDragEndedEvent) => {
-                  setSnackbarText(
-                    'marker moved, id: ' +
-                      id +
-                      ', latitude: ' +
-                      latitude +
-                      ', longitude: ' +
-                      longitude
-                  );
-                  if (id == '101') {
-                    setLatitude(latitude);
-                    setLongitude(longitude);
-                  }
-                }
-              )
+              Maps.addOnMarkerDragEndedListener(onMarkerDragEndedListener)
             );
           } else {
             Maps.removeAllOnMarkerDragEndedListeners();
@@ -154,13 +201,7 @@ export default function CallbacksExample() {
         onValueChange={() => {
           if (cameraMoveStartSub == undefined) {
             setCameraMoveStartSub(
-              Maps.addOnCameraMoveStartedListener(
-                ({ latitude, longitude }: Maps.CameraEvent) => {
-                  setSnackbarText(
-                    'camera started moving from: ' + latitude + ' ' + longitude
-                  );
-                }
-              )
+              Maps.addOnCameraMoveStartedListener(onCameraMoveStartedListener)
             );
           } else {
             Maps.removeAllOnCameraMoveStartedListeners();
@@ -174,13 +215,7 @@ export default function CallbacksExample() {
         onValueChange={() => {
           if (cameraMoveEndSub == undefined) {
             setCameraMoveEndSub(
-              Maps.addOnCameraMoveEndedListener(
-                ({ latitude, longitude }: Maps.CameraEvent) => {
-                  setSnackbarText(
-                    'camera moved to: ' + latitude + ' ' + longitude
-                  );
-                }
-              )
+              Maps.addOnCameraMoveEndedListener(onCameraMoveEndedListener)
             );
           } else {
             Maps.removeAllOnCameraMoveEndedListeners();

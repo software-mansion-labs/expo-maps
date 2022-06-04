@@ -14,6 +14,17 @@ import { Platform, findNodeHandle } from 'react-native';
 import * as Utils from './Utils';
 import { ProxyNativeModule } from 'expo-modules-core';
 
+export { Marker } from './Marker';
+export { Polygon } from './Polygon';
+export { Polyline } from './Polyline';
+export { Circle } from './Circle';
+export { Cluster } from './Cluster';
+export { KML } from './KML';
+export { GeoJson } from './GeoJson';
+export { Heatmap } from './Heatmap';
+export { Overlay } from './Overlay';
+export * from './Events';
+
 const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   mapType: 'normal',
   showZoomControls: true,

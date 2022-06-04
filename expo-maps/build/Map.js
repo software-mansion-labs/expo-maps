@@ -2,6 +2,16 @@ import React from 'react';
 import { NativeExpoAppleMapsView, NativeExpoAppleMapsModule, NativeExpoGoogleMapsView, NativeExpoGoogleMapsModule, } from './NativeExpoMapView';
 import { Platform, findNodeHandle } from 'react-native';
 import * as Utils from './Utils';
+export { Marker } from './Marker';
+export { Polygon } from './Polygon';
+export { Polyline } from './Polyline';
+export { Circle } from './Circle';
+export { Cluster } from './Cluster';
+export { KML } from './KML';
+export { GeoJson } from './GeoJson';
+export { Heatmap } from './Heatmap';
+export { Overlay } from './Overlay';
+export * from './Events';
 const defaultNativeExpoMapViewProps = {
     mapType: 'normal',
     showZoomControls: true,

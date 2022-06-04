@@ -74,7 +74,6 @@ export function removeAllOnCameraMoveEndedListeners() {
 export function addOnMarkerClickListener(
   listener: (event: MarkerClickEvent) => void
 ): Subscription {
-  console.log(emitter._listenerCount);
   return emitter.addListener<MarkerClickEvent>(
     MapsEventsNames.ON_MARKER_CLICK_EVENT,
     listener
