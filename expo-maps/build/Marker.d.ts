@@ -5,7 +5,8 @@ import { Point } from './Common.types';
  */
 export declare type BaseMarkerOptions = {
     /**
-     * Id of the marker, should be unique.
+     * Id of the marker or cluster, should be unique.
+     * If no id is specified then marker-related events won't fire for that particular marker or cluster.
      */
     id?: string;
     /**
@@ -60,7 +61,7 @@ export declare type BaseMarkerOptions = {
 };
 export declare type MarkerOptions = {
     /**
-     * If 'true' marker is draggable, clustered markers can't be dragged on Android.
+     * If 'true' marker is draggable, clustered markers can't be dragged.
      *
      * @default false
      */

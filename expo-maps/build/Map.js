@@ -9,8 +9,8 @@ export { Circle } from './Circle';
 export { Cluster } from './Cluster';
 export { KML } from './KML';
 export { GeoJson } from './GeoJson';
-export { Heatmap } from './Heatmap';
 export { Overlay } from './Overlay';
+export { Heatmap } from './Heatmap';
 export * from './Events';
 const defaultNativeExpoMapViewProps = {
     mapType: 'normal',
