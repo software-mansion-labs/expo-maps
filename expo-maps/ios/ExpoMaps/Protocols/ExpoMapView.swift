@@ -1,5 +1,5 @@
 protocol ExpoMapView: UIView {
-  init()
+  init(sendEvent: @escaping (String, [String: Any?]) -> Void)
   init?(coder: NSCoder)
 
   func setMapType(mapType: MapType)

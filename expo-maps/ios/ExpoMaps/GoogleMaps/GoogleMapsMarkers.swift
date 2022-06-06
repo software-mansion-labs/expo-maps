@@ -3,27 +3,28 @@ import GoogleMaps
 class GoogleMapsMarkers: Markers {
 
   private let mapView: GMSMapView
-  private var markers: [GMSMarker] = []
+  private let googleMapsMarkersManager: GoogleMapsMarkersManager
   private var poiMarkers: [GMSMarker] = []
 
-  init(mapView: GMSMapView) {
+  init(mapView: GMSMapView, googleMapsMarkersManager: GoogleMapsMarkersManager) {
     self.mapView = mapView
+    self.googleMapsMarkersManager = googleMapsMarkersManager
   }
 
   func setMarkers(markerObjects: [MarkerObject]) {
     detachAndDeleteMarkers()
     for markerObject in markerObjects {
-      let marker: GMSMarker = createGoogleMarker(markerObject: markerObject)
+      let marker: GMSMarker = createGoogleMarker(markerObject: markerObject, includeDragging: true)
       
       marker.map = mapView
-      markers.append(marker)
+      googleMapsMarkersManager.appendMarker(marker: marker, id: markerObject.id)
     }
   }
   
   func setPOIMarkers(markerObjects: [MarkerObject]) {
     detachAndDeletePOIMarkers()
     for markerObject in markerObjects {
-      let marker: GMSMarker = createGoogleMarker(markerObject: markerObject)
+      let marker: GMSMarker = createGoogleMarker(markerObject: markerObject, includeDragging: false)
       
       marker.map = mapView
       poiMarkers.append(marker)
@@ -31,10 +32,7 @@ class GoogleMapsMarkers: Markers {
   }
 
   internal func detachAndDeleteMarkers() {
-    for marker in markers {
-      marker.map = nil
-    }
-    markers = []
+    googleMapsMarkersManager.clearMarkers()
   }
   
   func detachAndDeletePOIMarkers() {

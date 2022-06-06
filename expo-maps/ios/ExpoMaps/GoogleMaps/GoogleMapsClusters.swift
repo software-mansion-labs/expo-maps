@@ -3,22 +3,22 @@ import GoogleMapsUtils
 
 class GoogleMapsClusters : Clusters {
   
-  private var clusters: [GMUClusterManager] = []
-  private var clusterRenderersDelegates: [ExpoClusterRendererDelegate] = []
   private let mapView: GMSMapView
+  private var clusterRenderersDelegates: [ExpoClusterRendererDelegate] = []
+  private let googleMapsMarkersManager: GoogleMapsMarkersManager
+  private let googleMapsClusterManagerDelegate: GoogleMapsClusterManagerDelegate
+  private let googleMapsViewDelegate: GoogleMapsViewDelegate
   
-  init(mapView: GMSMapView) {
+  init(mapView: GMSMapView, googleMapsMarkersManager: GoogleMapsMarkersManager, googleMapsClusterManagerDelegate: GoogleMapsClusterManagerDelegate, googleMapsViewDelegate: GoogleMapsViewDelegate) {
     self.mapView = mapView
+    self.googleMapsMarkersManager = googleMapsMarkersManager
+    self.googleMapsClusterManagerDelegate = googleMapsClusterManagerDelegate
+    self.googleMapsViewDelegate = googleMapsViewDelegate
   }
   
   func setClusters(clusterObjects: [ClusterObject]) {
-    for cluster in clusters {
-      cluster.clearItems()
-      cluster.cluster()
-    }
-    
-    clusters.removeAll()
-    
+    googleMapsMarkersManager.clearClusters()
+        
     for clusterObject in clusterObjects {
       var hue: CGFloat = 0
       clusterObject.color?.getHue(&hue, saturation: nil, brightness: nil, alpha: nil)
@@ -45,13 +45,16 @@ class GoogleMapsClusters : Clusters {
       )
       renderer.delegate = rendererDelegate
       let clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
-
+      
       for markerObject in clusterObject.markers {
-        clusterManager.add(createGoogleMarker(markerObject: markerObject))
+        let clusterItem = createGoogleMarker(markerObject: markerObject, includeDragging: false)
+        googleMapsMarkersManager.appendClusterItem(clusterItem: clusterItem, id: markerObject.id)
+        clusterManager.add(clusterItem)
         clusterManager.cluster()
       }
       
-      clusters.append(clusterManager)
+      clusterManager.setDelegate(googleMapsClusterManagerDelegate, mapDelegate: googleMapsViewDelegate)
+      googleMapsMarkersManager.appendCluster(cluster: clusterManager, id: clusterObject.id)
       clusterRenderersDelegates.append(rendererDelegate)
     }
   }

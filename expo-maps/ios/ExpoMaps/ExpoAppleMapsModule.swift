@@ -6,6 +6,8 @@ public class ExpoAppleMapsModule: Module {
   public func definition() -> ModuleDefinition {
     Name("ExpoAppleMaps")
     
+    Events(MapEventsNames.ON_CAMERA_MOVE_STARTED_EVENT.rawValue, MapEventsNames.ON_CAMERA_MOVE_ENDED_EVENT.rawValue, MapEventsNames.ON_MARKER_CLICK_EVENT.rawValue, MapEventsNames.ON_MARKER_DRAG_STARTED_EVENT.rawValue, MapEventsNames.ON_MARKER_DRAG_ENDED_EVENT.rawValue)
+
     AsyncFunction("getSearchCompletions") { (viewHandle: Int, searchQueryFragment: String, promise: Promise) in
       DispatchQueue.main.async {
         let view = self.appContext?.reactBridge?.uiManager?.view(forReactTag: NSNumber(value: viewHandle)) as? AppleMapsView
@@ -15,7 +17,7 @@ public class ExpoAppleMapsModule: Module {
 
     ViewManager {
       View {
-        AppleMapsView()
+        AppleMapsView(sendEvent: self.sendEvent)
       }
 
       Prop("showCompass") { (view: AppleMapsView, enable: Bool) in

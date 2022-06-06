@@ -6,6 +6,11 @@ import { Point } from './Common.types';
  */
 export type BaseMarkerOptions = {
   /**
+   * Id of the marker or cluster, should be unique.
+   * If no id is specified then marker-related events won't fire for that particular marker or cluster.
+   */
+  id?: string;
+  /**
    * Title of the marker, avaliable in annotation box.
    */
   markerTitle?: string;
@@ -58,7 +63,7 @@ export type BaseMarkerOptions = {
 
 export type MarkerOptions = {
   /**
-   * If 'true` marker is draggable.
+   * If 'true' marker is draggable, clustered markers can't be dragged.
    *
    * @default false
    */

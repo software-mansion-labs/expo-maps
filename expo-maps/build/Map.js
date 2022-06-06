@@ -11,6 +11,7 @@ export { KML } from './KML';
 export { GeoJson } from './GeoJson';
 export { Overlay } from './Overlay';
 export { Heatmap } from './Heatmap';
+export * from './Events';
 const defaultNativeExpoMapViewProps = {
     mapType: 'normal',
     showZoomControls: true,

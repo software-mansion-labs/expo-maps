@@ -9,6 +9,8 @@ open class ExpoMKAnnotation : NSObject, MKAnnotation {
   
   public var subtitle: String? = nil
   
+  var id: String? = nil
+  
   var isDraggable: Bool = false
   
   var centerOffsetX: Double = 0

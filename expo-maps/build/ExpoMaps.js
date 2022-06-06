@@ -1,3 +1,4 @@
 import { NativeModulesProxy } from 'expo-modules-core';
-export default NativeModulesProxy.ExpoMaps;
+export const NativeExpoAppleMapsModule = NativeModulesProxy.ExpoAppleMaps;
+export const NativeExpoGoogleMapsModule = NativeModulesProxy.ExpoGoogleMaps;
 //# sourceMappingURL=ExpoMaps.js.map

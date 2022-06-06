@@ -2,6 +2,8 @@ import MapKit
 
 open class ExpoMKClusterAnnotation : MKClusterAnnotation {
   
+  var id: String? = nil
+  
   var minimumClusterSize: Int = 4
   
   var alpha: Double = 1

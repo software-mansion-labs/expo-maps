@@ -4,7 +4,9 @@ public class ExpoGoogleMapsModule: Module {
 
   public func definition() -> ModuleDefinition {
     Name("ExpoGoogleMaps")
-    
+        
+    Events(MapEventsNames.ON_CAMERA_MOVE_STARTED_EVENT.rawValue, MapEventsNames.ON_CAMERA_MOVE_ENDED_EVENT.rawValue, MapEventsNames.ON_MARKER_CLICK_EVENT.rawValue, MapEventsNames.ON_MARKER_DRAG_STARTED_EVENT.rawValue, MapEventsNames.ON_MARKER_DRAG_ENDED_EVENT.rawValue)
+
     AsyncFunction("getSearchCompletions") { (viewHandle: Int, searchQueryFragment: String, promise: Promise) in
       DispatchQueue.main.async {
         let view = self.appContext?.reactBridge?.uiManager?.view(forReactTag: NSNumber(value: viewHandle)) as? GoogleMapsView
@@ -14,7 +16,7 @@ public class ExpoGoogleMapsModule: Module {
 
     ViewManager {
       View {
-        GoogleMapsView()
+        GoogleMapsView(sendEvent: self.sendEvent)
       }
 
       Prop("showCompass") { (view: GoogleMapsView, enable: Bool) in

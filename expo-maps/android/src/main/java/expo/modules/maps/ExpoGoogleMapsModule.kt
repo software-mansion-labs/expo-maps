@@ -4,17 +4,24 @@ import expo.modules.core.interfaces.services.UIManager
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import expo.modules.maps.googleMaps.GoogleMapsView
+import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
+import expo.modules.maps.googleMaps.events.MapEventsNames
 
 class ExpoGoogleMapsModule : Module() {
 
   override fun definition() = ModuleDefinition {
     Name("ExpoGoogleMaps")
 
+    Events(events = MapEventsNames.values().map { it.eventName }.toTypedArray())
+
+    val googleMapsEventEmitterManager = GoogleMapsEventEmitterManager(::sendEvent)
+
     ViewManager {
       View {
         GoogleMapsView(it).also { googleMapsView ->
           appContext.legacyModule<UIManager>()
             ?.registerLifecycleEventListener(googleMapsView.lifecycleEventListener)
+          googleMapsView.registerEvents(googleMapsEventEmitterManager)
         }
       }
 

@@ -257,6 +257,7 @@ export async function buildMarkerObject(child: Marker): Promise<MarkerObject> {
 
   let markerObject = {
     type: 'marker',
+    id: child.props.id,
     latitude: child.props.latitude,
     longitude: child.props.longitude,
     markerTitle: child.props.markerTitle,
@@ -384,6 +385,7 @@ export async function buildClusterObject(
 
     let clusterObject = {
       type: 'cluster',
+      id: child.props.id,
       markers: clusterPropObjects,
       name: child.props.name,
       minimumClusterSize: minimumClusterSize,

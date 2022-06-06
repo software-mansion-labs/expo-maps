@@ -9,6 +9,7 @@ import MapTypesExample from '../screens/MapTypesExample';
 import TrafficExample from '../screens/TrafficExample';
 import KMLExample from '../screens/KMLExample';
 import GeoJsonExample from '../screens/GeoJsonExample';
+import CallbacksExample from '../screens/CallbacksExample';
 import POIExample from '../screens/POIExample';
 import OverlaysExample from '../screens/OverlaysExample';
 import HeatmapsExample from '../screens/HeatmapsExample';
@@ -27,6 +28,7 @@ interface ConcreteExampleScreen {
     | 'Traffic'
     | 'KML'
     | 'GeoJson'
+    | 'Callbacks'
     | 'POI'
     | 'Overlays'
     | 'Heatmaps';
@@ -77,6 +79,10 @@ export const CONCRETE_EXAMPLE_SCREENS: Array<ConcreteExampleScreen> = [
   {
     name: 'GeoJson',
     screen: GeoJsonExample,
+  },
+  {
+    name: 'Callbacks',
+    screen: CallbacksExample,
   },
   {
     name: 'POI',

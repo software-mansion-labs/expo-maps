@@ -3,7 +3,7 @@ import MapKit
 class AppleMapsMarkers: NSObject, Markers {
 
   private let mapView: MKMapView
-  private var markers: [ExpoMKAnnotation] = []
+  private let markersManager: AppleMapsMarkersManager
   private var kmlMarkers: [ExpoMKAnnotation] = []
   private var poiMarkers: [ExpoMKAnnotation] = []
   
@@ -11,8 +11,9 @@ class AppleMapsMarkers: NSObject, Markers {
    Two marker classes, which are used to display markers on a map, are here registered in order to reuse their instances
    when user scrolls a map.
    */
-  init(mapView: MKMapView) {
+  init(mapView: MKMapView, markersManager: AppleMapsMarkersManager) {
     self.mapView = mapView
+    self.markersManager = markersManager
     mapView.register(ExpoMKImageAnnotationView.self, forAnnotationViewWithReuseIdentifier: "image_marker")
     mapView.register(ExpoMKColorAnnotationView.self, forAnnotationViewWithReuseIdentifier: "color_marker")
   }
@@ -21,10 +22,10 @@ class AppleMapsMarkers: NSObject, Markers {
     detachAndDeleteMarkers()
     
     for markerObject in markerObjects {
-      let marker = createAppleMarker(markerObject: markerObject)
+      let marker = createAppleMarker(markerObject: markerObject, includeDragging: true)
       
       mapView.addAnnotation(marker)
-      markers.append(marker)
+      markersManager.appendMarker(marker: marker)
     }
   }
   
@@ -32,7 +33,7 @@ class AppleMapsMarkers: NSObject, Markers {
     detachAndDeleteKMLMarkers()
     
     for markerObject in markerObjects {
-      let marker = createAppleMarker(markerObject: markerObject)
+      let marker = createAppleMarker(markerObject: markerObject, includeDragging: false)
       
       mapView.addAnnotation(marker)
       kmlMarkers.append(marker)
@@ -43,7 +44,7 @@ class AppleMapsMarkers: NSObject, Markers {
     detachAndDeletePOIMarkers()
     
     for markerObject in markerObjects {
-      let marker = createAppleMarker(markerObject: markerObject)
+      let marker = createAppleMarker(markerObject: markerObject, includeDragging: false)
       
       mapView.addAnnotation(marker)
       poiMarkers.append(marker)
@@ -51,8 +52,8 @@ class AppleMapsMarkers: NSObject, Markers {
   }
   
   internal func detachAndDeleteMarkers() {
-    mapView.removeAnnotations(markers)
-    markers = []
+    mapView.removeAnnotations(markersManager.getMarkers())
+    markersManager.clearMarkers()
   }
   
   private func detachAndDeleteKMLMarkers() {

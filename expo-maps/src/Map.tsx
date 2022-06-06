@@ -13,6 +13,7 @@ import {
 import { Platform, findNodeHandle } from 'react-native';
 import * as Utils from './Utils';
 import { ProxyNativeModule } from 'expo-modules-core';
+
 export { Marker } from './Marker';
 export { Polygon } from './Polygon';
 export { Polyline } from './Polyline';
@@ -24,6 +25,7 @@ export { Overlay } from './Overlay';
 export { ExpoMapRef } from './Map.types';
 export { POICategoryType } from './Map.types';
 export { Heatmap } from './Heatmap';
+export * from './Events';
 
 const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   mapType: 'normal',
@@ -125,7 +127,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
             return Utils.buildClusterObject(child);
           } else if (Utils.isOverlay(child)) {
             return Utils.buildOverlayObject(child);
-          } else if(Utils.isHeatmap(child)) {
+          } else if (Utils.isHeatmap(child)) {
             return Utils.buildHeatmapObject(child);
           }
           Utils.warnIfChildIsIncompatible(child);

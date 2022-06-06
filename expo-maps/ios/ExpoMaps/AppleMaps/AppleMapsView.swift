@@ -14,16 +14,17 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let geoJsons: AppleMapsGeoJsons
   private let kmls: AppleMapsKMLs
   private let pointsOfInterest: AppleMapsPOI
+  private let markersManager: AppleMapsMarkersManager = AppleMapsMarkersManager()
   private var wasInitialCameraPositionSet = false
 
-  init() {
+  init(sendEvent: @escaping (String, [String: Any?]) -> Void) {
     mapView = MKMapView()
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    delegate = AppleMapsDelegate()
+    delegate = AppleMapsDelegate(sendEvent: sendEvent, markersManager: markersManager)
     mapView.delegate = delegate
     controls = AppleMapsControls(mapView: mapView)
-    markers = AppleMapsMarkers(mapView: mapView)
-    clusters = AppleMapsClusters(mapView: mapView)
+    markers = AppleMapsMarkers(mapView: mapView, markersManager: markersManager)
+    clusters = AppleMapsClusters(mapView: mapView, markersManager: markersManager)
     gestures = AppleMapsGestures(mapView: mapView)
     polygons = AppleMapsPolygons(mapView: mapView)
     polylines = AppleMapsPolylines(mapView: mapView)

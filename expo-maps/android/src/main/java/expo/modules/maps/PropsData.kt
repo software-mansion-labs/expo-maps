@@ -14,6 +14,7 @@ enum class MapType(val value: String) {
 }
 
 data class MarkerObject(
+  @Field val id: String? = null,
   @Field val latitude: Double = 0.0,
   @Field val longitude: Double = 0.0,
   @Field val markerTitle: String? = null,
@@ -106,6 +107,7 @@ data class CircleObject(
 ) : Record
 
 data class ClusterObject(
+  @Field val id: String? = null,
   @Field val name: String = "default_cluster",
   @Field val minimumClusterSize: Int = 2,
   @Field val markerTitle: String? = null,
