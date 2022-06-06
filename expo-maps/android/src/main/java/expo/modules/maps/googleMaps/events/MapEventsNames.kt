@@ -19,3 +19,4 @@ fun createMarkerDragStartedEventContent(id: String) = bundleOf("id" to id)
 
 fun createMarkerDragEndedEventContent(id: String, latitude: Double, longitude: Double) =
   bundleOf("id" to id, "latitude" to latitude, "longitude" to longitude)
+  
