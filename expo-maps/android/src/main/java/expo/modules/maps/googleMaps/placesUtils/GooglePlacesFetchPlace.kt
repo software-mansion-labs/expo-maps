@@ -3,7 +3,6 @@ package expo.modules.maps.googleMaps.placesUtils
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FetchPlaceResponse
@@ -11,64 +10,59 @@ import com.google.android.libraries.places.api.net.PlacesClient
 import expo.modules.maps.MarkerObject
 import expo.modules.maps.googleMaps.GoogleMapsMarkers
 
-class GooglePlacesFetchPlace(private val placesClient: PlacesClient, private val tokenUtils: GoogleMapsPlacesTokenUtils,
-                             private val markers: GoogleMapsMarkers, private val map: GoogleMap) {
+class GooglePlacesFetchPlace(
+  private val placesClient: PlacesClient,
+  private val tokenUtils: GoogleMapsPlacesTokenUtils,
+  private val markers: GoogleMapsMarkers,
+  private val map: GoogleMap
+) {
 
-    private var fetchedPlace: Place? = null
-        set(newValue) {
-            field = newValue
-            displayMarker()
-        }
-
-    fun search(placeId: String) {
-        val placeFields = listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS)
-        val request = FetchPlaceRequest.newInstance(placeId, placeFields)
-
-        placesClient.fetchPlace(request)
-            .addOnSuccessListener { response: FetchPlaceResponse ->
-                fetchedPlace = response.place
-            }.addOnFailureListener { exception: Exception ->
-                println(String.format("FetchPlace error, %s", exception.message))
-            }
-
-        tokenUtils.setNewSessionToken()
+  private var fetchedPlace: Place? = null
+    set(newValue) {
+      field = newValue
+      displayMarker()
     }
 
-    private fun displayMarker() {
-        val marker = getMarkerToDisplay() ?: return
-        markers.setPOIMarkers(arrayOf(marker))
-        val update = CameraUpdateFactory.newLatLng(LatLng(marker.latitude, marker.longitude))
-        map.moveCamera(update)
-    }
+  fun search(placeId: String) {
+    val placeFields = listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS)
+    val request = FetchPlaceRequest.newInstance(placeId, placeFields)
 
-    private fun getMarkerToDisplay(): MarkerObject? {
-        val place = (if (fetchedPlace != null) fetchedPlace else null) ?: return null
-        return try {
-            MarkerObject(
-                getLatitude(place),
-                getLongitude(place),
-                place.name ?: "",
-                place.address ?: "",
-                null,
-                "red",
-                false,
-                null,
-                null,
-                1.0)
-        } catch (exception: PlaceRequiredFieldsException) {
-            println(String.format("Mapping to MarkerObject error, %s", exception.message))
-            null
-        }
+    placesClient.fetchPlace(request)
+      .addOnSuccessListener { response: FetchPlaceResponse ->
+        fetchedPlace = response.place
+      }.addOnFailureListener { exception: Exception ->
+        println("FetchPlace error, ${exception.message}")
+      }
 
-    }
+    tokenUtils.setNewSessionToken()
+  }
 
-    private fun getLatitude (place: Place): Double {
-        return place.latLng?.latitude ?: throw PlaceRequiredFieldsException("Missing latitude value.")
-    }
+  private fun displayMarker() {
+    val marker = getMarkerToDisplay() ?: return
+    markers.setPOIMarkers(arrayOf(marker))
+    val update = CameraUpdateFactory.newLatLng(LatLng(marker.latitude, marker.longitude))
+    map.moveCamera(update)
+  }
 
-    private fun getLongitude (place: Place): Double {
-        return place.latLng?.longitude ?: throw PlaceRequiredFieldsException("Missing longitude value.")
+  private fun getMarkerToDisplay(): MarkerObject? {
+    val place = fetchedPlace
+    val latitude = place?.latLng?.latitude
+    val longitude = place?.latLng?.longitude
+
+    if (place != null && latitude != null && longitude != null) {
+      return MarkerObject(
+        latitude,
+        longitude,
+        place.name ?: "",
+        place.address ?: "",
+        null,
+        "red",
+        false,
+        null,
+        null,
+        1.0
+      )
     }
+    return null
+  }
 }
-
-class PlaceRequiredFieldsException(message: String): Exception(message)

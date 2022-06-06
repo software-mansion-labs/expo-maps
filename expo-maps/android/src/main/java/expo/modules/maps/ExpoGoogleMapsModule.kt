@@ -129,8 +129,8 @@ class ExpoGoogleMapsModule : Module() {
         view.createPlaceSearchRequest(place)
       }
 
-      Prop("clickablePOIs") { view: GoogleMapsView, clickablePOIs: Boolean ->
-        view.setClickablePOIs(clickablePOIs)
+      Prop("clickablePOIs") { view: GoogleMapsView, arePOIClickable: Boolean ->
+        view.setClickablePOIs(arePOIClickable)
       }
     }
   }

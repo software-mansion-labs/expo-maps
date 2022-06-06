@@ -2,7 +2,6 @@ package expo.modules.maps.googleMaps
 
 import android.content.Context
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -19,7 +18,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 
-class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallback, ExpoMapView, GoogleMap.OnPoiClickListener {
+class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallback, ExpoMapView {
 
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
@@ -36,7 +35,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var overlays: GoogleMapsOverlays
   private lateinit var heatmaps: GoogleMapsHeatmaps
   private lateinit var places: GoogleMapsPlaces
-  private var clickablePOIs: Boolean = false
+
   private val mapReady = MutableStateFlow(false)
   private var wasInitialCameraPositionSet = false
 
@@ -65,6 +64,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     overlays = GoogleMapsOverlays(googleMap)
     heatmaps = GoogleMapsHeatmaps(googleMap)
     places = GoogleMapsPlaces(context, googleMap, markers)
+
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
@@ -136,25 +136,15 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
-  fun setClickablePOIs(clickablePOIs: Boolean) {
-    this.clickablePOIs = clickablePOIs
-  }
-
   fun createPlaceSearchRequest(place: String) {
     updateMap {
       places.createSearchRequest(place)
     }
   }
 
-  override fun onPoiClick(poi: PointOfInterest) {
-    if (clickablePOIs) {
-      updateMap {
-        Toast.makeText(this.context, """Clicked: ${poi.name}
-            Place ID:${poi.placeId}
-            Latitude:${poi.latLng.latitude} Longitude:${poi.latLng.longitude}""",
-                Toast.LENGTH_SHORT
-        ).show()
-      }
+  fun setClickablePOIs(arePOIClickable: Boolean) {
+    updateMap {
+      places.setClickablePOIs(arePOIClickable)
     }
   }
 

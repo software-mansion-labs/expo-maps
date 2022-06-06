@@ -1,2 +1,2 @@
 /example/ios/example/ApiKeys.plist filter=git-crypt diff=git-crypt
-/expo-maps/android/src/main/java/expo/modules/maps/ApiKeys.txt filter=git-crypt diff=git-crypt
+/example/android/app/src/main/assets/apikeys.properties filter=git-crypt diff=git-crypt
