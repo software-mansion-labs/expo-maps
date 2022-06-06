@@ -34,7 +34,13 @@ export default function CallbacksExample() {
     return () => {
       Maps.removeAllListeners();
     };
-  });
+  }, [
+    clickSub,
+    dragStartSub,
+    dragEndSub,
+    cameraMoveEndSub,
+    cameraMoveStartSub,
+  ]);
 
   const provider = useContext(ProviderContext);
 
