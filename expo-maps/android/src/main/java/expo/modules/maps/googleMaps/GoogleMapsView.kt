@@ -9,7 +9,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.collections.MarkerManager
-import com.google.android.gms.maps.model.PointOfInterest
 import expo.modules.kotlin.Promise
 import expo.modules.maps.*
 import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
@@ -54,7 +53,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     markerManager = MarkerManager(googleMap)
     controls = GoogleMapsControls(googleMap)
     gestures = GoogleMapsGestures(googleMap)
-    markers = GoogleMapsMarkers(markerManager)
+    markers = GoogleMapsMarkers(googleMap, markerManager)
     clusters = GoogleMapsClusters(context, googleMap, markerManager)
     polygons = GoogleMapsPolygons(googleMap)
     polylines = GoogleMapsPolylines(googleMap)

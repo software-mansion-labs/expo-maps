@@ -25,23 +25,22 @@ class GoogleMapsPlaces(
   private val tokenUtils: GoogleMapsPlacesTokenUtils
   private val placesSearchCompleter: GoogleMapsPlacesSearchCompleter
   private val placesFetcher: GooglePlacesFetchPlace
-  private var arePOIClickable: Boolean = false
+  private var arePOIClickable = false
 
   init {
     map.setOnPoiClickListener(this)
 
     val properties = Properties()
-    var key = "EMPTY_KEY"
-
-    try {
+    val key = try {
       properties.load(context.assets.open("apikeys.properties"))
-      key = properties.getProperty("GooglePlacesApiKey") ?: "EMPTY_KEY"
+      properties.getProperty("GooglePlacesApiKey")
     } catch (e: IOException) {
       Log.e(
-        "Expo-Maps Google Places",
-        "Could not find apikeys.properties file. Make sure the file exists in assets directory."
+              "Expo-Maps Google Places",
+              "Could not find apikeys.properties file. Make sure the file exists in assets directory."
       )
-    }
+      null
+    } ?: "EMPTY_KEY"
 
     Places.initialize(context, key)
     placesClient = Places.createClient(context)
@@ -57,7 +56,7 @@ class GoogleMapsPlaces(
 
   fun createSearchRequest(place: String) {
     val placeId = getPlaceIdFromCompletion(place)
-    if (placeId.isNotBlank()) placesFetcher.search(placeId) else markers.detachAndDeletePOIMarkers()
+    if (!placeId.isNullOrBlank()) placesFetcher.search(placeId) else markers.detachAndDeletePOIMarkers()
   }
 
   fun setClickablePOIs(arePOIClickable: Boolean) {
@@ -77,5 +76,5 @@ class GoogleMapsPlaces(
   }
 
   private fun getPlaceIdFromCompletion(place: String) =
-    place.split(';').getOrNull(1) ?: ""
+    place.split(';').getOrNull(1)
 }

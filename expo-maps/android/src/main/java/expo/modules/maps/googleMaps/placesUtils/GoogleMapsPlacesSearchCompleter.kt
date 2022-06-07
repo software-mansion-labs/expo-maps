@@ -23,7 +23,8 @@ class GoogleMapsPlacesSearchCompleter(
       .addOnSuccessListener { response ->
         searchCompleterResults = response.autocompletePredictions
         resolveSearchCompletionsPromise(searchCompletionsPromise)
-      }.addOnFailureListener { exception ->
+      }
+      .addOnFailureListener { exception ->
         val errorMessage = "Fetching AutocompletePredictions error, ${exception.message}"
         searchCompletionsPromise.reject(SearchCompleterException(errorMessage))
       }

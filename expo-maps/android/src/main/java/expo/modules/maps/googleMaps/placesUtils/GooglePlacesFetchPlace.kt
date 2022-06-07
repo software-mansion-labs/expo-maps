@@ -30,7 +30,8 @@ class GooglePlacesFetchPlace(
     placesClient.fetchPlace(request)
       .addOnSuccessListener { response: FetchPlaceResponse ->
         fetchedPlace = response.place
-      }.addOnFailureListener { exception: Exception ->
+      }
+      .addOnFailureListener { exception: Exception ->
         println("FetchPlace error, ${exception.message}")
       }
 
@@ -45,24 +46,21 @@ class GooglePlacesFetchPlace(
   }
 
   private fun getMarkerToDisplay(): MarkerObject? {
-    val place = fetchedPlace
-    val latitude = place?.latLng?.latitude
-    val longitude = place?.latLng?.longitude
-
-    if (place != null && latitude != null && longitude != null) {
-      return MarkerObject(
-        latitude,
-        longitude,
-        place.name ?: "",
-        place.address ?: "",
-        null,
-        "red",
-        false,
-        null,
-        null,
-        1.0
-      )
-    }
-    return null
+    val place = fetchedPlace ?: return null
+    val latitude = place.latLng?.latitude ?: return null
+    val longitude = place.latLng?.longitude ?: return null
+    return MarkerObject(
+      null,
+      latitude,
+      longitude,
+      place.name ?: "",
+      place.address ?: "",
+      null,
+      "red",
+      false,
+      null,
+      null,
+      1.0
+    )
   }
 }

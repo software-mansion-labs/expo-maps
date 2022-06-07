@@ -10,7 +10,7 @@ import expo.modules.maps.MarkerObject
 import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import expo.modules.maps.interfaces.Markers
 
-class GoogleMapsMarkers(markerManager: MarkerManager) : Markers {
+class GoogleMapsMarkers(private val map: GoogleMap, markerManager: MarkerManager) : Markers {
 
   private val markers = mutableMapOf<Marker, String?>()
   private val poiMarkers = mutableListOf<Marker>()
@@ -72,13 +72,13 @@ class GoogleMapsMarkers(markerManager: MarkerManager) : Markers {
       val markerOptions = MarkerOptions()
       val localUri = markerObject.icon?.let { Uri.parse(it)?.path }
       markerOptions
-              .position(LatLng(markerObject.latitude, markerObject.longitude))
-              .title(markerObject.markerTitle)
-              .snippet(markerObject.markerSnippet)
-              .draggable(markerObject.draggable)
-              .anchor((markerObject.anchorU ?: 0.5).toFloat(), (markerObject.anchorV ?: 1).toFloat())
-              .alpha(markerObject.opacity.toFloat())
-              .icon(provideDescriptor(localUri, markerObject.color))
+        .position(LatLng(markerObject.latitude, markerObject.longitude))
+        .title(markerObject.markerTitle)
+        .snippet(markerObject.markerSnippet)
+        .draggable(markerObject.draggable)
+        .anchor((markerObject.anchorU ?: 0.5).toFloat(), (markerObject.anchorV ?: 1).toFloat())
+        .alpha(markerObject.opacity.toFloat())
+        .icon(provideDescriptor(localUri, markerObject.color))
 
       map.addMarker(markerOptions)?.let { poiMarkers.add(it) }
     }
