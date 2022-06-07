@@ -22,7 +22,7 @@
     <meta-data android:name="expo.modules.updates.EXPO_UPDATE_URL" android:value="https://exp.host/@lukaszkosmaty/example"/>
     <meta-data
         android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyDbgaRNTr3PhYdj_PL7jY_o9u3R08Gf8Ao"/>
+        android:value="EMPTY_KEY"/>
     <activity android:name=".MainActivity" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.App.SplashScreen" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
