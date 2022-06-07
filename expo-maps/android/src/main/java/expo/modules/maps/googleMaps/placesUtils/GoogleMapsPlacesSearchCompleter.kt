@@ -57,4 +57,3 @@ class GoogleMapsPlacesSearchCompleter(
 }
 
 private class SearchCompleterException(detailMessage: String) : CodedException(detailMessage)
-
