@@ -1,1 +1,2 @@
 /example/ios/example/ApiKeys.plist filter=git-crypt diff=git-crypt
+/example/android/app/src/main/assets/apikeys.properties filter=git-crypt diff=git-crypt

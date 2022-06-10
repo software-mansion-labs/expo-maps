@@ -10,9 +10,10 @@ import expo.modules.maps.MarkerObject
 import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import expo.modules.maps.interfaces.Markers
 
-class GoogleMapsMarkers(markerManager: MarkerManager) : Markers {
+class GoogleMapsMarkers(private val map: GoogleMap, markerManager: MarkerManager) : Markers {
 
   private val markers = mutableMapOf<Marker, String?>()
+  private val poiMarkers = mutableListOf<Marker>()
   private val markerManagerCollection: MarkerManager.Collection = markerManager.Collection()
 
   override fun setMarkers(markerObjects: Array<MarkerObject>) {
@@ -63,9 +64,33 @@ class GoogleMapsMarkers(markerManager: MarkerManager) : Markers {
       }
     })
   }
+  
+  fun setPOIMarkers(markerObjects: Array<MarkerObject>) {
+    detachAndDeletePOIMarkers()
+
+    markerObjects.forEach { markerObject ->
+      val markerOptions = MarkerOptions()
+      val localUri = markerObject.icon?.let { Uri.parse(it)?.path }
+      markerOptions
+        .position(LatLng(markerObject.latitude, markerObject.longitude))
+        .title(markerObject.markerTitle)
+        .snippet(markerObject.markerSnippet)
+        .draggable(markerObject.draggable)
+        .anchor((markerObject.anchorU ?: 0.5).toFloat(), (markerObject.anchorV ?: 1).toFloat())
+        .alpha(markerObject.opacity.toFloat())
+        .icon(provideDescriptor(localUri, markerObject.color))
+
+      map.addMarker(markerOptions)?.let { poiMarkers.add(it) }
+    }
+  }
 
   override fun detachAndDeleteMarkers() {
     markerManagerCollection.clear()
     markers.clear()
+  }
+
+  fun detachAndDeletePOIMarkers() {
+    poiMarkers.forEach { it.remove() }
+    poiMarkers.clear()
   }
 }

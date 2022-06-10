@@ -9,6 +9,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.collections.MarkerManager
+import expo.modules.kotlin.Promise
 import expo.modules.maps.*
 import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import expo.modules.maps.interfaces.ExpoMapView
@@ -32,6 +33,8 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var markerManager: MarkerManager
   private lateinit var overlays: GoogleMapsOverlays
   private lateinit var heatmaps: GoogleMapsHeatmaps
+  private lateinit var places: GoogleMapsPlaces
+
   private val mapReady = MutableStateFlow(false)
   private var wasInitialCameraPositionSet = false
 
@@ -50,7 +53,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     markerManager = MarkerManager(googleMap)
     controls = GoogleMapsControls(googleMap)
     gestures = GoogleMapsGestures(googleMap)
-    markers = GoogleMapsMarkers(markerManager)
+    markers = GoogleMapsMarkers(googleMap, markerManager)
     clusters = GoogleMapsClusters(context, googleMap, markerManager)
     polygons = GoogleMapsPolygons(googleMap)
     polylines = GoogleMapsPolylines(googleMap)
@@ -59,6 +62,8 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     geojsons = GoogleMapsGeoJsons(googleMap)
     overlays = GoogleMapsOverlays(googleMap)
     heatmaps = GoogleMapsHeatmaps(googleMap)
+    places = GoogleMapsPlaces(context, googleMap, markers)
+
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
@@ -121,6 +126,24 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   fun setEnabledAllGestures(enabled: Boolean) {
     updateMap {
       gestures.setEnabledAllGestures(enabled)
+    }
+  }
+
+  fun fetchPlacesSearchCompletions(searchQueryFragment: String, promise: Promise) {
+    updateMap {
+      places.fetchSearchCompletions(searchQueryFragment, promise)
+    }
+  }
+
+  fun createPlaceSearchRequest(place: String) {
+    updateMap {
+      places.createSearchRequest(place)
+    }
+  }
+
+  fun setClickablePOIs(arePOIClickable: Boolean) {
+    updateMap {
+      places.setClickablePOIs(arePOIClickable)
     }
   }
 
