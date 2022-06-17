@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import * as Maps from 'expo-maps';
 import SwitchContainer from '../components/SwitchContainer';
 import ProviderContext from '../context/ProviderContext';
+import { Platform } from 'expo-modules-core';
 
 export default function ControlsExample() {
   const provider = useContext(ProviderContext);
@@ -25,9 +26,10 @@ export default function ControlsExample() {
         showMyLocationButton={showMyLocationButton}
         showLevelPicker={showLevelPicker}
         showMapToolbar={showMapToolbar}
+        enableRotateGestures={true}
       />
       <View style={{ padding: 20 }}>
-        {provider == 'google' && (
+        {Platform.OS == 'android' && (
           <SwitchContainer
             title="Show zoom controls"
             value={showZoomControls}
@@ -49,7 +51,7 @@ export default function ControlsExample() {
           value={showLevelPicker}
           onValueChange={() => setShowLevelPicker(!showLevelPicker)}
         />
-        {provider == 'google' && (
+        {Platform.OS == 'android' && (
           <SwitchContainer
             title="Show map toolbar"
             value={showMapToolbar}
