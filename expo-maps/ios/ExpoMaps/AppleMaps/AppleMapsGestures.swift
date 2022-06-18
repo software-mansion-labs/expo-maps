@@ -27,11 +27,4 @@ final class AppleMapsGestures: Gestures {
   func setEnabledZoomGesture(enabled: Bool) {
     mapView.isZoomEnabled = enabled
   }
-
-  func setEnabledAllGestures(enabled: Bool) {
-    mapView.isRotateEnabled = enabled
-    mapView.isPitchEnabled = enabled
-    mapView.isScrollEnabled = enabled
-    mapView.isZoomEnabled = enabled
-  }
 }

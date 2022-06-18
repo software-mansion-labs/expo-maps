@@ -20,8 +20,4 @@ class GoogleMapsGestures(private val googleMap: GoogleMap) : Gestures {
   override fun setEnabledZoomGesture(enabled: Boolean) {
     googleMap.uiSettings.isZoomGesturesEnabled = enabled
   }
-
-  override fun setEnabledAllGestures(enabled: Boolean) {
-    googleMap.uiSettings.setAllGesturesEnabled(enabled)
-  }
 }

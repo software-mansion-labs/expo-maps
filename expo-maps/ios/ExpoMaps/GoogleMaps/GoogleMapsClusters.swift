@@ -18,6 +18,7 @@ class GoogleMapsClusters : Clusters {
   
   func setClusters(clusterObjects: [ClusterObject]) {
     googleMapsMarkersManager.clearClusters()
+    clusterRenderersDelegates.removeAll()
         
     for clusterObject in clusterObjects {
       var hue: CGFloat = 0
