@@ -117,3 +117,6 @@ dist/
 
 # google api keys file
 google-maps-api-keys.json
+
+# Info.plist
+/ios/example/Info.plist
