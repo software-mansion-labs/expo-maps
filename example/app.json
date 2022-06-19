@@ -10,7 +10,7 @@
     "ios": {
       "bundleIdentifier": "com.expo.expo.maps"
     },
-    "plugins": ["./expo-maps.plugin.ios"]
+    "plugins": ["./expo-maps.plugin.ios", "./expo-maps.plugin.android"]
   },
   "name": "example"
 }
