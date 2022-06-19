@@ -3,15 +3,14 @@
     "name": "example",
     "slug": "example",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
-      "package": "com.example.app"
+      "package": "com.expo.expoMaps"
     },
     "ios": {
-      "bundleIdentifier": "com.example.app"
-    }
+      "bundleIdentifier": "com.expo.expoMaps"
+    },
+    "plugins": ["./expo-maps.plugin"]
   },
   "name": "example"
 }
