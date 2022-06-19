@@ -115,9 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   switchContainer: {
-    margin: 5,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    padding: 20,
   },
   textInput: {
     height: 30,
