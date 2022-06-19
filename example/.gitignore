@@ -120,3 +120,6 @@ google-maps-api-keys.json
 
 # Info.plist
 /ios/example/Info.plist
+
+# AndroidManifest.xml
+/android/app/src/main/AndroidManifest.xml
