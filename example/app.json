@@ -5,12 +5,12 @@
     "version": "1.0.0",
     "assetBundlePatterns": ["**/*"],
     "android": {
-      "package": "com.expo.expoMaps"
+      "package": "com.expo.expo.maps"
     },
     "ios": {
-      "bundleIdentifier": "com.expo.expoMaps"
+      "bundleIdentifier": "com.expo.expo.maps"
     },
-    "plugins": ["./expo-maps.plugin"]
+    "plugins": ["./expo-maps.plugin.ios"]
   },
   "name": "example"
 }

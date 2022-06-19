@@ -1,4 +1,3 @@
 {
-  "googleMapsBaseApiKey": "AIzaSyDbgaRNTr3PhYdj_PL7jY_o9u3R08Gf8Ao",
-  "googleMapsPlacesApiKey": "YOUR_PAID_KEY"
+  "googleMapsApiKey": "AIzaSyDbgaRNTr3PhYdj_PL7jY_o9u3R08Gf8Ao"
 }

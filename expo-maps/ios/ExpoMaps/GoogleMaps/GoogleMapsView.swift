@@ -63,14 +63,11 @@ public final class GoogleMapsView: UIView, ExpoMapView {
       fatalError("Couldn't find file 'Info.plist'.")
     }
     let content = NSDictionary(contentsOfFile: path)
-    guard let googlePlacesApiKey = content?.object(forKey: "GooglePlacesApiKey") as? String else {
-      fatalError("Couldn't find key 'GooglePlacesApiKey' in 'Info.plist'.")
-    }
     guard let googleMapsApiKey = content?.object(forKey: "GoogleMapsApiKey") as? String else {
       fatalError("Couldn't find key 'GoogleMapsApiKey' in 'Info.plist'.")
     }
     GMSServices.provideAPIKey(googleMapsApiKey)
-    GMSPlacesClient.provideAPIKey(googlePlacesApiKey)
+    GMSPlacesClient.provideAPIKey(googleMapsApiKey)
   }
   
   func fetchPlacesSearchCompletions(searchQueryFragment: String, promise: Promise) {
