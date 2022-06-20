@@ -23,8 +23,4 @@ class GoogleMapsGestures : Gestures {
   func setEnabledZoomGesture(enabled: Bool) {
     mapView.settings.zoomGestures = enabled
   }
-
-  func setEnabledAllGestures(enabled: Bool) {
-    mapView.settings.setAllGesturesEnabled(enabled)
-  }
 }

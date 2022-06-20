@@ -123,12 +123,6 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
-  fun setEnabledAllGestures(enabled: Boolean) {
-    updateMap {
-      gestures.setEnabledAllGestures(enabled)
-    }
-  }
-
   fun fetchPlacesSearchCompletions(searchQueryFragment: String, promise: Promise) {
     updateMap {
       places.fetchSearchCompletions(searchQueryFragment, promise)
@@ -268,7 +262,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
       OnMapReadyCallback, StateFlow emits the latest value letting provided lambda to be executed.
   */
   private fun updateMap(update: () -> Unit) {
-    CoroutineScope(Dispatchers.Default).launch {
+    CoroutineScope(Dispatchers.IO).launch {
       mapReady.collectLatest {
         if (it) {
           withContext(Dispatchers.Main) {

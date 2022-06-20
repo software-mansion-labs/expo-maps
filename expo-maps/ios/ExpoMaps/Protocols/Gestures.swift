@@ -3,5 +3,4 @@ protocol Gestures {
   func setEnabledScrollGesture(enabled: Bool)
   func setEnabledTiltGesture(enabled: Bool)
   func setEnabledZoomGesture(enabled: Bool)
-  func setEnabledAllGestures(enabled: Bool)
 }

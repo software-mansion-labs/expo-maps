@@ -65,7 +65,6 @@ export default function CallbacksExample() {
   const [latitude, setLatitude] = useState<number>(40.4);
   const [longitude, setLongitude] = useState<number>(-3.7);
 
-
   function onMarkerClickListener({ id }: Maps.MarkerClickEvent) {
     setSnackbarText('marker clicked, id: ' + id);
   }

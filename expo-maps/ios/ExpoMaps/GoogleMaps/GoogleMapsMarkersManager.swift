@@ -3,9 +3,9 @@ import GoogleMapsUtils
 
 class GoogleMapsMarkersManager {
   
-  private var markersMap: [GMSMarker : String] = [:]
-  private var clustersMap: [GMUClusterManager : String] = [:]
-  private var clustersItemsMap: [GMSMarker : String] = [:]
+  private var markersMap: [GMSMarker : String?] = [:]
+  private var clustersMap: [GMUClusterManager : String?] = [:]
+  private var clustersItemsMap: [GMSMarker : String?] = [:]
   
   func clearMarkers() {
     for marker in markersMap.keys {
@@ -19,10 +19,13 @@ class GoogleMapsMarkersManager {
   }
   
   func getMarkerId(marker: GMSMarker) -> String? {
-    return markersMap[marker]
+    return markersMap[marker] ?? nil
   }
   
   func clearClusters() {
+    for clusterItem in clustersItemsMap.keys {
+      clusterItem.map = nil
+    }
     clustersItemsMap.removeAll()
     
     for cluster in clustersMap.keys {
@@ -41,10 +44,10 @@ class GoogleMapsMarkersManager {
   }
   
   func getClusterId(cluster: GMUClusterManager) -> String? {
-    return clustersMap[cluster]
+    return clustersMap[cluster] ?? nil
   }
   
   func getClusterItemId(clusterItem: GMSMarker) -> String? {
-    return clustersItemsMap[clusterItem]
+    return clustersItemsMap[clusterItem] ?? nil
   }
 }
