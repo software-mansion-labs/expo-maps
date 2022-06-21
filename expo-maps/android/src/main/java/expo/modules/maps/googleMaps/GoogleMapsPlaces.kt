@@ -1,6 +1,7 @@
 package expo.modules.maps.googleMaps
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.util.Log
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -14,6 +15,7 @@ import expo.modules.maps.googleMaps.placesUtils.GoogleMapsPlacesTokenUtils
 import expo.modules.maps.googleMaps.placesUtils.GooglePlacesFetchPlace
 import java.io.IOException
 import java.util.*
+
 
 class GoogleMapsPlaces(
   context: Context,
@@ -30,10 +32,10 @@ class GoogleMapsPlaces(
   init {
     map.setOnPoiClickListener(this)
 
-    val properties = Properties()
+    val app = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
+    val bundle = app.metaData
     val key = try {
-      properties.load(context.assets.open("apikeys.properties"))
-      properties.getProperty("GooglePlacesApiKey")
+      bundle.getString("com.google.android.geo.API_KEY")
     } catch (e: IOException) {
       Log.e(
               "Expo-Maps Google Places",

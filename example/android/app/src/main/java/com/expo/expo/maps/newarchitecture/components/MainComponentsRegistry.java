@@ -1,4 +1,4 @@
-package com.example.app.newarchitecture.components;
+package com.expo.expo.maps.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

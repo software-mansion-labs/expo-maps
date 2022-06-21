@@ -1,4 +1,4 @@
-package com.example.app;
+package com.expo.expo.maps;
 
 import android.os.Build;
 import android.os.Bundle;
