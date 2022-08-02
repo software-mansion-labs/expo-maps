@@ -197,7 +197,7 @@ export default function CallbacksExample() {
         onRegionChangeStarted={(event) => {
           onRegionChangeStartedEnable &&
             setSnackbarText(
-              'Camera started moving to:' +
+              'Camera started moving from:' +
                 JSON.stringify(event.nativeEvent.target)
             );
         }}
