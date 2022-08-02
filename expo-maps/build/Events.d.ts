@@ -88,15 +88,6 @@ export declare function addOnCameraMoveStartedListener(listener: (event: CameraE
  */
 export declare function removeAllOnCameraMoveStartedListeners(): void;
 /**
- * Adds a new listener to be called when camera stops moving.
- * @returns Subscription which can be used later to remove this particular listener.
- */
-export declare function addOnCameraMoveEndedListener(listener: (event: CameraEvent) => void): Subscription;
-/**
- * Removes all listeners registered to listen for CameraMoveEnded event.
- */
-export declare function removeAllOnCameraMoveEndedListeners(): void;
-/**
  * Adds a new listener to be called when a marker or cluster is clicked.
  * @returns Subscription which can be used later to remove this particular listener.
  */

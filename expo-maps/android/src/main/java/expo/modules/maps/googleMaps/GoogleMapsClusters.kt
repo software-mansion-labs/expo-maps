@@ -13,7 +13,6 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.google.maps.android.collections.MarkerManager
 import expo.modules.maps.ClusterObject
 import expo.modules.maps.MarkerObject
-import expo.modules.maps.googleMaps.events.GoogleMapsCameraMoveEndedEventEmitter
 import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import expo.modules.maps.interfaces.Clusters
 
@@ -59,15 +58,6 @@ class GoogleMapsClusters(
 
     setOnClusterItemClickedListener()
     setOnClusterClickedListener()
-  }
-
-  fun setOnCameraIdleListener(eventEmitter: GoogleMapsCameraMoveEndedEventEmitter) {
-    // Point the map's listeners at the listeners implemented by the cluster managers.
-    eventEmitter.addListener {
-      clusters.forEach {
-        it.onCameraIdle()
-      }
-    }
   }
 
   private fun setOnClusterItemClickedListener() {

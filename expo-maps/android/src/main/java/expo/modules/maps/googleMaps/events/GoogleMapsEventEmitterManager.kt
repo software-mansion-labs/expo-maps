@@ -5,9 +5,6 @@ import com.google.android.gms.maps.GoogleMap
 
 class GoogleMapsEventEmitterManager(private val sendEvent: (String, Bundle?) -> Unit) {
 
-  lateinit var mapsEventEmitterCameraMoveStarted: GoogleMapsCameraMoveStartedEventEmitter
-  lateinit var mapsEventEmitterCameraMoveEnded: GoogleMapsCameraMoveEndedEventEmitter
-
   fun sendMarkerDragStartedEvent(id: String) =
     sendEvent(
       MapEventsNames.ON_MARKER_DRAG_STARTED_EVENT.eventName,
@@ -22,10 +19,4 @@ class GoogleMapsEventEmitterManager(private val sendEvent: (String, Bundle?) -> 
 
   fun sendMarkerClickEvent(id: String) =
     sendEvent(MapEventsNames.ON_MARKER_CLICK_EVENT.eventName, createMarkerClickEventContent(id))
-
-  fun createEmitters(googleMap: GoogleMap) {
-    mapsEventEmitterCameraMoveStarted =
-      GoogleMapsCameraMoveStartedEventEmitter(googleMap, sendEvent)
-    mapsEventEmitterCameraMoveEnded = GoogleMapsCameraMoveEndedEventEmitter(googleMap, sendEvent)
-  }
 }

@@ -35,9 +35,14 @@ class GoogleMapsCallbacks(private val map: GoogleMap) {
     }
   }
 
+  fun setupOnRegionChangeStarted(onRegionChangeStarted:Callback<CameraPositionRecord>){
+    map.setOnCameraMoveStartedListener {
+      onRegionChangeStarted(CameraPositionRecord(map.cameraPosition))
+    }
+  }
+
   fun setupOnRegionChangeComplete(onRegionChangeComplete:Callback<CameraPositionRecord>){
     map.setOnCameraIdleListener {
-      println("Camera is idle!")
       onRegionChangeComplete(CameraPositionRecord(map.cameraPosition))
     }
   }

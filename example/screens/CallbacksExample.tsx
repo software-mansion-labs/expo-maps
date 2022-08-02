@@ -17,17 +17,13 @@ export default function CallbacksExample() {
   const [dragEndSub, setDragEndSub] = useState<Subscription | undefined>(
     undefined
   );
-  const [cameraMoveStartSub, setCameraMoveStartSub] = useState<
-    Subscription | undefined
-  >(undefined);
-  const [cameraMoveEndSub, setCameraMoveEndSub] = useState<
-    Subscription | undefined
-  >(undefined);
 
   const [clickEventEnabled, setClickEventEnabled] = useState(true);
   const [readyEventEnabled, setReadyEventEnabled] = useState(true);
   const [loadedEventEnabled, setLoadedEventEnabled] = useState(true);
   const [onRegionChangeEnabled, setOnRegionChangeEnabled] = useState(false);
+  const [onRegionChangeStartedEnable, setOnRegionChangeStartedEnabled] =
+    useState(false);
   const [onRegionChangeCmpEnabled, setOnRegChangeCmpEnabled] = useState(false);
   const [onPoiClickEnabled, setOnPoiClickEnabled] = useState(true);
 
@@ -43,25 +39,10 @@ export default function CallbacksExample() {
     if (dragEndSub != undefined) {
       Maps.addOnMarkerDragEndedListener(onMarkerDragEndedListener);
     }
-
-    if (cameraMoveStartSub != undefined) {
-      Maps.addOnCameraMoveStartedListener(onCameraMoveStartedListener);
-    }
-
-    if (cameraMoveEndSub != undefined) {
-      Maps.addOnCameraMoveEndedListener(onCameraMoveEndedListener);
-    }
-
     return () => {
       Maps.removeAllListeners();
     };
-  }, [
-    clickSub,
-    dragStartSub,
-    dragEndSub,
-    cameraMoveEndSub,
-    cameraMoveStartSub,
-  ]);
+  }, [clickSub, dragStartSub, dragEndSub]);
 
   const provider = useContext(ProviderContext);
 
@@ -97,22 +78,6 @@ export default function CallbacksExample() {
       setLatitude(latitude);
       setLongitude(longitude);
     }
-  }
-
-  function onCameraMoveStartedListener({
-    latitude,
-    longitude,
-  }: Maps.CameraEvent) {
-    setSnackbarText(
-      'camera started moving from: ' + latitude + ' ' + longitude
-    );
-  }
-
-  function onCameraMoveEndedListener({
-    latitude,
-    longitude,
-  }: Maps.CameraEvent) {
-    setSnackbarText('camera moved to: ' + latitude + ' ' + longitude);
   }
 
   const callbacksData = [
@@ -157,34 +122,6 @@ export default function CallbacksExample() {
       },
     },
     {
-      title: 'Enable cameraMoveStarted listener',
-      value: cameraMoveStartSub != undefined,
-      onValueChange: () => {
-        if (cameraMoveStartSub == undefined) {
-          setCameraMoveStartSub(
-            Maps.addOnCameraMoveStartedListener(onCameraMoveStartedListener)
-          );
-        } else {
-          Maps.removeAllOnCameraMoveStartedListeners();
-          setCameraMoveStartSub(undefined);
-        }
-      },
-    },
-    {
-      title: 'Enable cameraMoveEnded listener',
-      value: cameraMoveEndSub != undefined,
-      onValueChange: () => {
-        if (cameraMoveEndSub == undefined) {
-          setCameraMoveEndSub(
-            Maps.addOnCameraMoveEndedListener(onCameraMoveEndedListener)
-          );
-        } else {
-          Maps.removeAllOnCameraMoveEndedListeners();
-          setCameraMoveEndSub(undefined);
-        }
-      },
-    },
-    {
       title: 'Enable onMapReady event',
       value: readyEventEnabled,
       onValueChange: () => {
@@ -213,8 +150,15 @@ export default function CallbacksExample() {
       },
     },
     {
+      title: 'Enable onRegionChangeStarted event',
+      value: onRegionChangeStartedEnable,
+      onValueChange: () => {
+        setOnRegionChangeStartedEnabled(!onRegionChangeStartedEnable);
+      },
+    },
+    {
       title: 'Enable onRegionChangeComplete event',
-      value: clickEventEnabled,
+      value: onRegionChangeCmpEnabled,
       onValueChange: () => {
         setOnRegChangeCmpEnabled(!onRegionChangeCmpEnabled);
       },
@@ -248,6 +192,13 @@ export default function CallbacksExample() {
           onRegionChangeEnabled &&
             setSnackbarText(
               'Camera moved to:' + JSON.stringify(event.nativeEvent.target)
+            );
+        }}
+        onRegionChangeStarted={(event) => {
+          onRegionChangeStartedEnable &&
+            setSnackbarText(
+              'Camera started moving to:' +
+                JSON.stringify(event.nativeEvent.target)
             );
         }}
         onRegionChangeComplete={(event) => {

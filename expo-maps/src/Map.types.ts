@@ -234,14 +234,21 @@ export type Callbacks = {
   onMapClick?: (event: OnMapClickEvent) => void;
 
   /**
-   * Callback to call when user moves the camera.
+   * Callback to call when camera is moving.
    *
    * @default (event: OnRegionChangeEvent) => {}
    */
   onRegionChange?: (event: OnRegionChangeEvent) => void;
 
   /**
-   * Callback to call when user ended moving the camera.
+   * Callback to call when camera has started moving.
+   *
+   * @default (event: OnRegionChangeEvent) => {}
+   */
+  onRegionChangeStarted?: (event: OnRegionChangeEvent) => void;
+
+  /**
+   * Callback to call when camera has stopped moving.
    *
    * @default (event: OnRegionChangeEvent) => {}
    */

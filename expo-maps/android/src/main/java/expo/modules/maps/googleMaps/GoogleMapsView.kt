@@ -48,6 +48,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private val onMapLoaded by callback<Unit>()
   private val onMapClick by callback<LatLngRecord>()
   private val onRegionChange by callback<CameraPositionRecord>()
+  private val onRegionChangeStarted by callback<CameraPositionRecord>()
   private val onRegionChangeComplete by callback<CameraPositionRecord>()
   private val onPoiClick by callback<PointOfInterestRecord>()
 
@@ -262,9 +263,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   fun registerEvents(mapsEventEmitterManager: GoogleMapsEventEmitterManager) {
     updateMap {
-      mapsEventEmitterManager.createEmitters(googleMap)
       clusters.googleMapsEventEmitterManager = mapsEventEmitterManager
-      clusters.setOnCameraIdleListener(mapsEventEmitterManager.mapsEventEmitterCameraMoveEnded)
       markers.setOnMarkerClickListener(mapsEventEmitterManager)
       markers.setOnMarkerDragListener(mapsEventEmitterManager)
     }
@@ -274,10 +273,10 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     callbacks.setupOnMapClick(onMapClick)
     callbacks.setupOnMapLoaded(onMapLoaded)
     callbacks.setupOnRegionChange(onRegionChange)
+    callbacks.setupOnRegionChangeStarted(onRegionChangeStarted)
     callbacks.setupOnRegionChangeComplete(onRegionChangeComplete)
     callbacks.setupOnPoiClick(onPoiClick)
 
-    println("Sending on map ready")
     // Call on map ready after the map is initialized
     onMapReady(Unit)
   }
