@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
+import { FlatList } from 'react-native';
+import { View } from 'react-native';
 import type { StackScreenProps } from '@react-navigation/stack';
 import ExamplesListItem from '../components/ExamplesListItem';
 import { ExamplesStackNavigatorProps } from '../navigators/MainNavigator';
@@ -15,17 +16,19 @@ export default function ExamplesListScreen({
 }: ExamplesListScreenProps) {
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView>
-        {CONCRETE_EXAMPLE_SCREENS.map(({ name }) => (
+      <FlatList
+        data={CONCRETE_EXAMPLE_SCREENS}
+        renderItem={({ item }) => (
           <ExamplesListItem
-            key={name}
-            name={name}
+            key={item.name}
+            name={item.name}
             onExampleSelect={() => {
-              navigation.navigate(name);
+              navigation.navigate(item.name);
             }}
           />
-        ))}
-      </ScrollView>
+        )}
+        contentContainerStyle={{ paddingVertical: 15 }}
+      />
     </View>
   );
 }

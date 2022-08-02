@@ -45,6 +45,38 @@ export type PatternItem = {
   length: number;
 };
 
+export type CameraPosition = {
+  /**
+   * The location that the camera is pointing at.
+   * @required
+   */
+  target: Point,
+
+  /**
+   * TDirection that the camera is pointing in, in degrees clockwise from north
+   * @required
+   */
+  bearing: number,
+
+  /**
+   * The angle, in degrees, of the camera angle from the nadir (directly facing the Earth).
+   * @required
+   */
+
+  tilt: number,
+  /**
+   * Zoom level near the center of the screen.
+   * @required
+   */
+  zoom: number
+}
+
+export type PointOfInterest = {
+  latLng: Point,
+  name: string,
+  placeId: string,
+}
+
 export type Color =
   | 'red'
   | 'blue'

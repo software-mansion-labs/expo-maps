@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, FlatList } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 
 import * as Maps from 'expo-maps';
@@ -23,6 +23,13 @@ export default function CallbacksExample() {
   const [cameraMoveEndSub, setCameraMoveEndSub] = useState<
     Subscription | undefined
   >(undefined);
+
+  const [clickEventEnabled, setClickEventEnabled] = useState(true);
+  const [readyEventEnabled, setReadyEventEnabled] = useState(true);
+  const [loadedEventEnabled, setLoadedEventEnabled] = useState(true);
+  const [onRegionChangeEnabled, setOnRegionChangeEnabled] = useState(false);
+  const [onRegionChangeCmpEnabled, setOnRegChangeCmpEnabled] = useState(false);
+  const [onPoiClickEnabled, setOnPoiClickEnabled] = useState(true);
 
   useEffect(() => {
     if (clickSub != undefined) {
@@ -108,9 +115,153 @@ export default function CallbacksExample() {
     setSnackbarText('camera moved to: ' + latitude + ' ' + longitude);
   }
 
+  const callbacksData = [
+    {
+      title: 'Enable markerClick listener',
+      value: clickSub != undefined,
+      onValueChange: () => {
+        if (clickSub == undefined) {
+          setClickSub(Maps.addOnMarkerClickListener(onMarkerClickListener));
+        } else {
+          Maps.removeAllOnMarkerClickListeners();
+          setClickSub(undefined);
+        }
+      },
+    },
+    {
+      title: 'Enable markerDragStarted listener',
+      value: dragStartSub != undefined,
+      onValueChange: () => {
+        if (dragStartSub == undefined) {
+          setDragStartSub(
+            Maps.addOnMarkerDragStartedListener(onMarkerDragStartedListener)
+          );
+        } else {
+          Maps.removeAllOnMarkerDragStartedListeners();
+          setDragStartSub(undefined);
+        }
+      },
+    },
+    {
+      title: 'Enable markerDragEnded listener',
+      value: dragEndSub != undefined,
+      onValueChange: () => {
+        if (dragEndSub == undefined) {
+          setDragEndSub(
+            Maps.addOnMarkerDragEndedListener(onMarkerDragEndedListener)
+          );
+        } else {
+          Maps.removeAllOnMarkerDragEndedListeners();
+          setDragEndSub(undefined);
+        }
+      },
+    },
+    {
+      title: 'Enable cameraMoveStarted listener',
+      value: cameraMoveStartSub != undefined,
+      onValueChange: () => {
+        if (cameraMoveStartSub == undefined) {
+          setCameraMoveStartSub(
+            Maps.addOnCameraMoveStartedListener(onCameraMoveStartedListener)
+          );
+        } else {
+          Maps.removeAllOnCameraMoveStartedListeners();
+          setCameraMoveStartSub(undefined);
+        }
+      },
+    },
+    {
+      title: 'Enable cameraMoveEnded listener',
+      value: cameraMoveEndSub != undefined,
+      onValueChange: () => {
+        if (cameraMoveEndSub == undefined) {
+          setCameraMoveEndSub(
+            Maps.addOnCameraMoveEndedListener(onCameraMoveEndedListener)
+          );
+        } else {
+          Maps.removeAllOnCameraMoveEndedListeners();
+          setCameraMoveEndSub(undefined);
+        }
+      },
+    },
+    {
+      title: 'Enable onMapReady event',
+      value: readyEventEnabled,
+      onValueChange: () => {
+        setReadyEventEnabled(!readyEventEnabled);
+      },
+    },
+    {
+      title: 'Enable onMapLoaded event',
+      value: loadedEventEnabled,
+      onValueChange: () => {
+        setLoadedEventEnabled(!loadedEventEnabled);
+      },
+    },
+    {
+      title: 'Enable onMapClick event',
+      value: clickEventEnabled,
+      onValueChange: () => {
+        setClickEventEnabled(!clickEventEnabled);
+      },
+    },
+    {
+      title: 'Enable onRegionChange event',
+      value: onRegionChangeEnabled,
+      onValueChange: () => {
+        setOnRegionChangeEnabled(!onRegionChangeEnabled);
+      },
+    },
+    {
+      title: 'Enable onRegionChangeComplete event',
+      value: clickEventEnabled,
+      onValueChange: () => {
+        setOnRegChangeCmpEnabled(!onRegionChangeCmpEnabled);
+      },
+    },
+    {
+      title: 'Enable onPoiClick event',
+      value: onPoiClickEnabled,
+      onValueChange: () => {
+        setOnPoiClickEnabled(!onPoiClickEnabled);
+      },
+    },
+  ];
   return (
     <View style={styles.container}>
-      <Maps.ExpoMap style={{ flex: 1, width: '100%' }} provider={provider}>
+      <Maps.ExpoMap
+        style={{ flex: 1, width: '100%' }}
+        provider={provider}
+        onMapClick={(event) => {
+          clickEventEnabled &&
+            setSnackbarText(
+              'Map clicked at:' + JSON.stringify(event.nativeEvent)
+            );
+        }}
+        onMapLoaded={() => {
+          loadedEventEnabled && setSnackbarText('Map has loaded!');
+        }}
+        onMapReady={() => {
+          readyEventEnabled && setSnackbarText('Map has initialized');
+        }}
+        onRegionChange={(event) => {
+          onRegionChangeEnabled &&
+            setSnackbarText(
+              'Camera moved to:' + JSON.stringify(event.nativeEvent.target)
+            );
+        }}
+        onRegionChangeComplete={(event) => {
+          onRegionChangeCmpEnabled &&
+            setSnackbarText(
+              'Camera finished moving to:' +
+                JSON.stringify(event.nativeEvent.target)
+            );
+        }}
+        onPoiClick={(event) => {
+          onPoiClickEnabled &&
+            setSnackbarText('Clicked POI:' + JSON.stringify(event.nativeEvent));
+        }}
+      >
         <Maps.Marker
           id="100"
           latitude={48.85}
@@ -157,78 +308,13 @@ export default function CallbacksExample() {
         style={{ backgroundColor: 'white' }}
         wrapperStyle={styles.snackbar}
       >
-        <View>
-          <Text>{snackbarText}</Text>
-        </View>
+        <Text style={{ color: 'black' }}>{snackbarText}</Text>
       </Snackbar>
-      <View style={{ padding: 20 }}>
-        <SwitchContainer
-          title="Enable markerClick listener"
-          value={clickSub != undefined}
-          onValueChange={() => {
-            if (clickSub == undefined) {
-              setClickSub(Maps.addOnMarkerClickListener(onMarkerClickListener));
-            } else {
-              Maps.removeAllOnMarkerClickListeners();
-              setClickSub(undefined);
-            }
-          }}
-        />
-        <SwitchContainer
-          title="Enable markerDragStarted listener"
-          value={dragStartSub != undefined}
-          onValueChange={() => {
-            if (dragStartSub == undefined) {
-              setDragStartSub(
-                Maps.addOnMarkerDragStartedListener(onMarkerDragStartedListener)
-              );
-            } else {
-              Maps.removeAllOnMarkerDragStartedListeners();
-              setDragStartSub(undefined);
-            }
-          }}
-        />
-        <SwitchContainer
-          title="Enable markerDragEnded listener"
-          value={dragEndSub != undefined}
-          onValueChange={() => {
-            if (dragEndSub == undefined) {
-              setDragEndSub(
-                Maps.addOnMarkerDragEndedListener(onMarkerDragEndedListener)
-              );
-            } else {
-              Maps.removeAllOnMarkerDragEndedListeners();
-              setDragEndSub(undefined);
-            }
-          }}
-        />
-        <SwitchContainer
-          title="Enable cameraMoveStarted listener"
-          value={cameraMoveStartSub != undefined}
-          onValueChange={() => {
-            if (cameraMoveStartSub == undefined) {
-              setCameraMoveStartSub(
-                Maps.addOnCameraMoveStartedListener(onCameraMoveStartedListener)
-              );
-            } else {
-              Maps.removeAllOnCameraMoveStartedListeners();
-              setCameraMoveStartSub(undefined);
-            }
-          }}
-        />
-        <SwitchContainer
-          title="Enable cameraMoveEnded listener"
-          value={cameraMoveEndSub != undefined}
-          onValueChange={() => {
-            if (cameraMoveEndSub == undefined) {
-              setCameraMoveEndSub(
-                Maps.addOnCameraMoveEndedListener(onCameraMoveEndedListener)
-              );
-            } else {
-              Maps.removeAllOnCameraMoveEndedListeners();
-              setCameraMoveEndSub(undefined);
-            }
-          }}
+      <View style={{ maxHeight: 200 }}>
+        <FlatList
+          contentContainerStyle={styles.eventsList}
+          data={callbacksData}
+          renderItem={({ item }) => <SwitchContainer {...item} />}
         />
       </View>
     </View>
@@ -241,5 +327,8 @@ const styles = StyleSheet.create({
   },
   snackbar: {
     top: 0,
+  },
+  eventsList: {
+    padding: 20,
   },
 });

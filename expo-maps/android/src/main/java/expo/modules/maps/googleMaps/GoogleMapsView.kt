@@ -1,6 +1,7 @@
 package expo.modules.maps.googleMaps
 
 import android.content.Context
+import android.os.Bundle
 import android.widget.LinearLayout
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -10,9 +11,13 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.collections.MarkerManager
 import expo.modules.kotlin.Promise
+import expo.modules.kotlin.callbacks.callback
 import expo.modules.maps.*
 import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import expo.modules.maps.interfaces.ExpoMapView
+import expo.modules.maps.records.CameraPositionRecord
+import expo.modules.maps.records.LatLngRecord
+import expo.modules.maps.records.PointOfInterestRecord
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -34,9 +39,17 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var overlays: GoogleMapsOverlays
   private lateinit var heatmaps: GoogleMapsHeatmaps
   private lateinit var places: GoogleMapsPlaces
+  private lateinit var callbacks: GoogleMapsCallbacks
 
   private val mapReady = MutableStateFlow(false)
   private var wasInitialCameraPositionSet = false
+
+  private val onMapReady by callback<Unit>()
+  private val onMapLoaded by callback<Unit>()
+  private val onMapClick by callback<LatLngRecord>()
+  private val onRegionChange by callback<CameraPositionRecord>()
+  private val onRegionChangeComplete by callback<CameraPositionRecord>()
+  private val onPoiClick by callback<PointOfInterestRecord>()
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
@@ -63,10 +76,13 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     overlays = GoogleMapsOverlays(googleMap)
     heatmaps = GoogleMapsHeatmaps(googleMap)
     places = GoogleMapsPlaces(context, googleMap, markers)
+    callbacks = GoogleMapsCallbacks(googleMap)
 
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
+
+    setupCallbacks()
   }
 
   fun setShowZoomControl(enable: Boolean) {
@@ -252,6 +268,18 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
       markers.setOnMarkerClickListener(mapsEventEmitterManager)
       markers.setOnMarkerDragListener(mapsEventEmitterManager)
     }
+  }
+
+  private fun setupCallbacks(){
+    callbacks.setupOnMapClick(onMapClick)
+    callbacks.setupOnMapLoaded(onMapLoaded)
+    callbacks.setupOnRegionChange(onRegionChange)
+    callbacks.setupOnRegionChangeComplete(onRegionChangeComplete)
+    callbacks.setupOnPoiClick(onPoiClick)
+
+    println("Sending on map ready")
+    // Call on map ready after the map is initialized
+    onMapReady(Unit)
   }
 
   /*

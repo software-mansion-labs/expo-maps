@@ -1,4 +1,5 @@
 import { Subscription } from 'expo-modules-core';
+import { CameraPosition, Point, PointOfInterest } from './Common.types';
 /**
  * Type of an argument of CameraMoveStarted and CameraMoveEnded listeners.
  */
@@ -46,6 +47,36 @@ export declare type MarkerDragStartedEvent = {
      * Id of the marker that was dragged.
      */
     id: string;
+};
+/**
+ * Represents data returned on click event.
+ */
+export declare type OnMapClickEvent = {
+    /**
+     * Coordinates the place where user clicked.
+     * Represented by {@link Point}
+     */
+    nativeEvent: Point;
+};
+/**
+ * Represents data returned on RegionChangeEvent
+ */
+export declare type OnRegionChangeEvent = {
+    /**
+     * Information on cameraPosition.
+     * Represented by {@link CameraPosition}
+     */
+    nativeEvent: CameraPosition;
+};
+/**
+ * Represents data returned on PoiClickEvent
+ */
+export declare type OnPoiClickEvent = {
+    /**
+     * Information on the clicked point of interest.
+     * Represented by {@link PointOfInterest}
+     */
+    nativeEvent: PointOfInterest;
 };
 /**
  * Adds a new listener to be called when camera starts moving.

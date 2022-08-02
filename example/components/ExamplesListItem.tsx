@@ -11,7 +11,7 @@ export default function ExampleListItem({
   name,
 }: ExampleListItem) {
   return (
-    <TouchableOpacity onPress={onExampleSelect}>
+    <TouchableOpacity onPress={onExampleSelect} style={{backgroundColor:"transparent"}}>
       <View style={styles.exampleListItem}>
         <Text style={styles.nameText}>{name}</Text>
       </View>
@@ -21,15 +21,21 @@ export default function ExampleListItem({
 
 const styles = StyleSheet.create({
   exampleListItem: {
+    flex:1,
     height: 80,
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#999999',
+    marginVertical:10,
+    marginHorizontal:30,
+    borderRadius:10,
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation:8,
+    shadowColor:"rgba(0,0,0,0.36)",
+    backgroundColor:"white"
   },
   nameText: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 16,
+    elevation:30,
   },
 });

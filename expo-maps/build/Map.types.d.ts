@@ -11,6 +11,8 @@ import { ExpoMap } from './Map';
 import { OverlayObject } from './Overlay';
 import { KMLObject } from './KML';
 import { HeatmapObject } from './Heatmap';
+import { OnMapClickEvent } from './Map';
+import { OnPoiClickEvent, OnRegionChangeEvent } from './Events';
 export declare type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 /**
  * Prop for managing map type.
@@ -192,6 +194,47 @@ export declare type Traffic = {
      */
     enableTraffic: boolean;
 };
+/**
+ * Props for callback events.
+ */
+export declare type Callbacks = {
+    /**
+     * Callback to call after the map is initialized.
+     *
+     * @default () => {}
+     */
+    onMapReady?: () => void;
+    /**
+     * Callback to call when the map is loaded.
+     *
+     * @default () => {}
+     */
+    onMapLoaded?: () => void;
+    /**
+     * Callback to call when user clicks on the map.
+     *
+     * @default () => {}
+     */
+    onMapClick?: (event: OnMapClickEvent) => void;
+    /**
+     * Callback to call when user moves the camera.
+     *
+     * @default (event: OnRegionChangeEvent) => {}
+     */
+    onRegionChange?: (event: OnRegionChangeEvent) => void;
+    /**
+     * Callback to call when user ended moving the camera.
+     *
+     * @default (event: OnRegionChangeEvent) => {}
+     */
+    onRegionChangeComplete?: (event: OnRegionChangeEvent) => void;
+    /**
+     * Callback to call when user ended moving the camera.
+     *
+     * @default (event: OnRegionChangeEvent) => {}
+     */
+    onPoiClick?: (event: OnPoiClickEvent) => void;
+};
 export declare type POICategoryType = 'airport' | 'atm' | 'bank' | 'beach' | 'cafe' | 'hospital' | 'hotel' | 'museum' | 'pharmacy' | 'store';
 /**
  * Props for POI handling.
@@ -274,7 +317,7 @@ export declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZ
 /**
  * Props for Google Maps implementation.
  */
-export declare type NativeExpoGoogleMapsViewProps = ViewProps & React.RefAttributes<ExpoMap> & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & GoogleMapsPOI & Overlays & Heatmaps>;
+export declare type NativeExpoGoogleMapsViewProps = ViewProps & React.RefAttributes<ExpoMap> & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & GoogleMapsPOI & Overlays & Heatmaps & Callbacks>;
 /**
  * Props for Apple Maps implementation.
  */
@@ -299,6 +342,6 @@ export declare type Provider = {
  *
  * All of the ExpoMap props are optional.
  */
-export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic & POI & KMLs & Heatmaps>>;
+export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic & POI & KMLs & Heatmaps & Callbacks>>;
 export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition & Traffic & POI;
 export declare type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters & KMLs & GeoJsons & Overlays & Heatmaps;

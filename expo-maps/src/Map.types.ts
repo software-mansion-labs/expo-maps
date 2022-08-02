@@ -11,7 +11,8 @@ import { ExpoMap } from './Map';
 import { OverlayObject } from './Overlay';
 import { KMLObject } from './KML';
 import { HeatmapObject } from './Heatmap';
-
+import { OnMapClickEvent } from './Map';
+import { OnPoiClickEvent, OnRegionChangeEvent } from './Events';
 export type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 
 /**
@@ -207,6 +208,53 @@ export type Traffic = {
   enableTraffic: boolean;
 };
 
+/**
+ * Props for callback events.
+ */
+export type Callbacks = {
+  /**
+   * Callback to call after the map is initialized.
+   *
+   * @default () => {}
+   */
+  onMapReady?: () => void;
+
+  /**
+   * Callback to call when the map is loaded.
+   *
+   * @default () => {}
+   */
+  onMapLoaded?: () => void;
+
+  /**
+   * Callback to call when user clicks on the map.
+   *
+   * @default () => {}
+   */
+  onMapClick?: (event: OnMapClickEvent) => void;
+
+  /**
+   * Callback to call when user moves the camera.
+   *
+   * @default (event: OnRegionChangeEvent) => {}
+   */
+  onRegionChange?: (event: OnRegionChangeEvent) => void;
+
+  /**
+   * Callback to call when user ended moving the camera.
+   *
+   * @default (event: OnRegionChangeEvent) => {}
+   */
+  onRegionChangeComplete?: (event: OnRegionChangeEvent) => void;
+
+  /**
+   * Callback to call when user ended moving the camera.
+   *
+   * @default (event: OnRegionChangeEvent) => {}
+   */
+  onPoiClick?: (event: OnPoiClickEvent) => void;
+};
+
 export type POICategoryType =
   | 'airport'
   | 'atm'
@@ -259,14 +307,11 @@ export type POI = {
    *
    * @default false
    */
-   clickablePOIs: boolean;
+  clickablePOIs: boolean;
 };
 
 export type AppleMapsPOI = POI;
-export type GoogleMapsPOI = Omit<
-  POI,
-  'enablePOISearching' | 'enablePOIFilter'
->;
+export type GoogleMapsPOI = Omit<POI, 'enablePOISearching' | 'enablePOIFilter'>;
 export type Heatmaps = {
   /**
    * Array of {@link HeatmapObject}.
@@ -353,7 +398,8 @@ export type NativeExpoGoogleMapsViewProps = ViewProps &
       GeoJsons &
       GoogleMapsPOI &
       Overlays &
-      Heatmaps
+      Heatmaps &
+      Callbacks
   >;
 
 /**
@@ -410,7 +456,8 @@ export type ExpoMapViewProps = ViewProps &
         Traffic &
         POI &
         KMLs &
-        Heatmaps
+        Heatmaps &
+        Callbacks
     >
   >;
 

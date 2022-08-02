@@ -2,6 +2,7 @@ package expo.modules.maps
 
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.UIManagerModule
+import com.google.android.gms.maps.model.LatLng
 import expo.modules.core.interfaces.services.UIManager
 import expo.modules.kotlin.Promise
 import expo.modules.kotlin.modules.Module
@@ -16,6 +17,7 @@ class ExpoGoogleMapsModule : Module() {
     Name("ExpoGoogleMaps")
 
     Events(events = MapEventsNames.values().map { it.eventName }.toTypedArray())
+    println(MapEventsNames.values().map { it.eventName }.toTypedArray().contentDeepToString())
 
     val googleMapsEventEmitterManager = GoogleMapsEventEmitterManager(::sendEvent)
     
@@ -29,6 +31,8 @@ class ExpoGoogleMapsModule : Module() {
     }
 
     ViewManager {
+      Events("onMapClick","onMapReady", "onMapLoaded", "onRegionChange", "onRegionChangeComplete", "onPoiClick")
+
       View {
         GoogleMapsView(it).also { googleMapsView ->
           appContext.legacyModule<UIManager>()
@@ -36,6 +40,7 @@ class ExpoGoogleMapsModule : Module() {
           googleMapsView.registerEvents(googleMapsEventEmitterManager)
         }
       }
+
 
       Prop("enableRotateGestures") { view: GoogleMapsView, enable: Boolean ->
         view.setEnabledRotateGestures(enable)

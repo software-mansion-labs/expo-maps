@@ -8,6 +8,7 @@ import {
   NativeExpoAppleMapsModule,
   NativeExpoGoogleMapsModule,
 } from './ExpoMaps';
+import { CameraPosition, Point, PointOfInterest } from './Common.types';
 
 var module: ProxyNativeModule;
 if (Platform.OS == 'ios') {
@@ -76,6 +77,39 @@ export type MarkerDragStartedEvent = {
    * Id of the marker that was dragged.
    */
   id: string;
+};
+
+/**
+ * Represents data returned on click event.
+ */
+export type OnMapClickEvent = {
+  /**
+   * Coordinates the place where user clicked.
+   * Represented by {@link Point}
+   */
+  nativeEvent: Point;
+};
+
+/**
+ * Represents data returned on RegionChangeEvent
+ */
+export type OnRegionChangeEvent = {
+  /**
+   * Information on cameraPosition.
+   * Represented by {@link CameraPosition}
+   */
+  nativeEvent: CameraPosition;
+};
+
+/**
+ * Represents data returned on PoiClickEvent
+ */
+export type OnPoiClickEvent = {
+  /**
+   * Information on the clicked point of interest.
+   * Represented by {@link PointOfInterest}
+   */
+  nativeEvent: PointOfInterest;
 };
 
 /**

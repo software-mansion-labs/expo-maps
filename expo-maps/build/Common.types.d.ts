@@ -42,4 +42,31 @@ export declare type PatternItem = {
      */
     length: number;
 };
+export declare type CameraPosition = {
+    /**
+     * The location that the camera is pointing at.
+     * @required
+     */
+    target: Point;
+    /**
+     * TDirection that the camera is pointing in, in degrees clockwise from north
+     * @required
+     */
+    bearing: number;
+    /**
+     * The angle, in degrees, of the camera angle from the nadir (directly facing the Earth).
+     * @required
+     */
+    tilt: number;
+    /**
+     * Zoom level near the center of the screen.
+     * @required
+     */
+    zoom: number;
+};
+export declare type PointOfInterest = {
+    latLng: Point;
+    name: string;
+    placeId: string;
+};
 export declare type Color = 'red' | 'blue' | 'green' | 'black' | 'white' | 'gray' | 'cyan' | 'magenta' | 'yellow' | 'lightgray' | 'darkgray' | 'aqua' | 'fuchsia' | 'lime' | 'maroon' | 'navy' | 'olive' | 'purple' | 'silver' | 'teal';
