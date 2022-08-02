@@ -20,24 +20,9 @@ if (Platform.OS == 'ios') {
 const emitter = new EventEmitter(module);
 
 const MapsEventsNames = {
-  ON_CAMERA_MOVE_STARTED_EVENT: 'onCameraMoveStarted',
   ON_MARKER_CLICK_EVENT: 'onMarkerClick',
   ON_MARKER_DRAG_STARTED_EVENT: 'onMarkerDragStarted',
   ON_MARKER_DRAG_ENDED_EVENT: 'onMarkerDragEnded',
-};
-
-/**
- * Type of an argument of CameraMoveStarted and CameraMoveEnded listeners.
- */
-export type CameraEvent = {
-  /**
-   * Latitude of the camera position.
-   */
-  latitude: number;
-  /**
-   * Longitude of the camera position.
-   */
-  longitude: number;
 };
 
 /**
@@ -110,26 +95,6 @@ export type OnPoiClickEvent = {
    */
   nativeEvent: PointOfInterest;
 };
-
-/**
- * Adds a new listener to be called when camera starts moving.
- * @returns Subscription which can be used later to remove this particular listener.
- */
-export function addOnCameraMoveStartedListener(
-  listener: (event: CameraEvent) => void
-): Subscription {
-  return emitter.addListener<CameraEvent>(
-    MapsEventsNames.ON_CAMERA_MOVE_STARTED_EVENT,
-    listener
-  );
-}
-
-/**
- * Removes all listeners registered to listen for CameraMoveStarted event.
- */
-export function removeAllOnCameraMoveStartedListeners() {
-  emitter.removeAllListeners(MapsEventsNames.ON_CAMERA_MOVE_STARTED_EVENT);
-}
 
 /**
  * Adds a new listener to be called when a marker or cluster is clicked.

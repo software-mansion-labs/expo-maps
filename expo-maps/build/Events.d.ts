@@ -1,19 +1,6 @@
 import { Subscription } from 'expo-modules-core';
 import { CameraPosition, Point, PointOfInterest } from './Common.types';
 /**
- * Type of an argument of CameraMoveStarted and CameraMoveEnded listeners.
- */
-export declare type CameraEvent = {
-    /**
-     * Latitude of the camera position.
-     */
-    latitude: number;
-    /**
-     * Longitude of the camera position.
-     */
-    longitude: number;
-};
-/**
  * Type of an argument of MarkerClick listener.
  */
 export declare type MarkerClickEvent = {
@@ -78,15 +65,6 @@ export declare type OnPoiClickEvent = {
      */
     nativeEvent: PointOfInterest;
 };
-/**
- * Adds a new listener to be called when camera starts moving.
- * @returns Subscription which can be used later to remove this particular listener.
- */
-export declare function addOnCameraMoveStartedListener(listener: (event: CameraEvent) => void): Subscription;
-/**
- * Removes all listeners registered to listen for CameraMoveStarted event.
- */
-export declare function removeAllOnCameraMoveStartedListeners(): void;
 /**
  * Adds a new listener to be called when a marker or cluster is clicked.
  * @returns Subscription which can be used later to remove this particular listener.
