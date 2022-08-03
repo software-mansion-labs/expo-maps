@@ -6,24 +6,15 @@ import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.records.Record
 
 class CameraPositionRecord(cameraPosition: CameraPosition) : Record {
+  @Field
+  var target: LatLngRecord = LatLngRecord(cameraPosition.target)
 
   @Field
-  var target: LatLngRecord = LatLngRecord(LatLng(0.0, 0.0))
+  var zoom: Float = cameraPosition.zoom
 
   @Field
-  var zoom: Float = 0.0f
+  var bearing: Float = cameraPosition.bearing
 
   @Field
-  var bearing: Float = 0.0f
-
-  @Field
-  var tilt: Float = 0.0f
-
-  init {
-    target = LatLngRecord(cameraPosition.target)
-    zoom = cameraPosition.zoom
-    bearing = cameraPosition.bearing
-    tilt = cameraPosition.tilt
-  }
-
+  var tilt: Float = cameraPosition.tilt
 }

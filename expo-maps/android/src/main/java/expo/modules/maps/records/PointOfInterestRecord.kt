@@ -13,6 +13,4 @@ class PointOfInterestRecord(pointOfInterest: PointOfInterest) : Record {
 
   @Field
   var placeId: String = pointOfInterest.placeId
-
-
 }

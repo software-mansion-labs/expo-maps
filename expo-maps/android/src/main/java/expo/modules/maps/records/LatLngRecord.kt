@@ -4,7 +4,7 @@ import com.google.android.gms.maps.model.LatLng
 import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.records.Record
 
-class LatLngRecord(val latLng: LatLng) : Record {
+class LatLngRecord(latLng: LatLng) : Record {
   @Field
   var longitude: Double = latLng.longitude
 

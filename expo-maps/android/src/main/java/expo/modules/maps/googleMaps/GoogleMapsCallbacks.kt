@@ -14,8 +14,7 @@ import kotlin.math.abs
 
 
 class GoogleMapsCallbacks(private val map: GoogleMap) {
-
-  fun setupOnMapLoaded(onMapLoaded: Callback<Unit>){
+  fun setupOnMapLoaded(onMapLoaded: Callback<Unit>) {
     map.setOnMapLoadedCallback {
       onMapLoaded(Unit)
     }
@@ -29,27 +28,27 @@ class GoogleMapsCallbacks(private val map: GoogleMap) {
     }
   }
 
-  fun setupOnRegionChange(onRegionChange: Callback<CameraPositionRecord>){
+  fun setupOnRegionChange(onRegionChange: Callback<CameraPositionRecord>) {
     map.setOnCameraMoveListener {
       onRegionChange(CameraPositionRecord(map.cameraPosition))
     }
   }
 
-  fun setupOnRegionChangeStarted(onRegionChangeStarted:Callback<CameraPositionRecord>){
+  fun setupOnRegionChangeStarted(onRegionChangeStarted: Callback<CameraPositionRecord>) {
     map.setOnCameraMoveStartedListener {
       onRegionChangeStarted(CameraPositionRecord(map.cameraPosition))
     }
   }
 
-  fun setupOnRegionChangeComplete(onRegionChangeComplete:Callback<CameraPositionRecord>){
+  fun setupOnRegionChangeComplete(onRegionChangeComplete: Callback<CameraPositionRecord>) {
     map.setOnCameraIdleListener {
       onRegionChangeComplete(CameraPositionRecord(map.cameraPosition))
     }
   }
 
-  fun setupOnPoiClick(onPoiClick:Callback<PointOfInterestRecord>){
-   map.setOnPoiClickListener{
-     onPoiClick(PointOfInterestRecord(it))
-   }
+  fun setupOnPoiClick(onPoiClick: Callback<PointOfInterestRecord>) {
+    map.setOnPoiClickListener {
+      onPoiClick(PointOfInterestRecord(it))
+    }
   }
 }

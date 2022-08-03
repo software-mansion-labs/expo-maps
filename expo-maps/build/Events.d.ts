@@ -40,7 +40,7 @@ export declare type MarkerDragStartedEvent = {
  */
 export declare type OnMapClickEvent = {
     /**
-     * Coordinates the place where user clicked.
+     * Coordinates the place where the user clicked.
      * Represented by {@link Point}
      */
     nativeEvent: Point;

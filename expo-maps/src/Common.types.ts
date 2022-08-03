@@ -53,7 +53,7 @@ export type CameraPosition = {
   target: Point,
 
   /**
-   * TDirection that the camera is pointing in, in degrees clockwise from north
+   * The Direction that the camera is pointing in, in degrees clockwise from north
    * @required
    */
   bearing: number,

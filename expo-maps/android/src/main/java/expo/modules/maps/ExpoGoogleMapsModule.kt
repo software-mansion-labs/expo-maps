@@ -17,7 +17,6 @@ class ExpoGoogleMapsModule : Module() {
     Name("ExpoGoogleMaps")
 
     Events(events = MapEventsNames.values().map { it.eventName }.toTypedArray())
-    println(MapEventsNames.values().map { it.eventName }.toTypedArray().contentDeepToString())
 
     val googleMapsEventEmitterManager = GoogleMapsEventEmitterManager(::sendEvent)
     
@@ -41,7 +40,6 @@ class ExpoGoogleMapsModule : Module() {
           googleMapsView.registerEvents(googleMapsEventEmitterManager)
         }
       }
-
 
       Prop("enableRotateGestures") { view: GoogleMapsView, enable: Boolean ->
         view.setEnabledRotateGestures(enable)
