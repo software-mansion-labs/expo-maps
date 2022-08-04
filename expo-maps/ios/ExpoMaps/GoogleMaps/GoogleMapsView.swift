@@ -22,7 +22,29 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let heatmaps: GoogleMapsHeatmaps
   public var clickablePOIs = true
   private let googleMapsMarkersManager: GoogleMapsMarkersManager = GoogleMapsMarkersManager()
+  
+  @Event
+  var onMapReady: Callback<String>
 
+  @Event
+  var onMapLoaded: Callback<String>
+
+  @Event
+  var onMapClick: Callback<[String: Any?]>
+  
+  @Event
+  var onRegionChange: Callback<[String: Any?]>
+  
+  @Event
+  var onRegionChangeStarted: Callback<[String: Any?]>
+  
+  @Event
+  var onRegionChangeComplete: Callback<[String: Any?]>
+  
+  @Event
+  var onPoiClick: Callback<[String: Any?]>
+  
+  
   init(sendEvent: @escaping (String, [String: Any?]) -> Void) {
     // just for now we do authentication here
     // should be moved to module's function
@@ -53,7 +75,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     googleMapsViewDelegate.expoMapView = self
     addSubview(mapView)
   }
-
+  
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }

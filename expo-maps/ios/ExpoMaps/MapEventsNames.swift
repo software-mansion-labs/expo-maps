@@ -1,4 +1,6 @@
 import Foundation
+import GoogleMapsUtils
+import GoogleMaps
 
 enum MapEventsNames: String {
   case ON_CAMERA_MOVE_STARTED_EVENT = "onCameraMoveStarted"

@@ -15,6 +15,8 @@ public class ExpoGoogleMapsModule: Module {
      }
 
     ViewManager {
+      Events("onMapClick","onMapReady", "onMapLoaded", "onRegionChange",
+              "onRegionChangeComplete","onRegionChangeStarted", "onPoiClick")
       View {
         GoogleMapsView(sendEvent: self.sendEvent)
       }

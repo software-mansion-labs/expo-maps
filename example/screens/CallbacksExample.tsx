@@ -186,26 +186,26 @@ export default function CallbacksExample() {
           loadedEventEnabled && setSnackbarText('Map has loaded!');
         }}
         onMapReady={() => {
+          console.log('The map has initialized');
           readyEventEnabled && setSnackbarText('Map has initialized');
         }}
         onRegionChange={(event) => {
           onRegionChangeEnabled &&
             setSnackbarText(
-              'Camera moved to:' + JSON.stringify(event.nativeEvent.target)
+              'Camera moved to:' +
+                JSON.stringify(event.nativeEvent.payload.target.latitude)
             );
         }}
         onRegionChangeStarted={(event) => {
           onRegionChangeStartedEnable &&
             setSnackbarText(
-              'Camera started moving from:' +
-                JSON.stringify(event.nativeEvent.target)
+              'Camera started moving from:' + JSON.stringify(event.nativeEvent)
             );
         }}
         onRegionChangeComplete={(event) => {
           onRegionChangeCmpEnabled &&
             setSnackbarText(
-              'Camera finished moving to:' +
-                JSON.stringify(event.nativeEvent.target)
+              'Camera finished moving to:' + JSON.stringify(event.nativeEvent)
             );
         }}
         onPoiClick={(event) => {
