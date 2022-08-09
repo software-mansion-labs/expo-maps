@@ -50,32 +50,46 @@ export type CameraPosition = {
    * The location that the camera is pointing at.
    * @required
    */
-  target: Point,
+  target: Point;
 
   /**
    * The Direction that the camera is pointing in, in degrees clockwise from north
    * @required
    */
-  bearing: number,
+  bearing: number;
 
   /**
    * The angle, in degrees, of the camera angle from the nadir (directly facing the Earth).
    * @required
    */
 
-  tilt: number,
+  tilt: number;
+
   /**
    * Zoom level near the center of the screen.
+   * @platform iOS: Google maps only.
+   * @platform Android: Supported
+   */
+  zoom: number;
+
+  /**
+   * The amount of north-to-south distance (measured in degrees) to display on the map.
+   * @required Google Maps only
+   */
+  latitudeDelta: number;
+
+  /**
+   * The amount of east-to-west distance (measured in degrees) to display for the map region.
    * @required
    */
-  zoom: number
-}
+  longitudeDelta: number;
+};
 
 export type PointOfInterest = {
-  latLng: Point,
-  name: string,
-  placeId: string,
-}
+  latLng: Point;
+  name: string;
+  placeId: string;
+};
 
 export type Color =
   | 'red'

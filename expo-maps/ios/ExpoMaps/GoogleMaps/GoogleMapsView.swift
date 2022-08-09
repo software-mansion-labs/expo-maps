@@ -31,6 +31,12 @@ public final class GoogleMapsView: UIView, ExpoMapView {
 
   @Event
   var onMapClick: Callback<[String: Any?]>
+
+  @Event
+  var onDoublePress: Callback<[String: Any?]>
+
+  @Event
+  var onLongPress: Callback<[String: Any?]>
   
   @Event
   var onRegionChange: Callback<[String: Any?]>
@@ -78,6 +84,12 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  // Allows the double tap to work
+  public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                                _ otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    true
   }
   
   private static func initializeGoogleMapsServices() {

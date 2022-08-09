@@ -1,15 +1,18 @@
 import MapKit
 
-class AppleMapsDelegate : NSObject, MKMapViewDelegate {
+class AppleMapsDelegate: NSObject, MKMapViewDelegate {
   
   private let markersManager: AppleMapsMarkersManager
   private let sendEvent: (String, [String: Any?]) -> Void
   // Dictionary which holds cluster names connected with clusters appearance data
-  private var clusterObjects: [String : ClusterObject] = [:]
+  private var clusterObjects: [String: ClusterObject] = [:]
+  private var finishedInitialLoad: Bool = false
+  weak var appleMapsView: AppleMapsView?
   
-  init(sendEvent: @escaping (String, [String: Any?]) -> Void, markersManager: AppleMapsMarkersManager) {
+  init(sendEvent: @escaping (String, [String: Any?]) -> Void, markersManager: AppleMapsMarkersManager, appleMapsView: AppleMapsView?) {
     self.sendEvent = sendEvent
     self.markersManager = markersManager
+    self.appleMapsView = appleMapsView
     super.init()
   }
   
@@ -27,14 +30,18 @@ class AppleMapsDelegate : NSObject, MKMapViewDelegate {
       renderer.fillColor = polygon.fillColor
       renderer.strokeColor = polygon.strokeColor
       renderer.lineWidth = CGFloat(polygon.strokeWidth)
-      if polygon.strokePattern != nil { renderer.lineDashPattern = polygon.strokePattern }
+      if polygon.strokePattern != nil {
+        renderer.lineDashPattern = polygon.strokePattern
+      }
       renderer.lineJoin = polygon.jointType
       return renderer
     case let polyline as ExpoMKPolyline:
       let renderer = MKPolylineRenderer(overlay: polyline)
       renderer.strokeColor = polyline.color
       renderer.lineWidth = CGFloat(polyline.width)
-      if polyline.pattern != nil { renderer.lineDashPattern = polyline.pattern }
+      if polyline.pattern != nil {
+        renderer.lineDashPattern = polyline.pattern
+      }
       renderer.lineJoin = polyline.jointType
       renderer.lineCap = polyline.capType
       return renderer
@@ -56,14 +63,14 @@ class AppleMapsDelegate : NSObject, MKMapViewDelegate {
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
     if let annotation = annotation as? ExpoMKImageAnnotation {
       let view = mapView.dequeueReusableAnnotationView(withIdentifier: "image_marker")
-
+      
       if let markerAnnotationView = view as? ExpoMKImageAnnotationView {
         markerAnnotationView.image = UIImage(contentsOfFile: annotation.icon)
         markerAnnotationView.isDraggable = annotation.isDraggable
         markerAnnotationView.centerOffset = CGPoint(x: annotation.centerOffsetX, y: annotation.centerOffsetY)
         markerAnnotationView.alpha = annotation.alpha
         markerAnnotationView.clusteringIdentifier = annotation.clusterName
-
+        
         return markerAnnotationView
       } else {
         return ExpoMKImageAnnotationView(annotation: annotation, reuseIdentifier: "image_marker")
@@ -116,7 +123,7 @@ class AppleMapsDelegate : NSObject, MKMapViewDelegate {
   func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
     if let expoAnnotation = memberAnnotations.first as? ExpoMKAnnotation {
       let clusterObject = clusterObjects[expoAnnotation.clusterName!]!
-
+      
       let iconURL = (clusterObject.icon != nil) ? URL(fileURLWithPath: clusterObject.icon!) : nil
       
       if (iconURL != nil) {
@@ -143,18 +150,33 @@ class AppleMapsDelegate : NSObject, MKMapViewDelegate {
         return clusterAnnotation
       }
     }
-
+    
     return ExpoMKClusterColorAnnotation(memberAnnotations: memberAnnotations)
   }
   
+  func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+    appleMapsView?.onRegionChange(
+        CameraPositionRecord(camera: mapView.camera, coordinateSpan: mapView.region.span).toDictionary()
+    )
+  }
+  
   func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-    let position = mapView.camera.centerCoordinate
-    sendEvent(MapEventsNames.ON_CAMERA_MOVE_STARTED_EVENT.rawValue, createCameraEventContent(latitude: position.latitude, longitude: position.longitude))
+    appleMapsView?.onRegionChangeStarted(
+        CameraPositionRecord(camera: mapView.camera, coordinateSpan: mapView.region.span).toDictionary()
+    )
   }
   
   func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-    let position = mapView.camera.centerCoordinate
-    sendEvent(MapEventsNames.ON_CAMERA_MOVE_ENDED_EVENT.rawValue, createCameraEventContent(latitude: position.latitude, longitude: position.longitude))
+    appleMapsView?.onRegionChangeComplete(
+        CameraPositionRecord(camera: mapView.camera, coordinateSpan: mapView.region.span).toDictionary()
+    )
+  }
+  
+  func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
+    if !finishedInitialLoad {
+      appleMapsView?.onMapLoaded("")
+      finishedInitialLoad = true
+    }
   }
   
   func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {

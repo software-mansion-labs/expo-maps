@@ -1,10 +1,11 @@
 import MapKit
 import ExpoModulesCore
+import UIKit
 
-public final class AppleMapsView: UIView, ExpoMapView {
+public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelegate {
   private let mapView: MKMapView
   private let controls: AppleMapsControls
-  private let delegate: AppleMapsDelegate
+  private var delegate: AppleMapsDelegate?
   private let markers: AppleMapsMarkers
   private let clusters: AppleMapsClusters
   private let gestures: AppleMapsGestures
@@ -17,11 +18,35 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let markersManager: AppleMapsMarkersManager = AppleMapsMarkersManager()
   private var wasInitialCameraPositionSet = false
 
+  @Event
+  var onMapReady: Callback<String>
+
+  @Event
+  var onMapLoaded: Callback<String>
+
+  @Event
+  var onMapClick: Callback<[String: Any?]>
+
+  @Event
+  var onDoublePress: Callback<[String: Any?]>
+
+  @Event
+  var onLongPress: Callback<[String: Any?]>
+
+  @Event
+  var onRegionChange: Callback<[String: Any?]>
+
+  @Event
+  var onRegionChangeStarted: Callback<[String: Any?]>
+
+  @Event
+  var onRegionChangeComplete: Callback<[String: Any?]>
+
+
+
   init(sendEvent: @escaping (String, [String: Any?]) -> Void) {
     mapView = MKMapView()
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    delegate = AppleMapsDelegate(sendEvent: sendEvent, markersManager: markersManager)
-    mapView.delegate = delegate
     controls = AppleMapsControls(mapView: mapView)
     markers = AppleMapsMarkers(mapView: mapView, markersManager: markersManager)
     clusters = AppleMapsClusters(mapView: mapView, markersManager: markersManager)
@@ -32,9 +57,54 @@ public final class AppleMapsView: UIView, ExpoMapView {
     geoJsons = AppleMapsGeoJsons(mapView: mapView)
     kmls = AppleMapsKMLs(mapView: mapView, markers: markers, polylines: polylines, polygons: polygons)
     pointsOfInterest = AppleMapsPOI(mapView: mapView, markers: markers)
-
     super.init(frame: CGRect.zero)
+    delegate = AppleMapsDelegate(sendEvent: sendEvent, markersManager: markersManager, appleMapsView: self)
+    mapView.delegate = delegate
+
+
+
+    let singleTap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+    singleTap.numberOfTapsRequired = 1
+    mapView.addGestureRecognizer(singleTap)
+
+    let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+    doubleTap.numberOfTapsRequired = 2
+    doubleTap.delegate = self
+    mapView.addGestureRecognizer(doubleTap)
+    singleTap.require(toFail: doubleTap)
+
+    let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+    mapView.addGestureRecognizer(longPress)
+    singleTap.require(toFail: longPress)
+
     addSubview(mapView)
+  }
+
+  // Allows the double tap to work
+  public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                                _ otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    true
+  }
+
+  @objc func handleTap(_ sender: UITapGestureRecognizer) {
+    if sender.state == .ended {
+      let pressCoordinates = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+      onMapClick(LatLngRecord(coordinate: pressCoordinates).toDictionary())
+    }
+  }
+
+  @objc func handleDoubleTap(_ sender: UITapGestureRecognizer) {
+    if sender.state == .ended {
+      let pressCoordinates = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+      onDoublePress(LatLngRecord(coordinate: pressCoordinates).toDictionary())
+    }
+  }
+
+  @objc func handleLongPress(_ sender: UILongPressGestureRecognizer) {
+    if sender.state == .ended {
+      let pressCoordinates = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+      onLongPress(LatLngRecord(coordinate: pressCoordinates).toDictionary())
+    }
   }
 
   required init?(coder: NSCoder) {
@@ -85,8 +155,18 @@ public final class AppleMapsView: UIView, ExpoMapView {
   func setEnabledPOISearching(enabled: Bool) {
     pointsOfInterest.setEnabledPOISearching(enabled: enabled)
   }
-  
- 
+
+  public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    let touchedView: UIView! = mapView.hitTest(point, with: event)
+    if touchedView.isKind(of: NSClassFromString("MKAnnotationContainerView")!){
+      return touchedView.hitTest(point, with: event)
+    }else if touchedView.isKind(of: NSClassFromString("_MKUserTrackingButton")!){
+      return super.hitTest(_: point, with: event)
+    }
+    // For now ignore all taps other than map and tracking button clicks
+    return nil
+  }
+
   func setEnabledPOIFilter(categories: [POICategoryType]) {
     guard #available(iOS 13.0, *) else {
       print("Enabling filter for points of interests is not avaliable for < iOS 13.0")
@@ -116,7 +196,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   }
   
   func setClusters(clusterObjects: [ClusterObject]) {
-    delegate.setClusters(clusterObjects: clusterObjects)
+    delegate?.setClusters(clusterObjects: clusterObjects)
     clusters.setClusters(clusterObjects: clusterObjects)
   }
 

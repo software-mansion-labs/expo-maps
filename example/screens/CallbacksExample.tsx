@@ -182,6 +182,14 @@ export default function CallbacksExample() {
               'Map clicked at:' + JSON.stringify(event.nativeEvent)
             );
         }}
+        onDoublePress={(event) => {
+          setSnackbarText(
+            'Double press at:' + JSON.stringify(event.nativeEvent)
+          );
+        }}
+        onLongPress={(event) => {
+          setSnackbarText('Long press at:' + JSON.stringify(event.nativeEvent));
+        }}
         onMapLoaded={() => {
           loadedEventEnabled && setSnackbarText('Map has loaded!');
         }}
@@ -192,8 +200,7 @@ export default function CallbacksExample() {
         onRegionChange={(event) => {
           onRegionChangeEnabled &&
             setSnackbarText(
-              'Camera moved to:' +
-                JSON.stringify(event.nativeEvent.payload.target.latitude)
+              'Camera moved to:' + JSON.stringify(event.nativeEvent)
             );
         }}
         onRegionChangeStarted={(event) => {

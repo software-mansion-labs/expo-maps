@@ -60,9 +60,20 @@ export declare type CameraPosition = {
     tilt: number;
     /**
      * Zoom level near the center of the screen.
-     * @required
+     * @platform iOS: Google maps only.
+     * @platform Android: Supported
      */
     zoom: number;
+    /**
+     * The amount of north-to-south distance (measured in degrees) to display on the map.
+     * @required Google Maps only
+     */
+    latitudeDelta: number;
+    /**
+     * The amount of east-to-west distance (measured in degrees) to display for the map region.
+     * @required
+     */
+    longitudeDelta: number;
 };
 export declare type PointOfInterest = {
     latLng: Point;

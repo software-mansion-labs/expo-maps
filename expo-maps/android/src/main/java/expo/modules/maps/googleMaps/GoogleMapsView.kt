@@ -1,7 +1,6 @@
 package expo.modules.maps.googleMaps
 
 import android.content.Context
-import android.os.Bundle
 import android.widget.LinearLayout
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -47,6 +46,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private val onMapReady by callback<Unit>()
   private val onMapLoaded by callback<Unit>()
   private val onMapClick by callback<LatLngRecord>()
+  private val onLongPress by callback<LatLngRecord>()
   private val onRegionChange by callback<CameraPositionRecord>()
   private val onRegionChangeStarted by callback<CameraPositionRecord>()
   private val onRegionChangeComplete by callback<CameraPositionRecord>()
@@ -248,7 +248,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
       geojsons.setGeoJsons(geoJsonObjects)
     }
   }
-  
+
   override fun setHeatmaps(heatmapObjects: Array<HeatmapObject>) {
     updateMap {
       heatmaps.setHeatmaps(heatmapObjects)
@@ -269,13 +269,14 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
-  private fun setupCallbacks(){
+  private fun setupCallbacks() {
     callbacks.setupOnMapClick(onMapClick)
     callbacks.setupOnMapLoaded(onMapLoaded)
     callbacks.setupOnRegionChange(onRegionChange)
     callbacks.setupOnRegionChangeStarted(onRegionChangeStarted)
     callbacks.setupOnRegionChangeComplete(onRegionChangeComplete)
     callbacks.setupOnPoiClick(onPoiClick)
+    callbacks.setupOnLongPress(onLongPress)
 
     // Call on map ready after the map is initialized
     onMapReady(Unit)

@@ -9,48 +9,60 @@ class GoogleMapsViewDelegate: NSObject, GMSMapViewDelegate {
   private let sendEvent: (String, [String: Any?]) -> Void
   private let googleMapsMarkersManager: GoogleMapsMarkersManager
   private var mapInitialized: Bool = false
-  private var mapInitialLoadComplete:Bool = false
-  
+  private var mapInitialLoadComplete: Bool = false
+
   init(sendEvent: @escaping (String, [String: Any?]) -> Void, googleMapsMarkersManager: GoogleMapsMarkersManager) {
     self.sendEvent = sendEvent
     self.googleMapsMarkersManager = googleMapsMarkersManager
     infoMarker.opacity = 0
     super.init()
   }
-
+  
   func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
     expoMapView?.onMapClick(LatLngRecord(coordinate: coordinate).toDictionary())
   }
   
+  func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
+    expoMapView?.onLongPress(LatLngRecord(coordinate: coordinate).toDictionary())
+  }
+  
   func mapViewDidStartTileRendering(_ mapView: GMSMapView) {
-    if (!mapInitialized){
+    if !mapInitialized {
       expoMapView?.onMapReady("")
       mapInitialized = true
     }
   }
-
+  
   func mapViewDidFinishTileRendering(_ mapView: GMSMapView) {
-    if (!mapInitialLoadComplete){
+    if !mapInitialLoadComplete {
       expoMapView?.onMapLoaded("")
       mapInitialLoadComplete = true
     }
   }
-
+  
   func mapView(_ mapView: GMSMapView, willMove: Bool) {
-    expoMapView?.onRegionChangeStarted(CameraPositionRecord(cameraPosition: mapView.camera).toDictionary())
+    expoMapView?.onRegionChangeStarted(CameraPositionRecord(
+        cameraPosition: mapView.camera,
+        visibleRegion: mapView.projection.visibleRegion()).toDictionary())
   }
-
+  
   func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-    if expoMapView == nil { return }
+    if expoMapView == nil {
+      return
+    }
     if zoom != position.zoom {
       expoMapView!.updatePolylines()
       expoMapView!.updatePolygons()
     }
-    expoMapView?.onRegionChange(CameraPositionRecord(cameraPosition: mapView.camera).toDictionary())
+    expoMapView?.onRegionChange(CameraPositionRecord(
+        cameraPosition: mapView.camera,
+        visibleRegion: mapView.projection.visibleRegion()).toDictionary())
   }
   
   func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-    expoMapView?.onRegionChangeComplete(CameraPositionRecord(cameraPosition: mapView.camera).toDictionary())
+    expoMapView?.onRegionChangeComplete(CameraPositionRecord(
+        cameraPosition: mapView.camera,
+        visibleRegion: mapView.projection.visibleRegion()).toDictionary())
   }
   
   func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
@@ -71,20 +83,20 @@ class GoogleMapsViewDelegate: NSObject, GMSMapViewDelegate {
   func mapView(_ mapView: GMSMapView, didEndDragging marker: GMSMarker) {
     if let id = googleMapsMarkersManager.getMarkerId(marker: marker) {
       sendEvent(
-              MapEventsNames.ON_MARKER_DRAG_ENDED_EVENT.rawValue,
-              createMarkerDragEndedEventContent(
-                      id: id,
-                      latitude: marker.position.latitude,
-                      longitude: marker.position.longitude)
+          MapEventsNames.ON_MARKER_DRAG_ENDED_EVENT.rawValue,
+          createMarkerDragEndedEventContent(
+              id: id,
+              latitude: marker.position.latitude,
+              longitude: marker.position.longitude)
       )
     }
   }
-
+  
   func mapView(
-    _ mapView: GMSMapView,
-    didTapPOIWithPlaceID placeId: String,
-    name: String,
-    location: CLLocationCoordinate2D
+      _ mapView: GMSMapView,
+      didTapPOIWithPlaceID placeId: String,
+      name: String,
+      location: CLLocationCoordinate2D
   ) {
     if (expoMapView!.clickablePOIs) {
       infoMarker.position = location

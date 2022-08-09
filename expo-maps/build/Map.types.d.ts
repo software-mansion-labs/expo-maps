@@ -217,6 +217,18 @@ export declare type Callbacks = {
      */
     onMapClick?: (event: OnMapClickEvent) => void;
     /**
+     * Callback to call when the user double presses the map
+     *
+     * @default () => {}
+     */
+    onDoublePress?: (event: OnMapClickEvent) => void;
+    /**
+     * Callback to call when the user long presses the map
+     *
+     * @default () => {}
+     */
+    onLongPress?: (event: OnMapClickEvent) => void;
+    /**
      * Callback to call when camera is moving.
      *
      * @default (event: OnRegionChangeEvent) => {}

@@ -22,9 +22,13 @@ class GoogleMapsCallbacks(private val map: GoogleMap) {
 
   fun setupOnMapClick(onMapClick: Callback<LatLngRecord>) {
     map.setOnMapClickListener {
-      onMapClick(
-        LatLngRecord(it)
-      )
+      onMapClick(LatLngRecord(it))
+    }
+  }
+
+  fun setupOnLongPress(onLongPress: Callback<LatLngRecord>) {
+    map.setOnMapLongClickListener {
+      onLongPress(LatLngRecord(it))
     }
   }
 
