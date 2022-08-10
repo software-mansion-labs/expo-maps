@@ -6,7 +6,7 @@ import expo.modules.kotlin.records.Record
 
 class PointOfInterestRecord(pointOfInterest: PointOfInterest) : Record {
   @Field
-  var latLng: LatLngRecord = LatLngRecord(pointOfInterest.latLng)
+  var position: LatLngRecord = LatLngRecord(pointOfInterest.latLng)
 
   @Field
   var name: String = pointOfInterest.name

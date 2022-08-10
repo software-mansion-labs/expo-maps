@@ -6,18 +6,8 @@ import * as Maps from 'expo-maps';
 import ProviderContext from '../context/ProviderContext';
 import SwitchContainer from '../components/SwitchContainer';
 import { useState } from 'react';
-import { Subscription } from 'expo-modules-core';
-import { useEffect } from 'react';
 
 export default function CallbacksExample() {
-  const [clickSub, setClickSub] = useState<Subscription | undefined>(undefined);
-  const [dragStartSub, setDragStartSub] = useState<Subscription | undefined>(
-    undefined
-  );
-  const [dragEndSub, setDragEndSub] = useState<Subscription | undefined>(
-    undefined
-  );
-
   const [clickEventEnabled, setClickEventEnabled] = useState(true);
   const [readyEventEnabled, setReadyEventEnabled] = useState(true);
   const [loadedEventEnabled, setLoadedEventEnabled] = useState(true);
@@ -26,23 +16,12 @@ export default function CallbacksExample() {
     useState(false);
   const [onRegionChangeCmpEnabled, setOnRegChangeCmpEnabled] = useState(false);
   const [onPoiClickEnabled, setOnPoiClickEnabled] = useState(true);
-
-  useEffect(() => {
-    if (clickSub != undefined) {
-      Maps.addOnMarkerClickListener(onMarkerClickListener);
-    }
-
-    if (dragStartSub != undefined) {
-      Maps.addOnMarkerDragStartedListener(onMarkerDragStartedListener);
-    }
-
-    if (dragEndSub != undefined) {
-      Maps.addOnMarkerDragEndedListener(onMarkerDragEndedListener);
-    }
-    return () => {
-      Maps.removeAllListeners();
-    };
-  }, [clickSub, dragStartSub, dragEndSub]);
+  const [onMarkerPressEnabled, setOnMarkerPressEnabled] = useState(true);
+  const [onMarkerDragEnabled, setOnMarkerDragEnabled] = useState(false);
+  const [onMarkerDragStartedEnabled, setOnMarkerDragStartedEnabled] =
+    useState(true);
+  const [onMarkerDragCompleteEnabled, setOnMarkerDragCompleteEnabled] =
+    useState(true);
 
   const provider = useContext(ProviderContext);
 
@@ -53,74 +32,7 @@ export default function CallbacksExample() {
   const [latitude, setLatitude] = useState<number>(40.4);
   const [longitude, setLongitude] = useState<number>(-3.7);
 
-  function onMarkerClickListener({ id }: Maps.MarkerClickEvent) {
-    setSnackbarText('marker clicked, id: ' + id);
-  }
-
-  function onMarkerDragStartedListener({ id }: Maps.MarkerDragStartedEvent) {
-    setSnackbarText('marker drag started, marker id: ' + id);
-  }
-
-  function onMarkerDragEndedListener({
-    id,
-    latitude,
-    longitude,
-  }: Maps.MarkerDragEndedEvent) {
-    setSnackbarText(
-      'marker moved, id: ' +
-        id +
-        ', latitude: ' +
-        latitude +
-        ', longitude: ' +
-        longitude
-    );
-    if (id == '101') {
-      setLatitude(latitude);
-      setLongitude(longitude);
-    }
-  }
-
   const callbacksData = [
-    {
-      title: 'Enable markerClick listener',
-      value: clickSub != undefined,
-      onValueChange: () => {
-        if (clickSub == undefined) {
-          setClickSub(Maps.addOnMarkerClickListener(onMarkerClickListener));
-        } else {
-          Maps.removeAllOnMarkerClickListeners();
-          setClickSub(undefined);
-        }
-      },
-    },
-    {
-      title: 'Enable markerDragStarted listener',
-      value: dragStartSub != undefined,
-      onValueChange: () => {
-        if (dragStartSub == undefined) {
-          setDragStartSub(
-            Maps.addOnMarkerDragStartedListener(onMarkerDragStartedListener)
-          );
-        } else {
-          Maps.removeAllOnMarkerDragStartedListeners();
-          setDragStartSub(undefined);
-        }
-      },
-    },
-    {
-      title: 'Enable markerDragEnded listener',
-      value: dragEndSub != undefined,
-      onValueChange: () => {
-        if (dragEndSub == undefined) {
-          setDragEndSub(
-            Maps.addOnMarkerDragEndedListener(onMarkerDragEndedListener)
-          );
-        } else {
-          Maps.removeAllOnMarkerDragEndedListeners();
-          setDragEndSub(undefined);
-        }
-      },
-    },
     {
       title: 'Enable onMapReady event',
       value: readyEventEnabled,
@@ -170,6 +82,34 @@ export default function CallbacksExample() {
         setOnPoiClickEnabled(!onPoiClickEnabled);
       },
     },
+    {
+      title: 'Enable onMarkerPress event',
+      value: onMarkerPressEnabled,
+      onValueChange: () => {
+        setOnMarkerPressEnabled(!onMarkerPressEnabled);
+      },
+    },
+    {
+      title: 'Enable onMarkerDrag event',
+      value: onMarkerDragEnabled,
+      onValueChange: () => {
+        setOnMarkerDragEnabled(!onMarkerDragEnabled);
+      },
+    },
+    {
+      title: 'Enable onMarkerDragStarted event',
+      value: onMarkerDragStartedEnabled,
+      onValueChange: () => {
+        setOnMarkerDragStartedEnabled(!onMarkerDragStartedEnabled);
+      },
+    },
+    {
+      title: 'Enable onMarkerDragComplete event',
+      value: onMarkerDragCompleteEnabled,
+      onValueChange: () => {
+        setOnMarkerDragCompleteEnabled(!onMarkerDragCompleteEnabled);
+      },
+    },
   ];
   return (
     <View style={styles.container}>
@@ -193,9 +133,8 @@ export default function CallbacksExample() {
         onMapLoaded={() => {
           loadedEventEnabled && setSnackbarText('Map has loaded!');
         }}
-        onMapReady={() => {
-          console.log('The map has initialized');
-          readyEventEnabled && setSnackbarText('Map has initialized');
+        onClusterPress={(event) => {
+          console.log(event.nativeEvent);
         }}
         onRegionChange={(event) => {
           onRegionChangeEnabled &&
@@ -218,6 +157,33 @@ export default function CallbacksExample() {
         onPoiClick={(event) => {
           onPoiClickEnabled &&
             setSnackbarText('Clicked POI:' + JSON.stringify(event.nativeEvent));
+        }}
+        onMarkerPress={(event) => {
+          onMarkerPressEnabled &&
+            setSnackbarText(
+              'Clicked marker at: ' +
+                event.nativeEvent.longitude +
+                ' ' +
+                event.nativeEvent.longitude
+            );
+        }}
+        onMarkerDrag={(event) => {
+          onMarkerDragEnabled &&
+            setSnackbarText(
+              'Dragging marker: ' + JSON.stringify(event.nativeEvent)
+            );
+        }}
+        onMarkerDragStarted={(event) => {
+          onMarkerDragStartedEnabled &&
+            setSnackbarText(
+              'Marker drag started: ' + JSON.stringify(event.nativeEvent)
+            );
+        }}
+        onMarkerDragComplete={(event) => {
+          onMarkerDragCompleteEnabled &&
+            setSnackbarText(
+              'Marker drag complete: ' + JSON.stringify(event.nativeEvent)
+            );
         }}
       >
         <Maps.Marker

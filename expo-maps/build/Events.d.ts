@@ -1,5 +1,5 @@
 import { Subscription } from 'expo-modules-core';
-import { CameraPosition, Point, PointOfInterest } from './Common.types';
+import { CameraPosition, MapCluster, Marker, Point, PointOfInterest } from './Common.types';
 /**
  * Type of an argument of MarkerClick listener.
  */
@@ -44,6 +44,18 @@ export declare type OnMapClickEvent = {
      * Represented by {@link Point}
      */
     nativeEvent: Point;
+};
+/**
+ * Type used for marker related events. eq. onMarkerClick, onMarkerDrag etc. contains marker's ID and position
+ */
+export declare type MarkerEvent = {
+    nativeEvent: Marker;
+};
+/**
+ * Represents data returned when a cluster press event is called
+ */
+export declare type ClusterPressEvent = {
+    nativeEvent: MapCluster;
 };
 /**
  * Represents data returned on RegionChangeEvent

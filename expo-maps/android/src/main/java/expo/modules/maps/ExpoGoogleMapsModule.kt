@@ -30,8 +30,8 @@ class ExpoGoogleMapsModule : Module() {
     }
 
     ViewManager {
-      Events("onMapClick","onLongPress","onMapReady", "onMapLoaded", "onRegionChange",
-        "onRegionChangeComplete","onRegionChangeStarted", "onPoiClick")
+      Events("onMapClick","onLongPress", "onMapLoaded", "onRegionChange",
+        "onRegionChangeComplete","onRegionChangeStarted", "onPoiClick", "onMarkerPress", "onMarkerDrag", "onMarkerDragStarted", "onMarkerDragComplete", "onClusterPress", "onClusterItemPress")
 
       View {
         GoogleMapsView(it).also { googleMapsView ->

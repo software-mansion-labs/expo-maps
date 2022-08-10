@@ -8,7 +8,13 @@ import {
   NativeExpoAppleMapsModule,
   NativeExpoGoogleMapsModule,
 } from './ExpoMaps';
-import { CameraPosition, Point, PointOfInterest } from './Common.types';
+import {
+  CameraPosition,
+  MapCluster,
+  Marker,
+  Point,
+  PointOfInterest,
+} from './Common.types';
 
 var module: ProxyNativeModule;
 if (Platform.OS == 'ios') {
@@ -72,6 +78,20 @@ export type OnMapClickEvent = {
    * Represented by {@link Point}
    */
   nativeEvent: Point;
+};
+
+/**
+ * Type used for marker related events. eq. onMarkerClick, onMarkerDrag etc. contains marker's ID and position
+ */
+export type MarkerEvent = {
+  nativeEvent: Marker;
+};
+
+/**
+ * Represents data returned when a cluster press event is called
+ */
+export type ClusterPressEvent = {
+  nativeEvent: MapCluster;
 };
 
 /**

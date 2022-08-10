@@ -14,9 +14,7 @@ import expo.modules.kotlin.callbacks.callback
 import expo.modules.maps.*
 import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import expo.modules.maps.interfaces.ExpoMapView
-import expo.modules.maps.records.CameraPositionRecord
-import expo.modules.maps.records.LatLngRecord
-import expo.modules.maps.records.PointOfInterestRecord
+import expo.modules.maps.records.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -43,7 +41,6 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private val mapReady = MutableStateFlow(false)
   private var wasInitialCameraPositionSet = false
 
-  private val onMapReady by callback<Unit>()
   private val onMapLoaded by callback<Unit>()
   private val onMapClick by callback<LatLngRecord>()
   private val onLongPress by callback<LatLngRecord>()
@@ -51,6 +48,12 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private val onRegionChangeStarted by callback<CameraPositionRecord>()
   private val onRegionChangeComplete by callback<CameraPositionRecord>()
   private val onPoiClick by callback<PointOfInterestRecord>()
+  private val onMarkerPress by callback<MarkerObject>()
+  private val onMarkerDrag by callback<MarkerObject>()
+  private val onMarkerDragStarted by callback<MarkerObject>()
+  private val onMarkerDragComplete by callback<MarkerObject>()
+  private val onClusterPress by callback<ClusterRecord>()
+
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
@@ -68,7 +71,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     controls = GoogleMapsControls(googleMap)
     gestures = GoogleMapsGestures(googleMap)
     markers = GoogleMapsMarkers(googleMap, markerManager)
-    clusters = GoogleMapsClusters(context, googleMap, markerManager)
+    clusters = GoogleMapsClusters(context, googleMap, markerManager, onClusterPress, onMarkerPress)
     polygons = GoogleMapsPolygons(googleMap)
     polylines = GoogleMapsPolylines(googleMap)
     circles = GoogleMapsCircles(googleMap)
@@ -263,9 +266,9 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
 
   fun registerEvents(mapsEventEmitterManager: GoogleMapsEventEmitterManager) {
     updateMap {
+      mapsEventEmitterManager.createEmitters(googleMap)
       clusters.googleMapsEventEmitterManager = mapsEventEmitterManager
-      markers.setOnMarkerClickListener(mapsEventEmitterManager)
-      markers.setOnMarkerDragListener(mapsEventEmitterManager)
+      clusters.setOnCameraIdleListener(mapsEventEmitterManager.mapsEventEmitterCameraMoveEnded)
     }
   }
 
@@ -278,8 +281,9 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     callbacks.setupOnPoiClick(onPoiClick)
     callbacks.setupOnLongPress(onLongPress)
 
-    // Call on map ready after the map is initialized
-    onMapReady(Unit)
+    markers.setOnMarkerPressListener(onMarkerPress)
+    markers.setOnMarkerDragListeners(onMarkerDrag, onMarkerDragStarted, onMarkerDragComplete)
+
   }
 
   /*

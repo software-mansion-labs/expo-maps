@@ -75,9 +75,86 @@ export declare type CameraPosition = {
      */
     longitudeDelta: number;
 };
+/**
+ * Type describing points of interest on the map
+ */
 export declare type PointOfInterest = {
-    latLng: Point;
+    /**
+     * Position of the point of interest
+     * @required
+     */
+    position: Point;
+    /**
+     * Name of the point of interest
+     * @required
+     */
     name: string;
+    /**
+     * Unique ID of the point of interest
+     * @required
+     */
     placeId: string;
+};
+/**
+ * Type describing a marker (pin) placed on the map
+ */
+export declare type Marker = {
+    /**
+     * Id given to the marker
+     */
+    id: string;
+    /**
+     * Latitude of the marker
+     * @required
+     */
+    latitude: Number;
+    /**
+     * Latitude of the marker
+     * @required
+     */
+    longitude: Number;
+    /**
+     * Title of the marker
+     */
+    markerTitle: string;
+    /**
+     * Description of the marker
+     */
+    markerSnippet: String;
+    /**
+     * Url of the icon representing the marker
+     */
+    icon: string;
+    /**
+     * Color of the marker
+     */
+    color: string;
+    /**
+     * Determines if the marker can be dragged by the user
+     */
+    draggable: Boolean;
+    anchorU: Number;
+    anchorV: Number;
+    /**
+     * Opacity of the marker
+     */
+    opacity: Number;
+};
+export declare type MapCluster = {
+    /**
+     * Position of the point of interest
+     * @required
+     */
+    position: Point;
+    /**
+     * Children belonging to the cluster
+     * @required
+     */
+    items: Marker[];
+    /**
+     * Number of children in the cluster
+     * @required
+     */
+    size: Number;
 };
 export declare type Color = 'red' | 'blue' | 'green' | 'black' | 'white' | 'gray' | 'cyan' | 'magenta' | 'yellow' | 'lightgray' | 'darkgray' | 'aqua' | 'fuchsia' | 'lime' | 'maroon' | 'navy' | 'olive' | 'purple' | 'silver' | 'teal';

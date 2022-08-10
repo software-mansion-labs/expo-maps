@@ -1,6 +1,6 @@
 import MapKit
 
-class ExpoMKColorAnnotationView : MKMarkerAnnotationView {
+class ExpoMKColorAnnotationView : MKMarkerAnnotationView, UIGestureRecognizerDelegate {
   
   override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
     super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -20,7 +20,7 @@ class ExpoMKColorAnnotationView : MKMarkerAnnotationView {
     markerTintColor = UIColor(hue: annotation.color, saturation: 1, brightness: 1, alpha: 1)
     clusteringIdentifier = annotation.clusterName
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }

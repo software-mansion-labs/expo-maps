@@ -12,7 +12,7 @@ import { OverlayObject } from './Overlay';
 import { KMLObject } from './KML';
 import { HeatmapObject } from './Heatmap';
 import { OnMapClickEvent } from './Map';
-import { OnPoiClickEvent, OnRegionChangeEvent } from './Events';
+import { ClusterPressEvent, MarkerEvent, OnPoiClickEvent, OnRegionChangeEvent } from './Events';
 export declare type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 /**
  * Prop for managing map type.
@@ -199,12 +199,6 @@ export declare type Traffic = {
  */
 export declare type Callbacks = {
     /**
-     * Callback to call after the map is initialized.
-     *
-     * @default () => {}
-     */
-    onMapReady?: () => void;
-    /**
      * Callback to call when the map is loaded.
      *
      * @default () => {}
@@ -247,11 +241,41 @@ export declare type Callbacks = {
      */
     onRegionChangeComplete?: (event: OnRegionChangeEvent) => void;
     /**
-     * Callback to call when user ended moving the camera.
+     * Callback to call when the user presses a point of interest.
      *
      * @default (event: OnRegionChangeEvent) => {}
      */
     onPoiClick?: (event: OnPoiClickEvent) => void;
+    /**
+     * Callback to call when the user presses a marker
+     *
+     * @default (event: MarkerEvent) => {}
+     */
+    onMarkerPress?: (event: MarkerEvent) => void;
+    /**
+     * Callback to call on every position update of a marker.
+     *
+     * @default (event: MarkerEvent) => {}
+     */
+    onMarkerDrag?: (event: MarkerEvent) => void;
+    /**
+     * Callback to call when the user started moving a marker.
+     *
+     * @default (event: OnMarkerDragStarted) => {}
+     */
+    onMarkerDragStarted?: (event: MarkerEvent) => void;
+    /**
+     * Callback to call when the user ended moving a marker.
+     *
+     * @default (event: MarkerEvent) => {}
+     */
+    onMarkerDragComplete?: (event: MarkerEvent) => void;
+    /**
+     * Callback to call when the user presses on a cluster.
+     *
+     * @default (event: ClusterPressEvent) => {}
+     */
+    onClusterPress?: (event: ClusterPressEvent) => void;
 };
 export declare type POICategoryType = 'airport' | 'atm' | 'bank' | 'beach' | 'cafe' | 'hospital' | 'hotel' | 'museum' | 'pharmacy' | 'store';
 /**

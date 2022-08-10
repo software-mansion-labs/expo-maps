@@ -6,6 +6,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.Marker
 import expo.modules.kotlin.callbacks.Callback
 import expo.modules.maps.records.CameraPositionRecord
 import expo.modules.maps.records.LatLngRecord
