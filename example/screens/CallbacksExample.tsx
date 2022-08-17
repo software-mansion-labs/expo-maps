@@ -161,10 +161,7 @@ export default function CallbacksExample() {
         onMarkerPress={(event) => {
           onMarkerPressEnabled &&
             setSnackbarText(
-              'Clicked marker at: ' +
-                event.nativeEvent.longitude +
-                ' ' +
-                event.nativeEvent.longitude
+              'Clicked marker: ' + JSON.stringify(event.nativeEvent)
             );
         }}
         onMarkerDrag={(event) => {

@@ -17,7 +17,8 @@ public class ExpoAppleMapsModule: Module {
 
     ViewManager {
       Events("onMapClick", "onDoublePress", "onLongPress", "onMapReady", "onMapLoaded", "onRegionChange",
-          "onRegionChangeComplete","onRegionChangeStarted")
+          "onRegionChangeComplete","onRegionChangeStarted","onMarkerPress", "onMarkerDrag", "onMarkerDragStarted",
+          "onMarkerDragComplete")
 
       View {
         AppleMapsView(sendEvent: self.sendEvent)

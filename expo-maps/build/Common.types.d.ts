@@ -104,45 +104,14 @@ export declare type Marker = {
      */
     id: string;
     /**
-     * Latitude of the marker
+     * Position of the marker
      * @required
      */
-    latitude: Number;
-    /**
-     * Latitude of the marker
-     * @required
-     */
-    longitude: Number;
-    /**
-     * Title of the marker
-     */
-    markerTitle: string;
-    /**
-     * Description of the marker
-     */
-    markerSnippet: String;
-    /**
-     * Url of the icon representing the marker
-     */
-    icon: string;
-    /**
-     * Color of the marker
-     */
-    color: string;
-    /**
-     * Determines if the marker can be dragged by the user
-     */
-    draggable: Boolean;
-    anchorU: Number;
-    anchorV: Number;
-    /**
-     * Opacity of the marker
-     */
-    opacity: Number;
+    position: Point;
 };
 export declare type MapCluster = {
     /**
-     * Position of the point of interest
+     * Position of the point of the cluster
      * @required
      */
     position: Point;

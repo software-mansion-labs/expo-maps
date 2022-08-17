@@ -181,25 +181,43 @@ class AppleMapsDelegate: NSObject, MKMapViewDelegate {
   
   func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
     if let annotation = view.annotation as? ExpoMKAnnotation {
-      if let id = annotation.id {
-        sendEvent(MapEventsNames.ON_MARKER_CLICK_EVENT.rawValue, createMarkerClickEventContent(id: id))
-      }
+      appleMapsView?.onMarkerPress(MarkerRecord(marker: annotation).toDictionary())
+      
     } else if let annotation = view.annotation as? ExpoMKClusterAnnotation {
-      if let id = annotation.id {
-        sendEvent(MapEventsNames.ON_MARKER_CLICK_EVENT.rawValue, createMarkerClickEventContent(id: id))
-      }
+      appleMapsView?.onMarkerPress(MarkerRecord(marker: annotation).toDictionary())
     }
   }
   
   func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
     if let annotation = view.annotation as? ExpoMKAnnotation {
-      if let id = annotation.id {
-        if (newState == MKAnnotationView.DragState.starting) {
-          sendEvent(MapEventsNames.ON_MARKER_DRAG_STARTED_EVENT.rawValue, createMarkerDragStartedEventContent(id: id))
-        } else if (newState == MKAnnotationView.DragState.ending) {
-          sendEvent(MapEventsNames.ON_MARKER_DRAG_ENDED_EVENT.rawValue, createMarkerDragEndedEventContent(id: id, latitude: view.annotation!.coordinate.latitude, longitude: view.annotation!.coordinate.longitude))
+      switch newState {
+      case .starting:
+        appleMapsView?.onMarkerDragStarted(MarkerRecord(marker: annotation).toDictionary())
+        view.addObserver(self, forKeyPath: "center", options: NSKeyValueObservingOptions.new, context: nil)
+      case .dragging:
+        appleMapsView?.onMarkerDrag(MarkerRecord(marker: annotation).toDictionary())
+      case .ending:
+        view.removeObserver(self, forKeyPath: "center")
+        appleMapsView?.onMarkerDragComplete(MarkerRecord(marker: annotation).toDictionary())
+      default: return
+      }
+    }
+  }
+  
+  override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+    if keyPath == "center" {
+      if let view = object as? MKAnnotationView{
+        print(view.annotation)
+        let newPosition = CGPoint(x: view.center.x - view.centerOffset.x, y: view.center.y - view.centerOffset.y)
+        let coordinate = appleMapsView?.convertToMapViewCoordinate(newPosition)
+        if let annotation = view.annotation as? ExpoMKColorAnnotation{
+          appleMapsView?.onMarkerDrag(MarkerRecord(id:annotation.id!, position: coordinate!).toDictionary())
+        }else if let annotation = view.annotation as? ExpoMKAnnotation{
+          appleMapsView?.onMarkerDrag(MarkerRecord(id:annotation.id!, position: coordinate!).toDictionary())
         }
       }
+    } else {
+      super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
     }
   }
 }
