@@ -15,8 +15,8 @@ enum class MapType(val value: String) {
 
 data class MarkerObject(
   @Field val id: String? = null,
-  @Field val latitude: Double = 0.0,
-  @Field val longitude: Double = 0.0,
+  @Field var latitude: Double = 0.0,
+  @Field var longitude: Double = 0.0,
   @Field val markerTitle: String? = null,
   @Field val markerSnippet: String? = null,
   @Field val icon: String? = null,

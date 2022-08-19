@@ -67,30 +67,37 @@ class GoogleMapsViewDelegate: NSObject, GMSMapViewDelegate {
   
   func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
     if let id = googleMapsMarkersManager.getMarkerId(marker: marker) {
-      sendEvent(MapEventsNames.ON_MARKER_CLICK_EVENT.rawValue, createMarkerClickEventContent(id: id))
+      expoMapView?.onMarkerPress(MarkerRecord(id:id, marker: marker).toDictionary())
     } else if let id = googleMapsMarkersManager.getClusterItemId(clusterItem: marker) {
-      sendEvent(MapEventsNames.ON_MARKER_CLICK_EVENT.rawValue, createMarkerClickEventContent(id: id))
+      expoMapView?.onMarkerPress(MarkerRecord(id:id, marker: marker).toDictionary())
     }
     return false
   }
   
+  func mapView(_ mapView: GMSMapView, didDrag marker: GMSMarker) {
+    let id = googleMapsMarkersManager.getMarkerId(marker: marker)
+    expoMapView?.onMarkerDrag(MarkerRecord(id: id, marker: marker).toDictionary())
+  }
+  
   func mapView(_ mapView: GMSMapView, didBeginDragging marker: GMSMarker) {
-    if let id = googleMapsMarkersManager.getMarkerId(marker: marker) {
-      sendEvent(MapEventsNames.ON_MARKER_DRAG_STARTED_EVENT.rawValue, createMarkerDragStartedEventContent(id: id))
-    }
+    let id = googleMapsMarkersManager.getMarkerId(marker: marker)
+    expoMapView?.onMarkerDragStarted(MarkerRecord(id: id, marker: marker).toDictionary())
   }
   
   func mapView(_ mapView: GMSMapView, didEndDragging marker: GMSMarker) {
-    if let id = googleMapsMarkersManager.getMarkerId(marker: marker) {
-      sendEvent(
-          MapEventsNames.ON_MARKER_DRAG_ENDED_EVENT.rawValue,
-          createMarkerDragEndedEventContent(
-              id: id,
-              latitude: marker.position.latitude,
-              longitude: marker.position.longitude)
-      )
-    }
+    let id = googleMapsMarkersManager.getMarkerId(marker: marker)
+    expoMapView?.onMarkerDragComplete(MarkerRecord(id: id, marker: marker).toDictionary())
   }
+  
+  func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
+    expoMapView?.onLocationDotPress("")
+  }
+  
+  func didTapMyLocationButton(for mapView: GMSMapView) -> Bool {
+    expoMapView?.onLocationButtonPress("")
+    return false
+  }
+  
   
   func mapView(
       _ mapView: GMSMapView,

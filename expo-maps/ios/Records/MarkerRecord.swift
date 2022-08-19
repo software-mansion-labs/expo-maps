@@ -8,7 +8,7 @@ struct MarkerRecord : Record{
   @Field var id: String?
   @Field var position: [String: Any?]
   
-  init(id: String, marker: GMSMarker){
+  init(id: String?, marker: GMSMarker){
     self.id = id
     position = LatLngRecord(coordinate: marker.position).toDictionary()
   }

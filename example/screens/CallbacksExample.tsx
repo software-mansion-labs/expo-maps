@@ -22,6 +22,7 @@ export default function CallbacksExample() {
     useState(true);
   const [onMarkerDragCompleteEnabled, setOnMarkerDragCompleteEnabled] =
     useState(true);
+  const [onClusterPressEnabled, setOnClusterPressEnabled] = useState(true);
 
   const provider = useContext(ProviderContext);
 
@@ -110,6 +111,13 @@ export default function CallbacksExample() {
         setOnMarkerDragCompleteEnabled(!onMarkerDragCompleteEnabled);
       },
     },
+    {
+      title: 'Enable onClusterPressEnabled event',
+      value: onClusterPressEnabled,
+      onValueChange: () => {
+        setOnClusterPressEnabled(!onClusterPressEnabled);
+      },
+    },
   ];
   return (
     <View style={styles.container}>
@@ -132,9 +140,6 @@ export default function CallbacksExample() {
         }}
         onMapLoaded={() => {
           loadedEventEnabled && setSnackbarText('Map has loaded!');
-        }}
-        onClusterPress={(event) => {
-          console.log(event.nativeEvent);
         }}
         onRegionChange={(event) => {
           onRegionChangeEnabled &&
@@ -182,6 +187,18 @@ export default function CallbacksExample() {
               'Marker drag complete: ' + JSON.stringify(event.nativeEvent)
             );
         }}
+        onClusterPress={(event) => {
+          onClusterPressEnabled &&
+            setSnackbarText(
+              'Clicked on a cluster: ' + JSON.stringify(event.nativeEvent)
+            );
+        }}
+        onLocationButtonPress={() => {
+          setSnackbarText('Location button has been pressed!');
+        }}
+        onLocationDotPress={() => {
+          setSnackbarText('Location dot has been pressed!');
+        }}
       >
         <Maps.Marker
           id="100"
@@ -218,9 +235,9 @@ export default function CallbacksExample() {
             markerTitle="Marker"
             markerSnippet="Marker with an id: 1"
           />
-          <Maps.Marker latitude={51} longitude={10} />
-          <Maps.Marker latitude={52} longitude={10.15} />
-          <Maps.Marker latitude={52} longitude={9.85} />
+          <Maps.Marker id="123" latitude={51} longitude={10} />
+          <Maps.Marker id="1234" latitude={52} longitude={10.15} />
+          <Maps.Marker id="12345" latitude={52} longitude={9.85} />
         </Maps.Cluster>
       </Maps.ExpoMap>
       <Snackbar

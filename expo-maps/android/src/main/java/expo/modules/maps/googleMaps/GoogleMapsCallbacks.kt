@@ -1,17 +1,10 @@
 package expo.modules.maps.googleMaps
 
-import android.os.Bundle
-import androidx.core.os.bundleOf
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.Marker
 import expo.modules.kotlin.callbacks.Callback
 import expo.modules.maps.records.CameraPositionRecord
 import expo.modules.maps.records.LatLngRecord
 import expo.modules.maps.records.PointOfInterestRecord
-import kotlin.math.abs
 
 
 class GoogleMapsCallbacks(private val map: GoogleMap) {
@@ -45,8 +38,9 @@ class GoogleMapsCallbacks(private val map: GoogleMap) {
     }
   }
 
-  fun setupOnRegionChangeComplete(onRegionChangeComplete: Callback<CameraPositionRecord>) {
+  fun setupOnRegionChangeComplete(onRegionChangeComplete: Callback<CameraPositionRecord>, clusters: GoogleMapsClusters) {
     map.setOnCameraIdleListener {
+      clusters.onCameraIdle()
       onRegionChangeComplete(CameraPositionRecord(map.cameraPosition))
     }
   }
@@ -54,6 +48,19 @@ class GoogleMapsCallbacks(private val map: GoogleMap) {
   fun setupOnPoiClick(onPoiClick: Callback<PointOfInterestRecord>) {
     map.setOnPoiClickListener {
       onPoiClick(PointOfInterestRecord(it))
+    }
+  }
+
+  fun setupOnLocationButtonButtonPress(onLocationButtonPress: Callback<Unit>){
+    map.setOnMyLocationButtonClickListener {
+      onLocationButtonPress(Unit)
+      false
+    }
+  }
+
+  fun setupOnLocationDotPress(onLocationDotPress:Callback<Unit>){
+    map.setOnMyLocationClickListener {
+      onLocationDotPress(Unit)
     }
   }
 }

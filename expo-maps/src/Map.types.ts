@@ -15,6 +15,8 @@ import { OnMapClickEvent } from './Map';
 import {
   ClusterPressEvent,
   MarkerEvent,
+  OnLocationButtonPressEvent,
+  OnLocationDotPressEvent,
   OnPoiClickEvent,
   OnRegionChangeEvent,
 } from './Events';
@@ -307,6 +309,20 @@ export type Callbacks = {
    * @default (event: ClusterPressEvent) => {}
    */
   onClusterPress?: (event: ClusterPressEvent) => void;
+
+  /**
+   * Callback to call when the user presses the current location dot.
+   *
+   * @default (event: OnLocationDotPressEvent) => {}
+   */
+  onLocationDotPress?: (event: OnLocationDotPressEvent) => void;
+
+  /**
+   * Callback to call when the user presses the location button.
+   *
+   * @default (event: OnLocationButtonPressEvent) => {}
+   */
+  onLocationButtonPress?: (event: OnLocationButtonPressEvent) => void;
 };
 
 export type POICategoryType =

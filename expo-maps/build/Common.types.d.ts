@@ -111,19 +111,13 @@ export declare type Marker = {
 };
 export declare type MapCluster = {
     /**
+     * ID of the cluster
+     */
+    id: String;
+    /**
      * Position of the point of the cluster
      * @required
      */
     position: Point;
-    /**
-     * Children belonging to the cluster
-     * @required
-     */
-    items: Marker[];
-    /**
-     * Number of children in the cluster
-     * @required
-     */
-    size: Number;
 };
 export declare type Color = 'red' | 'blue' | 'green' | 'black' | 'white' | 'gray' | 'cyan' | 'magenta' | 'yellow' | 'lightgray' | 'darkgray' | 'aqua' | 'fuchsia' | 'lime' | 'maroon' | 'navy' | 'olive' | 'purple' | 'silver' | 'teal';

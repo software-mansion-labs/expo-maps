@@ -182,9 +182,8 @@ class AppleMapsDelegate: NSObject, MKMapViewDelegate {
   func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
     if let annotation = view.annotation as? ExpoMKAnnotation {
       appleMapsView?.onMarkerPress(MarkerRecord(marker: annotation).toDictionary())
-      
     } else if let annotation = view.annotation as? ExpoMKClusterAnnotation {
-      appleMapsView?.onMarkerPress(MarkerRecord(marker: annotation).toDictionary())
+      appleMapsView?.onClusterPress(ClusterRecord(cluster: annotation).toDictionary())
     }
   }
   
@@ -207,7 +206,6 @@ class AppleMapsDelegate: NSObject, MKMapViewDelegate {
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
     if keyPath == "center" {
       if let view = object as? MKAnnotationView{
-        print(view.annotation)
         let newPosition = CGPoint(x: view.center.x - view.centerOffset.x, y: view.center.y - view.centerOffset.y)
         let coordinate = appleMapsView?.convertToMapViewCoordinate(newPosition)
         if let annotation = view.annotation as? ExpoMKColorAnnotation{

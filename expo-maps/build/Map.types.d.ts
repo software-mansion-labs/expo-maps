@@ -12,7 +12,7 @@ import { OverlayObject } from './Overlay';
 import { KMLObject } from './KML';
 import { HeatmapObject } from './Heatmap';
 import { OnMapClickEvent } from './Map';
-import { ClusterPressEvent, MarkerEvent, OnPoiClickEvent, OnRegionChangeEvent } from './Events';
+import { ClusterPressEvent, MarkerEvent, OnLocationButtonPressEvent, OnLocationDotPressEvent, OnPoiClickEvent, OnRegionChangeEvent } from './Events';
 export declare type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 /**
  * Prop for managing map type.
@@ -276,6 +276,18 @@ export declare type Callbacks = {
      * @default (event: ClusterPressEvent) => {}
      */
     onClusterPress?: (event: ClusterPressEvent) => void;
+    /**
+     * Callback to call when the user presses the current location dot.
+     *
+     * @default (event: OnLocationDotPressEvent) => {}
+     */
+    onLocationDotPress?: (event: OnLocationDotPressEvent) => void;
+    /**
+     * Callback to call when the user presses the location button.
+     *
+     * @default (event: OnLocationButtonPressEvent) => {}
+     */
+    onLocationButtonPress?: (event: OnLocationButtonPressEvent) => void;
 };
 export declare type POICategoryType = 'airport' | 'atm' | 'bank' | 'beach' | 'cafe' | 'hospital' | 'hotel' | 'museum' | 'pharmacy' | 'store';
 /**

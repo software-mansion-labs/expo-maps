@@ -1,20 +1,24 @@
 import GoogleMaps
 import GoogleMapsUtils
+import ExpoModulesCore
 
 class GoogleMapsClusterManagerDelegate: NSObject, GMUClusterManagerDelegate {
-  private let sendEvent: (String, [String: Any?]) -> Void
+  private var onClusterPress: Callback<[String: Any?]>?
   private let googleMapsMarkersManager: GoogleMapsMarkersManager
   
-  init(sendEvent: @escaping (String, [String: Any?]) -> Void, googleMapsMarkersManager: GoogleMapsMarkersManager) {
-    self.sendEvent = sendEvent
+  init(googleMapsMarkersManager: GoogleMapsMarkersManager) {
     self.googleMapsMarkersManager = googleMapsMarkersManager
     super.init()
   }
   
   func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
     if let id = googleMapsMarkersManager.getClusterId(cluster: clusterManager) {
-      sendEvent(MapEventsNames.ON_MARKER_CLICK_EVENT.rawValue, createMarkerClickEventContent(id: id))
+      onClusterPress?(ClusterRecord(id: id, cluster: cluster).toDictionary())
     }
     return false
+  }
+  
+  func setOnClusterPress(onClusterPress: Callback<[String: Any?]>){
+    self.onClusterPress = onClusterPress
   }
 }

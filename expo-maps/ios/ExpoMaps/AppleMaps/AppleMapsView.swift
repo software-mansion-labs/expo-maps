@@ -29,7 +29,9 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
   @Event var onMarkerDrag: Callback<[String: Any?]>
   @Event var onMarkerDragStarted: Callback<[String: Any?]>
   @Event var onMarkerDragComplete: Callback<[String: Any?]>
-  
+  @Event var onClusterPress: Callback<[String: Any?]>
+  @Event var onLocationButtonPress: Callback<String>
+  @Event var onLocationDotPress: Callback<String>
   
   init(sendEvent: @escaping (String, [String: Any?]) -> Void) {
     mapView = MKMapView()
@@ -141,18 +143,17 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
   func setEnabledPOISearching(enabled: Bool) {
     pointsOfInterest.setEnabledPOISearching(enabled: enabled)
   }
-
-//  public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-
-//    let touchedView: UIView! = mapView.hitTest(point, with: event)
-//    if touchedView.isKind(of: NSClassFromString("MKAnnotationContainerView")!){
-//      return touchedView.hitTest(point, with: event)
-//    }else if touchedView.isKind(of: NSClassFromString("_MKUserTrackingButton")!){
-//      return super.hitTest(_: point, with: event)
-//    }
-//    // For now ignore all taps other than map and tracking button clicks
-//    return nil
-//  }
+  
+  public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    let touchedView: UIView! = mapView.hitTest(point, with: event)
+    if touchedView.isKind(of: NSClassFromString("_MKUserTrackingButton")!) {
+      onLocationButtonPress("")
+    }else if touchedView.isKind(of: NSClassFromString("_MKUserLocationView")!){
+      onLocationDotPress("")
+      return touchedView.hitTest(point, with: event)
+    }
+    return super.hitTest(_: point, with: event)
+  }
   
   func setEnabledPOIFilter(categories: [POICategoryType]) {
     guard #available(iOS 13.0, *) else {
@@ -228,6 +229,7 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
   }
   
   // imitating Google Maps zoom level behaviour
+  
   // based on https://gis.stackexchange.com/questions/7430/what-ratio-scales-do-google-maps-zoom-levels-correspond-to
   private func googleMapsZoomLevelToMeters(latitude: Double, zoom: Double) -> Double {
     let metersPerPixel = 156543.03392 * cos(latitude * Double.pi / 180) / pow(2, zoom - 1)

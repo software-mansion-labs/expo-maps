@@ -12,7 +12,6 @@ import com.google.maps.android.collections.MarkerManager
 import expo.modules.kotlin.Promise
 import expo.modules.kotlin.callbacks.callback
 import expo.modules.maps.*
-import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import expo.modules.maps.interfaces.ExpoMapView
 import expo.modules.maps.records.*
 import kotlinx.coroutines.*
@@ -48,12 +47,13 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private val onRegionChangeStarted by callback<CameraPositionRecord>()
   private val onRegionChangeComplete by callback<CameraPositionRecord>()
   private val onPoiClick by callback<PointOfInterestRecord>()
-  private val onMarkerPress by callback<MarkerObject>()
-  private val onMarkerDrag by callback<MarkerObject>()
-  private val onMarkerDragStarted by callback<MarkerObject>()
-  private val onMarkerDragComplete by callback<MarkerObject>()
+  private val onMarkerPress by callback<MarkerRecord>()
+  private val onMarkerDrag by callback<MarkerRecord>()
+  private val onMarkerDragStarted by callback<MarkerRecord>()
+  private val onMarkerDragComplete by callback<MarkerRecord>()
   private val onClusterPress by callback<ClusterRecord>()
-
+  private val onLocationButtonPress by callback<Unit>()
+  private val onLocationDotPress by callback<Unit>()
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
@@ -264,26 +264,19 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
-  fun registerEvents(mapsEventEmitterManager: GoogleMapsEventEmitterManager) {
-    updateMap {
-      mapsEventEmitterManager.createEmitters(googleMap)
-      clusters.googleMapsEventEmitterManager = mapsEventEmitterManager
-      clusters.setOnCameraIdleListener(mapsEventEmitterManager.mapsEventEmitterCameraMoveEnded)
-    }
-  }
-
   private fun setupCallbacks() {
     callbacks.setupOnMapClick(onMapClick)
     callbacks.setupOnMapLoaded(onMapLoaded)
     callbacks.setupOnRegionChange(onRegionChange)
     callbacks.setupOnRegionChangeStarted(onRegionChangeStarted)
-    callbacks.setupOnRegionChangeComplete(onRegionChangeComplete)
+    callbacks.setupOnRegionChangeComplete(onRegionChangeComplete, clusters)
     callbacks.setupOnPoiClick(onPoiClick)
     callbacks.setupOnLongPress(onLongPress)
+    callbacks.setupOnLocationButtonButtonPress(onLocationButtonPress)
+    callbacks.setupOnLocationDotPress(onLocationDotPress)
 
     markers.setOnMarkerPressListener(onMarkerPress)
     markers.setOnMarkerDragListeners(onMarkerDrag, onMarkerDragStarted, onMarkerDragComplete)
-
   }
 
   /*

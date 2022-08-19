@@ -2,23 +2,17 @@ package expo.modules.maps
 
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.UIManagerModule
-import com.google.android.gms.maps.model.LatLng
 import expo.modules.core.interfaces.services.UIManager
 import expo.modules.kotlin.Promise
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import expo.modules.maps.googleMaps.GoogleMapsView
-import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
-import expo.modules.maps.googleMaps.events.MapEventsNames
+
 
 class ExpoGoogleMapsModule : Module() {
 
   override fun definition() = ModuleDefinition {
     Name("ExpoGoogleMaps")
-
-    Events(events = MapEventsNames.values().map { it.eventName }.toTypedArray())
-
-    val googleMapsEventEmitterManager = GoogleMapsEventEmitterManager(::sendEvent)
     
     AsyncFunction("getSearchCompletions") { viewHandle: Int, searchQueryFragment: String, promise: Promise ->
       val rnContext = appContext.reactContext as? ReactApplicationContext ?: return@AsyncFunction
@@ -31,13 +25,14 @@ class ExpoGoogleMapsModule : Module() {
 
     ViewManager {
       Events("onMapClick","onLongPress", "onMapLoaded", "onRegionChange",
-        "onRegionChangeComplete","onRegionChangeStarted", "onPoiClick", "onMarkerPress", "onMarkerDrag", "onMarkerDragStarted", "onMarkerDragComplete", "onClusterPress", "onClusterItemPress")
+        "onRegionChangeComplete","onRegionChangeStarted", "onPoiClick", "onMarkerPress",
+        "onMarkerDrag", "onMarkerDragStarted", "onMarkerDragComplete", "onClusterPress"
+        , "onLocationButtonPress", "onLocationDotPress")
 
       View {
         GoogleMapsView(it).also { googleMapsView ->
           appContext.legacyModule<UIManager>()
             ?.registerLifecycleEventListener(googleMapsView.lifecycleEventListener)
-          googleMapsView.registerEvents(googleMapsEventEmitterManager)
         }
       }
 

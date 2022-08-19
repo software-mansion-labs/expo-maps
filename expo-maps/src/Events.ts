@@ -117,6 +117,20 @@ export type OnPoiClickEvent = {
 };
 
 /**
+ * Event called when the location button is pressed
+ */
+export type OnLocationButtonPressEvent = {
+  nativeEvent: null;
+};
+
+/**
+ * Event returned when the current location dot is pressed
+ */
+export type OnLocationDotPressEvent = {
+  nativeEvent: null;
+};
+
+/**
  * Adds a new listener to be called when a marker or cluster is clicked.
  * @returns Subscription which can be used later to remove this particular listener.
  */

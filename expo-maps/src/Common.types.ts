@@ -118,25 +118,19 @@ export type Marker = {
    * Position of the marker
    * @required
    */
-  position: Point
+  position: Point;
 };
 
 export type MapCluster = {
+  /**
+   * ID of the cluster
+   */
+  id: String;
   /**
    * Position of the point of the cluster
    * @required
    */
   position: Point;
-  /**
-   * Children belonging to the cluster
-   * @required
-   */
-  items: Marker[];
-  /**
-   * Number of children in the cluster
-   * @required
-   */
-  size: Number;
 };
 
 export type Color =
