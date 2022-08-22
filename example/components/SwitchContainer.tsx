@@ -5,14 +5,16 @@ interface SwitchContainerProps {
   title: string;
   onValueChange: () => void;
   value: boolean;
+  enabled?: boolean;
 }
 
 export default function SwitchContainer({
   title,
   onValueChange,
   value,
+  enabled = true,
 }: SwitchContainerProps) {
-  return (
+  return enabled ? (
     <View style={styles.switchContainer}>
       <Text>{title}</Text>
       <Switch
@@ -21,7 +23,7 @@ export default function SwitchContainer({
         trackColor={{ true: 'green', false: 'red' }}
       />
     </View>
-  );
+  ) : null;
 }
 
 const styles = StyleSheet.create({

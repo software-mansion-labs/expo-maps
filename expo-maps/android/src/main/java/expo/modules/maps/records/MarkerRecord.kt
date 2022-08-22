@@ -7,10 +7,13 @@ import expo.modules.maps.MarkerObject
 
 class MarkerRecord() : Record {
 
-  @Field lateinit var id: String
-  @Field lateinit var position: LatLngRecord
+  @Field
+  lateinit var id: String
 
-  constructor(marker:Marker): this(){
+  @Field
+  lateinit var position: LatLngRecord
+
+  constructor(marker: Marker) : this() {
     this.id = marker.id
     this.position = LatLngRecord(marker.position)
   }

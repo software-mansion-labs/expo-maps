@@ -1,7 +1,7 @@
 import ExpoModulesCore
 import MapKit
 
-struct UserLocationRecord : Record{
+struct UserLocationRecord: Record {
   init() {}
   
   @Field var position: [String: Any?]
@@ -13,7 +13,7 @@ struct UserLocationRecord : Record{
   @Field var heading: Double?
   @Field var timestamp: Double?
   
-  init(location:CLLocation){
+  init(location: CLLocation) {
     position = LatLngRecord(coordinate: location.coordinate).toDictionary()
     altitude = location.altitude
     accuracy = location.horizontalAccuracy
@@ -24,7 +24,7 @@ struct UserLocationRecord : Record{
     timestamp = location.timestamp.timeIntervalSinceReferenceDate * 1000
   }
   
-  init(location: MKUserLocation){
+  init(location: MKUserLocation) {
     position = LatLngRecord(coordinate: location.coordinate).toDictionary()
     altitude = location.location?.altitude
     accuracy = location.location?.horizontalAccuracy

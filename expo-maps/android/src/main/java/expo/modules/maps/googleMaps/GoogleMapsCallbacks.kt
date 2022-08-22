@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Looper
 import androidx.core.app.ActivityCompat
-import com.android.volley.Request
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
 import expo.modules.kotlin.callbacks.Callback
@@ -52,7 +51,10 @@ class GoogleMapsCallbacks(private val map: GoogleMap, private val context: Conte
     }
   }
 
-  fun setupOnRegionChangeComplete(onRegionChangeComplete: Callback<CameraPositionRecord>, clusters: GoogleMapsClusters) {
+  fun setupOnRegionChangeComplete(
+    onRegionChangeComplete: Callback<CameraPositionRecord>,
+    clusters: GoogleMapsClusters
+  ) {
     map.setOnCameraIdleListener {
       clusters.onCameraIdle()
       onRegionChangeComplete(CameraPositionRecord(map.cameraPosition))
@@ -65,20 +67,20 @@ class GoogleMapsCallbacks(private val map: GoogleMap, private val context: Conte
     }
   }
 
-  fun setupOnLocationButtonButtonPress(onLocationButtonPress: Callback<Unit>){
+  fun setupOnLocationButtonButtonPress(onLocationButtonPress: Callback<Unit>) {
     map.setOnMyLocationButtonClickListener {
       onLocationButtonPress(Unit)
       false
     }
   }
 
-  fun setupOnLocationDotPress(onLocationDotPress:Callback<Unit>){
+  fun setupOnLocationDotPress(onLocationDotPress: Callback<Unit>) {
     map.setOnMyLocationClickListener {
       onLocationDotPress(Unit)
     }
   }
 
-  private fun setupOnLocationChangeRequests(){
+  private fun setupOnLocationChangeRequests() {
     locationProvider.removeLocationUpdates(locationChangeCallback)
     locationRequest = LocationRequest.create().apply {
       priority = locationCallbackPriority
@@ -94,15 +96,19 @@ class GoogleMapsCallbacks(private val map: GoogleMap, private val context: Conte
     ) {
       return
     }
-    locationProvider.requestLocationUpdates(locationRequest, locationChangeCallback, Looper.getMainLooper())
+    locationProvider.requestLocationUpdates(
+      locationRequest,
+      locationChangeCallback,
+      Looper.getMainLooper()
+    )
   }
 
-  fun setupOnLocationChange(onLocationChange: Callback<UserLocationRecord>){
+  fun setupOnLocationChange(onLocationChange: Callback<UserLocationRecord>) {
     locationProvider = LocationServices.getFusedLocationProviderClient(context)
     locationChangeCallback = object : LocationCallback() {
       override fun onLocationResult(loactionResult: LocationResult?) {
         loactionResult ?: return
-        for (location in loactionResult.locations){
+        for (location in loactionResult.locations) {
           onLocationChange(UserLocationRecord(location))
         }
         super.onLocationResult(loactionResult)
@@ -111,12 +117,12 @@ class GoogleMapsCallbacks(private val map: GoogleMap, private val context: Conte
     setupOnLocationChangeRequests()
   }
 
-  fun setLocationCallbackPriority(locationCallbackPriority: Int){
+  fun setLocationCallbackPriority(locationCallbackPriority: Int) {
     this.locationCallbackPriority = locationCallbackPriority
     setupOnLocationChangeRequests()
   }
 
-  fun setLocationCallbackInterval(locationCallbackInterval: Long){
+  fun setLocationCallbackInterval(locationCallbackInterval: Long) {
     this.locationCallbackInterval = locationCallbackInterval
     setupOnLocationChangeRequests()
   }

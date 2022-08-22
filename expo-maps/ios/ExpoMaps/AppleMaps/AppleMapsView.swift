@@ -149,7 +149,7 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
     let touchedView: UIView! = mapView.hitTest(point, with: event)
     if touchedView.isKind(of: NSClassFromString("_MKUserTrackingButton")!) {
       onLocationButtonPress("")
-    }else if touchedView.isKind(of: NSClassFromString("_MKUserLocationView")!){
+    } else if touchedView.isKind(of: NSClassFromString("_MKUserLocationView")!) {
       onLocationDotPress("")
       return touchedView.hitTest(point, with: event)
     }

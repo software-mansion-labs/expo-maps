@@ -209,13 +209,13 @@ class AppleMapsDelegate: NSObject, MKMapViewDelegate {
   
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
     if keyPath == "center" {
-      if let view = object as? MKAnnotationView{
+      if let view = object as? MKAnnotationView {
         let newPosition = CGPoint(x: view.center.x - view.centerOffset.x, y: view.center.y - view.centerOffset.y)
         let coordinate = appleMapsView?.convertToMapViewCoordinate(newPosition)
-        if let annotation = view.annotation as? ExpoMKColorAnnotation{
-          appleMapsView?.onMarkerDrag(MarkerRecord(id:annotation.id!, position: coordinate!).toDictionary())
-        }else if let annotation = view.annotation as? ExpoMKAnnotation{
-          appleMapsView?.onMarkerDrag(MarkerRecord(id:annotation.id!, position: coordinate!).toDictionary())
+        if let annotation = view.annotation as? ExpoMKColorAnnotation {
+          appleMapsView?.onMarkerDrag(MarkerRecord(id: annotation.id!, position: coordinate!).toDictionary())
+        } else if let annotation = view.annotation as? ExpoMKAnnotation {
+          appleMapsView?.onMarkerDrag(MarkerRecord(id: annotation.id!, position: coordinate!).toDictionary())
         }
       }
     } else {
