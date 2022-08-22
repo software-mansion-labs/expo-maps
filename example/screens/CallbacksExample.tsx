@@ -1,16 +1,20 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Platform } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 
 import * as Maps from 'expo-maps';
 import ProviderContext from '../context/ProviderContext';
 import SwitchContainer from '../components/SwitchContainer';
 import { useState } from 'react';
+import { LocationChangePriority } from '../../expo-maps/src/Common.types';
 
 export default function CallbacksExample() {
-  const [clickEventEnabled, setClickEventEnabled] = useState(true);
-  const [readyEventEnabled, setReadyEventEnabled] = useState(true);
-  const [loadedEventEnabled, setLoadedEventEnabled] = useState(true);
+  const provider = useContext(ProviderContext);
+
+  const [onMapLoadedEnabled, setOnMapLoadedEnabled] = useState(true);
+  const [onMapPressEnabled, setOnMapPressEnabled] = useState(true);
+  const [onDoublePressEnabled, setOnDoublePressEnabled] = useState(true);
+  const [onLongPressEnabled, setOnLongPressEnabled] = useState(true);
   const [onRegionChangeEnabled, setOnRegionChangeEnabled] = useState(false);
   const [onRegionChangeStartedEnable, setOnRegionChangeStartedEnabled] =
     useState(false);
@@ -23,8 +27,11 @@ export default function CallbacksExample() {
   const [onMarkerDragCompleteEnabled, setOnMarkerDragCompleteEnabled] =
     useState(true);
   const [onClusterPressEnabled, setOnClusterPressEnabled] = useState(true);
-
-  const provider = useContext(ProviderContext);
+  const [onLocationButtonPressEnabled, setOnLocationButtonPressEnabled] =
+    useState(true);
+  const [onLocationDotPressEnabled, setOnLocationDotPressEnabled] =
+    useState(true);
+  const [onLocationChangeEnabled, setOnLocationChangeEnabled] = useState(false);
 
   const [snackbarText, setSnackbarText] = useState<String | undefined>(
     undefined
@@ -35,24 +42,33 @@ export default function CallbacksExample() {
 
   const callbacksData = [
     {
-      title: 'Enable onMapReady event',
-      value: readyEventEnabled,
-      onValueChange: () => {
-        setReadyEventEnabled(!readyEventEnabled);
-      },
-    },
-    {
       title: 'Enable onMapLoaded event',
-      value: loadedEventEnabled,
+      value: onMapLoadedEnabled,
       onValueChange: () => {
-        setLoadedEventEnabled(!loadedEventEnabled);
+        setOnMapLoadedEnabled(!onMapLoadedEnabled);
       },
     },
     {
-      title: 'Enable onMapClick event',
-      value: clickEventEnabled,
+      title: 'Enable onMapPress event',
+      value: onMapPressEnabled,
       onValueChange: () => {
-        setClickEventEnabled(!clickEventEnabled);
+        setOnMapPressEnabled(!onMapPressEnabled);
+      },
+    },
+    {
+      title: 'Enable onDoublePress event',
+      value: onDoublePressEnabled,
+      onValueChange: () => {
+        setOnDoublePressEnabled(!onDoublePressEnabled);
+      },
+      enabled: provider == 'apple',
+    },
+
+    {
+      title: 'Enable onLongPress event',
+      value: onLongPressEnabled,
+      onValueChange: () => {
+        setOnLongPressEnabled(!onLongPressEnabled);
       },
     },
     {
@@ -82,6 +98,7 @@ export default function CallbacksExample() {
       onValueChange: () => {
         setOnPoiClickEnabled(!onPoiClickEnabled);
       },
+      enabled: provider == 'google',
     },
     {
       title: 'Enable onMarkerPress event',
@@ -118,28 +135,54 @@ export default function CallbacksExample() {
         setOnClusterPressEnabled(!onClusterPressEnabled);
       },
     },
+    {
+      title: 'Enable onLocationChange event',
+      value: onLocationChangeEnabled,
+      onValueChange: () => {
+        setOnLocationChangeEnabled(!onLocationChangeEnabled);
+      },
+    },
+    {
+      title: 'Enable onLocationButtonPress event',
+      value: onLocationButtonPressEnabled,
+      onValueChange: () => {
+        setOnLocationButtonPressEnabled(!onLocationButtonPressEnabled);
+      },
+    },
+    {
+      title: 'Enable onLocationDotPress event.',
+      value: onLocationDotPressEnabled,
+      onValueChange: () => {
+        setOnLocationDotPressEnabled(!onLocationDotPressEnabled);
+      },
+      enabled: provider != 'google' || Platform.OS == 'android',
+    },
   ];
   return (
     <View style={styles.container}>
       <Maps.ExpoMap
         style={{ flex: 1, width: '100%' }}
         provider={provider}
-        onMapClick={(event) => {
-          clickEventEnabled &&
+        onMapPress={(event) => {
+          onMapPressEnabled &&
             setSnackbarText(
               'Map clicked at:' + JSON.stringify(event.nativeEvent)
             );
         }}
         onDoublePress={(event) => {
-          setSnackbarText(
-            'Double press at:' + JSON.stringify(event.nativeEvent)
-          );
+          onDoublePressEnabled &&
+            setSnackbarText(
+              'Double press at:' + JSON.stringify(event.nativeEvent)
+            );
         }}
         onLongPress={(event) => {
-          setSnackbarText('Long press at:' + JSON.stringify(event.nativeEvent));
+          onLongPressEnabled &&
+            setSnackbarText(
+              'Long press at:' + JSON.stringify(event.nativeEvent)
+            );
         }}
         onMapLoaded={() => {
-          loadedEventEnabled && setSnackbarText('Map has loaded!');
+          onMapLoadedEnabled && setSnackbarText('Map has loaded!');
         }}
         onRegionChange={(event) => {
           onRegionChangeEnabled &&
@@ -193,11 +236,19 @@ export default function CallbacksExample() {
               'Clicked on a cluster: ' + JSON.stringify(event.nativeEvent)
             );
         }}
+        onLocationChange={(event) => {
+          onLocationChangeEnabled &&
+            setSnackbarText(
+              "User's location has changed!" + JSON.stringify(event.nativeEvent)
+            );
+        }}
         onLocationButtonPress={() => {
-          setSnackbarText('Location button has been pressed!');
+          onLocationButtonPressEnabled &&
+            setSnackbarText('Location button has been pressed!');
         }}
         onLocationDotPress={() => {
-          setSnackbarText('Location dot has been pressed!');
+          onLocationDotPressEnabled &&
+            setSnackbarText('Location dot has been pressed!');
         }}
       >
         <Maps.Marker
@@ -245,6 +296,7 @@ export default function CallbacksExample() {
         onDismiss={() => setSnackbarText(undefined)}
         style={{ backgroundColor: 'white' }}
         wrapperStyle={styles.snackbar}
+        duration={2000}
       >
         <Text style={{ color: 'black' }}>{snackbarText}</Text>
       </Snackbar>

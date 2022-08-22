@@ -133,6 +133,42 @@ export type MapCluster = {
   position: Point;
 };
 
+export type UserLocation = {
+  /**
+   * Current position of the user represented by
+   * {@link Point}
+   */
+  position: Point;
+  /**
+   * Current altitude of the user
+   */
+  altitude: Number;
+  /**
+   * The radius of uncertainty for the user'slocation, measured in meters.
+   */
+  accuracy: Number;
+  /**
+   * Accuracy of current altitude estimate
+   */
+  verticalAccuracy: Number;
+  /**
+   * Current speed of the user measured im meters per second
+   */
+  speed: Number;
+  /**
+   * Accuracy of the current speed estimate
+   */
+  speedAccuracy: Number;
+  /**
+   * Direction the user is heading
+   */
+  heading: Number;
+  /**
+   * The time at which this location was determined
+   */
+  timestamp: Number;
+};
+
 export type Color =
   | 'red'
   | 'blue'
@@ -154,3 +190,27 @@ export type Color =
   | 'purple'
   | 'silver'
   | 'teal';
+
+/**
+ * Possible power priorities for OnLocationChange event
+ */
+export enum LocationChangePriority {
+  /**
+   * Best accuracy that the device can acquire. Will consume more power.
+   */
+  PRIORITY_HIGH_ACCURACY = 100,
+  /**
+   * Bock level accuracy. Block level accuracy is considered to be about 100 meter accuracy.
+   */
+  PRIORITY_BALANCED_POWER_ACCURACY = 102,
+  /**
+   * City level accuracy. City level accuracy is considered to be about 10km accuracy.
+   * Using a coarse accuracy such as this often consumes less power
+   */
+  PRIORITY_LOW_POWER = 104,
+  /**
+   * No locations will be returned unless a different client has requested location updates in which case
+   * this request will act as a passive listener to those locations. Will use no additional power
+   */
+  PRIORITY_NO_POWER = 105,
+}

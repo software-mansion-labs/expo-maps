@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react';
 import { MarkerObject } from './Marker';
 import { PolygonObject } from './Polygon';
 import { PolylineObject } from './Polyline';
-import { Point } from './Common.types';
+import { LocationChangePriority, Point } from './Common.types';
 import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
 import { GeoJsonObject } from './GeoJson';
@@ -11,8 +11,8 @@ import { ExpoMap } from './Map';
 import { OverlayObject } from './Overlay';
 import { KMLObject } from './KML';
 import { HeatmapObject } from './Heatmap';
-import { OnMapClickEvent } from './Map';
-import { ClusterPressEvent, MarkerEvent, OnLocationButtonPressEvent, OnLocationDotPressEvent, OnPoiClickEvent, OnRegionChangeEvent } from './Events';
+import { OnMapPressEvent } from './Map';
+import { ClusterPressEvent, MarkerEvent, OnLocationButtonPressEvent, OnLocationChangeEvent, OnLocationDotPressEvent, OnPoiClickEvent, OnRegionChangeEvent } from './Events';
 export declare type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 /**
  * Prop for managing map type.
@@ -209,19 +209,19 @@ export declare type Callbacks = {
      *
      * @default () => {}
      */
-    onMapClick?: (event: OnMapClickEvent) => void;
+    onMapPress?: (event: OnMapPressEvent) => void;
     /**
      * Callback to call when the user double presses the map
      *
      * @default () => {}
      */
-    onDoublePress?: (event: OnMapClickEvent) => void;
+    onDoublePress?: (event: OnMapPressEvent) => void;
     /**
      * Callback to call when the user long presses the map
      *
      * @default () => {}
      */
-    onLongPress?: (event: OnMapClickEvent) => void;
+    onLongPress?: (event: OnMapPressEvent) => void;
     /**
      * Callback to call when camera is moving.
      *
@@ -288,6 +288,22 @@ export declare type Callbacks = {
      * @default (event: OnLocationButtonPressEvent) => {}
      */
     onLocationButtonPress?: (event: OnLocationButtonPressEvent) => void;
+    /**
+     * Callback to call when a change in user's location is detected
+     * @default (event: OnLocationChangeEvent) => {}
+     */
+    onLocationChange?: (event: OnLocationChangeEvent) => void;
+    /**
+     * Value in milliseconds describing how often the onLocationChangeCallback will check if the user location has changed.
+     * Reducing this value might have negative impact on battery life
+     * @default 5000
+     */
+    onLocationChangeEventInterval?: Number;
+    /**
+     * Determines how accurate requests for location change event should be
+     * @default LocationChangePriority.PRIORITY_NO_POWER
+     */
+    onLocationChangeEventPriority?: LocationChangePriority;
 };
 export declare type POICategoryType = 'airport' | 'atm' | 'bank' | 'beach' | 'cafe' | 'hospital' | 'hotel' | 'museum' | 'pharmacy' | 'store';
 /**

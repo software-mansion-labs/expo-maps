@@ -19,7 +19,7 @@ class GoogleMapsViewDelegate: NSObject, GMSMapViewDelegate {
   }
   
   func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-    expoMapView?.onMapClick(LatLngRecord(coordinate: coordinate).toDictionary())
+    expoMapView?.onMapPress(LatLngRecord(coordinate: coordinate).toDictionary())
   }
   
   func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
@@ -112,5 +112,15 @@ class GoogleMapsViewDelegate: NSObject, GMSMapViewDelegate {
       mapView.selectedMarker = infoMarker
     }
     expoMapView?.onPoiClick(PointOfInterestRecord(placeId: placeId, name: name, location: location).toDictionary())
+  }
+  
+  override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+    if (keyPath == "myLocation"){
+      if let mapView = object as? GMSMapView{
+        expoMapView?.onLocationChange(UserLocationRecord(location: mapView.myLocation!).toDictionary())
+      }
+    }else{
+      super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+    }
   }
 }

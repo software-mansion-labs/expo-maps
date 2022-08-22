@@ -26,7 +26,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   // TODO: change to proper types from "[String: Any?]" when conversion from records gets implemented for iOS
   @Event var onMapReady: Callback<String>
   @Event var onMapLoaded: Callback<String>
-  @Event var onMapClick: Callback<[String: Any?]>
+  @Event var onMapPress: Callback<[String: Any?]>
   @Event var onDoublePress: Callback<[String: Any?]>
   @Event var onLongPress: Callback<[String: Any?]>
   @Event var onRegionChange: Callback<[String: Any?]>
@@ -40,6 +40,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   @Event var onClusterPress: Callback<[String: Any?]>
   @Event var onLocationButtonPress: Callback<String>
   @Event var onLocationDotPress: Callback<String>
+  @Event var onLocationChange: Callback<[String: Any?]>
   
   init(sendEvent: @escaping (String, [String: Any?]) -> Void) {
     // just for now we do authentication here
@@ -70,6 +71,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     super.init(frame: CGRect.zero)
     googleMapsViewDelegate.expoMapView = self
     googleMapsClusterManagerDelegate.setOnClusterPress(onClusterPress: onClusterPress)
+    mapView.addObserver(googleMapsViewDelegate, forKeyPath: "myLocation", context: nil)
     addSubview(mapView)
   }
   

@@ -203,6 +203,10 @@ class AppleMapsDelegate: NSObject, MKMapViewDelegate {
     }
   }
   
+  func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+    appleMapsView?.onLocationChange(UserLocationRecord(location: userLocation).toDictionary())
+  }
+  
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
     if keyPath == "center" {
       if let view = object as? MKAnnotationView{

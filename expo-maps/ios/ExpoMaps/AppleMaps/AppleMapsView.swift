@@ -19,7 +19,7 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
   private var wasInitialCameraPositionSet = false
   @Event var onMapReady: Callback<String>
   @Event var onMapLoaded: Callback<String>
-  @Event var onMapClick: Callback<[String: Any?]>
+  @Event var onMapPress: Callback<[String: Any?]>
   @Event var onDoublePress: Callback<[String: Any?]>
   @Event var onLongPress: Callback<[String: Any?]>
   @Event var onRegionChange: Callback<[String: Any?]>
@@ -32,6 +32,7 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
   @Event var onClusterPress: Callback<[String: Any?]>
   @Event var onLocationButtonPress: Callback<String>
   @Event var onLocationDotPress: Callback<String>
+  @Event var onLocationChange: Callback<[String: Any?]>
   
   init(sendEvent: @escaping (String, [String: Any?]) -> Void) {
     mapView = MKMapView()
@@ -77,7 +78,7 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
   @objc func handleTap(_ sender: UITapGestureRecognizer) {
     if sender.state == .ended {
       let pressCoordinates = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
-      onMapClick(LatLngRecord(coordinate: pressCoordinates).toDictionary())
+      onMapPress(LatLngRecord(coordinate: pressCoordinates).toDictionary())
     }
   }
   

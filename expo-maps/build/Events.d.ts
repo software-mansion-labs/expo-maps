@@ -1,5 +1,5 @@
 import { Subscription } from 'expo-modules-core';
-import { CameraPosition, MapCluster, Marker, Point, PointOfInterest } from './Common.types';
+import { CameraPosition, MapCluster, Marker, Point, PointOfInterest, UserLocation } from './Common.types';
 /**
  * Type of an argument of MarkerClick listener.
  */
@@ -38,7 +38,7 @@ export declare type MarkerDragStartedEvent = {
 /**
  * Represents data returned on click event.
  */
-export declare type OnMapClickEvent = {
+export declare type OnMapPressEvent = {
     /**
      * Coordinates the place where the user clicked.
      * Represented by {@link Point}
@@ -78,7 +78,7 @@ export declare type OnPoiClickEvent = {
     nativeEvent: PointOfInterest;
 };
 /**
- * Event called when the location button is pressed
+ * Event returned when the location button is pressed
  */
 export declare type OnLocationButtonPressEvent = {
     nativeEvent: null;
@@ -88,6 +88,12 @@ export declare type OnLocationButtonPressEvent = {
  */
 export declare type OnLocationDotPressEvent = {
     nativeEvent: null;
+};
+/**
+ * Event returned when the user changes their location
+ */
+export declare type OnLocationChangeEvent = {
+    nativeEvent: UserLocation;
 };
 /**
  * Adds a new listener to be called when a marker or cluster is clicked.

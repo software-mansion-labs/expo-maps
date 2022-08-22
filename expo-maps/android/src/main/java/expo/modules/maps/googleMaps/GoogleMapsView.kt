@@ -41,7 +41,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private var wasInitialCameraPositionSet = false
 
   private val onMapLoaded by callback<Unit>()
-  private val onMapClick by callback<LatLngRecord>()
+  private val onMapPress by callback<LatLngRecord>()
   private val onLongPress by callback<LatLngRecord>()
   private val onRegionChange by callback<CameraPositionRecord>()
   private val onRegionChangeStarted by callback<CameraPositionRecord>()
@@ -54,6 +54,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private val onClusterPress by callback<ClusterRecord>()
   private val onLocationButtonPress by callback<Unit>()
   private val onLocationDotPress by callback<Unit>()
+  private val onLocationChange by callback<UserLocationRecord>()
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
@@ -80,7 +81,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     overlays = GoogleMapsOverlays(googleMap)
     heatmaps = GoogleMapsHeatmaps(googleMap)
     places = GoogleMapsPlaces(context, googleMap, markers)
-    callbacks = GoogleMapsCallbacks(googleMap)
+    callbacks = GoogleMapsCallbacks(googleMap, context)
 
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
@@ -158,6 +159,18 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   fun setClickablePOIs(arePOIClickable: Boolean) {
     updateMap {
       places.setClickablePOIs(arePOIClickable)
+    }
+  }
+
+  fun setLocationCallbackPriority(priority: Int) {
+    updateMap {
+      callbacks.setLocationCallbackPriority(priority)
+    }
+  }
+
+  fun setLocationCallbackInterval(interval: Long){
+    updateMap {
+      callbacks.setLocationCallbackInterval(interval)
     }
   }
 
@@ -265,7 +278,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   }
 
   private fun setupCallbacks() {
-    callbacks.setupOnMapClick(onMapClick)
+    callbacks.setupOnMapPress(onMapPress)
     callbacks.setupOnMapLoaded(onMapLoaded)
     callbacks.setupOnRegionChange(onRegionChange)
     callbacks.setupOnRegionChangeStarted(onRegionChangeStarted)
@@ -274,6 +287,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     callbacks.setupOnLongPress(onLongPress)
     callbacks.setupOnLocationButtonButtonPress(onLocationButtonPress)
     callbacks.setupOnLocationDotPress(onLocationDotPress)
+    callbacks.setupOnLocationChange(onLocationChange)
 
     markers.setOnMarkerPressListener(onMarkerPress)
     markers.setOnMarkerDragListeners(onMarkerDrag, onMarkerDragStarted, onMarkerDragComplete)

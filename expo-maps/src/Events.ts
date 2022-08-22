@@ -14,6 +14,7 @@ import {
   Marker,
   Point,
   PointOfInterest,
+  UserLocation,
 } from './Common.types';
 
 var module: ProxyNativeModule;
@@ -72,7 +73,7 @@ export type MarkerDragStartedEvent = {
 /**
  * Represents data returned on click event.
  */
-export type OnMapClickEvent = {
+export type OnMapPressEvent = {
   /**
    * Coordinates the place where the user clicked.
    * Represented by {@link Point}
@@ -117,7 +118,7 @@ export type OnPoiClickEvent = {
 };
 
 /**
- * Event called when the location button is pressed
+ * Event returned when the location button is pressed
  */
 export type OnLocationButtonPressEvent = {
   nativeEvent: null;
@@ -128,6 +129,13 @@ export type OnLocationButtonPressEvent = {
  */
 export type OnLocationDotPressEvent = {
   nativeEvent: null;
+};
+
+/**
+ * Event returned when the user changes their location
+ */
+export type OnLocationChangeEvent = {
+  nativeEvent: UserLocation;
 };
 
 /**

@@ -24,10 +24,10 @@ class ExpoGoogleMapsModule : Module() {
     }
 
     ViewManager {
-      Events("onMapClick","onLongPress", "onMapLoaded", "onRegionChange",
+      Events("onMapPress","onLongPress", "onMapLoaded", "onRegionChange",
         "onRegionChangeComplete","onRegionChangeStarted", "onPoiClick", "onMarkerPress",
         "onMarkerDrag", "onMarkerDragStarted", "onMarkerDragComplete", "onClusterPress"
-        , "onLocationButtonPress", "onLocationDotPress")
+        , "onLocationButtonPress", "onLocationDotPress", "onLocationChange")
 
       View {
         GoogleMapsView(it).also { googleMapsView ->
@@ -130,6 +130,14 @@ class ExpoGoogleMapsModule : Module() {
 
       Prop("clickablePOIs") { view: GoogleMapsView, arePOIClickable: Boolean ->
         view.setClickablePOIs(arePOIClickable)
+      }
+
+      Prop("onLocationChangeEventPriority") { view: GoogleMapsView, priority: Int ->
+        view.setLocationCallbackPriority(priority)
+      }
+
+      Prop("onLocationChangeEventInterval") { view: GoogleMapsView, interval: Double ->
+        view.setLocationCallbackInterval(interval.toLong())
       }
     }
   }
