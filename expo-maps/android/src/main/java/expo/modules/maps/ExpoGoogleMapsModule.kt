@@ -1,5 +1,6 @@
 package expo.modules.maps
 
+import android.view.View
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.UIManagerModule
 import expo.modules.core.interfaces.services.UIManager
@@ -13,7 +14,7 @@ class ExpoGoogleMapsModule : Module() {
 
   override fun definition() = ModuleDefinition {
     Name("ExpoGoogleMaps")
-    
+
     AsyncFunction("getSearchCompletions") { viewHandle: Int, searchQueryFragment: String, promise: Promise ->
       val rnContext = appContext.reactContext as? ReactApplicationContext ?: return@AsyncFunction
       val uiManager = rnContext.getNativeModule(UIManagerModule::class.java) ?: return@AsyncFunction
@@ -24,16 +25,33 @@ class ExpoGoogleMapsModule : Module() {
     }
 
     ViewManager {
-      Events("onMapPress","onLongPress", "onMapLoaded", "onRegionChange",
-        "onRegionChangeComplete","onRegionChangeStarted", "onPoiClick", "onMarkerPress",
-        "onMarkerDrag", "onMarkerDragStarted", "onMarkerDragComplete", "onClusterPress"
-        , "onLocationButtonPress", "onLocationDotPress", "onLocationChange")
+      Events(
+        "onMapPress",
+        "onLongPress",
+        "onMapLoaded",
+        "onRegionChange",
+        "onRegionChangeComplete",
+        "onRegionChangeStarted",
+        "onPoiClick",
+        "onMarkerPress",
+        "onMarkerDrag",
+        "onMarkerDragStarted",
+        "onMarkerDragComplete",
+        "onClusterPress",
+        "onLocationButtonPress",
+        "onLocationDotPress",
+        "onLocationChange"
+      )
 
       View {
         GoogleMapsView(it).also { googleMapsView ->
           appContext.legacyModule<UIManager>()
             ?.registerLifecycleEventListener(googleMapsView.lifecycleEventListener)
         }
+      }
+
+      OnViewDestroys<GoogleMapsView> {
+        it.onViewDestroyed()
       }
 
       Prop("enableRotateGestures") { view: GoogleMapsView, enable: Boolean ->
@@ -119,11 +137,11 @@ class ExpoGoogleMapsModule : Module() {
       Prop("overlays") { view: GoogleMapsView, overlayObjects: Array<OverlayObject> ->
         view.setOverlays(overlayObjects)
       }
-      
+
       Prop("heatmaps") { view: GoogleMapsView, heatmapObjects: Array<HeatmapObject> ->
         view.setHeatmaps(heatmapObjects)
       }
-      
+
       Prop("createPOISearchRequest") { view: GoogleMapsView, place: String ->
         view.createPlaceSearchRequest(place)
       }

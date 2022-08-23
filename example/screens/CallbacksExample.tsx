@@ -242,6 +242,10 @@ export default function CallbacksExample() {
               "User's location has changed!" + JSON.stringify(event.nativeEvent)
             );
         }}
+        onLocationChangeEventInterval={2500}
+        onLocationChangeEventPriority={
+          LocationChangePriority.PRIORITY_HIGH_ACCURACY
+        }
         onLocationButtonPress={() => {
           onLocationButtonPressEnabled &&
             setSnackbarText('Location button has been pressed!');

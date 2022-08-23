@@ -126,4 +126,8 @@ class GoogleMapsCallbacks(private val map: GoogleMap, private val context: Conte
     this.locationCallbackInterval = locationCallbackInterval
     setupOnLocationChangeRequests()
   }
+
+  fun removeLocationRequests() {
+    locationProvider.removeLocationUpdates(locationChangeCallback)
+  }
 }

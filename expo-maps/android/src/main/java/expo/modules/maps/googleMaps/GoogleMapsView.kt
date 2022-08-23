@@ -90,6 +90,10 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     setupCallbacks()
   }
 
+  fun onViewDestroyed() {
+    callbacks.removeLocationRequests()
+  }
+
   fun setShowZoomControl(enable: Boolean) {
     updateMap {
       controls.setShowZoomControl(enable)
@@ -168,7 +172,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
-  fun setLocationCallbackInterval(interval: Long){
+  fun setLocationCallbackInterval(interval: Long) {
     updateMap {
       callbacks.setLocationCallbackInterval(interval)
     }
