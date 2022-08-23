@@ -5,7 +5,7 @@ import expo.modules.kotlin.records.Field
 import expo.modules.kotlin.records.Record
 import expo.modules.maps.MarkerObject
 
-class MarkerRecord() : Record {
+class MarkerRecord(): Record {
 
   @Field
   lateinit var id: String
@@ -13,12 +13,12 @@ class MarkerRecord() : Record {
   @Field
   lateinit var position: LatLngRecord
 
-  constructor(marker: Marker) : this() {
+  constructor(marker: Marker): this() {
     this.id = marker.id
     this.position = LatLngRecord(marker.position)
   }
 
-  constructor(markerObject: MarkerObject) : this() {
+  constructor(markerObject: MarkerObject): this() {
     this.id = markerObject.id.toString()
     this.position = LatLngRecord(markerObject.position)
   }
