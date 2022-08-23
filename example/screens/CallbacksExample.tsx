@@ -246,13 +246,19 @@ export default function CallbacksExample() {
         onLocationChangeEventPriority={
           LocationChangePriority.PRIORITY_HIGH_ACCURACY
         }
-        onLocationButtonPress={() => {
+        onLocationButtonPress={(event) => {
           onLocationButtonPressEnabled &&
-            setSnackbarText('Location button has been pressed!');
+            setSnackbarText(
+              'Location button has been pressed!' +
+                JSON.stringify(event.nativeEvent)
+            );
         }}
-        onLocationDotPress={() => {
+        onLocationDotPress={(event) => {
           onLocationDotPressEnabled &&
-            setSnackbarText('Location dot has been pressed!');
+            setSnackbarText(
+              'Location dot has been pressed!' +
+                JSON.stringify(event.nativeEvent)
+            );
         }}
       >
         <Maps.Marker

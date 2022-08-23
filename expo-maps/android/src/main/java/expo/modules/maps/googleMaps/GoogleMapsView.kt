@@ -52,8 +52,8 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private val onMarkerDragStarted by callback<MarkerRecord>()
   private val onMarkerDragComplete by callback<MarkerRecord>()
   private val onClusterPress by callback<ClusterRecord>()
-  private val onLocationButtonPress by callback<Unit>()
-  private val onLocationDotPress by callback<Unit>()
+  private val onLocationButtonPress by callback<UserLocationRecord>()
+  private val onLocationDotPress by callback<UserLocationRecord>()
   private val onLocationChange by callback<UserLocationRecord>()
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)

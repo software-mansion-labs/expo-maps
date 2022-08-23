@@ -313,7 +313,7 @@ export type Callbacks = {
 
   /**
    * Callback to call when the user presses the current location dot.
-   *
+   * Not supported on `iOS GoogleMaps`
    * @default (event: OnLocationDotPressEvent) => {}
    */
   onLocationDotPress?: (event: OnLocationDotPressEvent) => void;

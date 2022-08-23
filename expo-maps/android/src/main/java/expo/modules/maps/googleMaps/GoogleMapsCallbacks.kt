@@ -67,16 +67,27 @@ class GoogleMapsCallbacks(private val map: GoogleMap, private val context: Conte
     }
   }
 
-  fun setupOnLocationButtonButtonPress(onLocationButtonPress: Callback<Unit>) {
+  fun setupOnLocationButtonButtonPress(onLocationButtonPress: Callback<UserLocationRecord>) {
     map.setOnMyLocationButtonClickListener {
-      onLocationButtonPress(Unit)
+      if (ActivityCompat.checkSelfPermission(
+          context,
+          Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+          context,
+          Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+      ) {
+        locationProvider.lastLocation.addOnSuccessListener { location ->
+          onLocationButtonPress(UserLocationRecord(location))
+        }
+      }
       false
     }
   }
 
-  fun setupOnLocationDotPress(onLocationDotPress: Callback<Unit>) {
+  fun setupOnLocationDotPress(onLocationDotPress: Callback<UserLocationRecord>) {
     map.setOnMyLocationClickListener {
-      onLocationDotPress(Unit)
+      onLocationDotPress(UserLocationRecord(it))
     }
   }
 
