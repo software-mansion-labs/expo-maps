@@ -212,7 +212,7 @@ export declare type Callbacks = {
     onMapPress?: (event: OnMapPressEvent) => void;
     /**
      * Callback to call when the user double presses the map
-     *
+     * note: `Apple Maps only`
      * @default () => {}
      */
     onDoublePress?: (event: OnMapPressEvent) => void;
