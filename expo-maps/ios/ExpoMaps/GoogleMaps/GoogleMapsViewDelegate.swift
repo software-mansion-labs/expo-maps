@@ -26,16 +26,9 @@ class GoogleMapsViewDelegate: NSObject, GMSMapViewDelegate {
     expoMapView?.onLongPress(LatLngRecord(coordinate: coordinate).toDictionary())
   }
 
-  func mapViewDidStartTileRendering(_ mapView: GMSMapView) {
-    if !mapInitialized {
-      expoMapView?.onMapReady("")
-      mapInitialized = true
-    }
-  }
-
   func mapViewDidFinishTileRendering(_ mapView: GMSMapView) {
     if !mapInitialLoadComplete {
-      expoMapView?.onMapLoaded("")
+      expoMapView?.onMapLoaded(nil)
       mapInitialLoadComplete = true
     }
   }

@@ -20,7 +20,6 @@ public class ExpoAppleMapsModule: Module {
         "onMapPress",
         "onDoublePress",
         "onLongPress",
-        "onMapReady",
         "onMapLoaded",
         "onRegionChange",
         "onRegionChangeComplete",

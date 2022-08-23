@@ -24,8 +24,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let googleMapsMarkersManager: GoogleMapsMarkersManager = GoogleMapsMarkersManager()
 
   // TODO: change to proper types from "[String: Any?]" when conversion from records gets implemented for iOS
-  @Event var onMapReady: Callback<String>
-  @Event var onMapLoaded: Callback<String>
+  @Event var onMapLoaded: Callback<String?>
   @Event var onMapPress: Callback<[String: Any?]>
   @Event var onDoublePress: Callback<[String: Any?]>
   @Event var onLongPress: Callback<[String: Any?]>

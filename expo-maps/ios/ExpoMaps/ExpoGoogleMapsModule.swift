@@ -18,7 +18,6 @@ public class ExpoGoogleMapsModule: Module {
       Events(
         "onMapPress",
         "onLongPress",
-        "onMapReady",
         "onMapLoaded",
         "onRegionChange",
         "onRegionChangeComplete",
