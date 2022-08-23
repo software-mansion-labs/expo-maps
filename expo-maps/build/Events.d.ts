@@ -81,13 +81,13 @@ export declare type OnPoiClickEvent = {
  * Event returned when the location button is pressed
  */
 export declare type OnLocationButtonPressEvent = {
-    nativeEvent: null;
+    nativeEvent: UserLocation;
 };
 /**
  * Event returned when the current location dot is pressed
  */
 export declare type OnLocationDotPressEvent = {
-    nativeEvent: null;
+    nativeEvent: UserLocation;
 };
 /**
  * Event returned when the user changes their location
