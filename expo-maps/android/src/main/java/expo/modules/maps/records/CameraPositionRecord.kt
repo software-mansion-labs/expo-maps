@@ -18,3 +18,4 @@ class CameraPositionRecord(cameraPosition: CameraPosition) : Record {
   @Field
   var tilt: Float = cameraPosition.tilt
 }
+
