@@ -20,6 +20,7 @@ class GoogleMapsCallbacks(private val map: GoogleMap, private val context: Conte
   private lateinit var locationRequest: LocationRequest
   private var locationCallbackPriority: Int = LocationRequest.PRIORITY_NO_POWER
   private var locationCallbackInterval: Long = 5000
+  private var onLocationButtonPress: Callback<UserLocationRecord>? = null
 
   fun setupOnMapLoaded(onMapLoaded: Callback<Unit>) {
     map.setOnMapLoadedCallback {
@@ -68,21 +69,7 @@ class GoogleMapsCallbacks(private val map: GoogleMap, private val context: Conte
   }
 
   fun setupOnLocationButtonButtonPress(onLocationButtonPress: Callback<UserLocationRecord>) {
-    map.setOnMyLocationButtonClickListener {
-      if (ActivityCompat.checkSelfPermission(
-          context,
-          Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
-          context,
-          Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-      ) {
-        locationProvider.lastLocation.addOnSuccessListener { location ->
-          onLocationButtonPress(UserLocationRecord(location))
-        }
-      }
-      false
-    }
+    this.onLocationButtonPress = onLocationButtonPress
   }
 
   fun setupOnLocationDotPress(onLocationDotPress: Callback<UserLocationRecord>) {
@@ -112,11 +99,19 @@ class GoogleMapsCallbacks(private val map: GoogleMap, private val context: Conte
       locationChangeCallback,
       Looper.getMainLooper()
     )
+    /*On location button click listener is set here in order to get permission updates more often.
+    * In the future it should be called only when the permissions change */
+    map.setOnMyLocationButtonClickListener {
+      locationProvider.lastLocation.addOnSuccessListener { location ->
+        onLocationButtonPress?.let { it(UserLocationRecord(location)) }
+      }
+      false
+    }
   }
 
   fun setupOnLocationChange(onLocationChange: Callback<UserLocationRecord>) {
     locationProvider = LocationServices.getFusedLocationProviderClient(context)
-    locationChangeCallback = object : LocationCallback() {
+    locationChangeCallback = object: LocationCallback() {
       override fun onLocationResult(loactionResult: LocationResult?) {
         loactionResult ?: return
         for (location in loactionResult.locations) {

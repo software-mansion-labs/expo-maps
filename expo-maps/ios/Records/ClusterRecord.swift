@@ -4,8 +4,7 @@ import MapKit
 import GoogleMapsUtils
 
 struct ClusterRecord: Record {
-  init() {
-  }
+  init() {}
 
   @Field var id: String?
   @Field var position: [String: Any?]

@@ -3,8 +3,7 @@ import GoogleMaps
 import MapKit
 
 struct CameraPositionRecord: Record {
-  init() {
-  }
+  init() {}
 
   @Field var target: [String: Any?]?
   @Field var zoom: Float?

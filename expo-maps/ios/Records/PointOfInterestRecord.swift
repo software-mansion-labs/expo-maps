@@ -1,8 +1,7 @@
 import ExpoModulesCore
 
 struct PointOfInterestRecord: Record {
-  init() {
-  }
+  init() {}
 
   @Field var position: [String: Any?]?
   @Field var name: String?

@@ -3,8 +3,7 @@ import GoogleMaps
 import MapKit
 
 struct MarkerRecord: Record {
-  init() {
-  }
+  init() {}
 
   @Field var id: String?
   @Field var position: [String: Any?]

@@ -1,8 +1,7 @@
 import ExpoModulesCore
 
 struct LatLngRecord: Record {
-  init() {
-  }
+  init() {}
 
   @Field var latitude: Double?
   @Field var longitude: Double?

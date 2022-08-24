@@ -212,7 +212,7 @@ export declare type Callbacks = {
     onMapPress?: (event: OnMapPressEvent) => void;
     /**
      * Callback to call when the user double presses the map
-     * note: `Apple Maps only`
+     *
      * @default () => {}
      */
     onDoublePress?: (event: OnMapPressEvent) => void;
@@ -278,7 +278,7 @@ export declare type Callbacks = {
     onClusterPress?: (event: ClusterPressEvent) => void;
     /**
      * Callback to call when the user presses the current location dot.
-     *
+     * Not supported on `iOS GoogleMaps`
      * @default (event: OnLocationDotPressEvent) => {}
      */
     onLocationDotPress?: (event: OnLocationDotPressEvent) => void;
