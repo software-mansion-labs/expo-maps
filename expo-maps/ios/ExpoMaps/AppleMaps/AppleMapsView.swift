@@ -1,10 +1,11 @@
 import MapKit
 import ExpoModulesCore
+import UIKit
 
-public final class AppleMapsView: UIView, ExpoMapView {
+public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelegate {
   private let mapView: MKMapView
   private let controls: AppleMapsControls
-  private let delegate: AppleMapsDelegate
+  private var delegate: AppleMapsDelegate?
   private let markers: AppleMapsMarkers
   private let clusters: AppleMapsClusters
   private let gestures: AppleMapsGestures
@@ -17,11 +18,25 @@ public final class AppleMapsView: UIView, ExpoMapView {
   private let markersManager: AppleMapsMarkersManager = AppleMapsMarkersManager()
   private var wasInitialCameraPositionSet = false
 
+  @Event var onMapLoaded: Callback<String?>
+  @Event var onMapPress: Callback<[String: Any?]>
+  @Event var onDoublePress: Callback<[String: Any?]>
+  @Event var onLongPress: Callback<[String: Any?]>
+  @Event var onRegionChange: Callback<[String: Any?]>
+  @Event var onRegionChangeStarted: Callback<[String: Any?]>
+  @Event var onRegionChangeComplete: Callback<[String: Any?]>
+  @Event var onMarkerPress: Callback<[String: Any?]>
+  @Event var onMarkerDrag: Callback<[String: Any?]>
+  @Event var onMarkerDragStarted: Callback<[String: Any?]>
+  @Event var onMarkerDragComplete: Callback<[String: Any?]>
+  @Event var onClusterPress: Callback<[String: Any?]>
+  @Event var onLocationButtonPress: Callback<[String: Any?]>
+  @Event var onLocationDotPress: Callback<[String: Any?]>
+  @Event var onLocationChange: Callback<[String: Any?]>
+
   init(sendEvent: @escaping (String, [String: Any?]) -> Void) {
     mapView = MKMapView()
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    delegate = AppleMapsDelegate(sendEvent: sendEvent, markersManager: markersManager)
-    mapView.delegate = delegate
     controls = AppleMapsControls(mapView: mapView)
     markers = AppleMapsMarkers(mapView: mapView, markersManager: markersManager)
     clusters = AppleMapsClusters(mapView: mapView, markersManager: markersManager)
@@ -32,9 +47,53 @@ public final class AppleMapsView: UIView, ExpoMapView {
     geoJsons = AppleMapsGeoJsons(mapView: mapView)
     kmls = AppleMapsKMLs(mapView: mapView, markers: markers, polylines: polylines, polygons: polygons)
     pointsOfInterest = AppleMapsPOI(mapView: mapView, markers: markers)
-
     super.init(frame: CGRect.zero)
+    delegate = AppleMapsDelegate(sendEvent: sendEvent, markersManager: markersManager, appleMapsView: self)
+    mapView.delegate = delegate
+
+    let singleTap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+    singleTap.numberOfTapsRequired = 1
+    mapView.addGestureRecognizer(singleTap)
+
+    let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+    doubleTap.numberOfTapsRequired = 2
+    doubleTap.delegate = self
+    mapView.addGestureRecognizer(doubleTap)
+    singleTap.require(toFail: doubleTap)
+
+    let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+    mapView.addGestureRecognizer(longPress)
+    singleTap.require(toFail: longPress)
+
     addSubview(mapView)
+  }
+
+  // Allows the double tap to work
+
+  public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                                _ otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    true
+  }
+
+  @objc func handleTap(_ sender: UITapGestureRecognizer) {
+    if sender.state == .ended {
+      let pressCoordinates = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+      onMapPress(LatLngRecord(coordinate: pressCoordinates).toDictionary())
+    }
+  }
+
+  @objc func handleDoubleTap(_ sender: UITapGestureRecognizer) {
+    if sender.state == .ended {
+      let pressCoordinates = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+      onDoublePress(LatLngRecord(coordinate: pressCoordinates).toDictionary())
+    }
+  }
+
+  @objc func handleLongPress(_ sender: UILongPressGestureRecognizer) {
+    if sender.state == .ended {
+      let pressCoordinates = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+      onLongPress(LatLngRecord(coordinate: pressCoordinates).toDictionary())
+    }
   }
 
   required init?(coder: NSCoder) {
@@ -81,12 +140,22 @@ public final class AppleMapsView: UIView, ExpoMapView {
     }
     mapView.mapType = mapViewType
   }
-  
+
   func setEnabledPOISearching(enabled: Bool) {
     pointsOfInterest.setEnabledPOISearching(enabled: enabled)
   }
-  
- 
+
+  public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    let touchedView: UIView! = mapView.hitTest(point, with: event)
+    if touchedView.isKind(of: NSClassFromString("_MKUserTrackingButton")!) {
+      onLocationButtonPress(UserLocationRecord(location: mapView.userLocation).toDictionary())
+    } else if touchedView.isKind(of: NSClassFromString("_MKUserLocationView")!) {
+      onLocationDotPress(UserLocationRecord(location: mapView.userLocation).toDictionary())
+      return touchedView.hitTest(point, with: event)
+    }
+    return super.hitTest(_: point, with: event)
+  }
+
   func setEnabledPOIFilter(categories: [POICategoryType]) {
     guard #available(iOS 13.0, *) else {
       print("Enabling filter for points of interests is not avaliable for < iOS 13.0")
@@ -94,7 +163,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
     }
     pointsOfInterest.setEnabledPOIFilter(categories: categories)
   }
-  
+
   func setEnabledPOIs(enabled: Bool) {
     guard #available(iOS 13.0, *) else {
       print("Manipulating points of interests visibility is not avaliable for < iOS 13.0")
@@ -102,11 +171,11 @@ public final class AppleMapsView: UIView, ExpoMapView {
     }
     pointsOfInterest.setEnabledPOIs(enabled: enabled)
   }
-  
+
   func fetchPOISearchCompletions(searchQueryFragment: String, promise: Promise) {
     pointsOfInterest.fetchSearchCompletions(searchQueryFragment: searchQueryFragment, promise: promise)
   }
-  
+
   func createPOISearchRequest(place: String) {
     pointsOfInterest.createSearchRequest(place: place)
   }
@@ -114,9 +183,9 @@ public final class AppleMapsView: UIView, ExpoMapView {
   func setMarkers(markerObjects: [MarkerObject]) {
     markers.setMarkers(markerObjects: markerObjects)
   }
-  
+
   func setClusters(clusterObjects: [ClusterObject]) {
-    delegate.setClusters(clusterObjects: clusterObjects)
+    delegate?.setClusters(clusterObjects: clusterObjects)
     clusters.setClusters(clusterObjects: clusterObjects)
   }
 
@@ -131,7 +200,7 @@ public final class AppleMapsView: UIView, ExpoMapView {
   func setCircles(circleObjects: [CircleObject]) {
     circles.setCircles(circleObjects: circleObjects)
   }
-  
+
   func setInitialCameraPosition(initialCameraPosition: CameraPosition) {
     if (!wasInitialCameraPositionSet) {
       let camera = MKMapCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: initialCameraPosition.latitude, longitude: initialCameraPosition.longitude), fromDistance: googleMapsZoomLevelToMeters(latitude: initialCameraPosition.latitude, zoom: initialCameraPosition.zoom), pitch: 0, heading: CLLocationDirection())
@@ -139,24 +208,29 @@ public final class AppleMapsView: UIView, ExpoMapView {
       wasInitialCameraPositionSet = true
     }
   }
-  
+
   func setEnabledTraffic(enableTraffic: Bool) {
     mapView.showsTraffic = enableTraffic
   }
-  
+
   func setKMLs(kmlObjects: [KMLObject]) {
     kmls.setKMLs(kmlObjects: kmlObjects)
   }
-  
+
   func setGeoJsons(geoJsonObjects: [GeoJsonObject]) {
     geoJsons.setGeoJsons(geoJsonObjects: geoJsonObjects)
   }
-  
+
   func setOverlays(overlayObjects: [OverlayObject]) {
-    
+
   }
-  
+
+  func convertToMapViewCoordinate(_ point: CGPoint) -> CLLocationCoordinate2D {
+    mapView.convert(point, toCoordinateFrom: mapView)
+  }
+
   // imitating Google Maps zoom level behaviour
+
   // based on https://gis.stackexchange.com/questions/7430/what-ratio-scales-do-google-maps-zoom-levels-correspond-to
   private func googleMapsZoomLevelToMeters(latitude: Double, zoom: Double) -> Double {
     let metersPerPixel = 156543.03392 * cos(latitude * Double.pi / 180) / pow(2, zoom - 1)

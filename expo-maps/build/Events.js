@@ -10,38 +10,10 @@ else {
 }
 const emitter = new EventEmitter(module);
 const MapsEventsNames = {
-    ON_CAMERA_MOVE_STARTED_EVENT: 'onCameraMoveStarted',
-    ON_CAMERA_MOVE_ENDED_EVENT: 'onCameraMoveEnded',
     ON_MARKER_CLICK_EVENT: 'onMarkerClick',
     ON_MARKER_DRAG_STARTED_EVENT: 'onMarkerDragStarted',
     ON_MARKER_DRAG_ENDED_EVENT: 'onMarkerDragEnded',
 };
-/**
- * Adds a new listener to be called when camera starts moving.
- * @returns Subscription which can be used later to remove this particular listener.
- */
-export function addOnCameraMoveStartedListener(listener) {
-    return emitter.addListener(MapsEventsNames.ON_CAMERA_MOVE_STARTED_EVENT, listener);
-}
-/**
- * Removes all listeners registered to listen for CameraMoveStarted event.
- */
-export function removeAllOnCameraMoveStartedListeners() {
-    emitter.removeAllListeners(MapsEventsNames.ON_CAMERA_MOVE_STARTED_EVENT);
-}
-/**
- * Adds a new listener to be called when camera stops moving.
- * @returns Subscription which can be used later to remove this particular listener.
- */
-export function addOnCameraMoveEndedListener(listener) {
-    return emitter.addListener(MapsEventsNames.ON_CAMERA_MOVE_ENDED_EVENT, listener);
-}
-/**
- * Removes all listeners registered to listen for CameraMoveEnded event.
- */
-export function removeAllOnCameraMoveEndedListeners() {
-    emitter.removeAllListeners(MapsEventsNames.ON_CAMERA_MOVE_ENDED_EVENT);
-}
 /**
  * Adds a new listener to be called when a marker or cluster is clicked.
  * @returns Subscription which can be used later to remove this particular listener.

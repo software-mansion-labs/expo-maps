@@ -5,7 +5,7 @@ public class ExpoAppleMapsModule: Module {
 
   public func definition() -> ModuleDefinition {
     Name("ExpoAppleMaps")
-    
+
     Events(MapEventsNames.ON_CAMERA_MOVE_STARTED_EVENT.rawValue, MapEventsNames.ON_CAMERA_MOVE_ENDED_EVENT.rawValue, MapEventsNames.ON_MARKER_CLICK_EVENT.rawValue, MapEventsNames.ON_MARKER_DRAG_STARTED_EVENT.rawValue, MapEventsNames.ON_MARKER_DRAG_ENDED_EVENT.rawValue)
 
     AsyncFunction("getSearchCompletions") { (viewHandle: Int, searchQueryFragment: String, promise: Promise) in
@@ -13,9 +13,27 @@ public class ExpoAppleMapsModule: Module {
         let view = self.appContext?.reactBridge?.uiManager?.view(forReactTag: NSNumber(value: viewHandle)) as? AppleMapsView
         view?.fetchPOISearchCompletions(searchQueryFragment: searchQueryFragment, promise: promise)
       }
-     }
+    }
 
     ViewManager {
+      Events(
+        "onMapPress",
+        "onDoublePress",
+        "onLongPress",
+        "onMapLoaded",
+        "onRegionChange",
+        "onRegionChangeComplete",
+        "onRegionChangeStarted",
+        "onMarkerPress",
+        "onMarkerDrag",
+        "onMarkerDragStarted",
+        "onMarkerDragComplete",
+        "onClusterPress",
+        "onLocationButtonPress",
+        "onLocationDotPress",
+        "onLocationChange"
+      )
+
       View {
         AppleMapsView(sendEvent: self.sendEvent)
       }
@@ -55,7 +73,7 @@ public class ExpoAppleMapsModule: Module {
       Prop("markers") { (view: AppleMapsView, markerObjects: [MarkerObject]) in
         view.setMarkers(markerObjects: markerObjects)
       }
-      
+
       Prop("clusters") { (view: AppleMapsView, clusterObjects: [ClusterObject]) in
         view.setClusters(clusterObjects: clusterObjects)
       }
@@ -71,39 +89,39 @@ public class ExpoAppleMapsModule: Module {
       Prop("circles") { (view: AppleMapsView, circleObjects: [CircleObject]) in
         view.setCircles(circleObjects: circleObjects)
       }
-      
+
       Prop("initialCameraPosition") { (view: AppleMapsView, cameraPosition: CameraPosition) in
         view.setInitialCameraPosition(initialCameraPosition: cameraPosition)
       }
-      
+
       Prop("enableTraffic") { (view: AppleMapsView, enable: Bool) in
         view.setEnabledTraffic(enableTraffic: enable)
       }
-      
+
       Prop("kmls") { (view: AppleMapsView, kmlObjects: [KMLObject]) in
         view.setKMLs(kmlObjects: kmlObjects)
       }
-      
+
       Prop("geojsons") { (view: AppleMapsView, geoJsonObjects: [GeoJsonObject]) in
         view.setGeoJsons(geoJsonObjects: geoJsonObjects)
       }
-      
+
       Prop("enablePOISearching") { (view: AppleMapsView, enable: Bool) in
         view.setEnabledPOISearching(enabled: enable)
       }
-      
+
       Prop("enablePOIFilter") { (view: AppleMapsView, categories: [POICategoryType]) in
         view.setEnabledPOIFilter(categories: categories)
       }
-      
+
       Prop("enablePOIs") { (view: AppleMapsView, enabled: Bool) in
         view.setEnabledPOIs(enabled: enabled)
       }
-      
+
       Prop("createPOISearchRequest") { (view: AppleMapsView, place: String) in
         view.createPOISearchRequest(place: place)
       }
-      
+
     }
   }
 }

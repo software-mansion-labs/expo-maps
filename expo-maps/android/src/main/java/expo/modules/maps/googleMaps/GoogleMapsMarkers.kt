@@ -6,9 +6,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.collections.MarkerManager
+import expo.modules.kotlin.callbacks.Callback
 import expo.modules.maps.MarkerObject
-import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import expo.modules.maps.interfaces.Markers
+import expo.modules.maps.records.MarkerRecord
 
 class GoogleMapsMarkers(private val map: GoogleMap, markerManager: MarkerManager) : Markers {
 
@@ -37,29 +38,31 @@ class GoogleMapsMarkers(private val map: GoogleMap, markerManager: MarkerManager
     }
   }
 
-  fun setOnMarkerClickListener(eventEmitterManager: GoogleMapsEventEmitterManager) {
+  fun setOnMarkerPressListener(onMarkerPress: Callback<MarkerRecord>) {
     markerManagerCollection.setOnMarkerClickListener { marker ->
       markers[marker]?.let {
-        eventEmitterManager.sendMarkerClickEvent(it)
+        onMarkerPress(MarkerRecord(marker))
       }
       false
     }
   }
 
-  fun setOnMarkerDragListener(eventEmitterManager: GoogleMapsEventEmitterManager) {
+  fun setOnMarkerDragListeners(onDrag: Callback<MarkerRecord>, onDragStarted: Callback<MarkerRecord>, onDragComplete: Callback<MarkerRecord>) {
     markerManagerCollection.setOnMarkerDragListener(object : GoogleMap.OnMarkerDragListener {
 
-      override fun onMarkerDrag(marker: Marker) = Unit
+      override fun onMarkerDrag(marker: Marker){
+        markers[marker]?.let { onDrag(MarkerRecord(marker)) }
+      }
 
       override fun onMarkerDragEnd(marker: Marker) {
         markers[marker]?.let {
-          eventEmitterManager.sendMarkerDragEndedEvent(it, marker.position.latitude, marker.position.longitude)
+          onDragComplete(MarkerRecord(marker))
         }
       }
 
       override fun onMarkerDragStart(marker: Marker) {
         markers[marker]?.let {
-          eventEmitterManager.sendMarkerDragStartedEvent(it)
+          onDragStarted(MarkerRecord(marker))
         }
       }
     })
@@ -92,5 +95,9 @@ class GoogleMapsMarkers(private val map: GoogleMap, markerManager: MarkerManager
   fun detachAndDeletePOIMarkers() {
     poiMarkers.forEach { it.remove() }
     poiMarkers.clear()
+  }
+
+  fun getMarkers(): MutableMap<Marker, String?>{
+    return markers
   }
 }

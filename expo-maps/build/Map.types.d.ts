@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react';
 import { MarkerObject } from './Marker';
 import { PolygonObject } from './Polygon';
 import { PolylineObject } from './Polyline';
-import { Point } from './Common.types';
+import { LocationChangePriority, Point } from './Common.types';
 import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
 import { GeoJsonObject } from './GeoJson';
@@ -11,6 +11,8 @@ import { ExpoMap } from './Map';
 import { OverlayObject } from './Overlay';
 import { KMLObject } from './KML';
 import { HeatmapObject } from './Heatmap';
+import { OnMapPressEvent } from './Map';
+import { ClusterPressEvent, MarkerEvent, OnLocationButtonPressEvent, OnLocationChangeEvent, OnLocationDotPressEvent, OnPoiClickEvent, OnRegionChangeEvent } from './Events';
 export declare type MapTypes = 'normal' | 'hybrid' | 'satellite' | 'terrain';
 /**
  * Prop for managing map type.
@@ -192,6 +194,117 @@ export declare type Traffic = {
      */
     enableTraffic: boolean;
 };
+/**
+ * Props for callback events.
+ */
+export declare type Callbacks = {
+    /**
+     * Callback to call when the map is loaded.
+     *
+     * @default () => {}
+     */
+    onMapLoaded?: () => void;
+    /**
+     * Callback to call when user clicks on the map.
+     *
+     * @default () => {}
+     */
+    onMapPress?: (event: OnMapPressEvent) => void;
+    /**
+     * Callback to call when the user double presses the map
+     *
+     * @default () => {}
+     */
+    onDoublePress?: (event: OnMapPressEvent) => void;
+    /**
+     * Callback to call when the user long presses the map
+     *
+     * @default () => {}
+     */
+    onLongPress?: (event: OnMapPressEvent) => void;
+    /**
+     * Callback to call when camera is moving.
+     *
+     * @default (event: OnRegionChangeEvent) => {}
+     */
+    onRegionChange?: (event: OnRegionChangeEvent) => void;
+    /**
+     * Callback to call when camera has started moving.
+     *
+     * @default (event: OnRegionChangeEvent) => {}
+     */
+    onRegionChangeStarted?: (event: OnRegionChangeEvent) => void;
+    /**
+     * Callback to call when camera has stopped moving.
+     *
+     * @default (event: OnRegionChangeEvent) => {}
+     */
+    onRegionChangeComplete?: (event: OnRegionChangeEvent) => void;
+    /**
+     * Callback to call when the user presses a point of interest.
+     *
+     * @default (event: OnRegionChangeEvent) => {}
+     */
+    onPoiClick?: (event: OnPoiClickEvent) => void;
+    /**
+     * Callback to call when the user presses a marker
+     *
+     * @default (event: MarkerEvent) => {}
+     */
+    onMarkerPress?: (event: MarkerEvent) => void;
+    /**
+     * Callback to call on every position update of a marker.
+     *
+     * @default (event: MarkerEvent) => {}
+     */
+    onMarkerDrag?: (event: MarkerEvent) => void;
+    /**
+     * Callback to call when the user started moving a marker.
+     *
+     * @default (event: OnMarkerDragStarted) => {}
+     */
+    onMarkerDragStarted?: (event: MarkerEvent) => void;
+    /**
+     * Callback to call when the user ended moving a marker.
+     *
+     * @default (event: MarkerEvent) => {}
+     */
+    onMarkerDragComplete?: (event: MarkerEvent) => void;
+    /**
+     * Callback to call when the user presses on a cluster.
+     *
+     * @default (event: ClusterPressEvent) => {}
+     */
+    onClusterPress?: (event: ClusterPressEvent) => void;
+    /**
+     * Callback to call when the user presses the current location dot.
+     * Not supported on `iOS GoogleMaps`
+     * @default (event: OnLocationDotPressEvent) => {}
+     */
+    onLocationDotPress?: (event: OnLocationDotPressEvent) => void;
+    /**
+     * Callback to call when the user presses the location button.
+     *
+     * @default (event: OnLocationButtonPressEvent) => {}
+     */
+    onLocationButtonPress?: (event: OnLocationButtonPressEvent) => void;
+    /**
+     * Callback to call when a change in user's location is detected
+     * @default (event: OnLocationChangeEvent) => {}
+     */
+    onLocationChange?: (event: OnLocationChangeEvent) => void;
+    /**
+     * Value in milliseconds describing how often the onLocationChangeCallback will check if the user location has changed.
+     * Reducing this value might have negative impact on battery life
+     * @default 5000
+     */
+    onLocationChangeEventInterval?: Number;
+    /**
+     * Determines how accurate requests for location change event should be
+     * @default LocationChangePriority.PRIORITY_NO_POWER
+     */
+    onLocationChangeEventPriority?: LocationChangePriority;
+};
 export declare type POICategoryType = 'airport' | 'atm' | 'bank' | 'beach' | 'cafe' | 'hospital' | 'hotel' | 'museum' | 'pharmacy' | 'store';
 /**
  * Props for POI handling.
@@ -274,7 +387,7 @@ export declare type AppleMapsControls = Omit<Controls, 'showMapToolbar' | 'showZ
 /**
  * Props for Google Maps implementation.
  */
-export declare type NativeExpoGoogleMapsViewProps = ViewProps & React.RefAttributes<ExpoMap> & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & GoogleMapsPOI & Overlays & Heatmaps>;
+export declare type NativeExpoGoogleMapsViewProps = ViewProps & React.RefAttributes<ExpoMap> & PropsWithChildren<MapType & GoogleMapsStyling & Gestures & Markers & Polygons & Polylines & GoogleMapsControls & CameraPosition & Circles & Clusters & Traffic & KMLs & GeoJsons & GoogleMapsPOI & Overlays & Heatmaps & Callbacks>;
 /**
  * Props for Apple Maps implementation.
  */
@@ -299,6 +412,6 @@ export declare type Provider = {
  *
  * All of the ExpoMap props are optional.
  */
-export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic & POI & KMLs & Heatmaps>>;
+export declare type ExpoMapViewProps = ViewProps & PropsWithChildren<Partial<Provider & MapType & Controls & GoogleMapsStyling & Gestures & CameraPosition & Traffic & POI & KMLs & Heatmaps & Callbacks>>;
 export declare type DefaultNativeExpoMapViewProps = MapType & Controls & Gestures & CameraPosition & Traffic & POI;
 export declare type ExpoMapState = Markers & Polygons & Polylines & Circles & Clusters & KMLs & GeoJsons & Overlays & Heatmaps;

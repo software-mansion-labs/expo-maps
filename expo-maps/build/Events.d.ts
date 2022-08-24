@@ -1,17 +1,5 @@
 import { Subscription } from 'expo-modules-core';
-/**
- * Type of an argument of CameraMoveStarted and CameraMoveEnded listeners.
- */
-export declare type CameraEvent = {
-    /**
-     * Latitude of the camera position.
-     */
-    latitude: number;
-    /**
-     * Longitude of the camera position.
-     */
-    longitude: number;
-};
+import { CameraPosition, MapCluster, Marker, Point, PointOfInterest, UserLocation } from './Common.types';
 /**
  * Type of an argument of MarkerClick listener.
  */
@@ -48,23 +36,65 @@ export declare type MarkerDragStartedEvent = {
     id: string;
 };
 /**
- * Adds a new listener to be called when camera starts moving.
- * @returns Subscription which can be used later to remove this particular listener.
+ * Represents data returned on click event.
  */
-export declare function addOnCameraMoveStartedListener(listener: (event: CameraEvent) => void): Subscription;
+export declare type OnMapPressEvent = {
+    /**
+     * Coordinates the place where the user clicked.
+     * Represented by {@link Point}
+     */
+    nativeEvent: Point;
+};
 /**
- * Removes all listeners registered to listen for CameraMoveStarted event.
+ * Type used for marker related events. eq. onMarkerClick, onMarkerDrag etc. contains marker's ID and position
  */
-export declare function removeAllOnCameraMoveStartedListeners(): void;
+export declare type MarkerEvent = {
+    nativeEvent: Marker;
+};
 /**
- * Adds a new listener to be called when camera stops moving.
- * @returns Subscription which can be used later to remove this particular listener.
+ * Represents data returned when a cluster press event is called
  */
-export declare function addOnCameraMoveEndedListener(listener: (event: CameraEvent) => void): Subscription;
+export declare type ClusterPressEvent = {
+    nativeEvent: MapCluster;
+};
 /**
- * Removes all listeners registered to listen for CameraMoveEnded event.
+ * Represents data returned on RegionChangeEvent
  */
-export declare function removeAllOnCameraMoveEndedListeners(): void;
+export declare type OnRegionChangeEvent = {
+    /**
+     * Information on cameraPosition.
+     * Represented by {@link CameraPosition}
+     */
+    nativeEvent: CameraPosition;
+};
+/**
+ * Represents data returned on PoiClickEvent
+ */
+export declare type OnPoiClickEvent = {
+    /**
+     * Information on the clicked point of interest.
+     * Represented by {@link PointOfInterest}
+     */
+    nativeEvent: PointOfInterest;
+};
+/**
+ * Event returned when the location button is pressed
+ */
+export declare type OnLocationButtonPressEvent = {
+    nativeEvent: UserLocation;
+};
+/**
+ * Event returned when the current location dot is pressed
+ */
+export declare type OnLocationDotPressEvent = {
+    nativeEvent: UserLocation;
+};
+/**
+ * Event returned when the user changes their location
+ */
+export declare type OnLocationChangeEvent = {
+    nativeEvent: UserLocation;
+};
 /**
  * Adds a new listener to be called when a marker or cluster is clicked.
  * @returns Subscription which can be used later to remove this particular listener.

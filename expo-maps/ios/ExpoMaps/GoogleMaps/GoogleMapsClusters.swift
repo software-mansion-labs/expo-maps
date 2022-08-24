@@ -48,7 +48,7 @@ class GoogleMapsClusters : Clusters {
       let clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
       
       for markerObject in clusterObject.markers {
-        let clusterItem = createGoogleMarker(markerObject: markerObject, includeDragging: false)
+        let clusterItem = createGoogleMarker(markerObject: markerObject, includeDragging: true)
         googleMapsMarkersManager.appendClusterItem(clusterItem: clusterItem, id: markerObject.id)
         clusterManager.add(clusterItem)
         clusterManager.cluster()

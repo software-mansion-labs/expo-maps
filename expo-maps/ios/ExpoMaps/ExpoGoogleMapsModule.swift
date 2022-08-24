@@ -4,7 +4,7 @@ public class ExpoGoogleMapsModule: Module {
 
   public func definition() -> ModuleDefinition {
     Name("ExpoGoogleMaps")
-        
+
     Events(MapEventsNames.ON_CAMERA_MOVE_STARTED_EVENT.rawValue, MapEventsNames.ON_CAMERA_MOVE_ENDED_EVENT.rawValue, MapEventsNames.ON_MARKER_CLICK_EVENT.rawValue, MapEventsNames.ON_MARKER_DRAG_STARTED_EVENT.rawValue, MapEventsNames.ON_MARKER_DRAG_ENDED_EVENT.rawValue)
 
     AsyncFunction("getSearchCompletions") { (viewHandle: Int, searchQueryFragment: String, promise: Promise) in
@@ -12,9 +12,27 @@ public class ExpoGoogleMapsModule: Module {
         let view = self.appContext?.reactBridge?.uiManager?.view(forReactTag: NSNumber(value: viewHandle)) as? GoogleMapsView
         view?.fetchPlacesSearchCompletions(searchQueryFragment: searchQueryFragment, promise: promise)
       }
-     }
+    }
 
     ViewManager {
+      Events(
+        "onMapPress",
+        "onLongPress",
+        "onMapLoaded",
+        "onRegionChange",
+        "onRegionChangeComplete",
+        "onRegionChangeStarted",
+        "onPoiClick",
+        "onMarkerPress",
+        "onMarkerDrag",
+        "onMarkerDragStarted",
+        "onMarkerDragComplete",
+        "onClusterPress",
+        "onLocationButtonPress",
+        "onLocationDotPress",
+        "onLocationChange"
+      )
+
       View {
         GoogleMapsView(sendEvent: self.sendEvent)
       }
@@ -58,7 +76,7 @@ public class ExpoGoogleMapsModule: Module {
       Prop("markers") { (view: GoogleMapsView, markerObjects: [MarkerObject]) in
         view.setMarkers(markerObjects: markerObjects)
       }
-      
+
       Prop("clusters") { (view: GoogleMapsView, clusterObjects: [ClusterObject]) in
         view.setClusters(clusterObjects: clusterObjects)
       }
@@ -78,31 +96,31 @@ public class ExpoGoogleMapsModule: Module {
       Prop("circles") { (view: GoogleMapsView, circleObjects: [CircleObject]) in
         view.setCircles(circleObjects: circleObjects)
       }
-      
+
       Prop("enableTraffic") { (view: GoogleMapsView, enable: Bool) in
         view.setEnabledTraffic(enableTraffic: enable)
       }
-      
+
       Prop("kmls") { (view: GoogleMapsView, kmlObjects: [KMLObject]) in
         view.setKMLs(kmlObjects: kmlObjects)
       }
-      
+
       Prop("geojsons") { (view: GoogleMapsView, geoJsonObjects: [GeoJsonObject]) in
         view.setGeoJsons(geoJsonObjects: geoJsonObjects)
       }
-      
+
       Prop("overlays") { (view: GoogleMapsView, overlayObjects: [OverlayObject]) in
         view.setOverlays(overlayObjects: overlayObjects)
       }
-      
+
       Prop("heatmaps") { (view: GoogleMapsView, heatmapObjects: [HeatmapObject]) in
         view.setHeatmaps(heatmapObjects: heatmapObjects)
       }
-      
+
       Prop("clickablePOIs") { (view: GoogleMapsView, clickablePOIs: Bool) in
         view.setClickablePOIs(clickablePOIs: clickablePOIs)
       }
-      
+
       Prop("createPOISearchRequest") { (view: GoogleMapsView, place: String) in
         view.createPOISearchRequest(place: place)
       }

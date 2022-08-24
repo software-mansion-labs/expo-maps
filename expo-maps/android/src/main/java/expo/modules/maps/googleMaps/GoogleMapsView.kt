@@ -10,9 +10,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.collections.MarkerManager
 import expo.modules.kotlin.Promise
+import expo.modules.kotlin.callbacks.callback
 import expo.modules.maps.*
-import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import expo.modules.maps.interfaces.ExpoMapView
+import expo.modules.maps.records.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -34,9 +35,26 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var overlays: GoogleMapsOverlays
   private lateinit var heatmaps: GoogleMapsHeatmaps
   private lateinit var places: GoogleMapsPlaces
+  private lateinit var callbacks: GoogleMapsCallbacks
 
   private val mapReady = MutableStateFlow(false)
   private var wasInitialCameraPositionSet = false
+
+  private val onMapLoaded by callback<Unit>()
+  private val onMapPress by callback<LatLngRecord>()
+  private val onLongPress by callback<LatLngRecord>()
+  private val onRegionChange by callback<CameraPositionRecord>()
+  private val onRegionChangeStarted by callback<CameraPositionRecord>()
+  private val onRegionChangeComplete by callback<CameraPositionRecord>()
+  private val onPoiClick by callback<PointOfInterestRecord>()
+  private val onMarkerPress by callback<MarkerRecord>()
+  private val onMarkerDrag by callback<MarkerRecord>()
+  private val onMarkerDragStarted by callback<MarkerRecord>()
+  private val onMarkerDragComplete by callback<MarkerRecord>()
+  private val onClusterPress by callback<ClusterRecord>()
+  private val onLocationButtonPress by callback<UserLocationRecord>()
+  private val onLocationDotPress by callback<UserLocationRecord>()
+  private val onLocationChange by callback<UserLocationRecord>()
 
   val lifecycleEventListener = MapViewLifecycleEventListener(mapView)
 
@@ -54,7 +72,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     controls = GoogleMapsControls(googleMap)
     gestures = GoogleMapsGestures(googleMap)
     markers = GoogleMapsMarkers(googleMap, markerManager)
-    clusters = GoogleMapsClusters(context, googleMap, markerManager)
+    clusters = GoogleMapsClusters(context, googleMap, markerManager, onClusterPress, onMarkerPress)
     polygons = GoogleMapsPolygons(googleMap)
     polylines = GoogleMapsPolylines(googleMap)
     circles = GoogleMapsCircles(googleMap)
@@ -63,10 +81,17 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     overlays = GoogleMapsOverlays(googleMap)
     heatmaps = GoogleMapsHeatmaps(googleMap)
     places = GoogleMapsPlaces(context, googleMap, markers)
+    callbacks = GoogleMapsCallbacks(googleMap, context)
 
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
     }
+
+    setupCallbacks()
+  }
+
+  fun onViewDestroyed() {
+    callbacks.removeLocationRequests()
   }
 
   fun setShowZoomControl(enable: Boolean) {
@@ -138,6 +163,18 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   fun setClickablePOIs(arePOIClickable: Boolean) {
     updateMap {
       places.setClickablePOIs(arePOIClickable)
+    }
+  }
+
+  fun setLocationCallbackPriority(priority: Int) {
+    updateMap {
+      callbacks.setLocationCallbackPriority(priority)
+    }
+  }
+
+  fun setLocationCallbackInterval(interval: Long) {
+    updateMap {
+      callbacks.setLocationCallbackInterval(interval)
     }
   }
 
@@ -231,7 +268,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
       geojsons.setGeoJsons(geoJsonObjects)
     }
   }
-  
+
   override fun setHeatmaps(heatmapObjects: Array<HeatmapObject>) {
     updateMap {
       heatmaps.setHeatmaps(heatmapObjects)
@@ -244,14 +281,20 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
-  fun registerEvents(mapsEventEmitterManager: GoogleMapsEventEmitterManager) {
-    updateMap {
-      mapsEventEmitterManager.createEmitters(googleMap)
-      clusters.googleMapsEventEmitterManager = mapsEventEmitterManager
-      clusters.setOnCameraIdleListener(mapsEventEmitterManager.mapsEventEmitterCameraMoveEnded)
-      markers.setOnMarkerClickListener(mapsEventEmitterManager)
-      markers.setOnMarkerDragListener(mapsEventEmitterManager)
-    }
+  private fun setupCallbacks() {
+    callbacks.setupOnMapPress(onMapPress)
+    callbacks.setupOnMapLoaded(onMapLoaded)
+    callbacks.setupOnRegionChange(onRegionChange)
+    callbacks.setupOnRegionChangeStarted(onRegionChangeStarted)
+    callbacks.setupOnRegionChangeComplete(onRegionChangeComplete, clusters)
+    callbacks.setupOnPoiClick(onPoiClick)
+    callbacks.setupOnLongPress(onLongPress)
+    callbacks.setupOnLocationButtonButtonPress(onLocationButtonPress)
+    callbacks.setupOnLocationDotPress(onLocationDotPress)
+    callbacks.setupOnLocationChange(onLocationChange)
+
+    markers.setOnMarkerPressListener(onMarkerPress)
+    markers.setOnMarkerDragListeners(onMarkerDrag, onMarkerDragStarted, onMarkerDragComplete)
   }
 
   /*

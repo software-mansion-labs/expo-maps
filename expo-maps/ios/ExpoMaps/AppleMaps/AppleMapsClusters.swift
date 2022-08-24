@@ -21,7 +21,7 @@ class AppleMapsClusters : Clusters {
     
     for clusterObject in clusterObjects {
       for markerObject in clusterObject.markers {
-        let marker = createAppleMarker(markerObject: markerObject, includeDragging: false)
+        let marker = createAppleMarker(markerObject: markerObject, includeDragging: true)
         
         if (clusterObject.markers.count >= clusterObject.minimumClusterSize) {
           marker.clusterName = clusterObject.name

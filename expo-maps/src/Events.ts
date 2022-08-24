@@ -8,6 +8,14 @@ import {
   NativeExpoAppleMapsModule,
   NativeExpoGoogleMapsModule,
 } from './ExpoMaps';
+import {
+  CameraPosition,
+  MapCluster,
+  Marker,
+  Point,
+  PointOfInterest,
+  UserLocation,
+} from './Common.types';
 
 var module: ProxyNativeModule;
 if (Platform.OS == 'ios') {
@@ -19,25 +27,9 @@ if (Platform.OS == 'ios') {
 const emitter = new EventEmitter(module);
 
 const MapsEventsNames = {
-  ON_CAMERA_MOVE_STARTED_EVENT: 'onCameraMoveStarted',
-  ON_CAMERA_MOVE_ENDED_EVENT: 'onCameraMoveEnded',
   ON_MARKER_CLICK_EVENT: 'onMarkerClick',
   ON_MARKER_DRAG_STARTED_EVENT: 'onMarkerDragStarted',
   ON_MARKER_DRAG_ENDED_EVENT: 'onMarkerDragEnded',
-};
-
-/**
- * Type of an argument of CameraMoveStarted and CameraMoveEnded listeners.
- */
-export type CameraEvent = {
-  /**
-   * Latitude of the camera position.
-   */
-  latitude: number;
-  /**
-   * Longitude of the camera position.
-   */
-  longitude: number;
 };
 
 /**
@@ -79,44 +71,72 @@ export type MarkerDragStartedEvent = {
 };
 
 /**
- * Adds a new listener to be called when camera starts moving.
- * @returns Subscription which can be used later to remove this particular listener.
+ * Represents data returned on click event.
  */
-export function addOnCameraMoveStartedListener(
-  listener: (event: CameraEvent) => void
-): Subscription {
-  return emitter.addListener<CameraEvent>(
-    MapsEventsNames.ON_CAMERA_MOVE_STARTED_EVENT,
-    listener
-  );
-}
+export type OnMapPressEvent = {
+  /**
+   * Coordinates the place where the user clicked.
+   * Represented by {@link Point}
+   */
+  nativeEvent: Point;
+};
 
 /**
- * Removes all listeners registered to listen for CameraMoveStarted event.
+ * Type used for marker related events. eq. onMarkerClick, onMarkerDrag etc. contains marker's ID and position
  */
-export function removeAllOnCameraMoveStartedListeners() {
-  emitter.removeAllListeners(MapsEventsNames.ON_CAMERA_MOVE_STARTED_EVENT);
-}
+export type MarkerEvent = {
+  nativeEvent: Marker;
+};
 
 /**
- * Adds a new listener to be called when camera stops moving.
- * @returns Subscription which can be used later to remove this particular listener.
+ * Represents data returned when a cluster press event is called
  */
-export function addOnCameraMoveEndedListener(
-  listener: (event: CameraEvent) => void
-): Subscription {
-  return emitter.addListener<CameraEvent>(
-    MapsEventsNames.ON_CAMERA_MOVE_ENDED_EVENT,
-    listener
-  );
-}
+export type ClusterPressEvent = {
+  nativeEvent: MapCluster;
+};
 
 /**
- * Removes all listeners registered to listen for CameraMoveEnded event.
+ * Represents data returned on RegionChangeEvent
  */
-export function removeAllOnCameraMoveEndedListeners() {
-  emitter.removeAllListeners(MapsEventsNames.ON_CAMERA_MOVE_ENDED_EVENT);
-}
+export type OnRegionChangeEvent = {
+  /**
+   * Information on cameraPosition.
+   * Represented by {@link CameraPosition}
+   */
+  nativeEvent: CameraPosition;
+};
+
+/**
+ * Represents data returned on PoiClickEvent
+ */
+export type OnPoiClickEvent = {
+  /**
+   * Information on the clicked point of interest.
+   * Represented by {@link PointOfInterest}
+   */
+  nativeEvent: PointOfInterest;
+};
+
+/**
+ * Event returned when the location button is pressed
+ */
+export type OnLocationButtonPressEvent = {
+  nativeEvent: UserLocation;
+};
+
+/**
+ * Event returned when the current location dot is pressed
+ */
+export type OnLocationDotPressEvent = {
+  nativeEvent: UserLocation;
+};
+
+/**
+ * Event returned when the user changes their location
+ */
+export type OnLocationChangeEvent = {
+  nativeEvent: UserLocation;
+};
 
 /**
  * Adds a new listener to be called when a marker or cluster is clicked.

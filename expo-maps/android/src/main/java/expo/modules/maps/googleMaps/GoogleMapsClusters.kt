@@ -11,26 +11,23 @@ import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.google.maps.android.collections.MarkerManager
+import expo.modules.kotlin.callbacks.Callback
 import expo.modules.maps.ClusterObject
 import expo.modules.maps.MarkerObject
-import expo.modules.maps.googleMaps.events.GoogleMapsCameraMoveEndedEventEmitter
-import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
 import expo.modules.maps.interfaces.Clusters
+import expo.modules.maps.records.ClusterRecord
+import expo.modules.maps.records.MarkerRecord
 
 // Context has to be passed in order to use custom cluster manager and renderer
 class GoogleMapsClusters(
   private val context: Context,
   private val map: GoogleMap,
-  private val markerManager: MarkerManager
+  private val markerManager: MarkerManager,
+  private val onClusterPressed: Callback<ClusterRecord>,
+  private val onClusterItemPress: Callback<MarkerRecord>
 ) : Clusters {
 
   private val clusters: MutableList<ExpoClusterManager> = mutableListOf()
-  var googleMapsEventEmitterManager: GoogleMapsEventEmitterManager? = null
-  set(value) {
-    field = value
-    setOnClusterItemClickedListener()
-    setOnClusterClickedListener()
-  }
 
   // After each cluster's items modification cluster() has to be called on cluster manager
   override fun setClusters(clusterObjects: Array<ClusterObject>) {
@@ -61,20 +58,18 @@ class GoogleMapsClusters(
     setOnClusterClickedListener()
   }
 
-  fun setOnCameraIdleListener(eventEmitter: GoogleMapsCameraMoveEndedEventEmitter) {
-    // Point the map's listeners at the listeners implemented by the cluster managers.
-    eventEmitter.addListener {
-      clusters.forEach {
-        it.onCameraIdle()
-      }
+  fun onCameraIdle() {
+    // Cluster/uncluster markers
+    clusters.forEach {
+      it.onCameraIdle()
     }
   }
 
   private fun setOnClusterItemClickedListener() {
     clusters.forEach { expoClusterManager ->
       expoClusterManager.setOnClusterItemClickListener { markerObject ->
-        markerObject.id?.let {
-          googleMapsEventEmitterManager?.sendMarkerClickEvent(it)
+        markerObject?.let {
+          onClusterItemPress(MarkerRecord(it))
         }
         false
       }
@@ -84,8 +79,8 @@ class GoogleMapsClusters(
   private fun setOnClusterClickedListener() {
     clusters.forEach { expoClusterManager ->
       expoClusterManager.setOnClusterClickListener {
-        expoClusterManager.id?.let { id ->
-          googleMapsEventEmitterManager?.sendMarkerClickEvent(id)
+        it?.let {
+          onClusterPressed(ClusterRecord(expoClusterManager.id, it))
         }
         false
       }

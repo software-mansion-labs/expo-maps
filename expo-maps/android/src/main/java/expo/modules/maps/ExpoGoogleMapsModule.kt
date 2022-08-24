@@ -1,5 +1,6 @@
 package expo.modules.maps
 
+import android.view.View
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.UIManagerModule
 import expo.modules.core.interfaces.services.UIManager
@@ -7,18 +8,13 @@ import expo.modules.kotlin.Promise
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import expo.modules.maps.googleMaps.GoogleMapsView
-import expo.modules.maps.googleMaps.events.GoogleMapsEventEmitterManager
-import expo.modules.maps.googleMaps.events.MapEventsNames
+
 
 class ExpoGoogleMapsModule : Module() {
 
   override fun definition() = ModuleDefinition {
     Name("ExpoGoogleMaps")
 
-    Events(events = MapEventsNames.values().map { it.eventName }.toTypedArray())
-
-    val googleMapsEventEmitterManager = GoogleMapsEventEmitterManager(::sendEvent)
-    
     AsyncFunction("getSearchCompletions") { viewHandle: Int, searchQueryFragment: String, promise: Promise ->
       val rnContext = appContext.reactContext as? ReactApplicationContext ?: return@AsyncFunction
       val uiManager = rnContext.getNativeModule(UIManagerModule::class.java) ?: return@AsyncFunction
@@ -29,12 +25,33 @@ class ExpoGoogleMapsModule : Module() {
     }
 
     ViewManager {
+      Events(
+        "onMapPress",
+        "onLongPress",
+        "onMapLoaded",
+        "onRegionChange",
+        "onRegionChangeComplete",
+        "onRegionChangeStarted",
+        "onPoiClick",
+        "onMarkerPress",
+        "onMarkerDrag",
+        "onMarkerDragStarted",
+        "onMarkerDragComplete",
+        "onClusterPress",
+        "onLocationButtonPress",
+        "onLocationDotPress",
+        "onLocationChange"
+      )
+
       View {
         GoogleMapsView(it).also { googleMapsView ->
           appContext.legacyModule<UIManager>()
             ?.registerLifecycleEventListener(googleMapsView.lifecycleEventListener)
-          googleMapsView.registerEvents(googleMapsEventEmitterManager)
         }
+      }
+
+      OnViewDestroys<GoogleMapsView> {
+        it.onViewDestroyed()
       }
 
       Prop("enableRotateGestures") { view: GoogleMapsView, enable: Boolean ->
@@ -120,17 +137,25 @@ class ExpoGoogleMapsModule : Module() {
       Prop("overlays") { view: GoogleMapsView, overlayObjects: Array<OverlayObject> ->
         view.setOverlays(overlayObjects)
       }
-      
+
       Prop("heatmaps") { view: GoogleMapsView, heatmapObjects: Array<HeatmapObject> ->
         view.setHeatmaps(heatmapObjects)
       }
-      
+
       Prop("createPOISearchRequest") { view: GoogleMapsView, place: String ->
         view.createPlaceSearchRequest(place)
       }
 
       Prop("clickablePOIs") { view: GoogleMapsView, arePOIClickable: Boolean ->
         view.setClickablePOIs(arePOIClickable)
+      }
+
+      Prop("onLocationChangeEventPriority") { view: GoogleMapsView, priority: Int ->
+        view.setLocationCallbackPriority(priority)
+      }
+
+      Prop("onLocationChangeEventInterval") { view: GoogleMapsView, interval: Double ->
+        view.setLocationCallbackInterval(interval.toLong())
       }
     }
   }

@@ -23,6 +23,24 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   public var clickablePOIs = true
   private let googleMapsMarkersManager: GoogleMapsMarkersManager = GoogleMapsMarkersManager()
 
+  // TODO: change to proper types from "[String: Any?]" when conversion from records gets implemented for iOS
+  @Event var onMapLoaded: Callback<String?>
+  @Event var onMapPress: Callback<[String: Any?]>
+  @Event var onDoublePress: Callback<[String: Any?]>
+  @Event var onLongPress: Callback<[String: Any?]>
+  @Event var onRegionChange: Callback<[String: Any?]>
+  @Event var onRegionChangeStarted: Callback<[String: Any?]>
+  @Event var onRegionChangeComplete: Callback<[String: Any?]>
+  @Event var onPoiClick: Callback<[String: Any?]>
+  @Event var onMarkerPress: Callback<[String: Any?]>
+  @Event var onMarkerDrag: Callback<[String: Any?]>
+  @Event var onMarkerDragStarted: Callback<[String: Any?]>
+  @Event var onMarkerDragComplete: Callback<[String: Any?]>
+  @Event var onClusterPress: Callback<[String: Any?]>
+  @Event var onLocationButtonPress: Callback<[String: Any?]>
+  @Event var onLocationDotPress: Callback<[String: Any?]>
+  @Event var onLocationChange: Callback<[String: Any?]>
+
   init(sendEvent: @escaping (String, [String: Any?]) -> Void) {
     // just for now we do authentication here
     // should be moved to module's function
@@ -37,7 +55,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     controls = GoogleMapsControls(mapView: mapView)
     markers = GoogleMapsMarkers(mapView: mapView, googleMapsMarkersManager: googleMapsMarkersManager)
-    googleMapsClusterManagerDelegate = GoogleMapsClusterManagerDelegate(sendEvent: sendEvent, googleMapsMarkersManager: googleMapsMarkersManager)
+    googleMapsClusterManagerDelegate = GoogleMapsClusterManagerDelegate(googleMapsMarkersManager: googleMapsMarkersManager)
     clusters = GoogleMapsClusters(mapView: mapView, googleMapsMarkersManager: googleMapsMarkersManager, googleMapsClusterManagerDelegate: googleMapsClusterManagerDelegate, googleMapsViewDelegate: googleMapsViewDelegate)
     gestures = GoogleMapsGestures(mapView: mapView)
     polygons = GoogleMapsPolygons(mapView: mapView)
@@ -51,13 +69,22 @@ public final class GoogleMapsView: UIView, ExpoMapView {
 
     super.init(frame: CGRect.zero)
     googleMapsViewDelegate.expoMapView = self
+    googleMapsClusterManagerDelegate.setOnClusterPress(onClusterPress: onClusterPress)
+    mapView.addObserver(googleMapsViewDelegate, forKeyPath: "myLocation", context: nil)
     addSubview(mapView)
   }
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
+
+  // Allows the double tap to work
+
+  public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                                _ otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    true
+  }
+
   private static func initializeGoogleMapsServices() {
     guard let path = Bundle.main.path(forResource: "Info", ofType: "plist") else {
       fatalError("Couldn't find file 'Info.plist'.")
@@ -69,11 +96,11 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     GMSServices.provideAPIKey(googleMapsApiKey)
     GMSPlacesClient.provideAPIKey(googleMapsApiKey)
   }
-  
+
   func fetchPlacesSearchCompletions(searchQueryFragment: String, promise: Promise) {
     places.fetchSearchCompletions(searchQueryFragment: searchQueryFragment, promise: promise)
   }
-  
+
   func createPOISearchRequest(place: String) {
     places.createSearchRequest(place: place)
   }
@@ -156,7 +183,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   func updatePolygons() {
     polygons.updateStrokePatterns()
   }
-  
+
   func setInitialCameraPosition(initialCameraPosition: CameraPosition) {
     if (!wasInitialCameraPositionSet) {
       let newCameraPosition = GMSCameraPosition(latitude: initialCameraPosition.latitude, longitude: initialCameraPosition.longitude, zoom: Float(initialCameraPosition.zoom))
@@ -168,23 +195,23 @@ public final class GoogleMapsView: UIView, ExpoMapView {
       wasInitialCameraPositionSet = true
     }
   }
-    
+
   func setClusters(clusterObjects: [ClusterObject]) {
     clusters.setClusters(clusterObjects: clusterObjects)
   }
-  
+
   func setEnabledTraffic(enableTraffic: Bool) {
     mapView.isTrafficEnabled = enableTraffic
   }
-  
+
   func setKMLs(kmlObjects: [KMLObject]) {
     kmls.setKMLs(kmlObjects: kmlObjects)
   }
-  
+
   func setGeoJsons(geoJsonObjects: [GeoJsonObject]) {
     geojsons.setGeoJsons(geoJsonObjects: geoJsonObjects)
   }
-  
+
   func setOverlays(overlayObjects: [OverlayObject]) {
     overlays.setOverlays(overlayObjects: overlayObjects)
   }
