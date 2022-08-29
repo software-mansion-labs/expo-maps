@@ -66,14 +66,59 @@ export declare type CameraPosition = {
     zoom: number;
     /**
      * The amount of north-to-south distance (measured in degrees) to display on the map.
-     * @required Google Maps only
+     * @required for Apple Maps Only
      */
     latitudeDelta: number;
     /**
      * The amount of east-to-west distance (measured in degrees) to display for the map region.
-     * @required
+     * @required for Apple Maps Only
      */
     longitudeDelta: number;
+};
+/**
+ * Information about animation of the camera, contains target position and animation parameters.
+ * Camera will animate only the values which have been set, unset parameters won't be affected
+ *
+ * Note: If both latitudeDelta and longitudeDelta are set camera move is going to ignore the zoom,
+ * tilt and bearing properties.Instead the camera will move to a smallest view containing a rectangle
+ * created around the center point by the deltas.
+ */
+export declare type CameraMove = {
+    /**
+     * Location to which the camera should animate. This will be in the center of the view
+     */
+    target?: Point;
+    /**
+     * Bearing to which the camera should animate.
+     */
+    bearing?: number;
+    /**
+     * Tilt to which the camera should animate.
+     */
+    tilt?: number;
+    /**
+     * Zoom to which the camera should animate.
+     */
+    zoom?: number;
+    /**
+     * The north-to-south distance of the rectangle the view will contain.
+     */
+    latitudeDelta?: number;
+    /**
+     * The east-to-west distance of the rectangle the view will contain.
+     */
+    longitudeDelta?: number;
+    /**
+     * Duration in milliseconds of the animation
+     * @required
+     */
+    duration: Number;
+    /**
+     * When true camera will smoothly animate it's position over the time provided in `duration` prop.
+     * Otherwise the camera will instantly move to provided position
+     * @required
+     */
+    animate: Boolean;
 };
 /**
  * Type describing points of interest on the map

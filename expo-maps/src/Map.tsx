@@ -5,6 +5,7 @@ import {
   NativeExpoGoogleMapsView,
   NativeExpoGoogleMapsModule,
 } from './NativeExpoMapView';
+
 import {
   DefaultNativeExpoMapViewProps,
   ExpoMapState,
@@ -12,7 +13,8 @@ import {
 } from './Map.types';
 import { Platform, findNodeHandle } from 'react-native';
 import * as Utils from './Utils';
-import { ProxyNativeModule } from 'expo-modules-core';
+import { ProxyNativeModule, requireNativeModule } from 'expo-modules-core';
+import { CameraMove, CameraPosition } from './Common.types';
 
 export { Marker } from './Marker';
 export { Polygon } from './Polygon';
@@ -39,10 +41,13 @@ const defaultNativeExpoMapViewProps: DefaultNativeExpoMapViewProps = {
   enableTiltGestures: false,
   enableZoomGestures: true,
   initialCameraPosition: {
-    latitude: 51.51,
-    longitude: 0.13,
+    target: {
+      latitude: 51.51,
+      longitude: 0.13,
+    },
     zoom: 4,
     animate: true,
+    duration: 1000,
   },
   enableTraffic: false,
   enablePOISearching: false,
@@ -89,6 +94,17 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
       .catch((error: Error) => {
         console.log('Error with message: ' + error.message);
       });
+  }
+
+  async moveCamera(cameraMove: CameraMove) {
+    const nodeHandle = findNodeHandle(this.mapView.current);
+    let module: ProxyNativeModule;
+    if (Platform.OS == 'ios' && this.props.provider == 'apple') {
+      module = requireNativeModule('ExpoAppleMaps');
+    } else {
+      module = requireNativeModule('ExpoGoogleMaps');
+    }
+    return module.moveCamera(nodeHandle, cameraMove);
   }
 
   componentDidMount() {

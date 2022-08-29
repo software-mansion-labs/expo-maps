@@ -15,6 +15,13 @@ public class ExpoAppleMapsModule: Module {
       }
     }
 
+    AsyncFunction("moveCamera") { (viewHandle: Int, cameraAnimation: CameraMoveRecord, promise: Promise) in
+      DispatchQueue.main.async {
+        let view = self.appContext?.reactBridge?.uiManager?.view(forReactTag: NSNumber(value: viewHandle)) as? AppleMapsView
+        view?.moveCamera(cameraMove: cameraAnimation, promise: promise)
+      }
+    }
+
     ViewManager {
       Events(
         "onMapPress",
@@ -90,8 +97,8 @@ public class ExpoAppleMapsModule: Module {
         view.setCircles(circleObjects: circleObjects)
       }
 
-      Prop("initialCameraPosition") { (view: AppleMapsView, cameraPosition: CameraPosition) in
-        view.setInitialCameraPosition(initialCameraPosition: cameraPosition)
+      Prop("initialCameraPosition") { (view: AppleMapsView, cameraAnimation: CameraMoveRecord) in
+        view.setInitialCameraPosition(initialCameraPosition: cameraAnimation)
       }
 
       Prop("enableTraffic") { (view: AppleMapsView, enable: Bool) in

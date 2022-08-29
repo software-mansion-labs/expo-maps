@@ -8,9 +8,10 @@ import expo.modules.kotlin.Promise
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import expo.modules.maps.googleMaps.GoogleMapsView
+import expo.modules.maps.records.CameraMoveRecord
 
 
-class ExpoGoogleMapsModule : Module() {
+class ExpoGoogleMapsModule: Module() {
 
   override fun definition() = ModuleDefinition {
     Name("ExpoGoogleMaps")
@@ -21,6 +22,14 @@ class ExpoGoogleMapsModule : Module() {
       appContext.activityProvider?.currentActivity?.runOnUiThread {
         val view = uiManager.resolveView(viewHandle) as GoogleMapsView
         view.fetchPlacesSearchCompletions(searchQueryFragment, promise)
+      }
+    }
+    AsyncFunction("moveCamera") { viewHandle: Int, cameraPosition: CameraMoveRecord, promise: Promise ->
+      val rnContext = appContext.reactContext as? ReactApplicationContext ?: return@AsyncFunction
+      val uiManager = rnContext.getNativeModule(UIManagerModule::class.java) ?: return@AsyncFunction
+      appContext.activityProvider?.currentActivity?.runOnUiThread {
+        val view = uiManager.resolveView(viewHandle) as GoogleMapsView
+        view.moveCamera(cameraPosition, promise)
       }
     }
 
@@ -110,7 +119,7 @@ class ExpoGoogleMapsModule : Module() {
         view.setPolylines(polylineObjects)
       }
 
-      Prop("initialCameraPosition") { view: GoogleMapsView, initialCameraPosition: CameraPosition ->
+      Prop("initialCameraPosition") { view: GoogleMapsView, initialCameraPosition: CameraMoveRecord ->
         view.setInitialCameraPosition(initialCameraPosition)
       }
 

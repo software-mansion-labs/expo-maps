@@ -95,13 +95,6 @@ struct CircleObject: Record {
   @Field var strokeWidth: Float?
 }
 
-struct CameraPosition: Record {
-  @Field var latitude: Double = 0
-  @Field var longitude: Double = 0
-  @Field var zoom: Double = 0
-  @Field var animate: Bool = false
-}
-
 struct ClusterObject: Record {
   @Field var id: String? = nil
   @Field var name: String = "default_cluster"

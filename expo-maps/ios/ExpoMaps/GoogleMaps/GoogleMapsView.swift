@@ -20,6 +20,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
   private let places: GoogleMapsPlaces
   private var wasInitialCameraPositionSet = false
   private let heatmaps: GoogleMapsHeatmaps
+  private let cameraAnimations: GoogleMapsCameraAnimations
   public var clickablePOIs = true
   private let googleMapsMarkersManager: GoogleMapsMarkersManager = GoogleMapsMarkersManager()
 
@@ -66,7 +67,7 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     overlays = GoogleMapsOverlays(mapView: mapView)
     heatmaps = GoogleMapsHeatmaps(mapView: mapView)
     places = GoogleMapsPlaces(mapView: mapView, markers: markers)
-
+    cameraAnimations = GoogleMapsCameraAnimations(mapView: mapView)
     super.init(frame: CGRect.zero)
     googleMapsViewDelegate.expoMapView = self
     googleMapsClusterManagerDelegate.setOnClusterPress(onClusterPress: onClusterPress)
@@ -95,6 +96,10 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     }
     GMSServices.provideAPIKey(googleMapsApiKey)
     GMSPlacesClient.provideAPIKey(googleMapsApiKey)
+  }
+
+  func moveCamera(cameraMove: CameraMoveRecord, promise: Promise?) {
+    cameraAnimations.moveCamera(cameraMove: cameraMove, promise: promise)
   }
 
   func fetchPlacesSearchCompletions(searchQueryFragment: String, promise: Promise) {
@@ -184,14 +189,9 @@ public final class GoogleMapsView: UIView, ExpoMapView {
     polygons.updateStrokePatterns()
   }
 
-  func setInitialCameraPosition(initialCameraPosition: CameraPosition) {
+  func setInitialCameraPosition(initialCameraPosition: CameraMoveRecord) {
     if (!wasInitialCameraPositionSet) {
-      let newCameraPosition = GMSCameraPosition(latitude: initialCameraPosition.latitude, longitude: initialCameraPosition.longitude, zoom: Float(initialCameraPosition.zoom))
-      if (initialCameraPosition.animate) {
-        mapView.animate(to: newCameraPosition)
-      } else {
-        mapView.camera = newCameraPosition
-      }
+      cameraAnimations.moveCamera(cameraMove: initialCameraPosition, promise: nil)
       wasInitialCameraPositionSet = true
     }
   }

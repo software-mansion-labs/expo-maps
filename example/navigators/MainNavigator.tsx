@@ -26,6 +26,8 @@ export type ExamplesStackNavigatorProps = {
   Callbacks: undefined;
   POI: undefined;
   Overlays: undefined;
+  Heatmaps: undefined;
+  'Map Move': undefined;
 };
 
 const ExamplesStackNavigator =

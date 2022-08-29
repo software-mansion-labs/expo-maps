@@ -14,6 +14,13 @@ public class ExpoGoogleMapsModule: Module {
       }
     }
 
+    AsyncFunction("moveCamera") { (viewHandle: Int, cameraAnimation: CameraMoveRecord, promise: Promise) in
+      DispatchQueue.main.async {
+        let view = self.appContext?.reactBridge?.uiManager?.view(forReactTag: NSNumber(value: viewHandle)) as? GoogleMapsView
+        view?.moveCamera(cameraMove: cameraAnimation, promise: promise)
+      }
+    }
+
     ViewManager {
       Events(
         "onMapPress",
@@ -89,8 +96,8 @@ public class ExpoGoogleMapsModule: Module {
         view.setPolylines(polylineObjects: polylineObjects)
       }
 
-      Prop("initialCameraPosition") { (view: GoogleMapsView, cameraPosition: CameraPosition) in
-        view.setInitialCameraPosition(initialCameraPosition: cameraPosition)
+      Prop("initialCameraPosition") { (view: GoogleMapsView, cameraAnimation: CameraMoveRecord) in
+        view.setInitialCameraPosition(initialCameraPosition: cameraAnimation)
       }
 
       Prop("circles") { (view: GoogleMapsView, circleObjects: [CircleObject]) in
