@@ -17,10 +17,7 @@ class CameraMoveRecord: Record {
   var tilt: Float? = null
 
   @Field
-  var latitudeDelta: Float? = null
-
-  @Field
-  var longitudeDelta: Float? = null
+  var latLngDelta: LatLngDeltaRecord? = null
 
   @Field
   var animate: Boolean = true

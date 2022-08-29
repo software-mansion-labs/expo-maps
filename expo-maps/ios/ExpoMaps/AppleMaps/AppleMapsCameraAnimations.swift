@@ -40,7 +40,9 @@ class AppleMapsCameraAnimations {
       }
     }
 
-    if let latitudeDelta = cameraMove.latitudeDelta, let longitudeDelta = cameraMove.longitudeDelta {
+    if let delta = cameraMove.latLngDelta {
+      let latitudeDelta = delta["latitudeDelta"] as! Double
+      let longitudeDelta = delta["longitudeDelta"] as! Double
       let x1 = target.latitude - latitudeDelta / 2
       let y1 = target.longitude - longitudeDelta / 2
       let topLeft = MKMapPoint(CLLocationCoordinate2D(latitude: x1 + latitudeDelta, longitude: y1))

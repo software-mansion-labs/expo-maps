@@ -14,6 +14,21 @@ export declare type Point = {
     longitude: number;
 };
 /**
+ * Type for representing width and height on a map using latitude and longitude.
+ */
+export declare type LatLngDelta = {
+    /**
+     * The north-to-south distance.
+     * @required
+     */
+    latitudeDelta: number;
+    /**
+     * The east-to-west distance.
+     * @required
+     */
+    longitudeDelta: number;
+};
+/**
  * Generic object that associates numerical data with a georgaphic coordinate.
  */
 export declare type PointWithData = Point & {
@@ -79,7 +94,7 @@ export declare type CameraPosition = {
  * Information about animation of the camera, contains target position and animation parameters.
  * Camera will animate only the values which have been set, unset parameters won't be affected
  *
- * Note: If both latitudeDelta and longitudeDelta are set camera move is going to ignore the zoom,
+ * Note: If latLngDelta is set the camera move is going to ignore the zoom,
  * tilt and bearing properties.Instead the camera will move to a smallest view containing a rectangle
  * created around the center point by the deltas.
  */
@@ -100,14 +115,7 @@ export declare type CameraMove = {
      * Zoom to which the camera should animate.
      */
     zoom?: number;
-    /**
-     * The north-to-south distance of the rectangle the view will contain.
-     */
-    latitudeDelta?: number;
-    /**
-     * The east-to-west distance of the rectangle the view will contain.
-     */
-    longitudeDelta?: number;
+    latLngDelta?: LatLngDelta;
     /**
      * Duration in milliseconds of the animation
      * @required

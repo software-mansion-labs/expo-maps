@@ -19,16 +19,18 @@ class GoogleMapsCameraAnimations(private val googleMap: GoogleMap) {
       if (cameraMove.target?.longitude != null) cameraMove.target!!.longitude else googleMap.cameraPosition.target.longitude
     )
 
-    if (cameraMove.latitudeDelta != null && cameraMove.longitudeDelta != null) {
+    if (cameraMove.latLngDelta != null) {
 
-      val x1 = target.latitude - cameraMove.latitudeDelta!! / 2
-      val y1 = target.longitude - cameraMove.longitudeDelta!! / 2
+      val x1 = target.latitude - cameraMove.latLngDelta!!.latitudeDelta / 2
+      val y1 = target.longitude - cameraMove.latLngDelta!!.longitudeDelta / 2
       val bottomLeft = LatLng(x1, y1)
-      val topRight = LatLng(x1 + cameraMove.latitudeDelta!!, y1 + cameraMove.longitudeDelta!!)
-
+      val topRight = LatLng(
+        x1 + cameraMove.latLngDelta!!.latitudeDelta,
+        y1 + cameraMove.latLngDelta!!.longitudeDelta
+      )
       boundsUpdate = CameraUpdateFactory.newLatLngBounds(LatLngBounds(bottomLeft, topRight), 0)
     }
-    
+
     cameraPositionBuilder.target(target)
 
     if (cameraMove.zoom != null) {

@@ -9,8 +9,7 @@ struct CameraMoveRecord: Record {
   @Field var zoom: Float?
   @Field var bearing: Double?
   @Field var tilt: Double?
-  @Field var latitudeDelta: Double?
-  @Field var longitudeDelta: Double?
+  @Field var latLngDelta: [String: Any?]?
   @Field var duration: Int
   @Field var animate: Bool
 }

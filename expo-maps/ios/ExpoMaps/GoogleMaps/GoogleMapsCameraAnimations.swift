@@ -17,11 +17,13 @@ class GoogleMapsCameraAnimations {
       longitude: cameraMove.target["longitude"] as? CLLocationDegrees ?? mapView.camera.target.longitude
     );
 
-    if let latDelta = cameraMove.latitudeDelta, let lonDelta = cameraMove.longitudeDelta {
-      let x1 = target.latitude - latDelta / 2
-      let y1 = target.longitude - lonDelta / 2
-      let topLeft = CLLocationCoordinate2D(latitude: x1 + latDelta, longitude: y1)
-      let bottomRight = CLLocationCoordinate2D(latitude: x1, longitude: y1 + lonDelta)
+    if let delta = cameraMove.latLngDelta {
+      let latitudeDelta = delta["latitudeDelta"] as! Double
+      let longitudeDelta = delta["longitudeDelta"] as! Double
+      let x1 = target.latitude - latitudeDelta / 2
+      let y1 = target.longitude - longitudeDelta / 2
+      let topLeft = CLLocationCoordinate2D(latitude: x1 + latitudeDelta, longitude: y1)
+      let bottomRight = CLLocationCoordinate2D(latitude: x1, longitude: y1 + longitudeDelta)
       boundsUpdate = GMSCameraUpdate.fit(GMSCoordinateBounds(coordinate: topLeft, coordinate: bottomRight))
     }
 
@@ -55,13 +57,17 @@ class GoogleMapsCameraAnimations {
 
       CATransaction.commit()
     } else {
-      mapView.camera = GMSCameraPosition(
-        latitude: target.latitude,
-        longitude: target.longitude,
-        zoom: cameraMove.zoom ?? mapView.camera.zoom,
-        bearing: cameraMove.bearing ?? mapView.camera.bearing,
-        viewingAngle: cameraMove.tilt ?? mapView.camera.viewingAngle
-      )
+      if let boundsUpdate = boundsUpdate {
+        mapView.moveCamera(boundsUpdate)
+      } else {
+        mapView.camera = GMSCameraPosition(
+          latitude: target.latitude,
+          longitude: target.longitude,
+          zoom: cameraMove.zoom ?? mapView.camera.zoom,
+          bearing: cameraMove.bearing ?? mapView.camera.bearing,
+          viewingAngle: cameraMove.tilt ?? mapView.camera.viewingAngle
+        )
+      }
       promise?.resolve(CameraPositionRecord(cameraPosition: mapView.camera, visibleRegion: mapView.projection.visibleRegion()).toDictionary())
     }
   }
