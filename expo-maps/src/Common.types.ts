@@ -135,15 +135,15 @@ export type CameraMove = {
 
   /**
    * Duration in milliseconds of the animation
-   * @required
+   * @default 1000
    */
-  duration: Number;
+  duration?: Number;
   /**
    * When true camera will smoothly animate it's position over the time provided in `duration` prop.
    * Otherwise the camera will instantly move to provided position
-   * @required
+   * @default true
    */
-  animate: Boolean;
+  animate?: Boolean;
 };
 
 /**

@@ -12,10 +12,11 @@ export default function OverlaysExample() {
         style={styles.map}
         provider={provider}
         initialCameraPosition={{
-          latitude: 40.7357,
-          longitude: -74.1724,
+          target: {
+            latitude: 40.7357,
+            longitude: -74.1724,
+          },
           zoom: 12,
-          animate: true,
         }}
       >
         <Maps.Overlay
