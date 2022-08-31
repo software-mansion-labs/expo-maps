@@ -13,6 +13,7 @@ import {
 import { Platform, findNodeHandle } from 'react-native';
 import * as Utils from './Utils';
 import { ProxyNativeModule } from 'expo-modules-core';
+import { SearchCompletion } from './Common.types';
 
 export { Marker } from './Marker';
 export { Polygon } from './Polygon';
@@ -72,7 +73,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
   _ismounted = false;
   mapView = React.createRef<ExpoMap>();
 
-  getSearchCompletions(queryFragment: string) {
+  getSearchCompletions(queryFragment: string) : Promise<[SearchCompletion]> {
     const nodeHandle = findNodeHandle(this.mapView.current);
     var module: ProxyNativeModule;
     if (Platform.OS == 'ios' && this.props.provider == 'apple') {
@@ -81,14 +82,7 @@ export class ExpoMap extends React.Component<ExpoMapViewProps> {
       module = NativeExpoGoogleMapsModule;
     }
 
-    module
-      .getSearchCompletions(nodeHandle, queryFragment)
-      .then((response: [String]) => {
-        console.log(response);
-      })
-      .catch((error: Error) => {
-        console.log('Error with message: ' + error.message);
-      });
+    return module.getSearchCompletions(nodeHandle, queryFragment)
   }
 
   componentDidMount() {

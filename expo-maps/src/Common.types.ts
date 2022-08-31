@@ -169,6 +169,13 @@ export type UserLocation = {
   timestamp: Number;
 };
 
+export type SearchCompletion = {
+  title: String;
+  subtitle?: String;
+  titleHighlightRanges?: [[Number]?];
+  subtitleHighlightRanges?: [[Number]?];
+};
+
 export type Color =
   | 'red'
   | 'blue'

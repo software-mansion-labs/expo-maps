@@ -1,10 +1,17 @@
 import React, { useContext, useState, useRef } from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Text,
+  FlatList,
+  ScrollView,
+} from 'react-native';
 
 import * as Maps from 'expo-maps';
 import SwitchContainer from '../components/SwitchContainer';
 import ProviderContext from '../context/ProviderContext';
-
+import type { SearchCompletion } from '../../expo-maps/src/Common.types';
 export default function POIExample() {
   const provider = useContext(ProviderContext);
   const ref = useRef<Maps.ExpoMap>(null);
@@ -19,12 +26,52 @@ export default function POIExample() {
   const [enablePlaceSearch, setEnablePlaceSearch] = useState<boolean>(false);
   const [clickablePOIs, setClickablePOIs] = useState<boolean>(false);
 
+  const [searchResults, setSearchResults] = useState<[SearchCompletion]>([]);
   const appleMapsSearchRequest = 'Centrum Pompidou;Roue 1234';
   const googleMapsSearchRequest =
     'Centrum Pompidou;ChIJoyC4CRxu5kcRRTPcWX5srLc';
 
   return (
     <View style={styles.mapContainer}>
+      <View style={styles.searchContainer}>
+        <SearchBar
+          onValueChange={(value) => {
+            ref.current?.getSearchCompletions(value).then((results) => {
+              setSearchResults(results);
+            });
+            console.log(value);
+            if (value.length < 1) {
+              setSearchResults([]);
+            }
+          }}
+        />
+      </View>
+      {searchResults.length > 0 && (
+        <View
+          style={{
+            flexGrow: 1,
+            backgroundColor: 'white',
+          }}
+        >
+          <FlatList
+            data={searchResults}
+            renderItem={({ item }) => {
+              console.log(item);
+              return (
+                <View style={{ paddingVertical: 10, paddingHorizontal: 8 }}>
+                  <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
+                    {item.title}
+                  </Text>
+                  <Text style={{ fontSize: 12, color: 'gray' }}>
+                    {item.subtitle}
+                  </Text>
+                </View>
+              );
+            }}
+          />
+        </View>
+      )}
+
       <Maps.ExpoMap
         style={{ flex: 1, width: '100%' }}
         provider={provider}
@@ -41,6 +88,7 @@ export default function POIExample() {
           animate: true,
         }}
       />
+
       <View style={styles.switchContainer}>
         {provider == 'apple' && (
           <SwitchContainer
@@ -110,6 +158,27 @@ export default function POIExample() {
   );
 }
 
+function SearchBar({
+  onValueChange,
+}: {
+  onValueChange: (text: string) => void;
+}) {
+  const [text, setText] = useState<string>('');
+  return (
+    <>
+      <TextInput
+        style={styles.searchBar}
+        placeholder={'🔎 Search for POIs'}
+        value={text}
+        onChangeText={(text) => {
+          setText(text);
+          onValueChange(text);
+        }}
+      />
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
   mapContainer: {
     flex: 1,
@@ -117,8 +186,24 @@ const styles = StyleSheet.create({
   switchContainer: {
     padding: 20,
   },
+  searchBar: {
+    ms: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 12,
+    fontSize: 17,
+    lineHeight: 18.5,
+    borderRadius: 8,
+    backgroundColor: 'rgb(239,239,239)',
+    color: 'rgb(96,96,96)',
+  },
+  searchContainer: {
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
+  },
   textInput: {
-    height: 30,
     margin: 5,
     padding: 5,
     borderWidth: 0.5,

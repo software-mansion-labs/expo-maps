@@ -1,5 +1,6 @@
 import React from 'react';
 import { ExpoMapState, ExpoMapViewProps } from './Map.types';
+import { SearchCompletion } from './Common.types';
 export { Marker } from './Marker';
 export { Polygon } from './Polygon';
 export { Polyline } from './Polyline';
@@ -21,7 +22,7 @@ export declare class ExpoMap extends React.Component<ExpoMapViewProps> {
     state: ExpoMapState;
     _ismounted: boolean;
     mapView: React.RefObject<ExpoMap>;
-    getSearchCompletions(queryFragment: string): void;
+    getSearchCompletions(queryFragment: string): Promise<[SearchCompletion]>;
     componentDidMount(): void;
     componentWillUnmount(): void;
     componentDidUpdate(_: any, prevState: ExpoMapState): void;

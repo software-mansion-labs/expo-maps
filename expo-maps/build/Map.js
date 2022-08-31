@@ -64,14 +64,7 @@ export class ExpoMap extends React.Component {
         else {
             module = NativeExpoGoogleMapsModule;
         }
-        module
-            .getSearchCompletions(nodeHandle, queryFragment)
-            .then((response) => {
-            console.log(response);
-        })
-            .catch((error) => {
-            console.log('Error with message: ' + error.message);
-        });
+        return module.getSearchCompletions(nodeHandle, queryFragment);
     }
     componentDidMount() {
         this.mapChildren();

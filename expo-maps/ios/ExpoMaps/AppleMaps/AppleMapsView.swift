@@ -146,13 +146,15 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
   }
 
   public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-    let touchedView: UIView! = mapView.hitTest(point, with: event)
-    if touchedView.isKind(of: NSClassFromString("_MKUserTrackingButton")!) {
-      onLocationButtonPress(UserLocationRecord(location: mapView.userLocation).toDictionary())
-    } else if touchedView.isKind(of: NSClassFromString("_MKUserLocationView")!) {
-      onLocationDotPress(UserLocationRecord(location: mapView.userLocation).toDictionary())
-      return touchedView.hitTest(point, with: event)
+    if let touchedView: UIView = mapView.hitTest(point, with: event) {
+      if touchedView.isKind(of: NSClassFromString("_MKUserTrackingButton")!) {
+        onLocationButtonPress(UserLocationRecord(location: mapView.userLocation).toDictionary())
+      } else if touchedView.isKind(of: NSClassFromString("_MKUserLocationView")!) {
+        onLocationDotPress(UserLocationRecord(location: mapView.userLocation).toDictionary())
+        return touchedView.hitTest(point, with: event)
+      }
     }
+
     return super.hitTest(_: point, with: event)
   }
 

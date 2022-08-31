@@ -155,6 +155,12 @@ export declare type UserLocation = {
      */
     timestamp: Number;
 };
+export declare type SearchCompletion = {
+    title: String;
+    subtitle?: String;
+    titleHighlightRanges?: [[Number]?];
+    subtitleHighlightRanges?: [[Number]?];
+};
 export declare type Color = 'red' | 'blue' | 'green' | 'black' | 'white' | 'gray' | 'cyan' | 'magenta' | 'yellow' | 'lightgray' | 'darkgray' | 'aqua' | 'fuchsia' | 'lime' | 'maroon' | 'navy' | 'olive' | 'purple' | 'silver' | 'teal';
 /**
  * Possible power priorities for OnLocationChange event
