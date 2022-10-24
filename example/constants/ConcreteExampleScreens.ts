@@ -13,6 +13,7 @@ import CallbacksExample from '../screens/CallbacksExample';
 import POIExample from '../screens/POIExample';
 import OverlaysExample from '../screens/OverlaysExample';
 import HeatmapsExample from '../screens/HeatmapsExample';
+import MapMoveExample from '../screens/MapMoveExample';
 
 // TODO: Type this better
 interface ConcreteExampleScreen {
@@ -31,7 +32,8 @@ interface ConcreteExampleScreen {
     | 'Callbacks'
     | 'POI'
     | 'Overlays'
-    | 'Heatmaps';
+    | 'Heatmaps'
+    | 'Map Move';
   screen: (props: any) => JSX.Element;
 }
 
@@ -39,6 +41,10 @@ export const CONCRETE_EXAMPLE_SCREENS: Array<ConcreteExampleScreen> = [
   {
     name: 'Markers',
     screen: MarkersExample,
+  },
+  {
+    name: 'Map Move',
+    screen: MapMoveExample,
   },
   {
     name: 'Polygons',

@@ -35,10 +35,11 @@ export default function POIExample() {
         clickablePOIs={clickablePOIs}
         ref={ref}
         initialCameraPosition={{
-          latitude: 48.85,
-          longitude: 2.34,
+          target: {
+            latitude: 48.85,
+            longitude: 2.34,
+          },
           zoom: 13,
-          animate: true,
         }}
       />
       <View style={styles.switchContainer}>

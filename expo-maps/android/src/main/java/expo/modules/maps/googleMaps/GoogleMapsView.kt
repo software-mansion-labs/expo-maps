@@ -2,11 +2,9 @@ package expo.modules.maps.googleMaps
 
 import android.content.Context
 import android.widget.LinearLayout
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.collections.MarkerManager
 import expo.modules.kotlin.Promise
@@ -18,7 +16,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 
-class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallback, ExpoMapView {
+class GoogleMapsView(context: Context): LinearLayout(context), OnMapReadyCallback, ExpoMapView {
 
   private val mapView: MapView = MapView(context)
   private lateinit var googleMap: GoogleMap
@@ -36,6 +34,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   private lateinit var heatmaps: GoogleMapsHeatmaps
   private lateinit var places: GoogleMapsPlaces
   private lateinit var callbacks: GoogleMapsCallbacks
+  private lateinit var cameraAnimations: GoogleMapsCameraAnimations
 
   private val mapReady = MutableStateFlow(false)
   private var wasInitialCameraPositionSet = false
@@ -82,6 +81,7 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     heatmaps = GoogleMapsHeatmaps(googleMap)
     places = GoogleMapsPlaces(context, googleMap, markers)
     callbacks = GoogleMapsCallbacks(googleMap, context)
+    cameraAnimations = GoogleMapsCameraAnimations(googleMap)
 
     CoroutineScope(Dispatchers.Default).launch {
       mapReady.emit(true)
@@ -178,6 +178,12 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
     }
   }
 
+  override fun moveCamera(cameraMove: CameraMoveRecord, promise: Promise?) {
+    updateMap {
+      cameraAnimations.moveCamera(cameraMove, promise)
+    }
+  }
+
   override fun setMapType(mapType: MapType) {
     val googleMapType = when (mapType) {
       MapType.Normal -> GoogleMap.MAP_TYPE_NORMAL
@@ -228,18 +234,10 @@ class GoogleMapsView(context: Context) : LinearLayout(context), OnMapReadyCallba
   }
 
 
-  override fun setInitialCameraPosition(initialCameraPosition: CameraPosition) {
+  override fun setInitialCameraPosition(initialCameraPosition: CameraMoveRecord) {
     if (!wasInitialCameraPositionSet) {
       updateMap {
-        val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-          LatLng(initialCameraPosition.latitude, initialCameraPosition.longitude),
-          initialCameraPosition.zoom.toFloat()
-        )
-        if (initialCameraPosition.animate) {
-          googleMap.animateCamera(cameraUpdate)
-        } else {
-          googleMap.moveCamera(cameraUpdate)
-        }
+        moveCamera(initialCameraPosition, null)
       }
       wasInitialCameraPositionSet = true
     }

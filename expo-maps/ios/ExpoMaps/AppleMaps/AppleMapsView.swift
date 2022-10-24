@@ -16,6 +16,7 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
   private let kmls: AppleMapsKMLs
   private let pointsOfInterest: AppleMapsPOI
   private let markersManager: AppleMapsMarkersManager = AppleMapsMarkersManager()
+  private let cameraAnimator: AppleMapsCameraAnimations
   private var wasInitialCameraPositionSet = false
 
   @Event var onMapLoaded: Callback<String?>
@@ -47,6 +48,7 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
     geoJsons = AppleMapsGeoJsons(mapView: mapView)
     kmls = AppleMapsKMLs(mapView: mapView, markers: markers, polylines: polylines, polygons: polygons)
     pointsOfInterest = AppleMapsPOI(mapView: mapView, markers: markers)
+    cameraAnimator = AppleMapsCameraAnimations(mapView: mapView)
     super.init(frame: CGRect.zero)
     delegate = AppleMapsDelegate(sendEvent: sendEvent, markersManager: markersManager, appleMapsView: self)
     mapView.delegate = delegate
@@ -66,6 +68,10 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
     singleTap.require(toFail: longPress)
 
     addSubview(mapView)
+  }
+
+  func moveCamera(cameraMove: CameraMoveRecord, promise: Promise?) {
+    cameraAnimator.moveCamera(cameraMove: cameraMove, promise: promise)
   }
 
   // Allows the double tap to work
@@ -201,10 +207,9 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
     circles.setCircles(circleObjects: circleObjects)
   }
 
-  func setInitialCameraPosition(initialCameraPosition: CameraPosition) {
+  func setInitialCameraPosition(initialCameraPosition: CameraMoveRecord) {
     if (!wasInitialCameraPositionSet) {
-      let camera = MKMapCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: initialCameraPosition.latitude, longitude: initialCameraPosition.longitude), fromDistance: googleMapsZoomLevelToMeters(latitude: initialCameraPosition.latitude, zoom: initialCameraPosition.zoom), pitch: 0, heading: CLLocationDirection())
-      mapView.setCamera(camera, animated: initialCameraPosition.animate)
+      cameraAnimator.moveCamera(cameraMove: initialCameraPosition, promise: nil)
       wasInitialCameraPositionSet = true
     }
   }
@@ -221,9 +226,7 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
     geoJsons.setGeoJsons(geoJsonObjects: geoJsonObjects)
   }
 
-  func setOverlays(overlayObjects: [OverlayObject]) {
-
-  }
+  func setOverlays(overlayObjects: [OverlayObject]) {}
 
   func convertToMapViewCoordinate(_ point: CGPoint) -> CLLocationCoordinate2D {
     mapView.convert(point, toCoordinateFrom: mapView)
@@ -232,7 +235,7 @@ public final class AppleMapsView: UIView, ExpoMapView, UIGestureRecognizerDelega
   // imitating Google Maps zoom level behaviour
 
   // based on https://gis.stackexchange.com/questions/7430/what-ratio-scales-do-google-maps-zoom-levels-correspond-to
-  private func googleMapsZoomLevelToMeters(latitude: Double, zoom: Double) -> Double {
+  static func googleMapsZoomLevelToMeters(latitude: Double, zoom: Double) -> Double {
     let metersPerPixel = 156543.03392 * cos(latitude * Double.pi / 180) / pow(2, zoom - 1)
     return UIScreen.main.bounds.size.width * metersPerPixel
   }

@@ -15,6 +15,22 @@ export type Point = {
 };
 
 /**
+ * Type for representing width and height on a map using latitude and longitude.
+ */
+export type LatLngDelta = {
+  /**
+   * The north-to-south distance.
+   * @required
+   */
+  latitudeDelta: number;
+  /**
+   * The east-to-west distance.
+   * @required
+   */
+  longitudeDelta: number;
+};
+
+/**
  * Generic object that associates numerical data with a georgaphic coordinate.
  */
 export type PointWithData = Point & {
@@ -74,15 +90,60 @@ export type CameraPosition = {
 
   /**
    * The amount of north-to-south distance (measured in degrees) to display on the map.
-   * @required Google Maps only
+   * @required for Apple Maps Only
    */
   latitudeDelta: number;
 
   /**
    * The amount of east-to-west distance (measured in degrees) to display for the map region.
-   * @required
+   * @required for Apple Maps Only
    */
   longitudeDelta: number;
+};
+
+/**
+ * Information about animation of the camera, contains target position and animation parameters.
+ * Camera will animate only the values which have been set, unset parameters won't be affected
+ *
+ * Note: If latLngDelta is set the camera move is going to ignore the zoom,
+ * tilt and bearing properties.Instead the camera will move to a smallest view containing a rectangle
+ * created around the center point by the deltas.
+ */
+export type CameraMove = {
+  /**
+   * Location to which the camera should animate. This will be in the center of the view
+   */
+  target?: Point;
+
+  /**
+   * Bearing to which the camera should animate.
+   */
+  bearing?: number;
+
+  /**
+   * Tilt to which the camera should animate.
+   */
+
+  tilt?: number;
+
+  /**
+   * Zoom to which the camera should animate.
+   */
+  zoom?: number;
+
+  latLngDelta?: LatLngDelta;
+
+  /**
+   * Duration in milliseconds of the animation
+   * @default 1000
+   */
+  duration?: Number;
+  /**
+   * When true camera will smoothly animate it's position over the time provided in `duration` prop.
+   * Otherwise the camera will instantly move to provided position
+   * @default true
+   */
+  animate?: Boolean;
 };
 
 /**

@@ -13,10 +13,11 @@ export default function KMLExample() {
         style={{ flex: 1, width: '100%' }}
         provider={provider}
         initialCameraPosition={{
-          latitude: 38.818844,
-          longitude: 8.366278,
+          target: {
+            latitude: 38.818844,
+            longitude: 8.366278,
+          },
           zoom: 2,
-          animate: true,
         }}
       >
         <Maps.KML filePath={require('../assets/sample.kml')} />

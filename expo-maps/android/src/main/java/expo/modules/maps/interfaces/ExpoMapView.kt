@@ -1,6 +1,8 @@
 package expo.modules.maps.interfaces
 
+import expo.modules.kotlin.Promise
 import expo.modules.maps.*
+import expo.modules.maps.records.CameraMoveRecord
 
 interface ExpoMapView {
   fun setMapType(mapType: MapType)
@@ -12,7 +14,8 @@ interface ExpoMapView {
   fun setEnabledTraffic(enableTraffic: Boolean)
   fun setKMLs(kmlObjects: Array<KMLObject>)
   fun setGeoJsons(geoJsonObjects: Array<GeoJsonObject>)
-  fun setInitialCameraPosition(initialCameraPosition: CameraPosition)
+  fun setInitialCameraPosition(initialCameraPosition: CameraMoveRecord)
+  fun moveCamera(cameraMove: CameraMoveRecord, promise: Promise?)
   fun setOverlays(overlayObjects: Array<OverlayObject>)
   fun setHeatmaps(heatmapObjects: Array<HeatmapObject>)
 }

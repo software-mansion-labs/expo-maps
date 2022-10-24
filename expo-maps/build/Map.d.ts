@@ -1,5 +1,6 @@
 import React from 'react';
 import { ExpoMapState, ExpoMapViewProps } from './Map.types';
+import { CameraMove } from './Common.types';
 export { Marker } from './Marker';
 export { Polygon } from './Polygon';
 export { Polyline } from './Polyline';
@@ -22,6 +23,7 @@ export declare class ExpoMap extends React.Component<ExpoMapViewProps> {
     _ismounted: boolean;
     mapView: React.RefObject<ExpoMap>;
     getSearchCompletions(queryFragment: string): void;
+    moveCamera(cameraMove: CameraMove): Promise<any>;
     componentDidMount(): void;
     componentWillUnmount(): void;
     componentDidUpdate(_: any, prevState: ExpoMapState): void;

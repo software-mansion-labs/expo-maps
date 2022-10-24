@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react';
 import { MarkerObject } from './Marker';
 import { PolygonObject } from './Polygon';
 import { PolylineObject } from './Polyline';
-import { LocationChangePriority, Point } from './Common.types';
+import { CameraMove, LocationChangePriority, Point } from './Common.types';
 import { CircleObject } from './Circle';
 import { ClusterObject } from './Cluster';
 import { GeoJsonObject } from './GeoJson';
@@ -450,16 +450,7 @@ export type CameraPosition = {
    *   animate: true,
    * }
    */
-  initialCameraPosition: Point & {
-    /**
-     * Zoom level. Number from range 1-22.
-     */
-    zoom: ZoomLevels;
-    /**
-     * Indicates if camera should be gently animated from old position to new one or maybe "teleported".
-     */
-    animate: boolean;
-  };
+  initialCameraPosition: CameraMove;
 };
 
 export type AppleMapsControls = Omit<
@@ -513,7 +504,10 @@ export type NativeExpoAppleMapsViewProps = ViewProps &
       AppleMapsPOI
   >;
 
-export type ExpoMapRef = { getSearchCompletions: () => Promise<void> };
+export type ExpoMapRef = {
+  getSearchCompletions: () => Promise<void>;
+  moveCamera: () => Promise<CameraPosition>;
+};
 
 export type Providers = 'google' | 'apple';
 
